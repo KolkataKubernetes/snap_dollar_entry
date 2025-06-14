@@ -28,7 +28,7 @@ from extract_pages import page_texts #Custom function that extracts clean text f
 
 load_dotenv() #load the enivronment variables from a .env file
 ROOT = Path(os.getenv("WAIVER_ROOT")) #Root folder with PDFs
-OUT_DIR = Path(os.getenv("DOWNLOADS_DIR")) #Where to save output
+OUT_DIR = Path(os.path.expandvars(os.getenv("DOWNLOADS_DIR")))  # ← expand $HOME, where to save output
 
 MODEL = os.getenv("MODEL") #name of the LLM Model to call: SHOULD I REPLACE THIS WITH LLAMA3.2?
 STATE_LUT = json.loads((Path(__file__).parent / "state_lookup.json").read_text()) #JSON look-up table
