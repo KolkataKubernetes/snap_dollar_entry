@@ -1,7 +1,7 @@
 # snap_dollar_entry
 Virtually all of this script was written by ChatGPT.
 snap_dollar_entry
-├─0_data
+├─0_data #Contains year subfolders, under which we have the PDFs of interest.
 ├─abawd_llm.
     ├─ .env                  # keeps paths & API knobs
     ├─ src/
