@@ -31,7 +31,7 @@ ROOT = Path(os.getenv("WAIVER_ROOT")) #Root folder with PDFs
 OUT_DIR = Path(os.getenv("DOWNLOADS_DIR")) #Where to save output
 
 MODEL = os.getenv("MODEL") #name of the LLM Model to call: SHOULD I REPLACE THIS WITH LLAMA3.2?
-STATE_LUT = json.loads(Path("state_lookup.json").read_text()) #JSON look-up table
+STATE_LUT = json.loads((Path(__file__).parent / "state_lookup.json").read_text()) #JSON look-up table
 PROMPT_RAW = (Path(__file__).parent / "prompt.txt").read_text()
 
 if ROOT is None or OUT_DIR is None:
