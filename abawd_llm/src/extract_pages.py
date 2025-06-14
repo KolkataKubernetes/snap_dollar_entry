@@ -5,7 +5,7 @@ from pdf2image import convert_from_path
 
 MIN_CHARS = 30          # threshold for “has text”
 
-def page_texts(pdf_path: Path, dpi=300):
+def page_texts(pdf_path: Path, dpi=300): #400-450 dpi might help with fonts. 
     """
     Yields plain-text strings, one per page, for *any* PDF.
     """
@@ -25,7 +25,8 @@ def page_texts(pdf_path: Path, dpi=300):
             pdf_path, dpi=dpi, #Note that DPI is defaulting to 300
             first_page=min(ocr_needed),
             last_page=max(ocr_needed),
-            fmt="png"
+            fmt="png",
+            thread_count=4 #Limit to 4 cores 
         )
         for idx, img in zip(range(min(ocr_needed), max(ocr_needed)+1), images): #Pair each page index which its corresponding image
             if idx in ocr_needed: 
