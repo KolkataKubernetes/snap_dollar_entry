@@ -1,0 +1,19 @@
+You are a data-extraction assistant.
+
+Return a **JSON array** where each element has:
+  "entire_state": 0/1,
+  "loc": [strings],           # empty if entire_state == 1
+  "loc_type": [strings],      # one of: county, city, town, reserva
+  tion, other
+  "date_start": "YYYY-MM-DD" | null,
+  "date_end":   "YYYY-MM-DD" | null
+
+Context:
+  YEAR  = {{year}}
+  STATE = {{state_full}} ({{state_abbr}})
+  SOURCE_DOC = {{doc_name}}
+
+PDF page text:
+<<<{{page_text}}>>>
+
+Return the JSON **and nothing else**.
