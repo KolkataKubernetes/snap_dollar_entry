@@ -66,6 +66,12 @@ for pdf in pdf_iter: #Recursively find all PDFs
     year, st_abbr = int(year), st_abbr.upper()
     for page in page_texts(pdf): #Invoke the page_texts function, loop through parsed text
         data = query_llm(prompt_for(page, year, st_abbr, pdf.stem)) #Create data output in JSON format
+        print("DEBUG raw:", repr(data)[:200])   # shows first 200 chars
+            # Normalise / guard
+        if isinstance(data, dict):
+            data = [data]
+        elif isinstance(data, str):
+            raise ValueError(f"Model did not return JSON array:\n{data}")
         for item in data: #Now, parse the model output
             if item["entire_state"]: #If the waiver applied to the entire state for that year, record one row with the flag set and empty location fields
                 rows.append([year, STATE_LUT[st_abbr], st_abbr, 1, "", "", item["date_start"], item["date_end"], pdf.stem])
