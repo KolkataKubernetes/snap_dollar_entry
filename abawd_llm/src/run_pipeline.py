@@ -32,7 +32,7 @@ OUT_DIR = Path(os.getenv("DOWNLOADS_DIR")) #Where to save output
 
 MODEL = os.getenv("MODEL") #name of the LLM Model to call: SHOULD I REPLACE THIS WITH LLAMA3.2?
 STATE_LUT = json.loads(Path("state_lookup.json").read_text()) #JSON look-up table
-PROMPT_RAW = Path("src/prompt.txt").read_text()
+PROMPT_RAW = (Path(__file__).parent / "prompt.txt").read_text()
 
 if ROOT is None or OUT_DIR is None:
     raise RuntimeError("WAIVER_ROOT or DOWNLOADS_DIR not set (check .env)")
@@ -49,7 +49,6 @@ def prompt_for(page, year, st_abbr, doc):
             .replace("{{year}}", str(year))
             .replace("{{state_abbr}}", st_abbr)
             .replace("{{state_full}}", STATE_LUT[st_abbr])
-            .replace("{{doc_name}}", doc)
             .replace("{{doc_name}}", doc)
             .replace("{{page_text}}", page))
 
@@ -78,4 +77,4 @@ for pdf in pdf_iter: #Recursively find all PDFs
 df = pd.DataFrame(rows, columns = HEADERS)
 out_path = OUT_DIR / "ABAWD_waivers_extracted.csv"
 df.to_csv(out_path, index = False)
-print("Process Complete :Saved to {out_path}")
+print(f"Process Complete :Saved to {out_path}")
