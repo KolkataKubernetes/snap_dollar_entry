@@ -134,16 +134,44 @@ for pdf in pdf_iter:
     year, st_abbr, *_ = pdf.stem.split("_")
     year, st_abbr = int(year), st_abbr.upper()
 
-    ll_text = " ".join(page_texts(pdf))
+    all_pages = page_texts(pdf)                     # OCR once
+    all_text  = " ".join(all_pages)                 # concat for candidates
+
     cands = set(county_pat.findall(all_text) +
                 reservation_pat.findall(all_text) +
                 city_pat.findall(all_text) +
                 town_pat.findall(all_text))
 
-    for pg_idx, text in enumerate(page_texts(pdf), 1):
-        # harvest candidates from page text
-
+    for pg_idx, text in enumerate(all_pages, 1):
         prompt = prompt_for(text, year, st_abbr, pdf.stem, cands)
+
+        prompt_path = OUT_DIR / f"{pdf.stem}_page_{pg_idx:02d}_prompt.txt"
+        prompt_path.write_text(prompt)
+
+        for attempt in range(2):
+            try:
+                data = fix_if_needed(query_llm(prompt))
+                break
+            except ValueError as e:
+                if attempt == 1:
+                    raise
+                prompt = (f"Your previous answer was invalid ({e}). "
+                          "Return a corrected JSON array ONLY.\n" + prompt)
+
+        for item in data:
+            d_start = item.get("date_start")
+            d_end   = item.get("date_end")
+
+            if item["entire_state"]:
+                rows.append([year, state_lut[st_abbr], st_abbr, 1,
+                             "", "", d_start, d_end, pdf.stem])
+                continue
+
+            for loc, ltype in zip(item["loc"], item["loc_type"]):
+                if agg_pat.match(loc.lower()) or loc.lower() in {"arizona", "page"}:
+                    continue
+                rows.append([year, state_lut[st_abbr], st_abbr, 0,
+                             loc, ltype, d_start, d_end, pdf.stem])
 
         # ---- NEW: Save the exact prompt for inspection ---------
         prompt_path = OUT_DIR / f"{pdf.stem}_page_{pg_idx:02d}_prompt.txt"
