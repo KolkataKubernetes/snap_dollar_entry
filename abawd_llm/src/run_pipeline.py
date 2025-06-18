@@ -134,12 +134,14 @@ for pdf in pdf_iter:
     year, st_abbr, *_ = pdf.stem.split("_")
     year, st_abbr = int(year), st_abbr.upper()
 
+    ll_text = " ".join(page_texts(pdf))
+    cands = set(county_pat.findall(all_text) +
+                reservation_pat.findall(all_text) +
+                city_pat.findall(all_text) +
+                town_pat.findall(all_text))
+
     for pg_idx, text in enumerate(page_texts(pdf), 1):
         # harvest candidates from page text
-        cands = set(county_pat.findall(text) +
-                    reservation_pat.findall(text) +
-                    city_pat.findall(text) +
-                    town_pat.findall(text))
 
         prompt = prompt_for(text, year, st_abbr, pdf.stem, cands)
 
