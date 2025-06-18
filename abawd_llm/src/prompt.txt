@@ -30,12 +30,12 @@ Each element must contain:
 }]
 
 # ❹ Context variables  --------------------------------------
-YEAR        = ‹‹YEAR››  
-STATE       = ‹‹STATE_FULL›› (‹‹STATE_ABBR››)  
-SOURCE_DOC  = ‹‹DOC_NAME››  
+YEAR        = {{year}} 
+STATE       = ({{state_full}} {{state_abbr}}) 
+SOURCE_DOC  = {{doc_name}}
 
 # ❺ Candidate list  -----------------------------------------
-CANDIDATES = ‹‹JSON_ENCODED_LIST_OF_NAMES››
+CANDIDATES = {{JSON_ENCODED_LIST_OF_NAMES}}
 #  e.g. ["Apache County","Cochise County","Navajo Nation","Gila River Reservation"]
 
 # ❻ Rules (follow **exactly**) -------------------------------
@@ -53,6 +53,6 @@ CANDIDATES = ‹‹JSON_ENCODED_LIST_OF_NAMES››
 
 # ❼ Waiver text to analyse  ---------------------------------
 <<<
-‹‹PAGE_TEXT››
+{{page_text}} 
 >>>
 END
