@@ -68,15 +68,34 @@ def query_llm(prompt):
     )
     return json.loads(r.json()["response"])
 
+# --- helper to infer a loc_type from the name ----------------
+def infer_type(name: str) -> str:
+    n = name.lower()
+    if n.endswith(" county"):
+        return "county"
+    if n.endswith(" city") or ", az" in n or ", ar" in n:   # tweak if needed
+        return "city"
+    if n.endswith(" town"):
+        return "town"
+    if "reservation" in n or "nation" in n:
+        return "reservation"
+    return "other"
+
+# --- patched fix_if_needed ----------------------------------
 def fix_if_needed(raw):
-    """Ensure list-of-dicts JSON and loc/loc_type lengths match."""
     if isinstance(raw, dict):
         raw = [raw]
     if not isinstance(raw, list):
         raise ValueError("Model output not a list")
+
     for itm in raw:
-        if len(itm["loc"]) != len(itm["loc_type"]):
-            raise ValueError("loc/loc_type length mismatch")
+        locs, types = itm["loc"], itm["loc_type"]
+        if len(types) < len(locs):
+            # auto-fill the missing types by inference
+            for name in locs[len(types):]:
+                types.append(infer_type(name))
+        if len(locs) != len(types):
+            raise ValueError("loc/loc_type length mismatch after autofill")
     return raw
 
 # ── Output table init ───────────────────────────────────────
