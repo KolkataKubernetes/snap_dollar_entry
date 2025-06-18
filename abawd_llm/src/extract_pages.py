@@ -5,7 +5,7 @@ from pdf2image import convert_from_path
 
 MIN_CHARS = 30          # threshold for “has text”
 
-def page_texts(pdf_path: Path, dpi=300): #400-450 dpi might help with fonts. 
+def page_texts(pdf_path: Path, dpi=500): #400-450 dpi might help with fonts. 
     """
     Yields plain-text strings, one per page, for *any* PDF.
     """
@@ -30,7 +30,7 @@ def page_texts(pdf_path: Path, dpi=300): #400-450 dpi might help with fonts.
         )
         for idx, img in zip(range(min(ocr_needed), max(ocr_needed)+1), images): #Pair each page index which its corresponding image
             if idx in ocr_needed: 
-                txt_map[idx] = pytesseract.image_to_string(img, lang="eng") #Use OCR
+                txt_map[idx] = pytesseract.image_to_string(img, lang="eng", config = "--oem 1 --psm 6") #Use OCR
 
     return [txt_map[i] for i in sorted(txt_map)] #Returns a list of extracted text for all successfully processed pages, sorted by page number. Combined results from Tesseract, pdfplumber
 
