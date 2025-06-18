@@ -69,8 +69,12 @@ for pdf in pdf_iter:
     year, st_abbr, *_ = pdf.stem.split("_")
     year, st_abbr = int(year), st_abbr.upper()
 
-    for page in page_texts(pdf):
+    for i, page in enumerate(page_texts(pdf)):
         base_prompt = prompt_for(page, year, st_abbr, pdf.stem)
+        prompt_path = OUT_DIR / f"{pdf.stem}_page_{i+1:02d}_prompt.txt"
+        with open(prompt_path, "w") as f:
+            f.write(base_prompt)
+
 
         # 2-attempt retry loop
         for attempt in range(2):
