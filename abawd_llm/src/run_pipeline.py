@@ -12,35 +12,35 @@ from extract_pages import page_texts
 
 # ── CLI ──────────────────────────────────────────────────────
 ap = argparse.ArgumentParser()
-ap.add_argument("--one", help="Path to a single PDF for a dry-run", default=None)
+ap.add_argument("--one", help="Path to a single PDF for a dry-run", default=None) ##Add --one flag: IF --one is supplied in the CLI prompt, only process the file mentioned.
 args = ap.parse_args()
 
 # ── ENV / paths ──────────────────────────────────────────────
-load_dotenv()
+load_dotenv() #Load the .env file
 ROOT     = Path(os.getenv("WAIVER_ROOT"))                   # where PDFs live
 OUT_DIR  = Path(os.path.expandvars(os.getenv("DOWNLOADS_DIR")))
-MODEL    = os.getenv("MODEL", "llama3.2")
+MODEL    = os.getenv("MODEL", "llama3.2") #default to llama3.2 if unset.
 
 if not ROOT.exists():
-    raise RuntimeError(f"WAIVER_ROOT not found: {ROOT}")
+    raise RuntimeError(f"WAIVER_ROOT not found: {ROOT}") #early fail-test if WAIVER_ROOT is missing
 
 state_lut   = json.loads((Path(__file__).parent / "state_lookup.json").read_text())
-prompt_raw  = (Path(__file__).parent / "prompt.txt").read_text()
+prompt_raw  = (Path(__file__).parent / "prompt.txt").read_text() # Invokes prompt.txt, which contains placeholders like "year."
 
 HEADERS = ["YEAR","STATE","STATE_ABBREV","ENTIRE_STATE",
            "LOC","LOC_TYPE","DATE_START","DATE_END","SOURCE_DOC"]
-rows = []
+rows = [] #Goal - collect one list per location. It later becomes a dataframe.
 
 # ── helpers ──────────────────────────────────────────────────
 def prompt_for(page_txt, year, st_abbr, doc):
     return (prompt_raw
-            .replace("{{year}}", str(year))
-            .replace("{{state_abbr}}", st_abbr)
-            .replace("{{state_full}}", state_lut[st_abbr])
-            .replace("{{doc_name}}", doc)
-            .replace("{{page_text}}", page_txt))
+            .replace("{{year}}", str(year)) #From file name
+            .replace("{{state_abbr}}", st_abbr) #From file name 
+            .replace("{{state_full}}", state_lut[st_abbr]) #From state lookup json
+            .replace("{{doc_name}}", doc) #PDF name
+            .replace("{{page_text}}", page_txt)) #Text for that page, exctracted using extract_pages.py
 
-def query_llm(prompt):
+def query_llm(prompt): #Posts JSON Payload to llama and return a parsed JSON rasponse.
     r = requests.post(
         "http://localhost:11434/api/generate",
         json={"model": MODEL, "format": "json",
@@ -49,7 +49,7 @@ def query_llm(prompt):
     )
     return json.loads(r.json()["response"])
 
-def fix_if_needed(raw):
+def fix_if_needed(raw): 
     """Ensure we have a list of dicts and matching loc / loc_type lengths."""
     if isinstance(raw, dict):
         raw = [raw]
@@ -66,12 +66,12 @@ agg_pat = re.compile(r"^(?:\d+|one)\s+(county|counties|city|cities|reservation|a
 pdf_iter = [Path(args.one)] if args.one else ROOT.rglob("*.pdf")
 
 for pdf in pdf_iter:
-    year, st_abbr, *_ = pdf.stem.split("_")
+    year, st_abbr, *_ = pdf.stem.split("_") #parse year and state abbrevation from the stemmed pdf name 
     year, st_abbr = int(year), st_abbr.upper()
 
     for i, page in enumerate(page_texts(pdf)):
-        base_prompt = prompt_for(page, year, st_abbr, pdf.stem)
-        prompt_path = OUT_DIR / f"{pdf.stem}_page_{i+1:02d}_prompt.txt"
+        base_prompt = prompt_for(page, year, st_abbr, pdf.stem) #Build the base prompt
+        prompt_path = OUT_DIR / f"{pdf.stem}_page_{i+1:02d}_prompt.txt" #Save prompt for failure analysis
         with open(prompt_path, "w") as f:
             f.write(base_prompt)
 
@@ -79,7 +79,7 @@ for pdf in pdf_iter:
         # 2-attempt retry loop
         for attempt in range(2):
             try:
-                data = fix_if_needed(query_llm(base_prompt))
+                data = fix_if_needed(query_llm(base_prompt)) #run it through fix first - if it breaks, prepend the corrective instruction using the error
                 break
             except ValueError as e:
                 if attempt == 1:
