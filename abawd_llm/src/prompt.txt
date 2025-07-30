@@ -1,58 +1,71 @@
-You are a data-extraction assistant.  
-Return **only** a JSON array; nothing else.
+####################################################################
+# ❶  Waiver metadata ----------------------------------------------
+YEAR          = {{year}}
+STATE_ABBREV  = {{state_abbr}}
+STATE_FULL    = {{state_full}}
+SOURCE_DOC    = "{{doc_name}}"
 
-# ❶ Schema  --------------------------------------------------
-Each element must contain:
-{
-  "entire_state": 0 | 1,                      // 1 = waiver applies statewide
-  "loc"        : [string],                    // [] if entire_state == 1
-  "loc_type"   : ["county" | "city" | "town" | "reservation" | "other"],
-  "date_start" : "YYYY-MM-DD" | null,
-  "date_end"   : "YYYY-MM-DD" | null
-}
+####################################################################
+# ❷  Desired JSON schema ------------------------------------------
+# Return a **JSON array only**.  Each element must be an object:
+#
+#   {
+#     "entire_state": <0 or 1>,          # 1 = waiver covers whole state
+#     "loc":        ["<place name>", …], # matching names *exactly*
+#     "loc_type":   ["county" | "city" | "town" | "reservation" | "other", …],
+#     "date_start": "YYYY-MM-DD" | null,
+#     "date_end":   "YYYY-MM-DD" | null
+#   }
+#
+# • One object per *row* you would write to a table.
+# • `loc` and `loc_type` lists must be the same length.
 
-# ❷ Positive example  ---------------------------------------
-[{
-  "entire_state": 0,
-  "loc"        : ["Apache County", "Cochise County"],
-  "loc_type"   : ["county", "county"],
-  "date_start" : "2019-01-01",
-  "date_end"   : "2019-12-31"
-}]
-
-# ❸ Bad example (do NOT imitate) -----------------------------
-[{
-  "entire_state": 0,
-  "loc"        : ["12 counties"],
-  "loc_type"   : ["county"],
-  "date_start" : null,
-  "date_end"   : null
-}]
-
-# ❹ Context variables  --------------------------------------
-YEAR        = {{year}} 
-STATE       = ({{state_full}} {{state_abbr}}) 
-SOURCE_DOC  = {{doc_name}}
-
-# ❺ Candidate list  -----------------------------------------
+####################################################################
+# ❸  Candidate list ------------------------------------------------
+# Prefer to use only these names.  They were harvested from the waiver
+# text and tables.  The list may be incomplete if OCR missed a cell.
 CANDIDATES = {{JSON_ENCODED_LIST_OF_NAMES}}
-#  e.g. ["Apache County","Cochise County","Navajo Nation","Gila River Reservation"]
 
-# ❻ Rules (follow **exactly**) -------------------------------
-1. Use **only** names that appear verbatim in CANDIDATES.  
-2. Do **not** add, drop, merge, or summarise items. No “12 counties”.  
-3. Arrays *loc* and *loc_type* must be the same length.  
-4. If the waiver covers the whole state, set `"entire_state": 1` and leave
-   *loc* / *loc_type* empty (`[]`).  
-5. A reservation name must include “Reservation” or “Nation”.  
-6. A city name ends in “City” or appears as “<Name>, <state>”.  
-7. Ignore page numbers, waiver IDs, headers, footers, tables of contents,
-   and narrative summaries of counts.  
-8. If a date is missing, return `null`.  
+####################################################################
+# ❹  Tokens to ignore (common header artefacts) --------------------
+BAD_TOKENS = [
+  "Combined Area",
+  "Individual City",
+  "Considering The City",
+  "Reservation Areas"
+]
+
+####################################################################
+# ❺  Rules (follow EXACTLY) ---------------------------------------
+1. Use the names in **CANDIDATES** whenever possible.
+   • If a place name appears *verbatim* in the waiver text **and** is
+     listed under a table header that implies its geography type
+     (see Rule 10), you MAY include it even if it is missing from
+     CANDIDATES.
+2. Do **NOT** invent or merge locations.  No “12 counties”.
+3. Preserve spellings exactly as printed (e.g. “La Paz County”).
+4. `loc_type` must be one of:
+     "county", "city", "town", "reservation", "other".
+5. Dates:
+     • If the waiver gives an “Implementation” / “Start” date,
+       use it for `date_start`.
+     • If an “Expiration” / “End” date is present, use it for `date_end`.
+     • Missing date ⇒ `null`.
+6. Ignore page numbers, footers, narrative summaries of counts,
+   and any string that matches **BAD_TOKENS**.
+7. If `entire_state` = 1 you MUST set `loc = []` and `loc_type = []`.
+8. Sort output rows by `loc` alphabetically for readability.
 9. Output **nothing** except the JSON array.
+10. Header inference:
+    • If the immediate table header (or section title) contains
+        “Reservation” or “Nation” → `loc_type = "reservation"`
+        “City”                 → `loc_type = "city"`
+        “Town”                 → `loc_type = "town"`
+        “County” or “Combined Area” → `loc_type = "county"`
+      you may apply that `loc_type` to every subsequent name in
+      that table column/section even if the suffix is missing.
 
-# ❼ Waiver text to analyse  ---------------------------------
-<<<
-{{page_text}} 
->>>
-END
+####################################################################
+# ❻  Waiver text to analyse (all pages, table-first) --------------
+{{page_text}}
+####################################################################
