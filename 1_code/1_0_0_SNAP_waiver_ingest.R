@@ -68,4 +68,12 @@ for (i in 1:nrow(waiver_data)) {
   }
 }
 
+# Save waiver data 
+
+file_path <- readLines("2_processed_data/processed_path.txt")[1]
+
+filesave <- paste(file_path, "/waiver_data_consolidated.csv", sep = "")
+
+write_csv(waiver_data, filesave)
+
 
