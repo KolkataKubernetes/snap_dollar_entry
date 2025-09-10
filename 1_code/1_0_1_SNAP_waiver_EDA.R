@@ -34,9 +34,22 @@ theme_econ <- function(base_size = 14) {
     )
 }
 
+data(USCounties, package = "Matrix")
+
 # --------------------------------------------------------------------------------
 # '''Exploratory Data Analysis - DATA PREP - States with SNAP by year'''
 # --------------------------------------------------------------------------------
+
+waivers |>
+  mutate(
+    DATE_START = as.Date(DATE_START, format = "%Y-%m-%d"),
+    DATE_END   = as.Date(DATE_END,   format = "%Y-%m-%d"),
+    YEAR_START = as.integer(format(DATE_START, "%Y")),
+    YEAR_END   = as.integer(format(DATE_END,   "%Y"))
+  ) |>
+  filter(STATE == 'Virginia')
+
+
 
 # --- All loc types ---
 waivers |>
@@ -79,7 +92,7 @@ waivers |>
   transmute(STATE, LOC_TYPE, YEAR) |>
   unnest(cols = YEAR) |>
   distinct() |> # E.G. Louisiana
- # filter(STATE == 'Arizona') |> #'test case' - check Alaska for anothre example
+  #filter(STATE == 'New York') |> #'test case' - check Alaska for anothre example
   group_by(STATE, YEAR) |>
   summarise(count = n()) |>
   filter(count > 1) |>
@@ -182,7 +195,7 @@ waivers_singles |>
   distinct() |>
   group_by(STATE) |> 
   summarise(LOC_SUMMARY = paste(LOC_TYPE, collapse = ",")) |>
-  filter(LOC_SUMMARY == 'State,County' | LOC_SUMMARY == 'County') -> SC_statelist
+  filter(LOC_SUMMARY == 'State,County') -> SC_statelist
 
 waivers_singles |>
   transmute(STATE, LOC_TYPE) |>
@@ -260,7 +273,8 @@ ggplot() +
             linewidth = 1)
 
 
-
+waivers |>
+  filter(LOC_TYPE == 'Plantation')
 # --------------------------------------------------------------------------------
 # 
 # --------------------------------------------------------------------------------
