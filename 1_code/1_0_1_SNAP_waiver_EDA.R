@@ -92,7 +92,7 @@ waivers |>
   transmute(STATE, LOC_TYPE, YEAR) |>
   unnest(cols = YEAR) |>
   distinct() |> # E.G. Louisiana
-  #filter(STATE == 'New York') |> #'test case' - check Alaska for anothre example
+#  filter(STATE == 'California') |> #'test case' - check Alaska for anothre example
   group_by(STATE, YEAR) |>
   summarise(count = n()) |>
   filter(count > 1) |>
@@ -179,6 +179,12 @@ waivers_singles |>
   summarise(LOC_SUMMARY = paste(LOC_TYPE, collapse = ",")) -> transition_types
 
 table(transition_types$LOC_SUMMARY)
+
+transition_types |>
+  filter(LOC_SUMMARY == 'State,County')
+
+transition_types |>
+  filter(STATE == 'California')
 
 # --------------------------------------------------------------------------------
 # '''Hierarchical Code: Adjusting for State-County Transitions'''
