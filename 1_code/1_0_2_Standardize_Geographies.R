@@ -58,7 +58,8 @@ theme_econ <- function(base_size = 14) {
 # Waiver data ----
   filesave  <- paste(file_path, "/waiver_data_consolidated.csv", sep = "")
   dt <- fread(filesave)
-
+  table(dt$LOC_TYPE)/nrow(dt)*100
+  
 # Geographies dictionary 2010 ----
   geo = fread('https://www2.census.gov/geo/docs/reference/codes/files/national_county.txt')
   setnames(geo, c("STATE", "STATEFP", "COUNTYFP", "COUNTYNAME", "CLASSFP"))
