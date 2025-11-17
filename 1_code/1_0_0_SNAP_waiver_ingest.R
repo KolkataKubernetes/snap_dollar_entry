@@ -75,6 +75,8 @@ for (i in 1:nrow(waiver_data)) {
   }
 }
 
+rm(i,j,temp,item,months_between)
+
 # Save waiver data 
 
 file_path <- readLines("2_processed_data/processed_path.txt")[1]
@@ -82,4 +84,9 @@ file_path <- readLines("2_processed_data/processed_path.txt")[1]
 filesave <- paste(file_path, "/waiver_data_consolidated.csv", sep = "")
 
 write_csv(waiver_data, filesave)
+
+# Clear workspace --------------------------------
+
+rm(file, file_path, filesave, waiver_dir,waiver_path,waiver_data)
+
 
