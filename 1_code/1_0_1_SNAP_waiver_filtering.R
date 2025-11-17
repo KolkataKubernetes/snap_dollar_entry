@@ -1,0 +1,207 @@
+
+#///////////////////////////////////////////////////////////////////////////////
+#----                              Preamble                                 ----
+# File name:        1_0_1_SNAP_waiver_EDA.R
+# Previous author:  -
+# Current author:   Inder Majumdar
+# Last Updated:    November 16, 2025
+# Description: Narrow the SNAP Waiver database to an economically relevant subpopulation for further analysis
+#
+# Change log:       
+#///////////////////////////////////////////////////////////////////////////////
+
+
+# Setup ------------------------------------------------------------------------
+
+
+# Load Packages
+library(tidyverse)
+library(stringr)
+library(purrr)
+library(scales)
+library(zoo)
+
+
+# Set data path
+file_path <- readLines("2_processed_data/processed_path.txt")[1]
+filesave  <- paste(file_path, "/waiver_data_consolidated.csv", sep = "")
+waivers   <- read.csv(filesave)
+
+# Shared helper
+
+theme_econ <- function(base_size = 14) {
+  theme_minimal(base_size = base_size) +
+    theme(
+      panel.grid.minor = element_blank(),
+      panel.grid.major.x = element_blank(),
+      axis.title.x = element_text(margin = margin(t = 8)),
+      axis.title.y = element_text(margin = margin(r = 8)),
+      plot.title.position = "plot",
+      legend.position = "top",
+      legend.title = element_blank()
+    )
+}
+
+#data(USCounties, package = "Matrix")
+
+# US Counties list
+
+counties_list <- read.csv('/Users/indermajumdar/Library/CloudStorage/Box-Box/SNAP Dollar Entry/data/county_list/uscounties.csv')
+
+# 1) Sizing the universe: Count of states by year  -----------------------------
+
+waivers |>
+  ungroup() |>
+  select(YEAR, STATE) |>
+  unique() |>
+  group_by(YEAR) |>
+  summarise(states_total = n())
+
+# 2) States with county or state loc_type ONLY  -----------------------------
+
+# How many of these states only have LOC_TYPE == State or County?
+
+waivers |>
+  group_by(STATE) |>
+  distinct(LOC_TYPE) |>
+  arrange(STATE) |>
+  filter(all(LOC_TYPE %in% c("State", "County"))) |>
+  group_keys() -> state_keys
+
+# Show trends over time
+
+waivers |>
+  ungroup() |>
+  filter(STATE %in% (state_keys$STATE)) |>
+  select(YEAR, STATE) |>
+  unique() |>
+  group_by(YEAR) |>
+  summarise(states_total = n())
+
+# 2) Subsetting states based on continuous years, county-state waivers only  ---
+
+
+# Now which states are in all years?
+  
+years_needed <- waivers |>
+  filter(STATE %in% state_keys$STATE) |>
+  distinct(YEAR) |>
+  pull()
+
+waivers |>
+  filter(STATE %in% (state_keys$STATE)) |>
+  group_by(STATE) |>
+  filter(n_distinct(YEAR) == length(years_needed)) |>
+  distinct(STATE)
+
+# Only North Dakota is common across all years.
+
+# Also what happened to California in 2015?
+waivers |>
+  filter(STATE == 'California') |>
+  distinct(YEAR)
+
+# What I should do next is figure out what year combinations are present, and categorize.
+
+waivers |>
+  filter(STATE %in% (state_keys$STATE)) |>
+  group_by(STATE) |>
+  distinct(STATE, YEAR) |>
+  arrange(STATE, YEAR) |>
+  mutate(YEAR_COMBO = paste(sort(YEAR), collapse = ",")) |>
+  distinct(STATE, YEAR_COMBO) -> year_combo
+
+table(year_combo$YEAR_COMBO)
+
+rm(year_combo)
+
+# eyeballing it, looks like I'll want to just focus on 2016 - 2019
+years = seq(2016, 2019)
+
+waivers |> 
+  filter(STATE %in% (state_keys$STATE)) |>
+  distinct(STATE, YEAR) |>
+  filter(YEAR %in% years) |>
+  group_by(STATE) |>
+  arrange(STATE, YEAR) |>
+  filter(n_distinct(YEAR) == length(years)) |>
+  group_keys() -> state_keys_16_19
+
+waivers |>
+  filter(STATE %in% state_keys_16_19$STATE, YEAR %in% years) -> waivers_filtered
+
+rm(x, year_combo,years,years_needed)
+
+# 3) Merge waiver data with county info  ----------------------------------------------
+
+# For speed, I'm going to assume that YEAR maps to year completely.  
+
+# In later work, we can take the month-year combinations I made.
+
+# Create relevant snap waiver columns
+
+waivers_filtered |>
+  select(YEAR, STATE, STATE_ABBREV, ENTIRE_STATE, LOC, LOC_TYPE) |>
+  distinct() -> county_activity
+
+# merge LOC against FIPS against county list to get FIPS code 
+
+counties_list |>
+  select(county, county_fips, population, state_name) |>
+  filter(state_name %in% state_keys_16_19$STATE) -> counties_list
+
+# Initiate waivers_filtered_long, merge with counties_list to get each county-year combination
+
+waivers_filtered_long <- tibble(YEAR = rep(2016:2019, each = nrow(counties_list)))
+
+
+x <- counties_list[rep(seq_len(nrow(counties_list)), each = 4), ]
+
+waivers_filtered_long_vf <- cbind(waivers_filtered_long, x)
+waivers_filtered_long_vf |>
+  rename('STATE' = 'state_name',
+         'LOC' = 'county') -> waivers_filtered_long_vf
+
+rm(x)
+
+# For each year, check each state. If there's a statewide waiver, then mark all counties in that state-year as active
+
+waivers_filtered_long_vf$waiver <- 0
+
+
+# Is the ENTIRE_STATE flag triggered for any of the records?
+county_activity |>
+  group_by(STATE, YEAR) |>
+  summarise(
+    entire_state_flag = as.integer(any(ENTIRE_STATE == 1)),
+    .groups = "drop"
+  ) -> state_year_flags
+
+
+# Next, county-level flags.
+
+  county_year_flags <- county_activity |>
+    group_by(STATE, YEAR) |>
+    filter(!any(ENTIRE_STATE == 1)) |>      # keep only state-years with NO entire-state waiver
+    ungroup() |>
+    mutate(county_flag = 1L) |>
+    select(STATE, YEAR, LOC, county_flag)
+  
+  
+  # Join on panel, flip indicator
+ 
+waivers_filtered_long_vf |>
+  left_join(state_year_flags, by = c("STATE", "YEAR")) |>
+  left_join(county_year_flags, by = c("STATE", "YEAR", "LOC")) |>
+  mutate(waiver = case_when(
+    entire_state_flag == 1L ~ 1L, 
+    !is.na(county_flag) ~ 1L,
+    TRUE ~ 0L
+  )
+  ) -> waivers_filtered_long_vf
+
+write_csv(waivers_filtered_long_vf, '/Users/indermajumdar/Library/CloudStorage/Box-Box/SNAP Dollar Entry/data/waivers/waiver_data_long.csv')
+  
+
+
+
