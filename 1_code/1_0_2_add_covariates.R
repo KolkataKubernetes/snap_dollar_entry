@@ -11,7 +11,6 @@
 #///////////////////////////////////////////////////////////////////////////////
 
 
-
 # Load Packages
 library(tidyverse)
 library(stringr)
@@ -23,7 +22,8 @@ library(zoo)
 # Set data path
 file_path <- readLines("2_processed_data/processed_path.txt")[1]
 filesave  <- paste(file_path, "/waiver_data_long.csv", sep = "")
-waivers   <- read.csv(filesave)
+waivers   <- read.csv(filesave) |>
+  mutate(county_fips = str_pad(as.character(county_fips), width = 5, pad = "0"))
 
 # Shared helper
 
@@ -43,16 +43,27 @@ theme_econ <- function(base_size = 14) {
 # Wage Data
 
 wages <- read_csv('/Users/indermajumdar/Library/CloudStorage/Box-Box/SNAP Dollar Entry/data/prices/Wages_V2.csv') |>
-  select(YEAR = year, county_fips, wage, wage_st)
+  select(YEAR = year, county_fips, wage, wage_st) |>
+  mutate(county_fips = str_pad(as.character(county_fips), width = 5, pad = "0"))
 
 # Store Count
 
 store_count <- read_csv('/Users/indermajumdar/Library/CloudStorage/Box-Box/SNAP Dollar Entry/data/SNAP/store_count.csv') |>
-  rename('YEAR' = 'year')
+  rename('YEAR' = 'year') |>
+  mutate(county_fips = str_pad(as.character(county_fips), width = 5, pad = "0"))
 
-# Snap Clean
+# income, rent data
 
-# 
+income_rent <- read_csv('/Users/indermajumdar/Library/CloudStorage/Box-Box/SNAP Dollar Entry/data/prices/Prices.csv') |> 
+  rename('county_fips' = 'GEOID', 'income' = 'B20002_001E_mean', 'YEAR' = 'year') |>
+  select(county_fips, YEAR, income, rent_mean) |>
+  mutate(county_fips = str_pad(as.character(county_fips), width = 5, pad = "0"))
+
+# Unemployment
+
+unemployment <- read_csv('/Users/indermajumdar/Library/CloudStorage/Box-Box/SNAP Dollar Entry/data/acs/unemployment.csv') |>
+  mutate(county_fips = str_pad(as.character(GEOID), width = 5, pad = "0")) |>
+  select(YEAR = year, county_fips, unemployment_rate, snap_rate)
 
 # 1) Wages Merge  --------------------------------------------------------------
 
@@ -67,12 +78,12 @@ waivers |>
 
 # 2) Store count merge  --------------------------------------------------------
 
-supermarkets <- c("chain_ingles_markets", 
+supermarket <- c("chain_ingles_markets", 
                   "chain_winn-dixie", 
                   "chain_stop_&_shop", 
                   "chain_albertsons", 
                   "chain_fred_meyer", 
-                  "chain_trader_joes", 
+                  "chain_trader_joe_s", 
                   "chain_whole_foods", 
                   "chain_save_a_lot", 
                   "chain_aldi", 
@@ -84,16 +95,58 @@ supermarkets <- c("chain_ingles_markets",
                   "chain_publix", 
                   "chain_supervalu", 
                   "chain_raleys", 
-                  "chain_smart_&_final", s
+                  "chain_smart_&_final", 
                   "chain_wild_oats", 
                   "chain_meijer", 
                   "chain_giant_eagle", 
                   "chain_he_butt", 
                   "chain_stater_bros", 
-                  "chain_roundys")
+                  "chain_roundys",
+                  "chain_roundy_s",
+                  "chain_raley_s")
+
 club <- c("chain_costco", 
-          "chain_sams_club", 
+          "chain_sam_s_club", 
           "chain_bjs")
+
+convenience <- c("chain_seven_eleven", 
+                 "chain_circle_k", 
+                 "chain_speedway")
+
+multi_category <- c("chain_wal-mart", 
+                    "chain_target")
+
+dollar <- c('chain_dollar_general',
+            'chain_family_dollar',
+            'chain_dollar_tree')
+
+store_count |>
+  group_by(county_fips, YEAR) |>
+  mutate(chain_type = case_when(
+    chain %in% supermarket ~ 'chain_supermarket',
+    chain %in% club ~ 'chain_club',
+    chain %in% convenience ~ 'chain_convenience', 
+    chain %in% multi_category ~ 'chain_multicategory',
+    chain %in% dollar ~ 'chain_dollar',
+    TRUE ~ 'other'
+  )) |>
+  ungroup() |>
+  group_by(county_fips, YEAR, chain_type) |>
+  summarise(total_count = sum(count), .groups = "drop") -> store_type_count
+
+store_type_count |>
+  spread(chain_type, total_count) -> store_type_count_wide
+
+waivers <- left_join(waivers, store_type_count_wide, by = c('YEAR', 'county_fips'))
+
+# 3) income, rent merge  -------------------------------------------------------
+
+waivers <- left_join(waivers, income_rent, by = c('YEAR', 'county_fips'))
+
+# 4) unemployment  -------------------------------------------------------
+
+waivers <- left_join(waivers, unemployment, by = c('YEAR', 'county_fips'))
+
 
 
 
