@@ -148,5 +148,6 @@ waivers <- left_join(waivers, income_rent, by = c('YEAR', 'county_fips'))
 waivers <- left_join(waivers, unemployment, by = c('YEAR', 'county_fips'))
 
 
+write_csv(waivers, '/Users/indermajumdar/Library/CloudStorage/Box-Box/SNAP Dollar Entry/data/waivers/waiver_data_long_covariates.csv')
 
 
