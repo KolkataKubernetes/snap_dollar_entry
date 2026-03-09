@@ -1,0 +1,372 @@
+#///////////////////////////////////////////////////////////////////////////////
+#----                              Preamble                                 ----
+# File name:        01 - Virginia: Descriptives & Motivation.R
+# Previous author:  -
+# Current author:   Alejandro Herrera
+# Creation date:    October 5, 2025
+# Description:      How does ABAWD waivers affect entry?
+#                   What is the underlying mechanism?
+# Sample:           The united states
+#
+# Change log:       
+#///////////////////////////////////////////////////////////////////////////////
+
+# Directory
+  rm(list=ls())
+  current_path = dirname(rstudioapi::getActiveDocumentContext()$path)
+  setwd(current_path)
+  setwd('..')
+  gc()
+
+# Libraries
+  require(data.table)
+  library(readr)
+  library(dplyr)
+  library(purrr)
+  library(ggplot2)
+  library(fixest)
+  library(rdrobust)        
+  
+
+
+#*******************************************************************************
+#----                             R file map                                ----
+# 1. Load the data and import controls
+# 2. Clean and prepare the data for regressions
+# 3. Construct Treatment and merge controls
+# 5. Run event study analysis and generate results
+#*******************************************************************************
+
+#///////////////////////////////////////////////////////////////////////////////
+#----  1. Loading the data                                                  ----
+#///////////////////////////////////////////////////////////////////////////////
+# Snap =========================================================================
+  snap = fread('data/snap/snap_clean.csv')
+  
+  counties = unique(snap$county_fips)
+  #counties = counties[counties %/% 1000 == 51]
+  unique(snap$chain)
+
+# Group non dollar stores ======================================================
+  # For Supermarkets
+  snap = snap[chain %in% c("chain_ingles_markets", 
+                           "chain_winn-dixie", 
+                           "chain_stop_&_shop", 
+                           "chain_albertsons", 
+                           "chain_fred_meyer", 
+                           "chain_trader_joes", 
+                           "chain_trader_joe_s",
+                           "chain_whole_foods", 
+                           "chain_save_a_lot", 
+                           "chain_aldi", 
+                           "chain_save_mart", 
+                           "chain_safeway", 
+                           "chain_kroger", 
+                           "chain_giant_food", 
+                           "chain_weis_markets", 
+                           "chain_publix", 
+                           "chain_supervalu", 
+                           "chain_raleys", 
+                           "chain_smart_&_final", 
+                           "chain_wild_oats", 
+                           "chain_meijer", 
+                           "chain_giant_eagle", 
+                           "chain_he_butt", 
+                           "chain_stater_bros", 
+                           "chain_roundys"),
+              chain := 'chain_super_market']
+  
+  # For Club Stores
+  snap = snap[chain %in% c("chain_costco", 
+                           "chain_sams_club", 
+                           "chain_bjs"),
+              chain := 'chain_club_store']
+  
+  # For Convenience Stores
+  snap = snap[chain %in% c("chain_seven_eleven", 
+                           "chain_circle_k", 
+                           "chain_speedway"),
+              chain := 'chain_convenience_store']
+  
+  # For Multi-category (optional, depending on your classification)
+  snap = snap[chain %in% c("chain_wal-mart", 
+                           "chain_target"),
+              chain := 'chain_multi_category']
+  
+  table(snap$chain)
+  table(snap$chain, snap$authorization_year)
+
+  
+# Wages ========================================================================
+  wages = fread('data/prices/Wages_V2.csv')
+
+# Abawd ========================================================================
+  aba_old = fread('data/virginia_abawd/snap_timelimits.csv')
+  aba = fread('data/waivers/waived_data_consolidated_long.csv')
+
+# Count of stores  =============================================================
+  storeCount = fread('data/snap/store_count.csv')
+  
+# Load other variables  ========================================================
+  population =fread('data/acs/population.csv')
+  acs03 = readRDS('data/acs/Append_CountyDP03.rds')
+  acs04 = readRDS('data/acs/Append_CountyDP04.rds')
+  
+  fp = fread('data/prices/Prices.csv')
+  setnames(fp, c('B20002_001'), c('income'))
+  
+  fp = fp[,.(GEOID, year, income, rent)]
+  fp = fp[, rent:=rent*1]
+  fp = fp[, county_fips:=as.numeric(GEOID)]
+  
+  u = fread('data/acs/Unemployment.csv')
+
+# ==============================================================================
+# What are the cuts for virginia
+
+  # 2019: 5.4, over March '16 to Feb '18   (2)
+  # 2018: 5.5, over Jan   '16 to Dec '17   (1)
+  # 2017: 6.5, over May   '14 to Apr '16   (2)
+  # 2016: 6.9, over May   '13 to Apr '15 (2)
+  # 2015: 8.1, over Jan   '13 to Dec '14 (1)
+  # 2014: 9.4, over Nov   '11 to Oct '13 (2)
+  # 2013: State-wide
+  # 2012: State-wide
+  # 2011: State-wide
+  
+  
+#///////////////////////////////////////////////////////////////////////////////
+#----  2. SNAP Counts                                                       ----
+#///////////////////////////////////////////////////////////////////////////////   
+  tab = storeCount[, .(count=sum(count)), by='chain,year']
+  tab = tab[chain %in% c('chain_dollar_general',
+                         'chain_family_dollar',
+                         'chain_dollar_tree')]
+  ggplot(tab, aes(x=year, y=count, group=chain, color=chain)) + 
+    geom_line() +
+    geom_point() +
+    scale_x_continuous(breaks = unique(tab$year)) +
+    theme(legend.position = "bottom",
+          axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))    
+
+#///////////////////////////////////////////////////////////////////////////////
+#----  3. Cleaning the data                                                 ----
+#///////////////////////////////////////////////////////////////////////////////
+# Geography
+  setnames(aba, 'FIPS', 'county_fips')
+  treated_counties = unique(aba$county_fips)
+
+# Only keep treated counties
+  aba <- aba[!is.na(county_fips)]
+  aba <- unique(aba[,.(county_fips, year=YEAR, countyname=LOC, type = LOC_TYPE, Value=1)])
+  counties = aba$county_fips
+
+# Entry counts ---------------------------------------------------------------
+  table(snap$county_fips)
+  entry <- snap[, .(entry=.N), by='authorization_year,county_fips,chain']
+  setnames(entry, 'authorization_year', 'year')
+  entry <- dcast(entry, year + county_fips ~ chain, value.var = 'entry', fill=0)
+  entry <- entry[, total_ds := chain_dollar_general + chain_dollar_tree + chain_family_dollar]
+  
+  entry <- entry[, state:=substr(county_fips, 1,2)]
+  entry <- entry[, state:=as.numeric(county_fips) %/% 1000]
+  
+  grid = CJ(county_fips = as.numeric(acs03$GEOID_COUNTY), 
+            year= 2000:2020, 
+            unique = TRUE)
+  entry = merge(grid, entry, by=c('county_fips','year'), all.x=T)
+
+
+# Store Counts -----------------------------------------------------------------
+  sc = storeCount[, chain:=paste0(chain, '_count')]
+  sc = sc[!chain %in% c("chain_family_dollar_count", 
+                        "chain_dollar_general_count", 
+                        "chain_dollar_tree_count"), chain := 'chain_nods_count'] 
+  sc = sc[, .(count=sum(count)), by='county_fips,chain,year']
+  sc = dcast(sc, year + county_fips ~ chain, value.var = 'count', fill=0)
+  sc = sc[, total_count:=chain_dollar_general_count+
+            chain_dollar_tree_count+
+            chain_family_dollar_count]
+  sc = sc[, county_fips:=as.numeric(county_fips)]
+
+# Merge entry and aba ----------------------------------------------------------
+  aba <- merge(aba, entry, by=c('year', 'county_fips'), all.y=T)
+  setnames(aba, 'Value', 'treatment')
+  
+  aba <- merge(aba, sc, by=c('year', 'county_fips'), all.x=T)
+  aba[is.na(aba)] <- 0
+  length(unique(aba$county_fips))
+
+# Add controls -----------------------------------------------------------------
+  aba <- merge(aba, fp[,.(county_fips, year, income, rent)], all.x=T, 
+               by=c('year', 'county_fips'))
+  
+  length(unique(aba$county_fips))
+
+# Event Study Variables --------------------------------------------------------
+  event1 = aba[treatment==1]
+  event1 = event1[, minYear1:=min(year), by='county_fips']
+  event1 = event1[minYear1==year]
+  
+  event2 = aba[treatment==1 & year>=2014 & type == 'County']
+  event2 = event2[, minYear2:=min(year), by='county_fips']
+  event2 = event2[minYear2==year]
+  
+  aba = merge(aba, event1[,.(county_fips, eventYear1=minYear1)], by='county_fips', all.x=T)
+  length(unique(aba$county_fips))
+  
+  aba = aba[year %in% 2010:2013, treatment:=1]
+  aba = aba[!county_fips %in% treated_counties, `:=`(eventYear1=2010)]
+  
+  aba = aba[, tau1:= year - eventYear1]
+  
+  aba = merge(aba, event2[,.(county_fips, eventYear2=minYear2)], by='county_fips', all.x=T)
+  aba = aba[, tau2:= year - eventYear2]
+  length(unique(aba$county_fips))
+
+# Treated ----------------------------------------------------------------------
+  aba = aba[, treated:=county_fips %in% treated_counties]
+
+# Merge wage -------------------------------------------------------------------
+  aba = merge(aba, wages, by=c('county_fips', 'year'), all.x=T)  
+  aba = aba[, wage_st := mean(wage,na.rm=T), by='year']
+  aba = aba[is.na(wage), wage:=wage_st]
+  
+  # aba = aba[county_fips!=0]
+  length(unique(aba$county_fips))
+
+# Merge total of households ----------------------------------------------------
+  aba = merge(aba, acs03[,.(county_fips=as.numeric(GEOID_COUNTY), year, totalHH, meanInc, medianInc)],
+              by=c('county_fips', 'year'),
+              all.x=T)
+  length(unique(aba$county_fips))
+  
+  
+  aba = merge(aba, population[,.(county_fips=GEOID, year, population=estimate)],
+              by=c('county_fips', 'year'),
+              all.x=T)
+  length(unique(aba$county_fips))
+
+# Merge the unemployment
+  aba = merge(aba, u[,.(county_fips=GEOID, year, urate=unemployment_rate)],
+              by=c('county_fips', 'year'),
+              all.x=T)
+  length(unique(aba$county_fips))
+
+#///////////////////////////////////////////////////////////////////////////////
+#----  4. Analysis Count  2014-2019                                         ----
+#///////////////////////////////////////////////////////////////////////////////
+# Set the relevant data
+  #aba = aba[county_fips!='51000']
+  aba = aba[, lowq := total_ds + chain_convenience_store]
+  aba = aba[, rent:=rent/1000]
+  aba = aba[, meanInc:=meanInc/1000]
+  
+  aba = aba[, zl := shift(urate, type = 'lag') ]
+  aba = aba[, z := urate]
+  aba = aba[, no_stores := (total_ds + chain_super_market + chain_convenience_store + chain_multi_category) == 0]
+  aba = aba[, state_fips := county_fips %/% 1000]
+  
+  #inder_sample = c(17, 38, 47, 48, 49)
+
+  aba1 = aba[year %in% 2014:2019]
+  #aba1 = aba1[state_fips == 51]
+  aba1 = aba1[is.na(tau2), tau2:=-1000]
+  aba1 = aba1[is.na(eventYear2), eventYear2:= 10000]
+  #aba1 = aba1[state_fips %in% inder_sample]
+  aba1 = aba1[, treated_group := eventYear2 != 10000]
+  aba1 = aba1[, treated_state := sum(treated_group)>0, by='state_fips']
+  aba1 = aba1[, treated_county := sum(treated_group)>0, by='county_fips']
+  aba1 = aba1[year - eventYear2 >= -3]
+  aba1 = aba1[treated_state == T]
+  aba1 = aba1[treated_county == T]
+  
+  ihs = function(y){log(y+sqrt(y^2+1))}
+  
+  aba1= aba1[, state_year := paste(state,year)]
+  summary(aba1[total_ds>0]$total_ds)
+  
+  
+# Run the regressions ===
+  # Define all outcomes and labels
+  outcomes <- c("total_ds", "chain_super_market", "chain_convenience_store", "chain_multi_category","chain_medium_grocery", "chain_small_grocery", "chain_produce", 'chain_farmers_market')
+  labels <- c("Dollar Stores", "Supermarkets", "Convenience Stores", "Multi Category", "Medium Grocery", "Small Grocery", "Produce", 'Farmers Market')
+  dict_outcomes <- setNames(labels, outcomes)
+  
+  # Run all models
+  results <- setNames(lapply(outcomes, function(var) {
+    feols(as.formula(paste0("ihs(", var, ") ~ sunab(eventYear2, year, ref.p = 0) + 
+                          population + wage + meanInc + rent + urate | 
+                          county_fips + year")), 
+          data = aba1)
+  }), outcomes)
+  
+  # Explore individually
+  summary(results$total_ds, agg = "att")
+  summary(results$chain_super_market, agg = "att")
+  summary(results$chain_convenience_store, agg = "att")
+  
+# Save all figures and tables ===
+  for (i in seq_along(outcomes)) {
+    
+    var <- outcomes[i]
+    label <- labels[i]
+    
+    # Save figure
+    pdf(paste0("figures/event_study_ihs_", var, ".pdf"), width = 8, height = 6)
+    iplot(results[[var]], sep = 0.2, main = '', pt.join = TRUE)
+    title(paste0("IHS(", label, ")"))
+    dev.off()
+    
+    # Save table
+    etable(
+      results[[var]],
+      agg     = "att",
+      keep    = "ATT",
+      dict    = dict_outcomes,
+      file    = paste0("tables/event_study_ihs_", var, ".tex"),
+      replace = TRUE
+    )
+  }
+  
+# Compare all models in one table ===
+  etable(results$total_ds, 
+         results$chain_super_market, 
+         results$chain_convenience_store, 
+         results$chain_multi_category,
+         results$chain_medium_grocery,
+         results$chain_small_grocery,
+         results$chain_produce,
+         results$chain_farmers_market,
+         headers = labels,
+         file = "tables/event_study_ihs_all.tex",
+         agg     = "att",
+         keep    = "ATT",
+         replace = TRUE
+         )
+  
+  etable(results$total_ds, 
+         results$chain_super_market, 
+         results$chain_convenience_store, 
+         results$chain_multi_category,
+         results$chain_medium_grocery,
+         results$chain_small_grocery,
+         results$chain_produce,
+         results$chain_farmers_market,
+         agg = "att",
+         headers = labels)
+  
+# Stats ===
+# Subset outcome variables and rename
+outcomes_df <- aba1[, ..outcomes]
+names(outcomes_df) <- labels
+
+# Export to LaTeX
+stargazer(outcomes_df,
+          type = "latex",
+          summary = TRUE,
+          title = "Descriptive Statistics: Retail Outlets",
+          label = "tab:desc_stats",
+          digits = 2,
+          out = "tables/desc_stats_outcomes.tex")
+  
