@@ -18,7 +18,7 @@ library(stringr)
 library(purrr)
 library(scales)
 library(zoo)
-
+library(did)
 
 # Set data path
 file_path <- readLines("2_processed_data/processed_path.txt")[1]
@@ -112,8 +112,19 @@ waivers_cs |>
   count(unit_id, YEAR) |>
   filter(n > 1)                   # should return 0 rows
 
+ihs <- function(x) {
+  y <- log(x + sqrt(x ^ 2 + 1))
+  return(y)
+}
+
+waivers_cs |>
+  mutate(ihs_chain_dollar = ihs(replace_na(chain_dollar, 0))) -> waivers_cs
+
+summary(waivers_cs$chain_dollar)
+
+
 att_cs <- att_gt(
-  yname   = "chain_dollar",
+  yname   = "ihs_chain_dollar",
   tname   = "YEAR",
   idname  = "unit_id",
   gname   = "g",

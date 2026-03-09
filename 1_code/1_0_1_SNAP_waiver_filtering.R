@@ -46,7 +46,9 @@ theme_econ <- function(base_size = 14) {
 
 # US Counties list
 
-counties_list <- read.csv('/Users/indermajumdar/Library/CloudStorage/Box-Box/SNAP Dollar Entry/data/county_list/uscounties.csv')
+counties_list <- read.csv('/Users/indermajumdar/Library/CloudStorage/Box-Box/SNAP Dollar Entry/data/county_list/uscounties.csv') |>
+  mutate(county_fips = str_pad(as.character(county_fips), width = 5, pad = "0")) |>
+  rename('STATE' = 'state_name')
 
 # 1) Sizing the universe: Count of states by year  -----------------------------
 
@@ -116,19 +118,20 @@ table(year_combo$YEAR_COMBO)
 rm(year_combo)
 
 # eyeballing it, looks like I'll want to just focus on 2016 - 2019
-years = seq(2016, 2019)
+years = seq(2013, 2019)
 
-waivers |> 
-  filter(STATE %in% (state_keys$STATE)) |>
-  distinct(STATE, YEAR) |>
-  filter(YEAR %in% years) |>
-  group_by(STATE) |>
-  arrange(STATE, YEAR) |>
-  filter(n_distinct(YEAR) == length(years)) |>
-  group_keys() -> state_keys_16_19
+# Since we're keeping all years that are state or county defined only
+#waivers |> 
+#  filter(STATE %in% (state_keys$STATE)) |>
+#  distinct(STATE, YEAR) |>
+#  filter(YEAR %in% years) |>
+#  group_by(STATE) |>
+#  arrange(STATE, YEAR) |>
+#  #filter(n_distinct(YEAR) == length(years)) |>
+#  group_keys() -> state_keys_16_19
 
 waivers |>
-  filter(STATE %in% state_keys_16_19$STATE, YEAR %in% years) -> waivers_filtered
+  filter(STATE %in% state_keys$STATE, YEAR %in% years) -> waivers_filtered
 
 rm(x, year_combo,years,years_needed)
 
@@ -138,29 +141,32 @@ rm(x, year_combo,years,years_needed)
 
 # In later work, we can take the month-year combinations I made.
 
+# Subset counties list for relevant states
+
+counties_list |>
+  select(county, county_fips, population, STATE) |>
+  filter(STATE %in% state_keys$STATE) -> counties_list
+
+
 # Create relevant snap waiver columns
 
 waivers_filtered |>
   select(YEAR, STATE, STATE_ABBREV, ENTIRE_STATE, LOC, LOC_TYPE) |>
-  distinct() -> county_activity
+  distinct() -> waivers_filtered
 
 # merge LOC against FIPS against county list to get FIPS code 
 
-counties_list |>
-  select(county, county_fips, population, state_name) |>
-  filter(state_name %in% state_keys_16_19$STATE) -> counties_list
 
 # Initiate waivers_filtered_long, merge with counties_list to get each county-year combination
 
-waivers_filtered_long <- tibble(YEAR = rep(2016:2019, each = nrow(counties_list)))
+waivers_filtered_long <- tibble(YEAR = rep(2013:2019, times = nrow(counties_list)))
 
 
-x <- counties_list[rep(seq_len(nrow(counties_list)), each = 4), ]
+x <- counties_list[rep(seq_len(nrow(counties_list)), each = 7), ]
 
 waivers_filtered_long_vf <- cbind(waivers_filtered_long, x)
 waivers_filtered_long_vf |>
-  rename('STATE' = 'state_name',
-         'LOC' = 'county') -> waivers_filtered_long_vf
+  rename('LOC' = 'county') -> waivers_filtered_long_vf
 
 rm(x)
 
@@ -169,25 +175,19 @@ rm(x)
 waivers_filtered_long_vf$waiver <- 0
 
 
-# Is the ENTIRE_STATE flag triggered for any of the records?
-county_activity |>
+# state-year flags
+state_year_flags <- waivers_filtered |>
   group_by(STATE, YEAR) |>
   summarise(
     entire_state_flag = as.integer(any(ENTIRE_STATE == 1)),
     .groups = "drop"
-  ) -> state_year_flags
+  )
 
-
-# Next, county-level flags.
-
-  county_year_flags <- county_activity |>
-    group_by(STATE, YEAR) |>
-    filter(!any(ENTIRE_STATE == 1)) |>      # keep only state-years with NO entire-state waiver
-    ungroup() |>
-    mutate(county_flag = 1L) |>
-    select(STATE, YEAR, LOC, county_flag)
-  
-  
+# county-year flags (only in years with no statewide waiver)
+county_year_flags <- waivers_filtered |>
+  filter(ENTIRE_STATE == 0 | is.na(ENTIRE_STATE)) |>
+  distinct(STATE, YEAR, LOC) |>
+  mutate(county_flag = 1L)
   # Join on panel, flip indicator
  
 waivers_filtered_long_vf |>
@@ -200,8 +200,13 @@ waivers_filtered_long_vf |>
   )
   ) -> waivers_filtered_long_vf
 
+waivers_filtered_long_vf |> 
+  distinct() -> waivers_filtered_long_vf
+
 write_csv(waivers_filtered_long_vf, '/Users/indermajumdar/Library/CloudStorage/Box-Box/SNAP Dollar Entry/data/waivers/waiver_data_long.csv')
   
 
 
+waivers_filtered_long_vf |>
+  filter(county_fips == '06037')
 
