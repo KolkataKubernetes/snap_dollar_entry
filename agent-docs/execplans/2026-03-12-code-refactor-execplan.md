@@ -26,6 +26,8 @@ Dependencies: local Box-backed data roots referenced by `0_inputs/input_root.txt
 | Date | Change | Author |
 |-----|------|------|
 | 2026-03-12 | Initial ExecPlan drafted from `agent-docs/agent_context/2026_03_12_code_refactor.md` and current repo inventory | Codex |
+| 2026-03-12 | Added user-confirmed benchmark inventory, exact-match expectation, output destination, and script-splitting rules | Codex |
+| 2026-03-12 | Added final validation rule for waiver-panel precedence and confirmed new naming convention for outputs | Codex |
 
 ---
 
@@ -43,8 +45,8 @@ A working, file-by-file R pipeline in the main repository that replaces the lega
 
 - The scripts in `1_code/1_0_ingest/` run without hardcoded absolute data paths inside the R code.
 - The monolithic legacy U.S. analysis is decomposed into scripts under `1_code/1_1_descriptives/` and `1_code/1_2_reduced_form/`.
-- Running the new pipeline produces the key processed datasets, descriptive artifacts, and reduced-form estimates needed to match the legacy U.S. analysis.
-- The new outputs are close enough to the legacy benchmark that any remaining differences can be explained line-by-line from documented cleaning or aggregation changes.
+- Running the new pipeline produces the processed datasets, figures, tables, and regression estimates named explicitly in this ExecPlan.
+- The new outputs match the legacy benchmark exactly, except where a waiver-panel replication issue is traced to prior manual edits and then documented clearly in both code comments and this ExecPlan.
 
 **Key Files**
 
@@ -59,6 +61,7 @@ A working, file-by-file R pipeline in the main repository that replaces the lega
 - `legacy/Box/code/02 - Descriptives & Motivation US.R`
 - `0_inputs/input_root.txt`
 - `2_processed_data/processed_root.txt`
+- `3_outputs/`
 
 ---
 
@@ -76,7 +79,8 @@ The benchmark is behavioral, not cosmetic. The refactor succeeds only if the new
 - [x] (2026-03-12 22:05Z) Inventoried the new repository layout and confirmed that `1_code/1_1_descriptives/` and `1_code/1_2_reduced_form/` are still empty.
 - [x] (2026-03-12 22:10Z) Reviewed the current scaffold scripts in `1_code/1_0_ingest/` and the relevant legacy source scripts in `legacy/1_code/` and `legacy/Box/code/`.
 - [x] (2026-03-12 22:15Z) Identified the main migration risks: mixed path conventions, partial script ports, and unclear benchmark outputs.
-- [ ] Define the exact benchmark outputs from `legacy/Box/code/02 - Descriptives & Motivation US.R` that must be matched during validation.
+- [x] (2026-03-12 22:35Z) Incorporated the user’s benchmark inventory from `agent-docs/agent_context/2026_03_12_code_refactor.md`, including exact-match expectation, one-output-per-script preference, and `3_outputs/` destination.
+- [x] (2026-03-12 22:50Z) Resolved the remaining planning ambiguity: if the newly generated waiver long panel differs from the waiver panel used by the benchmark script, the benchmark version takes precedence for replication and the differences must be diffed and documented.
 - [ ] Refactor the ingest layer so each script follows the same section/comment structure as `1_code/1_0_ingest/1_0_0_SNAP_waiver_ingest.R`, but with corrected relative-path handling and complete metadata blocks.
 - [ ] Build new scripts under `1_code/1_1_descriptives/` that split the U.S. descriptives into separate single-purpose scripts.
 - [ ] Build new scripts under `1_code/1_2_reduced_form/` that split the U.S. reduced-form/event-study analysis into separate single-purpose scripts.
@@ -98,6 +102,12 @@ The benchmark is behavioral, not cosmetic. The refactor succeeds only if the new
 - Observation: The waiver panel has a known provenance ambiguity.
   Evidence: `1_code/1_0_ingest/1_0_0_SNAP_waiver_ingest.R` includes an explicit note asking whether the consolidated waiver panel used in the analysis includes manual edits.
 
+- Observation: The benchmark inventory and output location are now explicit.
+  Evidence: The user added an output inventory and directed that final artifacts live under `3_outputs/`, with names following the repository numbering convention.
+
+- Observation: Output naming and validation naming are intentionally different concerns.
+  Evidence: The user confirmed that new artifacts should use the new numbered naming convention, while legacy scripts and filenames should be used only as validation references.
+
 ---
 
 ## Decision Log
@@ -118,6 +128,34 @@ The benchmark is behavioral, not cosmetic. The refactor succeeds only if the new
   Rationale: Those choices affect analytical results, not just implementation details.
   Date/Author: 2026-03-12 / Codex
 
+- Decision: Final user-facing figures and tables will be written under `3_outputs/`, using the repository naming convention such as `3_0_0_<artifact_name>.<ext>`.
+  Rationale: The user explicitly set `3_outputs/` as the destination for final outputs and requested naming consistency with the repository structure.
+  Date/Author: 2026-03-12 / Codex
+
+- Decision: Match the benchmark outputs exactly unless a waiver-panel replication issue is traced to prior manual edits, in which case the edit and its justification must be documented clearly.
+  Rationale: The user identified the legacy outputs as verified results and only allowed ambiguity around possible manual waiver edits.
+  Date/Author: 2026-03-12 / Codex
+
+- Decision: Split the descriptive layer one figure or table per script for the first implementation pass.
+  Rationale: The user explicitly prefers the initial split at the level of one figure per table.
+  Date/Author: 2026-03-12 / Codex
+
+- Decision: Preserve legacy sample restrictions exactly, including year windows, treated-county definitions, and event-time construction.
+  Rationale: The user explicitly requested exact preservation of the legacy analytical sample before any later refinement.
+  Date/Author: 2026-03-12 / Codex
+
+- Decision: Prefer tidyverse rewrites when cleaner or safer, but retain non-tidyverse logic if that is needed to preserve correctness.
+  Rationale: The user prefers tidyverse as the default style, not as an absolute rule that overrides reproducibility.
+  Date/Author: 2026-03-12 / Codex
+
+- Decision: If the waiver long panel generated by the new ingest logic differs from the waiver panel actually used by the benchmark workflow, default to the benchmark version for replication and document the diff explicitly.
+  Rationale: The user directed that benchmark replication takes precedence over reconstructed ingest output when the two disagree, provided the discrepancy is documented clearly.
+  Date/Author: 2026-03-12 / Codex
+
+- Decision: Store new outputs under the new hierarchical numbering convention even when validation references legacy filenames and scripts.
+  Rationale: The user explicitly agreed that new artifacts should follow the new architecture, with legacy outputs serving only as validation targets.
+  Date/Author: 2026-03-12 / Codex
+
 ---
 
 ## Outcomes & Retrospective
@@ -131,6 +169,7 @@ Planning is in progress. The initial outcome is a structured migration specifica
 - Expected outcome: a self-contained refactor plan that a contributor can execute.
 - Actual outcome: a first-pass plan with the main file mappings, path decisions, and unresolved analytical ambiguities surfaced.
 - Difference (if any): the benchmark set of outputs is not yet pinned down to exact figures, tables, and regression columns.
+- Difference (if any): the benchmark inventory and precedence rule are now pinned down, but the exact new script names and processed artifact names remain to be assigned during implementation.
 
 **Key Challenges Encountered**
 
@@ -146,7 +185,7 @@ Planning is in progress. The initial outcome is a structured migration specifica
 
 **Follow-up Work**
 
-- Follow-up task: pin down the exact benchmark outputs that define success for the U.S. analysis.
+- Follow-up task: translate the benchmark inventory into concrete new script names and output paths under `1_code/` and `3_outputs/`.
 
 ---
 
@@ -181,7 +220,7 @@ This is acceptable for now, but every main-repo script must read those pointer f
 
 ## Data Artifact Flow
 
-The refactor should make the artifact flow explicit and reproducible.
+The refactor should make the artifact flow explicit and reproducible. Final user-facing artifacts should be written to `3_outputs/`, not mixed into `2_processed_data/`.
 
 Raw Inputs
 
@@ -203,8 +242,8 @@ Intermediate Artifacts
 
 Final Outputs
 
-- Descriptive figures under a stable output directory defined by the new scripts
-- Regression tables or serialized model outputs under a stable output directory defined by the new scripts
+- Descriptive figures under `3_outputs/`
+- Regression tables under `3_outputs/tables/` or an equivalently explicit subfolder inside `3_outputs/`
 - A validation note or machine-readable comparison artifact showing agreement with the legacy U.S. script
 
 ---
@@ -213,13 +252,15 @@ Final Outputs
 
 First, normalize the ingest layer. `1_code/1_0_ingest/1_0_0_SNAP_waiver_ingest.R`, `1_code/1_0_ingest/1_0_1_SNAP_retailer_ingest.R`, `1_code/1_0_ingest/1_0_2_unemployment_rates.R`, and `1_code/1_0_ingest/1_0_3_ACS_prep.R` must all use the same preamble style, the same numbered section style, and the same path-loader helpers. Each script must declare its inputs, procedures, and outputs in the preamble, and each must read from the root pointer files instead of embedding absolute paths. While doing this, preserve the legacy transformation logic from the matching `legacy/Box/code/00 - ...` scripts or `legacy/1_code/` files, but rewrite the code in tidyverse-forward style when that does not change behavior.
 
-Second, create a single script that assembles the analysis-ready county-year panel. The legacy U.S. script currently does this assembly inline before making figures and running regressions. In the new layout, that assembly should become an explicit intermediate step that merges waiver treatment, store outcomes, wages, ACS controls, rent/income measures, population, and unemployment into one processed file. This keeps descriptives and reduced-form scripts thin and easier to validate.
+Second, create a single script that assembles the analysis-ready county-year panel. The legacy U.S. script currently does this assembly inline before making figures and running regressions. In the new layout, that assembly should become an explicit intermediate step that merges waiver treatment, store outcomes, wages, ACS controls, rent/income measures, population, and unemployment into one processed `.rds` file. This keeps descriptives and reduced-form scripts thin and easier to validate.
 
-Third, split the descriptive portion of `legacy/Box/code/02 - Descriptives & Motivation US.R` into separate scripts under `1_code/1_1_descriptives/`. Each script should produce exactly one figure or one closely related figure family and should read the analysis-ready processed panel rather than rebuilding data objects internally. Based on the current legacy section, the initial descriptive split should include the retailer format stock index, the rural-only retailer format stock index, the county-waiver time series, the pre/post retail-format growth chart, and the dollar-store stock trend by waiver status.
+As part of this phase, add a waiver-comparison step. Generate the waiver long panel from the new ingest logic, identify the waiver panel actually consumed by the benchmark workflow, and compare the two. If they differ, use the benchmark version for replication, write down the differences, and preserve the diff as part of the implementation record.
 
-Fourth, split the reduced-form portion of `legacy/Box/code/02 - Descriptives & Motivation US.R` into scripts under `1_code/1_2_reduced_form/`. At minimum, one script should build the analysis sample and event-time variables, and another should run the event-study models and write tables or model summaries. If the regression code remains tightly coupled, keep it in one file initially but make the output contract explicit.
+Third, split the descriptive portion of `legacy/Box/code/02 - Descriptives & Motivation US.R` into separate scripts under `1_code/1_1_descriptives/`. Each script should produce exactly one figure or table and should read the analysis-ready processed panel rather than rebuilding data objects internally. Based on the current legacy section and the user’s inventory, the initial descriptive split should include five figure scripts for `retailer_format_stock_index.jpeg`, `retailer_format_stock_index_rural.jpeg`, `county_conferral_growth_rural_share.jpeg`, `06_retail_format_pre_post.jpeg`, and `01_ds_stock_trend_by_waiver.jpeg`, plus one script for `tables/desc_stats_outcomes.tex` if that descriptive table is confirmed to exist in the benchmark workflow.
 
-Fifth, define and run validation. Validation should operate at three levels: input/output checks for ingest scripts, panel-contract checks for the assembled analysis dataset, and benchmark checks against the legacy U.S. script. The benchmark cannot remain vague. Before execution is complete, this plan must list the exact figures, table outputs, or coefficient sets that count as “matching.”
+Fourth, split the reduced-form portion of `legacy/Box/code/02 - Descriptives & Motivation US.R` into scripts under `1_code/1_2_reduced_form/`. Preserve the exact legacy sample restrictions, year windows, treated-county definitions, and event-time construction. At minimum, one script should build the analysis sample and event-time variables, and one or more scripts should run the eight event-study models and write the benchmark outputs: eight figure files, eight outcome-specific `.tex` tables, and the combined table `event_study_ihs_all.tex`.
+
+Fifth, define and run validation. Validation should operate at three levels: input/output checks for ingest scripts, panel-contract checks for the assembled analysis dataset, and benchmark checks against the legacy U.S. script. The benchmark is now explicit and includes all named figures, tables, and the shared regression specification described in the user’s notes.
 
 ---
 
@@ -262,7 +303,7 @@ All commands below assume the working directory is the repository root: `/Users/
        find 1_code/1_2_reduced_form -maxdepth 1 -type f -name '*.R' | sort
        Rscript 1_code/1_2_reduced_form/<script_name>.R
 
-   Expected result: event-study tables or serialized model outputs are written to the documented output folder.
+   Expected result: event-study figures and `.tex` tables are written to `3_outputs/` using the agreed naming convention.
 
 6. Compare against the legacy benchmark.
 
@@ -283,7 +324,9 @@ Validation check 1: path-regime correctness for ingest scripts.
 
 Run each ingest script with `Rscript` from the repository root after temporarily moving to a machine where the Box data root is reachable only through the text pointer files, not through hardcoded paths embedded in source. The test passes only if the scripts complete and write outputs using the configured roots.
 
-Validation check 2: analysis-panel contract.
+Validation check 2: waiver-panel precedence and analysis-panel contract.
+
+First, compare the newly generated waiver long panel with the waiver panel actually used by the benchmark workflow. If they differ, record the diff and switch the replication pipeline to the benchmark version.
 
 After building the new analysis-ready county-year panel, verify that it contains the required keys and core columns. At minimum, the panel must contain one row per county-year and include county identifier, year, treatment indicator, event year, dollar-store outcome measures, and control variables used in the event study. This test should fail before the panel-builder script exists and pass after it is implemented.
 
@@ -293,10 +336,15 @@ Run `legacy/Box/code/02 - Descriptives & Motivation US.R` and the new split pipe
 
 - the count of treated counties
 - the year range in the final panel
-- at least one descriptive artifact reproduced from the legacy script
-- at least one reduced-form table or coefficient vector reproduced from the legacy script
+- the five always-produced workshop descriptive figures
+- when `run_event_study = TRUE`, the eight event-study figures
+- the eight event-study outcome-specific `.tex` tables
+- the combined regression table `event_study_ihs_all.tex`
+- the descriptive statistics table `desc_stats_outcomes.tex`
+- the coefficient estimates implied by the shared regression specification:
+  `IHS(y_ct) ~ sunab(eventYear2, year) + population + wage + meanInc + rent + urate | county_fips + year`
 
-The exact comparison target must be upgraded from this placeholder list to named files or named coefficient sets before the plan moves to `Execution (In Progress)`.
+The benchmark is exact-match by default. If a mismatch is traced to legacy manual edits in the waiver panel, document the discrepancy, the benchmark file used, the correction made, and the reason it was necessary in both the code and this ExecPlan.
 
 ---
 
@@ -306,7 +354,7 @@ Each ingest script should be safe to rerun. If an output file already exists, th
 
 The analysis-panel build should also be idempotent. If a rerun fails midway, recovery should consist of deleting only the incomplete output artifact and rerunning the script, not manually editing intermediate data.
 
-If legacy and new outputs differ, do not “fix” the difference by hand-editing processed files. Instead, record the discrepancy, trace it to the upstream script or data contract, and update either the implementation or the plan.
+If legacy and new outputs differ, do not “fix” the difference casually by hand-editing processed files. First trace the discrepancy to the upstream script or data contract. For the waiver panel specifically, compare the generated panel against the benchmark-used panel, default to the benchmark-used panel when they differ, and document the diff and rationale clearly in the code, the processed artifact notes, and this ExecPlan.
 
 ---
 
@@ -317,6 +365,9 @@ The following implementation notes are already known and should guide the refact
     - `1_code/1_0_ingest/1_0_0_SNAP_waiver_ingest.R` currently includes a note that the consolidated waiver panel may have been manually edited before it fed later analysis.
     - `1_code/1_0_ingest/1_0_1_SNAP_retailer_ingest.R` currently mixes the intended new section style with old path assumptions and incomplete save logic.
     - `legacy/Box/code/02 - Descriptives & Motivation US.R` already contains a natural split that should be preserved when naming new scripts.
+    - Final outputs belong in `3_outputs/`, with file naming aligned to the repository numbering convention rather than the legacy filenames.
+    - The first split should be as granular as possible: one figure or one table per script.
+    - Legacy scripts and filenames are validation references, not the required output naming convention for the refactored pipeline.
 
 The first implementation pass should prefer explicit intermediate files over hidden in-memory coupling between scripts.
 
@@ -338,7 +389,7 @@ Dependency 2: waiver ingest.
 - Repository location: `1_code/1_0_ingest/1_0_0_SNAP_waiver_ingest.R`
 - Inputs consumed: raw waiver panel workbooks stored under the input root
 - Outputs produced: consolidated waiver data file under the processed root
-- Invariant: date expansion must be deterministic, and the output must preserve the waiver records needed to reconstruct county-year treatment timing
+- Invariant: date expansion must be deterministic, and the output must preserve the waiver records needed to reconstruct county-year treatment timing; if the generated output differs from the benchmark-used waiver panel, the benchmark-used panel becomes the replication input and the discrepancy must be documented
 
 Dependency 3: SNAP retailer ingest.
 
@@ -369,8 +420,70 @@ Dependency 6: descriptive and reduced-form scripts.
 - Tool: R with `ggplot2` and `fixest`
 - Repository location: new files under `1_code/1_1_descriptives/` and `1_code/1_2_reduced_form/`
 - Inputs consumed: the analysis-ready panel and, where unavoidable, a small number of explicit auxiliary inputs such as rural-urban codes
-- Outputs produced: figure files, tables, and model artifacts
+- Outputs produced: figure files in `3_outputs/`, tables in `3_outputs/tables/` or another explicit `3_outputs/` subfolder, and any model artifacts required for validation
 - Invariant: these scripts should consume prepared data rather than repeating ingest logic
+
+---
+
+## Benchmark Output Inventory
+
+The benchmark outputs are the artifacts produced by `legacy/Box/code/02 - Descriptives & Motivation US.R`. These are the true-north outputs that the refactor must reproduce.
+
+Workshop descriptive figures that are always produced:
+
+- `retailer_format_stock_index.jpeg`
+- `retailer_format_stock_index_rural.jpeg`
+- `county_conferral_growth_rural_share.jpeg`
+- `06_retail_format_pre_post.jpeg`
+- `01_ds_stock_trend_by_waiver.jpeg`
+
+Event-study figures produced when `run_event_study = TRUE`:
+
+- `event_study_ihs_total_ds.pdf`
+- `event_study_ihs_chain_super_market.pdf`
+- `event_study_ihs_chain_convenience_store.pdf`
+- `event_study_ihs_chain_multi_category.pdf`
+- `event_study_ihs_chain_medium_grocery.pdf`
+- `event_study_ihs_chain_small_grocery.pdf`
+- `event_study_ihs_chain_produce.pdf`
+- `event_study_ihs_chain_farmers_market.pdf`
+
+Event-study regression tables:
+
+- `tables/event_study_ihs_total_ds.tex`
+- `tables/event_study_ihs_chain_super_market.tex`
+- `tables/event_study_ihs_chain_convenience_store.tex`
+- `tables/event_study_ihs_chain_multi_category.tex`
+- `tables/event_study_ihs_chain_medium_grocery.tex`
+- `tables/event_study_ihs_chain_small_grocery.tex`
+- `tables/event_study_ihs_chain_produce.tex`
+- `tables/event_study_ihs_chain_farmers_market.tex`
+- `tables/event_study_ihs_all.tex`
+
+Descriptive statistics table:
+
+- `tables/desc_stats_outcomes.tex`
+
+Shared regression specification to preserve exactly:
+
+- `IHS(y_ct) ~ sunab(eventYear2, year) + population + wage + meanInc + rent + urate | county_fips + year`
+
+Outcome variables to preserve exactly:
+
+- `total_ds`
+- `chain_super_market`
+- `chain_convenience_store`
+- `chain_multi_category`
+- `chain_medium_grocery`
+- `chain_small_grocery`
+- `chain_produce`
+- `chain_farmers_market`
+
+---
+
+## Remaining Ambiguities
+
+No substantive planning ambiguities remain. The remaining work is implementation mapping: assigning exact new script names, assigning exact processed `.rds` filenames, and carrying out the waiver-panel comparison described above.
 
 ---
 
@@ -384,10 +497,12 @@ Before marking the ExecPlan **Complete**, verify:
 - [ ] Data contracts remain satisfied
 - [ ] Progress log reflects the final state
 - [ ] ExecPlan Status updated to **Complete**
-- [ ] The benchmark outputs from `legacy/Box/code/02 - Descriptives & Motivation US.R` are named explicitly in this document
+- [ ] All benchmark outputs listed in `Benchmark Output Inventory` are reproduced in `3_outputs/`
 
 ---
 
 ## Change Notes
 
 2026-03-12: Initial draft created from the user’s refactor notes and repository inspection. The draft focuses on turning a broad migration request into a file-specific execution plan while leaving analytical ambiguities explicit instead of guessing over them.
+2026-03-12: Updated the plan after the user supplied benchmark outputs, exact-match expectations, `3_outputs/` as the final destination, and one-output-per-script splitting guidance.
+2026-03-12: Updated the plan after the user specified that new outputs should use the new naming convention and that the waiver panel should default to the benchmark-used version when a documented diff exists.
