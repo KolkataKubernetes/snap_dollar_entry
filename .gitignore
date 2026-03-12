@@ -1,8 +1,4 @@
 # Ignore any directory named 0_data, no matter where it appears
 **/0_data/
 .Rproj.user
-Box/docs/
-Box/literature/
-Box/data/
-
-
+**/legacy/
