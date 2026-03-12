@@ -156,6 +156,10 @@ The benchmark is behavioral, not cosmetic. The refactor succeeds only if the new
   Rationale: The user explicitly agreed that new artifacts should follow the new architecture, with legacy outputs serving only as validation targets.
   Date/Author: 2026-03-12 / Codex
 
+- Decision: Treat `legacy/` as read-only during this refactor unless the user explicitly requests a legacy-file edit.
+  Rationale: The legacy folder is the validation benchmark and provenance record; overwriting it would destroy the comparison target.
+  Date/Author: 2026-03-12 / Codex
+
 ---
 
 ## Outcomes & Retrospective
@@ -251,6 +255,8 @@ Final Outputs
 ## Plan of Work
 
 First, normalize the ingest layer. `1_code/1_0_ingest/1_0_0_SNAP_waiver_ingest.R`, `1_code/1_0_ingest/1_0_1_SNAP_retailer_ingest.R`, `1_code/1_0_ingest/1_0_2_unemployment_rates.R`, and `1_code/1_0_ingest/1_0_3_ACS_prep.R` must all use the same preamble style, the same numbered section style, and the same path-loader helpers. Each script must declare its inputs, procedures, and outputs in the preamble, and each must read from the root pointer files instead of embedding absolute paths. While doing this, preserve the legacy transformation logic from the matching `legacy/Box/code/00 - ...` scripts or `legacy/1_code/` files, but rewrite the code in tidyverse-forward style when that does not change behavior.
+
+Throughout execution, treat `legacy/` as read-only reference material. Do not overwrite, rename, reformat, or “clean up” files in `legacy/` as part of this refactor. Any required documentation of legacy-versus-new differences must be written outside `legacy/`, either in the new code, new processed artifacts, or this ExecPlan.
 
 Second, create a single script that assembles the analysis-ready county-year panel. The legacy U.S. script currently does this assembly inline before making figures and running regressions. In the new layout, that assembly should become an explicit intermediate step that merges waiver treatment, store outcomes, wages, ACS controls, rent/income measures, population, and unemployment into one processed `.rds` file. This keeps descriptives and reduced-form scripts thin and easier to validate.
 
@@ -356,6 +362,8 @@ The analysis-panel build should also be idempotent. If a rerun fails midway, rec
 
 If legacy and new outputs differ, do not “fix” the difference casually by hand-editing processed files. First trace the discrepancy to the upstream script or data contract. For the waiver panel specifically, compare the generated panel against the benchmark-used panel, default to the benchmark-used panel when they differ, and document the diff and rationale clearly in the code, the processed artifact notes, and this ExecPlan.
 
+Do not modify the benchmark materials inside `legacy/` while doing this comparison. If a comparison requires a derived artifact, write it outside `legacy/`.
+
 ---
 
 ## Artifacts and Notes
@@ -368,6 +376,7 @@ The following implementation notes are already known and should guide the refact
     - Final outputs belong in `3_outputs/`, with file naming aligned to the repository numbering convention rather than the legacy filenames.
     - The first split should be as granular as possible: one figure or one table per script.
     - Legacy scripts and filenames are validation references, not the required output naming convention for the refactored pipeline.
+    - `legacy/` is read-only for this project unless the user explicitly requests a legacy-file change.
 
 The first implementation pass should prefer explicit intermediate files over hidden in-memory coupling between scripts.
 
