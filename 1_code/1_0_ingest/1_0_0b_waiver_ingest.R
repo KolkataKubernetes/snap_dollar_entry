@@ -11,7 +11,7 @@
 #                   `2_0_waivers/2_0_0_waiver_data_consolidated_generated.rds`
 #                   `2_0_waivers/2_0_1_waiver_data_consolidated_benchmark.rds`
 #                   `0_0_waivers/0_0_2_consolidated_panels/waived_data_consolidated_long.csv`
-#                   `0_inputs/0_3_county_list/national_county.txt`
+#                   `0_3_county_list/national_county.txt`
 # OUTPUTS:          `2_0_waivers/2_0_2_waived_data_consolidated_long_generated.rds`
 #                   `2_0_waivers/2_0_3_waived_data_consolidated_long_benchmark.rds`
 #                   `2_0_waivers/2_0_4_waived_data_consolidated_long.rds`
@@ -28,7 +28,7 @@ library(stringr)
 library(tibble)
 library(lubridate)
 
-source("1_code/shared_ingest_helpers.R")
+source("1_code/1_0_ingest/shared_ingest_helpers.R")
 
 expand_month_rows <- function(df) {
   month_sequences <- purrr::map2(
@@ -137,7 +137,7 @@ input_root <- read_root_path("0_inputs/input_root.txt")
 processed_root <- read_root_path("2_processed_data/processed_root.txt")
 
 waiver_output_dir <- ensure_dir(file.path(processed_root, "2_0_waivers"))
-county_crosswalk_path <- file.path(repo_root, "0_inputs", "0_3_county_list", "national_county.txt")
+county_crosswalk_path <- file.path(input_root, "0_3_county_list", "national_county.txt")
 benchmark_long_path <- file.path(
   input_root,
   "0_0_waivers",

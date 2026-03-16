@@ -9,7 +9,7 @@
 # INPUTS:           `0_inputs/input_root.txt`
 #                   `2_processed_data/processed_root.txt`
 #                   `0_5_SNAP/0_5_2_Historical SNAP Retailer Locator Data-20231231.csv`
-#                   `0_3_county_list/0_3_uscounties.csv`
+#                   `0_3_county_list/national_county.txt`
 # OUTPUTS:          `2_5_SNAP/2_5_0_snap_clean.rds`
 #                   `2_5_SNAP/2_5_1_store_count.rds`
 #///////////////////////////////////////////////////////////////////////////////
@@ -22,7 +22,7 @@ library(lubridate)
 library(readr)
 library(stringr)
 
-source("1_code/shared_ingest_helpers.R")
+source("1_code/1_0_ingest/shared_ingest_helpers.R")
 
 repo_root <- get_repo_root()
 setwd(repo_root)
@@ -31,8 +31,49 @@ input_root <- read_root_path("0_inputs/input_root.txt")
 processed_root <- read_root_path("2_processed_data/processed_root.txt")
 
 snap_path <- file.path(input_root, "0_5_SNAP", "0_5_2_Historical SNAP Retailer Locator Data-20231231.csv")
-county_path <- file.path(input_root, "0_3_county_list", "0_3_uscounties.csv")
+county_path <- file.path(input_root, "0_3_county_list", "national_county.txt")
 snap_output_dir <- ensure_dir(file.path(processed_root, "2_5_SNAP"))
+
+prepare_snap_county_crosswalk <- function(path) {
+  data.table::fread(
+    file = path,
+    header = FALSE,
+    col.names = c("state_id", "state_fips", "county_fips_component", "county_name", "classfp")
+  )[
+    ,
+    `:=`(
+      state_fips = stringr::str_pad(as.character(state_fips), width = 2, side = "left", pad = "0"),
+      county_fips_component = stringr::str_pad(as.character(county_fips_component), width = 3, side = "left", pad = "0")
+    )
+  ][
+    ,
+    `:=`(
+      county = toupper(trimws(county_name)),
+      county_fips = paste0(state_fips, county_fips_component)
+    )
+  ][
+    ,
+    county := gsub(" CITY AND BOROUGH$", "", county)
+  ][
+    ,
+    county := gsub(" COUNTY$", "", county)
+  ][
+    ,
+    county := gsub(" PARISH$", "", county)
+  ][
+    ,
+    county := gsub(" BOROUGH$", "", county)
+  ][
+    ,
+    county := gsub(" CENSUS AREA$", "", county)
+  ][
+    ,
+    county := gsub(" MUNICIPALITY$", "", county)
+  ][
+    ,
+    .(county, state_id, county_fips)
+  ]
+}
 
 store_patterns <- c(
   "dollar general" = "dollar general",
@@ -79,10 +120,12 @@ store_patterns <- c(
   "sam's club" = "sam's club"
 )
 
-snap <- data.table::fread(snap_path, encoding = "UTF-8")
-county <- data.table::fread(county_path)
+snap <- data.table::fread(file = snap_path, encoding = "UTF-8")
+county <- prepare_snap_county_crosswalk(county_path)
 
 snap[, `Store Name` := str_to_lower(trimws(`Store Name`))]
+snap[, County := toupper(trimws(County))]
+snap[, State := toupper(trimws(State))]
 snap[, chain := "placeholder"]
 
 for (pattern in names(store_patterns)) {
@@ -102,7 +145,6 @@ snap[, chain := paste0("chain_", chain)]
 snap[, chain := gsub("[' ]", "_", chain)]
 snap <- snap[chain != "chain_placeholder"]
 
-county[, county := toupper(county)]
 county[, keep := .N == 1, by = .(county, state_id)]
 county <- county[keep == TRUE, .(county, state_id, county_fips)]
 

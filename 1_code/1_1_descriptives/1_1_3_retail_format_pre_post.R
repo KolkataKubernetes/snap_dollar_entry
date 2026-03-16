@@ -18,7 +18,7 @@
 library(dplyr)
 library(ggplot2)
 
-source("1_code/shared_us_analysis_helpers.R")
+source("1_code/1_1_descriptives/shared_us_analysis_helpers.R")
 ctx <- load_us_analysis_context()
 
 #(1) Build the pre/post growth summary ----------------------------------------

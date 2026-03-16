@@ -1,5 +1,5 @@
 library(fixest)
-source("1_code/shared_reduced_form_helpers.R")
+source("1_code/1_2_reduced_form/shared_reduced_form_helpers.R")
 
 models <- lapply(event_study_outcomes, run_event_study_model)
 names(models) <- event_study_outcomes

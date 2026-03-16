@@ -77,6 +77,8 @@ discover_stage_scripts <- function(stage_dir) {
     full.names = FALSE
   )
 
+  stage_files <- stage_files[!grepl("^shared_.*\\.[Rr]$", stage_files)]
+
   file.path(stage_dir, sort(stage_files))
 }
 

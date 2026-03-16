@@ -16,7 +16,7 @@
 library(dplyr)
 library(stringr)
 
-source("1_code/shared_reduced_form_helpers.R")
+source("1_code/1_2_reduced_form/shared_reduced_form_helpers.R")
 
 repo_root <- get_repo_root()
 setwd(repo_root)

@@ -17,7 +17,7 @@
 
 library(readr)
 
-source("1_code/shared_ingest_helpers.R")
+source("1_code/1_0_ingest/shared_ingest_helpers.R")
 
 repo_root <- get_repo_root()
 setwd(repo_root)

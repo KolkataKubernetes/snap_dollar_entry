@@ -1,6 +1,6 @@
 library(dplyr)
 library(stargazer)
-source("1_code/shared_reduced_form_helpers.R")
+source("1_code/1_2_reduced_form/shared_reduced_form_helpers.R")
 
 aba1 <- load_event_study_sample()
 outcomes_df <- as.data.frame(aba1[, event_study_outcomes, drop = FALSE])

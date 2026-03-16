@@ -24,7 +24,7 @@ library(readxl)
 library(lubridate)
 library(zoo)
 
-source("1_code/shared_ingest_helpers.R")
+source("1_code/1_0_ingest/shared_ingest_helpers.R")
 
 month_labels_between <- function(start_date, end_date) {
   if (is.na(start_date) || is.na(end_date)) {
@@ -108,7 +108,6 @@ saveRDS(
 )
 
 message(sprintf("Saved raw waiver ingest outputs to %s", waiver_output_dir))
-
 
 
 
