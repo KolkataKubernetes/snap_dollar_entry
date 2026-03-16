@@ -86,7 +86,7 @@ load_us_analysis_context <- function() {
       county_fips = as.integer(county_fips),
       year = as.integer(year)
     )
-  waiver_long <- readRDS(file.path(processed_root, "2_0_waivers", "2_0_4_waived_data_consolidated_long_selected.rds"))
+  waiver_long <- readRDS(file.path(processed_root, "2_0_waivers", "2_0_4_waived_data_consolidated_long.rds"))
 
   rucc <- readxl::read_excel(file.path(input_root, "0_7_Ruralurbancontinuumcodes2023.xlsx")) |>
     transmute(

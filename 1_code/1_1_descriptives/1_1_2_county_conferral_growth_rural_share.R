@@ -6,7 +6,7 @@
 # Last Updated:     March 12, 2026
 # Description:      Create the county waiver counts over time figure, split by
 #                   rural, urban, and total counties.
-# INPUTS:           `2_0_waivers/2_0_4_waived_data_consolidated_long_selected.rds`
+# INPUTS:           `2_0_waivers/2_0_4_waived_data_consolidated_long.rds`
 #                   `0_7_Ruralurbancontinuumcodes2023.xlsx`
 # PROCEDURES:       Load the shared descriptive context, count county waivers by
 #                   year and rural status, and save the figure.

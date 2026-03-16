@@ -8,7 +8,7 @@
 #                   the legacy U.S. descriptives and reduced-form script.
 # INPUTS:           `0_inputs/input_root.txt`
 #                   `2_processed_data/processed_root.txt`
-#                   `2_0_waivers/2_0_4_waived_data_consolidated_long_selected.rds`
+#                   `2_0_waivers/2_0_4_waived_data_consolidated_long.rds`
 #                   `2_5_SNAP/2_5_0_snap_clean.rds`
 #                   `2_5_SNAP/2_5_1_store_count.rds`
 #                   `2_1_acs/2_1_0_unemployment.rds`
@@ -35,27 +35,7 @@ library(stringr)
 library(lubridate)
 library(tibble)
 
-get_repo_root <- function() {
-  file_arg <- grep("^--file=", commandArgs(trailingOnly = FALSE), value = TRUE)
-
-  if (length(file_arg) > 0) {
-    script_path <- normalizePath(sub("^--file=", "", file_arg[[1]]))
-    return(normalizePath(file.path(dirname(script_path), "..", "..")))
-  }
-
-  if (requireNamespace("rstudioapi", quietly = TRUE) && rstudioapi::isAvailable()) {
-    script_path <- rstudioapi::getActiveDocumentContext()$path
-    return(normalizePath(file.path(dirname(script_path), "..", "..")))
-  }
-
-  normalizePath(getwd())
-}
-
-read_root_path <- function(path_file) {
-  readLines(path_file, warn = FALSE)[[1]] |>
-    str_trim() |>
-    str_remove_all("^['\"]|['\"]$")
-}
+source("1_code/shared_ingest_helpers.R")
 
 ensure_columns <- function(df, columns, fill_value = 0L) {
   missing_cols <- setdiff(columns, names(df))
@@ -73,7 +53,7 @@ setwd(repo_root)
 input_root <- read_root_path("0_inputs/input_root.txt")
 processed_root <- read_root_path("2_processed_data/processed_root.txt")
 
-waiver_path <- file.path(processed_root, "2_0_waivers", "2_0_4_waived_data_consolidated_long_selected.rds")
+waiver_path <- file.path(processed_root, "2_0_waivers", "2_0_4_waived_data_consolidated_long.rds")
 snap_clean_path <- file.path(processed_root, "2_5_SNAP", "2_5_0_snap_clean.rds")
 store_count_path <- file.path(processed_root, "2_5_SNAP", "2_5_1_store_count.rds")
 unemployment_path <- file.path(processed_root, "2_1_acs", "2_1_0_unemployment.rds")

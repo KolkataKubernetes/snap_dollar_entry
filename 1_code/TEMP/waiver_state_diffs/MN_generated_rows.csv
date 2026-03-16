@@ -1,0 +1,1441 @@
+YEAR,STATE,STATE_ABBREV,ENTIRE_STATE,LOC,LOC_TYPE,DATE_START,DATE_END,SOURCE_DOC,MONTH_DATE,FIPS
+2016,Minnesota,MN,0,Aitkin County,County,2016-10-01,2017-09-30,2017_MN,2016-10-01,27001
+2016,Minnesota,MN,0,Aitkin County,County,2016-10-01,2017-09-30,2017_MN,2016-11-01,27001
+2016,Minnesota,MN,0,Aitkin County,County,2016-10-01,2017-09-30,2017_MN,2016-12-01,27001
+2017,Minnesota,MN,0,Aitkin County,County,2016-10-01,2017-09-30,2017_MN,2017-01-01,27001
+2017,Minnesota,MN,0,Aitkin County,County,2016-10-01,2017-09-30,2017_MN,2017-02-01,27001
+2017,Minnesota,MN,0,Aitkin County,County,2016-10-01,2017-09-30,2017_MN,2017-03-01,27001
+2017,Minnesota,MN,0,Aitkin County,County,2016-10-01,2017-09-30,2017_MN,2017-04-01,27001
+2017,Minnesota,MN,0,Aitkin County,County,2016-10-01,2017-09-30,2017_MN,2017-05-01,27001
+2017,Minnesota,MN,0,Aitkin County,County,2016-10-01,2017-09-30,2017_MN,2017-06-01,27001
+2017,Minnesota,MN,0,Aitkin County,County,2016-10-01,2017-09-30,2017_MN,2017-07-01,27001
+2017,Minnesota,MN,0,Aitkin County,County,2016-10-01,2017-09-30,2017_MN,2017-08-01,27001
+2017,Minnesota,MN,0,Aitkin County,County,2016-10-01,2017-09-30,2017_MN,2017-09-01,27001
+2017,Minnesota,MN,0,Aitkin County,County,2017-10-01,2018-09-30,2018_MN,2017-10-01,27001
+2017,Minnesota,MN,0,Aitkin County,County,2017-10-01,2018-09-30,2018_MN,2017-11-01,27001
+2017,Minnesota,MN,0,Aitkin County,County,2017-10-01,2018-09-30,2018_MN,2017-12-01,27001
+2018,Minnesota,MN,0,Aitkin County,County,2017-10-01,2018-09-30,2018_MN,2018-01-01,27001
+2018,Minnesota,MN,0,Aitkin County,County,2017-10-01,2018-09-30,2018_MN,2018-02-01,27001
+2018,Minnesota,MN,0,Aitkin County,County,2017-10-01,2018-09-30,2018_MN,2018-03-01,27001
+2018,Minnesota,MN,0,Aitkin County,County,2017-10-01,2018-09-30,2018_MN,2018-04-01,27001
+2018,Minnesota,MN,0,Aitkin County,County,2017-10-01,2018-09-30,2018_MN,2018-05-01,27001
+2018,Minnesota,MN,0,Aitkin County,County,2017-10-01,2018-09-30,2018_MN,2018-06-01,27001
+2018,Minnesota,MN,0,Aitkin County,County,2017-10-01,2018-09-30,2018_MN,2018-07-01,27001
+2018,Minnesota,MN,0,Aitkin County,County,2017-10-01,2018-09-30,2018_MN,2018-08-01,27001
+2018,Minnesota,MN,0,Aitkin County,County,2017-10-01,2018-09-30,2018_MN,2018-09-01,27001
+2018,Minnesota,MN,0,Aitkin County,County,2018-10-01,2019-09-30,2019_MN,2018-10-01,27001
+2018,Minnesota,MN,0,Aitkin County,County,2018-10-01,2019-09-30,2019_MN,2018-11-01,27001
+2018,Minnesota,MN,0,Aitkin County,County,2018-10-01,2019-09-30,2019_MN,2018-12-01,27001
+2019,Minnesota,MN,0,Aitkin County,County,2018-10-01,2019-09-30,2019_MN,2019-01-01,27001
+2019,Minnesota,MN,0,Aitkin County,County,2018-10-01,2019-09-30,2019_MN,2019-02-01,27001
+2019,Minnesota,MN,0,Aitkin County,County,2018-10-01,2019-09-30,2019_MN,2019-03-01,27001
+2019,Minnesota,MN,0,Aitkin County,County,2018-10-01,2019-09-30,2019_MN,2019-04-01,27001
+2019,Minnesota,MN,0,Aitkin County,County,2018-10-01,2019-09-30,2019_MN,2019-05-01,27001
+2019,Minnesota,MN,0,Aitkin County,County,2018-10-01,2019-09-30,2019_MN,2019-06-01,27001
+2019,Minnesota,MN,0,Aitkin County,County,2018-10-01,2019-09-30,2019_MN,2019-07-01,27001
+2019,Minnesota,MN,0,Aitkin County,County,2018-10-01,2019-09-30,2019_MN,2019-08-01,27001
+2019,Minnesota,MN,0,Aitkin County,County,2018-10-01,2019-09-30,2019_MN,2019-09-01,27001
+2017,Minnesota,MN,0,Becker County,County,2017-10-01,2018-09-30,2018_MN,2017-10-01,27005
+2017,Minnesota,MN,0,Becker County,County,2017-10-01,2018-09-30,2018_MN,2017-11-01,27005
+2017,Minnesota,MN,0,Becker County,County,2017-10-01,2018-09-30,2018_MN,2017-12-01,27005
+2018,Minnesota,MN,0,Becker County,County,2017-10-01,2018-09-30,2018_MN,2018-01-01,27005
+2018,Minnesota,MN,0,Becker County,County,2017-10-01,2018-09-30,2018_MN,2018-02-01,27005
+2018,Minnesota,MN,0,Becker County,County,2017-10-01,2018-09-30,2018_MN,2018-03-01,27005
+2018,Minnesota,MN,0,Becker County,County,2017-10-01,2018-09-30,2018_MN,2018-04-01,27005
+2018,Minnesota,MN,0,Becker County,County,2017-10-01,2018-09-30,2018_MN,2018-05-01,27005
+2018,Minnesota,MN,0,Becker County,County,2017-10-01,2018-09-30,2018_MN,2018-06-01,27005
+2018,Minnesota,MN,0,Becker County,County,2017-10-01,2018-09-30,2018_MN,2018-07-01,27005
+2018,Minnesota,MN,0,Becker County,County,2017-10-01,2018-09-30,2018_MN,2018-08-01,27005
+2018,Minnesota,MN,0,Becker County,County,2017-10-01,2018-09-30,2018_MN,2018-09-01,27005
+2018,Minnesota,MN,0,Becker County,County,2018-10-01,2019-09-30,2019_MN,2018-10-01,27005
+2018,Minnesota,MN,0,Becker County,County,2018-10-01,2019-09-30,2019_MN,2018-11-01,27005
+2018,Minnesota,MN,0,Becker County,County,2018-10-01,2019-09-30,2019_MN,2018-12-01,27005
+2019,Minnesota,MN,0,Becker County,County,2018-10-01,2019-09-30,2019_MN,2019-01-01,27005
+2019,Minnesota,MN,0,Becker County,County,2018-10-01,2019-09-30,2019_MN,2019-02-01,27005
+2019,Minnesota,MN,0,Becker County,County,2018-10-01,2019-09-30,2019_MN,2019-03-01,27005
+2019,Minnesota,MN,0,Becker County,County,2018-10-01,2019-09-30,2019_MN,2019-04-01,27005
+2019,Minnesota,MN,0,Becker County,County,2018-10-01,2019-09-30,2019_MN,2019-05-01,27005
+2019,Minnesota,MN,0,Becker County,County,2018-10-01,2019-09-30,2019_MN,2019-06-01,27005
+2019,Minnesota,MN,0,Becker County,County,2018-10-01,2019-09-30,2019_MN,2019-07-01,27005
+2019,Minnesota,MN,0,Becker County,County,2018-10-01,2019-09-30,2019_MN,2019-08-01,27005
+2019,Minnesota,MN,0,Becker County,County,2018-10-01,2019-09-30,2019_MN,2019-09-01,27005
+2017,Minnesota,MN,0,Beltrami County,County,2017-10-01,2018-09-30,2018_MN,2017-10-01,27007
+2017,Minnesota,MN,0,Beltrami County,County,2017-10-01,2018-09-30,2018_MN,2017-11-01,27007
+2017,Minnesota,MN,0,Beltrami County,County,2017-10-01,2018-09-30,2018_MN,2017-12-01,27007
+2018,Minnesota,MN,0,Beltrami County,County,2017-10-01,2018-09-30,2018_MN,2018-01-01,27007
+2018,Minnesota,MN,0,Beltrami County,County,2017-10-01,2018-09-30,2018_MN,2018-02-01,27007
+2018,Minnesota,MN,0,Beltrami County,County,2017-10-01,2018-09-30,2018_MN,2018-03-01,27007
+2018,Minnesota,MN,0,Beltrami County,County,2017-10-01,2018-09-30,2018_MN,2018-04-01,27007
+2018,Minnesota,MN,0,Beltrami County,County,2017-10-01,2018-09-30,2018_MN,2018-05-01,27007
+2018,Minnesota,MN,0,Beltrami County,County,2017-10-01,2018-09-30,2018_MN,2018-06-01,27007
+2018,Minnesota,MN,0,Beltrami County,County,2017-10-01,2018-09-30,2018_MN,2018-07-01,27007
+2018,Minnesota,MN,0,Beltrami County,County,2017-10-01,2018-09-30,2018_MN,2018-08-01,27007
+2018,Minnesota,MN,0,Beltrami County,County,2017-10-01,2018-09-30,2018_MN,2018-09-01,27007
+2018,Minnesota,MN,0,Beltrami County,County,2018-10-01,2019-09-30,2019_MN,2018-10-01,27007
+2018,Minnesota,MN,0,Beltrami County,County,2018-10-01,2019-09-30,2019_MN,2018-11-01,27007
+2018,Minnesota,MN,0,Beltrami County,County,2018-10-01,2019-09-30,2019_MN,2018-12-01,27007
+2019,Minnesota,MN,0,Beltrami County,County,2018-10-01,2019-09-30,2019_MN,2019-01-01,27007
+2019,Minnesota,MN,0,Beltrami County,County,2018-10-01,2019-09-30,2019_MN,2019-02-01,27007
+2019,Minnesota,MN,0,Beltrami County,County,2018-10-01,2019-09-30,2019_MN,2019-03-01,27007
+2019,Minnesota,MN,0,Beltrami County,County,2018-10-01,2019-09-30,2019_MN,2019-04-01,27007
+2019,Minnesota,MN,0,Beltrami County,County,2018-10-01,2019-09-30,2019_MN,2019-05-01,27007
+2019,Minnesota,MN,0,Beltrami County,County,2018-10-01,2019-09-30,2019_MN,2019-06-01,27007
+2019,Minnesota,MN,0,Beltrami County,County,2018-10-01,2019-09-30,2019_MN,2019-07-01,27007
+2019,Minnesota,MN,0,Beltrami County,County,2018-10-01,2019-09-30,2019_MN,2019-08-01,27007
+2019,Minnesota,MN,0,Beltrami County,County,2018-10-01,2019-09-30,2019_MN,2019-09-01,27007
+2013,Minnesota,MN,0,Bois Forte,Reservation Area,2013-10-01,2014-09-30,2014_MN,2013-10-01,NA
+2013,Minnesota,MN,0,Bois Forte,Reservation Area,2013-10-01,2014-09-30,2014_MN,2013-11-01,NA
+2013,Minnesota,MN,0,Bois Forte,Reservation Area,2013-10-01,2014-09-30,2014_MN,2013-12-01,NA
+2014,Minnesota,MN,0,Bois Forte,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-01-01,NA
+2014,Minnesota,MN,0,Bois Forte,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-02-01,NA
+2014,Minnesota,MN,0,Bois Forte,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-03-01,NA
+2014,Minnesota,MN,0,Bois Forte,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-04-01,NA
+2014,Minnesota,MN,0,Bois Forte,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-05-01,NA
+2014,Minnesota,MN,0,Bois Forte,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-06-01,NA
+2014,Minnesota,MN,0,Bois Forte,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-07-01,NA
+2014,Minnesota,MN,0,Bois Forte,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-08-01,NA
+2014,Minnesota,MN,0,Bois Forte,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-09-01,NA
+2014,Minnesota,MN,0,Bois Forte,Reservation,2014-10-01,2015-09-30,2015_MN,2014-10-01,NA
+2014,Minnesota,MN,0,Bois Forte,Reservation,2014-10-01,2015-09-30,2015_MN,2014-11-01,NA
+2014,Minnesota,MN,0,Bois Forte,Reservation,2014-10-01,2015-09-30,2015_MN,2014-12-01,NA
+2015,Minnesota,MN,0,Bois Forte,Reservation,2014-10-01,2015-09-30,2015_MN,2015-01-01,NA
+2015,Minnesota,MN,0,Bois Forte,Reservation,2014-10-01,2015-09-30,2015_MN,2015-02-01,NA
+2015,Minnesota,MN,0,Bois Forte,Reservation,2014-10-01,2015-09-30,2015_MN,2015-03-01,NA
+2015,Minnesota,MN,0,Bois Forte,Reservation,2014-10-01,2015-09-30,2015_MN,2015-04-01,NA
+2015,Minnesota,MN,0,Bois Forte,Reservation,2014-10-01,2015-09-30,2015_MN,2015-05-01,NA
+2015,Minnesota,MN,0,Bois Forte,Reservation,2014-10-01,2015-09-30,2015_MN,2015-06-01,NA
+2015,Minnesota,MN,0,Bois Forte,Reservation,2014-10-01,2015-09-30,2015_MN,2015-07-01,NA
+2015,Minnesota,MN,0,Bois Forte,Reservation,2014-10-01,2015-09-30,2015_MN,2015-08-01,NA
+2015,Minnesota,MN,0,Bois Forte,Reservation,2014-10-01,2015-09-30,2015_MN,2015-09-01,NA
+2017,Minnesota,MN,0,Bois Forte,Reservation Area,2017-10-01,2018-09-30,2018_MN,2017-10-01,NA
+2017,Minnesota,MN,0,Bois Forte,Reservation Area,2017-10-01,2018-09-30,2018_MN,2017-11-01,NA
+2017,Minnesota,MN,0,Bois Forte,Reservation Area,2017-10-01,2018-09-30,2018_MN,2017-12-01,NA
+2018,Minnesota,MN,0,Bois Forte,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-01-01,NA
+2018,Minnesota,MN,0,Bois Forte,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-02-01,NA
+2018,Minnesota,MN,0,Bois Forte,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-03-01,NA
+2018,Minnesota,MN,0,Bois Forte,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-04-01,NA
+2018,Minnesota,MN,0,Bois Forte,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-05-01,NA
+2018,Minnesota,MN,0,Bois Forte,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-06-01,NA
+2018,Minnesota,MN,0,Bois Forte,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-07-01,NA
+2018,Minnesota,MN,0,Bois Forte,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-08-01,NA
+2018,Minnesota,MN,0,Bois Forte,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-09-01,NA
+2018,Minnesota,MN,0,Bois Forte,Reservation Area,2018-10-01,2019-09-30,2019_MN,2018-10-01,NA
+2018,Minnesota,MN,0,Bois Forte,Reservation Area,2018-10-01,2019-09-30,2019_MN,2018-11-01,NA
+2018,Minnesota,MN,0,Bois Forte,Reservation Area,2018-10-01,2019-09-30,2019_MN,2018-12-01,NA
+2019,Minnesota,MN,0,Bois Forte,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-01-01,NA
+2019,Minnesota,MN,0,Bois Forte,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-02-01,NA
+2019,Minnesota,MN,0,Bois Forte,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-03-01,NA
+2019,Minnesota,MN,0,Bois Forte,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-04-01,NA
+2019,Minnesota,MN,0,Bois Forte,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-05-01,NA
+2019,Minnesota,MN,0,Bois Forte,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-06-01,NA
+2019,Minnesota,MN,0,Bois Forte,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-07-01,NA
+2019,Minnesota,MN,0,Bois Forte,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-08-01,NA
+2019,Minnesota,MN,0,Bois Forte,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-09-01,NA
+2017,Minnesota,MN,0,Carlton County,County,2017-10-01,2018-09-30,2018_MN,2017-10-01,27017
+2017,Minnesota,MN,0,Carlton County,County,2017-10-01,2018-09-30,2018_MN,2017-11-01,27017
+2017,Minnesota,MN,0,Carlton County,County,2017-10-01,2018-09-30,2018_MN,2017-12-01,27017
+2018,Minnesota,MN,0,Carlton County,County,2017-10-01,2018-09-30,2018_MN,2018-01-01,27017
+2018,Minnesota,MN,0,Carlton County,County,2017-10-01,2018-09-30,2018_MN,2018-02-01,27017
+2018,Minnesota,MN,0,Carlton County,County,2017-10-01,2018-09-30,2018_MN,2018-03-01,27017
+2018,Minnesota,MN,0,Carlton County,County,2017-10-01,2018-09-30,2018_MN,2018-04-01,27017
+2018,Minnesota,MN,0,Carlton County,County,2017-10-01,2018-09-30,2018_MN,2018-05-01,27017
+2018,Minnesota,MN,0,Carlton County,County,2017-10-01,2018-09-30,2018_MN,2018-06-01,27017
+2018,Minnesota,MN,0,Carlton County,County,2017-10-01,2018-09-30,2018_MN,2018-07-01,27017
+2018,Minnesota,MN,0,Carlton County,County,2017-10-01,2018-09-30,2018_MN,2018-08-01,27017
+2018,Minnesota,MN,0,Carlton County,County,2017-10-01,2018-09-30,2018_MN,2018-09-01,27017
+2018,Minnesota,MN,0,Carlton County,County,2018-10-01,2019-09-30,2019_MN,2018-10-01,27017
+2018,Minnesota,MN,0,Carlton County,County,2018-10-01,2019-09-30,2019_MN,2018-11-01,27017
+2018,Minnesota,MN,0,Carlton County,County,2018-10-01,2019-09-30,2019_MN,2018-12-01,27017
+2019,Minnesota,MN,0,Carlton County,County,2018-10-01,2019-09-30,2019_MN,2019-01-01,27017
+2019,Minnesota,MN,0,Carlton County,County,2018-10-01,2019-09-30,2019_MN,2019-02-01,27017
+2019,Minnesota,MN,0,Carlton County,County,2018-10-01,2019-09-30,2019_MN,2019-03-01,27017
+2019,Minnesota,MN,0,Carlton County,County,2018-10-01,2019-09-30,2019_MN,2019-04-01,27017
+2019,Minnesota,MN,0,Carlton County,County,2018-10-01,2019-09-30,2019_MN,2019-05-01,27017
+2019,Minnesota,MN,0,Carlton County,County,2018-10-01,2019-09-30,2019_MN,2019-06-01,27017
+2019,Minnesota,MN,0,Carlton County,County,2018-10-01,2019-09-30,2019_MN,2019-07-01,27017
+2019,Minnesota,MN,0,Carlton County,County,2018-10-01,2019-09-30,2019_MN,2019-08-01,27017
+2019,Minnesota,MN,0,Carlton County,County,2018-10-01,2019-09-30,2019_MN,2019-09-01,27017
+2013,Minnesota,MN,0,Cass County,County,2013-10-01,2014-09-30,2014_MN,2013-10-01,27021
+2013,Minnesota,MN,0,Cass County,County,2013-10-01,2014-09-30,2014_MN,2013-11-01,27021
+2013,Minnesota,MN,0,Cass County,County,2013-10-01,2014-09-30,2014_MN,2013-12-01,27021
+2014,Minnesota,MN,0,Cass County,County,2013-10-01,2014-09-30,2014_MN,2014-01-01,27021
+2014,Minnesota,MN,0,Cass County,County,2013-10-01,2014-09-30,2014_MN,2014-02-01,27021
+2014,Minnesota,MN,0,Cass County,County,2013-10-01,2014-09-30,2014_MN,2014-03-01,27021
+2014,Minnesota,MN,0,Cass County,County,2013-10-01,2014-09-30,2014_MN,2014-04-01,27021
+2014,Minnesota,MN,0,Cass County,County,2013-10-01,2014-09-30,2014_MN,2014-05-01,27021
+2014,Minnesota,MN,0,Cass County,County,2013-10-01,2014-09-30,2014_MN,2014-06-01,27021
+2014,Minnesota,MN,0,Cass County,County,2013-10-01,2014-09-30,2014_MN,2014-07-01,27021
+2014,Minnesota,MN,0,Cass County,County,2013-10-01,2014-09-30,2014_MN,2014-08-01,27021
+2014,Minnesota,MN,0,Cass County,County,2013-10-01,2014-09-30,2014_MN,2014-09-01,27021
+2016,Minnesota,MN,0,Cass County,County,2016-10-01,2017-09-30,2017_MN,2016-10-01,27021
+2016,Minnesota,MN,0,Cass County,County,2016-10-01,2017-09-30,2017_MN,2016-11-01,27021
+2016,Minnesota,MN,0,Cass County,County,2016-10-01,2017-09-30,2017_MN,2016-12-01,27021
+2017,Minnesota,MN,0,Cass County,County,2016-10-01,2017-09-30,2017_MN,2017-01-01,27021
+2017,Minnesota,MN,0,Cass County,County,2016-10-01,2017-09-30,2017_MN,2017-02-01,27021
+2017,Minnesota,MN,0,Cass County,County,2016-10-01,2017-09-30,2017_MN,2017-03-01,27021
+2017,Minnesota,MN,0,Cass County,County,2016-10-01,2017-09-30,2017_MN,2017-04-01,27021
+2017,Minnesota,MN,0,Cass County,County,2016-10-01,2017-09-30,2017_MN,2017-05-01,27021
+2017,Minnesota,MN,0,Cass County,County,2016-10-01,2017-09-30,2017_MN,2017-06-01,27021
+2017,Minnesota,MN,0,Cass County,County,2016-10-01,2017-09-30,2017_MN,2017-07-01,27021
+2017,Minnesota,MN,0,Cass County,County,2016-10-01,2017-09-30,2017_MN,2017-08-01,27021
+2017,Minnesota,MN,0,Cass County,County,2016-10-01,2017-09-30,2017_MN,2017-09-01,27021
+2017,Minnesota,MN,0,Cass County,County,2017-10-01,2018-09-30,2018_MN,2017-10-01,27021
+2017,Minnesota,MN,0,Cass County,County,2017-10-01,2018-09-30,2018_MN,2017-11-01,27021
+2017,Minnesota,MN,0,Cass County,County,2017-10-01,2018-09-30,2018_MN,2017-12-01,27021
+2018,Minnesota,MN,0,Cass County,County,2017-10-01,2018-09-30,2018_MN,2018-01-01,27021
+2018,Minnesota,MN,0,Cass County,County,2017-10-01,2018-09-30,2018_MN,2018-02-01,27021
+2018,Minnesota,MN,0,Cass County,County,2017-10-01,2018-09-30,2018_MN,2018-03-01,27021
+2018,Minnesota,MN,0,Cass County,County,2017-10-01,2018-09-30,2018_MN,2018-04-01,27021
+2018,Minnesota,MN,0,Cass County,County,2017-10-01,2018-09-30,2018_MN,2018-05-01,27021
+2018,Minnesota,MN,0,Cass County,County,2017-10-01,2018-09-30,2018_MN,2018-06-01,27021
+2018,Minnesota,MN,0,Cass County,County,2017-10-01,2018-09-30,2018_MN,2018-07-01,27021
+2018,Minnesota,MN,0,Cass County,County,2017-10-01,2018-09-30,2018_MN,2018-08-01,27021
+2018,Minnesota,MN,0,Cass County,County,2017-10-01,2018-09-30,2018_MN,2018-09-01,27021
+2018,Minnesota,MN,0,Cass County,County,2018-10-01,2019-09-30,2019_MN,2018-10-01,27021
+2018,Minnesota,MN,0,Cass County,County,2018-10-01,2019-09-30,2019_MN,2018-11-01,27021
+2018,Minnesota,MN,0,Cass County,County,2018-10-01,2019-09-30,2019_MN,2018-12-01,27021
+2019,Minnesota,MN,0,Cass County,County,2018-10-01,2019-09-30,2019_MN,2019-01-01,27021
+2019,Minnesota,MN,0,Cass County,County,2018-10-01,2019-09-30,2019_MN,2019-02-01,27021
+2019,Minnesota,MN,0,Cass County,County,2018-10-01,2019-09-30,2019_MN,2019-03-01,27021
+2019,Minnesota,MN,0,Cass County,County,2018-10-01,2019-09-30,2019_MN,2019-04-01,27021
+2019,Minnesota,MN,0,Cass County,County,2018-10-01,2019-09-30,2019_MN,2019-05-01,27021
+2019,Minnesota,MN,0,Cass County,County,2018-10-01,2019-09-30,2019_MN,2019-06-01,27021
+2019,Minnesota,MN,0,Cass County,County,2018-10-01,2019-09-30,2019_MN,2019-07-01,27021
+2019,Minnesota,MN,0,Cass County,County,2018-10-01,2019-09-30,2019_MN,2019-08-01,27021
+2019,Minnesota,MN,0,Cass County,County,2018-10-01,2019-09-30,2019_MN,2019-09-01,27021
+2017,Minnesota,MN,0,Chippewa Trust,Reservation Area,2017-10-01,2018-09-30,2018_MN,2017-10-01,NA
+2017,Minnesota,MN,0,Chippewa Trust,Reservation Area,2017-10-01,2018-09-30,2018_MN,2017-11-01,NA
+2017,Minnesota,MN,0,Chippewa Trust,Reservation Area,2017-10-01,2018-09-30,2018_MN,2017-12-01,NA
+2018,Minnesota,MN,0,Chippewa Trust,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-01-01,NA
+2018,Minnesota,MN,0,Chippewa Trust,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-02-01,NA
+2018,Minnesota,MN,0,Chippewa Trust,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-03-01,NA
+2018,Minnesota,MN,0,Chippewa Trust,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-04-01,NA
+2018,Minnesota,MN,0,Chippewa Trust,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-05-01,NA
+2018,Minnesota,MN,0,Chippewa Trust,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-06-01,NA
+2018,Minnesota,MN,0,Chippewa Trust,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-07-01,NA
+2018,Minnesota,MN,0,Chippewa Trust,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-08-01,NA
+2018,Minnesota,MN,0,Chippewa Trust,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-09-01,NA
+2013,Minnesota,MN,0,Clearwater County,County,2013-10-01,2014-09-30,2014_MN,2013-10-01,27029
+2013,Minnesota,MN,0,Clearwater County,County,2013-10-01,2014-09-30,2014_MN,2013-11-01,27029
+2013,Minnesota,MN,0,Clearwater County,County,2013-10-01,2014-09-30,2014_MN,2013-12-01,27029
+2014,Minnesota,MN,0,Clearwater County,County,2013-10-01,2014-09-30,2014_MN,2014-01-01,27029
+2014,Minnesota,MN,0,Clearwater County,County,2013-10-01,2014-09-30,2014_MN,2014-02-01,27029
+2014,Minnesota,MN,0,Clearwater County,County,2013-10-01,2014-09-30,2014_MN,2014-03-01,27029
+2014,Minnesota,MN,0,Clearwater County,County,2013-10-01,2014-09-30,2014_MN,2014-04-01,27029
+2014,Minnesota,MN,0,Clearwater County,County,2013-10-01,2014-09-30,2014_MN,2014-05-01,27029
+2014,Minnesota,MN,0,Clearwater County,County,2013-10-01,2014-09-30,2014_MN,2014-06-01,27029
+2014,Minnesota,MN,0,Clearwater County,County,2013-10-01,2014-09-30,2014_MN,2014-07-01,27029
+2014,Minnesota,MN,0,Clearwater County,County,2013-10-01,2014-09-30,2014_MN,2014-08-01,27029
+2014,Minnesota,MN,0,Clearwater County,County,2013-10-01,2014-09-30,2014_MN,2014-09-01,27029
+2014,Minnesota,MN,0,Clearwater County,County,2014-10-01,2015-09-30,2015_MN,2014-10-01,27029
+2014,Minnesota,MN,0,Clearwater County,County,2014-10-01,2015-09-30,2015_MN,2014-11-01,27029
+2014,Minnesota,MN,0,Clearwater County,County,2014-10-01,2015-09-30,2015_MN,2014-12-01,27029
+2015,Minnesota,MN,0,Clearwater County,County,2014-10-01,2015-09-30,2015_MN,2015-01-01,27029
+2015,Minnesota,MN,0,Clearwater County,County,2014-10-01,2015-09-30,2015_MN,2015-02-01,27029
+2015,Minnesota,MN,0,Clearwater County,County,2014-10-01,2015-09-30,2015_MN,2015-03-01,27029
+2015,Minnesota,MN,0,Clearwater County,County,2014-10-01,2015-09-30,2015_MN,2015-04-01,27029
+2015,Minnesota,MN,0,Clearwater County,County,2014-10-01,2015-09-30,2015_MN,2015-05-01,27029
+2015,Minnesota,MN,0,Clearwater County,County,2014-10-01,2015-09-30,2015_MN,2015-06-01,27029
+2015,Minnesota,MN,0,Clearwater County,County,2014-10-01,2015-09-30,2015_MN,2015-07-01,27029
+2015,Minnesota,MN,0,Clearwater County,County,2014-10-01,2015-09-30,2015_MN,2015-08-01,27029
+2015,Minnesota,MN,0,Clearwater County,County,2014-10-01,2015-09-30,2015_MN,2015-09-01,27029
+2015,Minnesota,MN,0,Clearwater County,County,2015-10-01,2016-09-30,2016_MN,2015-10-01,27029
+2015,Minnesota,MN,0,Clearwater County,County,2015-10-01,2016-09-30,2016_MN,2015-11-01,27029
+2015,Minnesota,MN,0,Clearwater County,County,2015-10-01,2016-09-30,2016_MN,2015-12-01,27029
+2016,Minnesota,MN,0,Clearwater County,County,2015-10-01,2016-09-30,2016_MN,2016-01-01,27029
+2016,Minnesota,MN,0,Clearwater County,County,2015-10-01,2016-09-30,2016_MN,2016-02-01,27029
+2016,Minnesota,MN,0,Clearwater County,County,2015-10-01,2016-09-30,2016_MN,2016-03-01,27029
+2016,Minnesota,MN,0,Clearwater County,County,2015-10-01,2016-09-30,2016_MN,2016-04-01,27029
+2016,Minnesota,MN,0,Clearwater County,County,2015-10-01,2016-09-30,2016_MN,2016-05-01,27029
+2016,Minnesota,MN,0,Clearwater County,County,2015-10-01,2016-09-30,2016_MN,2016-06-01,27029
+2016,Minnesota,MN,0,Clearwater County,County,2015-10-01,2016-09-30,2016_MN,2016-07-01,27029
+2016,Minnesota,MN,0,Clearwater County,County,2015-10-01,2016-09-30,2016_MN,2016-08-01,27029
+2016,Minnesota,MN,0,Clearwater County,County,2015-10-01,2016-09-30,2016_MN,2016-09-01,27029
+2016,Minnesota,MN,0,Clearwater County,County,2016-10-01,2017-09-30,2017_MN,2016-10-01,27029
+2016,Minnesota,MN,0,Clearwater County,County,2016-10-01,2017-09-30,2017_MN,2016-11-01,27029
+2016,Minnesota,MN,0,Clearwater County,County,2016-10-01,2017-09-30,2017_MN,2016-12-01,27029
+2017,Minnesota,MN,0,Clearwater County,County,2016-10-01,2017-09-30,2017_MN,2017-01-01,27029
+2017,Minnesota,MN,0,Clearwater County,County,2016-10-01,2017-09-30,2017_MN,2017-02-01,27029
+2017,Minnesota,MN,0,Clearwater County,County,2016-10-01,2017-09-30,2017_MN,2017-03-01,27029
+2017,Minnesota,MN,0,Clearwater County,County,2016-10-01,2017-09-30,2017_MN,2017-04-01,27029
+2017,Minnesota,MN,0,Clearwater County,County,2016-10-01,2017-09-30,2017_MN,2017-05-01,27029
+2017,Minnesota,MN,0,Clearwater County,County,2016-10-01,2017-09-30,2017_MN,2017-06-01,27029
+2017,Minnesota,MN,0,Clearwater County,County,2016-10-01,2017-09-30,2017_MN,2017-07-01,27029
+2017,Minnesota,MN,0,Clearwater County,County,2016-10-01,2017-09-30,2017_MN,2017-08-01,27029
+2017,Minnesota,MN,0,Clearwater County,County,2016-10-01,2017-09-30,2017_MN,2017-09-01,27029
+2017,Minnesota,MN,0,Clearwater County,County,2017-10-01,2018-09-30,2018_MN,2017-10-01,27029
+2017,Minnesota,MN,0,Clearwater County,County,2017-10-01,2018-09-30,2018_MN,2017-11-01,27029
+2017,Minnesota,MN,0,Clearwater County,County,2017-10-01,2018-09-30,2018_MN,2017-12-01,27029
+2018,Minnesota,MN,0,Clearwater County,County,2017-10-01,2018-09-30,2018_MN,2018-01-01,27029
+2018,Minnesota,MN,0,Clearwater County,County,2017-10-01,2018-09-30,2018_MN,2018-02-01,27029
+2018,Minnesota,MN,0,Clearwater County,County,2017-10-01,2018-09-30,2018_MN,2018-03-01,27029
+2018,Minnesota,MN,0,Clearwater County,County,2017-10-01,2018-09-30,2018_MN,2018-04-01,27029
+2018,Minnesota,MN,0,Clearwater County,County,2017-10-01,2018-09-30,2018_MN,2018-05-01,27029
+2018,Minnesota,MN,0,Clearwater County,County,2017-10-01,2018-09-30,2018_MN,2018-06-01,27029
+2018,Minnesota,MN,0,Clearwater County,County,2017-10-01,2018-09-30,2018_MN,2018-07-01,27029
+2018,Minnesota,MN,0,Clearwater County,County,2017-10-01,2018-09-30,2018_MN,2018-08-01,27029
+2018,Minnesota,MN,0,Clearwater County,County,2017-10-01,2018-09-30,2018_MN,2018-09-01,27029
+2018,Minnesota,MN,0,Clearwater County,County,2018-10-01,2019-09-30,2019_MN,2018-10-01,27029
+2018,Minnesota,MN,0,Clearwater County,County,2018-10-01,2019-09-30,2019_MN,2018-11-01,27029
+2018,Minnesota,MN,0,Clearwater County,County,2018-10-01,2019-09-30,2019_MN,2018-12-01,27029
+2019,Minnesota,MN,0,Clearwater County,County,2018-10-01,2019-09-30,2019_MN,2019-01-01,27029
+2019,Minnesota,MN,0,Clearwater County,County,2018-10-01,2019-09-30,2019_MN,2019-02-01,27029
+2019,Minnesota,MN,0,Clearwater County,County,2018-10-01,2019-09-30,2019_MN,2019-03-01,27029
+2019,Minnesota,MN,0,Clearwater County,County,2018-10-01,2019-09-30,2019_MN,2019-04-01,27029
+2019,Minnesota,MN,0,Clearwater County,County,2018-10-01,2019-09-30,2019_MN,2019-05-01,27029
+2019,Minnesota,MN,0,Clearwater County,County,2018-10-01,2019-09-30,2019_MN,2019-06-01,27029
+2019,Minnesota,MN,0,Clearwater County,County,2018-10-01,2019-09-30,2019_MN,2019-07-01,27029
+2019,Minnesota,MN,0,Clearwater County,County,2018-10-01,2019-09-30,2019_MN,2019-08-01,27029
+2019,Minnesota,MN,0,Clearwater County,County,2018-10-01,2019-09-30,2019_MN,2019-09-01,27029
+2017,Minnesota,MN,0,Cook County,County,2017-10-01,2018-09-30,2018_MN,2017-10-01,27031
+2017,Minnesota,MN,0,Cook County,County,2017-10-01,2018-09-30,2018_MN,2017-11-01,27031
+2017,Minnesota,MN,0,Cook County,County,2017-10-01,2018-09-30,2018_MN,2017-12-01,27031
+2018,Minnesota,MN,0,Cook County,County,2017-10-01,2018-09-30,2018_MN,2018-01-01,27031
+2018,Minnesota,MN,0,Cook County,County,2017-10-01,2018-09-30,2018_MN,2018-02-01,27031
+2018,Minnesota,MN,0,Cook County,County,2017-10-01,2018-09-30,2018_MN,2018-03-01,27031
+2018,Minnesota,MN,0,Cook County,County,2017-10-01,2018-09-30,2018_MN,2018-04-01,27031
+2018,Minnesota,MN,0,Cook County,County,2017-10-01,2018-09-30,2018_MN,2018-05-01,27031
+2018,Minnesota,MN,0,Cook County,County,2017-10-01,2018-09-30,2018_MN,2018-06-01,27031
+2018,Minnesota,MN,0,Cook County,County,2017-10-01,2018-09-30,2018_MN,2018-07-01,27031
+2018,Minnesota,MN,0,Cook County,County,2017-10-01,2018-09-30,2018_MN,2018-08-01,27031
+2018,Minnesota,MN,0,Cook County,County,2017-10-01,2018-09-30,2018_MN,2018-09-01,27031
+2018,Minnesota,MN,0,Cook County,County,2018-10-01,2019-09-30,2019_MN,2018-10-01,27031
+2018,Minnesota,MN,0,Cook County,County,2018-10-01,2019-09-30,2019_MN,2018-11-01,27031
+2018,Minnesota,MN,0,Cook County,County,2018-10-01,2019-09-30,2019_MN,2018-12-01,27031
+2019,Minnesota,MN,0,Cook County,County,2018-10-01,2019-09-30,2019_MN,2019-01-01,27031
+2019,Minnesota,MN,0,Cook County,County,2018-10-01,2019-09-30,2019_MN,2019-02-01,27031
+2019,Minnesota,MN,0,Cook County,County,2018-10-01,2019-09-30,2019_MN,2019-03-01,27031
+2019,Minnesota,MN,0,Cook County,County,2018-10-01,2019-09-30,2019_MN,2019-04-01,27031
+2019,Minnesota,MN,0,Cook County,County,2018-10-01,2019-09-30,2019_MN,2019-05-01,27031
+2019,Minnesota,MN,0,Cook County,County,2018-10-01,2019-09-30,2019_MN,2019-06-01,27031
+2019,Minnesota,MN,0,Cook County,County,2018-10-01,2019-09-30,2019_MN,2019-07-01,27031
+2019,Minnesota,MN,0,Cook County,County,2018-10-01,2019-09-30,2019_MN,2019-08-01,27031
+2019,Minnesota,MN,0,Cook County,County,2018-10-01,2019-09-30,2019_MN,2019-09-01,27031
+2017,Minnesota,MN,0,Cottonwood County,County,2017-10-01,2018-09-30,2018_MN,2017-10-01,27033
+2017,Minnesota,MN,0,Cottonwood County,County,2017-10-01,2018-09-30,2018_MN,2017-11-01,27033
+2017,Minnesota,MN,0,Cottonwood County,County,2017-10-01,2018-09-30,2018_MN,2017-12-01,27033
+2018,Minnesota,MN,0,Cottonwood County,County,2017-10-01,2018-09-30,2018_MN,2018-01-01,27033
+2018,Minnesota,MN,0,Cottonwood County,County,2017-10-01,2018-09-30,2018_MN,2018-02-01,27033
+2018,Minnesota,MN,0,Cottonwood County,County,2017-10-01,2018-09-30,2018_MN,2018-03-01,27033
+2018,Minnesota,MN,0,Cottonwood County,County,2017-10-01,2018-09-30,2018_MN,2018-04-01,27033
+2018,Minnesota,MN,0,Cottonwood County,County,2017-10-01,2018-09-30,2018_MN,2018-05-01,27033
+2018,Minnesota,MN,0,Cottonwood County,County,2017-10-01,2018-09-30,2018_MN,2018-06-01,27033
+2018,Minnesota,MN,0,Cottonwood County,County,2017-10-01,2018-09-30,2018_MN,2018-07-01,27033
+2018,Minnesota,MN,0,Cottonwood County,County,2017-10-01,2018-09-30,2018_MN,2018-08-01,27033
+2018,Minnesota,MN,0,Cottonwood County,County,2017-10-01,2018-09-30,2018_MN,2018-09-01,27033
+2017,Minnesota,MN,0,Crow Wing County,County,2017-10-01,2018-09-30,2018_MN,2017-10-01,27035
+2017,Minnesota,MN,0,Crow Wing County,County,2017-10-01,2018-09-30,2018_MN,2017-11-01,27035
+2017,Minnesota,MN,0,Crow Wing County,County,2017-10-01,2018-09-30,2018_MN,2017-12-01,27035
+2018,Minnesota,MN,0,Crow Wing County,County,2017-10-01,2018-09-30,2018_MN,2018-01-01,27035
+2018,Minnesota,MN,0,Crow Wing County,County,2017-10-01,2018-09-30,2018_MN,2018-02-01,27035
+2018,Minnesota,MN,0,Crow Wing County,County,2017-10-01,2018-09-30,2018_MN,2018-03-01,27035
+2018,Minnesota,MN,0,Crow Wing County,County,2017-10-01,2018-09-30,2018_MN,2018-04-01,27035
+2018,Minnesota,MN,0,Crow Wing County,County,2017-10-01,2018-09-30,2018_MN,2018-05-01,27035
+2018,Minnesota,MN,0,Crow Wing County,County,2017-10-01,2018-09-30,2018_MN,2018-06-01,27035
+2018,Minnesota,MN,0,Crow Wing County,County,2017-10-01,2018-09-30,2018_MN,2018-07-01,27035
+2018,Minnesota,MN,0,Crow Wing County,County,2017-10-01,2018-09-30,2018_MN,2018-08-01,27035
+2018,Minnesota,MN,0,Crow Wing County,County,2017-10-01,2018-09-30,2018_MN,2018-09-01,27035
+2018,Minnesota,MN,0,Crow Wing County,County,2018-10-01,2019-09-30,2019_MN,2018-10-01,27035
+2018,Minnesota,MN,0,Crow Wing County,County,2018-10-01,2019-09-30,2019_MN,2018-11-01,27035
+2018,Minnesota,MN,0,Crow Wing County,County,2018-10-01,2019-09-30,2019_MN,2018-12-01,27035
+2019,Minnesota,MN,0,Crow Wing County,County,2018-10-01,2019-09-30,2019_MN,2019-01-01,27035
+2019,Minnesota,MN,0,Crow Wing County,County,2018-10-01,2019-09-30,2019_MN,2019-02-01,27035
+2019,Minnesota,MN,0,Crow Wing County,County,2018-10-01,2019-09-30,2019_MN,2019-03-01,27035
+2019,Minnesota,MN,0,Crow Wing County,County,2018-10-01,2019-09-30,2019_MN,2019-04-01,27035
+2019,Minnesota,MN,0,Crow Wing County,County,2018-10-01,2019-09-30,2019_MN,2019-05-01,27035
+2019,Minnesota,MN,0,Crow Wing County,County,2018-10-01,2019-09-30,2019_MN,2019-06-01,27035
+2019,Minnesota,MN,0,Crow Wing County,County,2018-10-01,2019-09-30,2019_MN,2019-07-01,27035
+2019,Minnesota,MN,0,Crow Wing County,County,2018-10-01,2019-09-30,2019_MN,2019-08-01,27035
+2019,Minnesota,MN,0,Crow Wing County,County,2018-10-01,2019-09-30,2019_MN,2019-09-01,27035
+2013,Minnesota,MN,0,Fond Du Lac,Reservation Area,2013-10-01,2014-09-30,2014_MN,2013-10-01,NA
+2013,Minnesota,MN,0,Fond Du Lac,Reservation Area,2013-10-01,2014-09-30,2014_MN,2013-11-01,NA
+2013,Minnesota,MN,0,Fond Du Lac,Reservation Area,2013-10-01,2014-09-30,2014_MN,2013-12-01,NA
+2014,Minnesota,MN,0,Fond Du Lac,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-01-01,NA
+2014,Minnesota,MN,0,Fond Du Lac,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-02-01,NA
+2014,Minnesota,MN,0,Fond Du Lac,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-03-01,NA
+2014,Minnesota,MN,0,Fond Du Lac,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-04-01,NA
+2014,Minnesota,MN,0,Fond Du Lac,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-05-01,NA
+2014,Minnesota,MN,0,Fond Du Lac,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-06-01,NA
+2014,Minnesota,MN,0,Fond Du Lac,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-07-01,NA
+2014,Minnesota,MN,0,Fond Du Lac,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-08-01,NA
+2014,Minnesota,MN,0,Fond Du Lac,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-09-01,NA
+2014,Minnesota,MN,0,Fond Du Lac,Reservation,2014-10-01,2015-09-30,2015_MN,2014-10-01,NA
+2014,Minnesota,MN,0,Fond Du Lac,Reservation,2014-10-01,2015-09-30,2015_MN,2014-11-01,NA
+2014,Minnesota,MN,0,Fond Du Lac,Reservation,2014-10-01,2015-09-30,2015_MN,2014-12-01,NA
+2015,Minnesota,MN,0,Fond Du Lac,Reservation,2014-10-01,2015-09-30,2015_MN,2015-01-01,NA
+2015,Minnesota,MN,0,Fond Du Lac,Reservation,2014-10-01,2015-09-30,2015_MN,2015-02-01,NA
+2015,Minnesota,MN,0,Fond Du Lac,Reservation,2014-10-01,2015-09-30,2015_MN,2015-03-01,NA
+2015,Minnesota,MN,0,Fond Du Lac,Reservation,2014-10-01,2015-09-30,2015_MN,2015-04-01,NA
+2015,Minnesota,MN,0,Fond Du Lac,Reservation,2014-10-01,2015-09-30,2015_MN,2015-05-01,NA
+2015,Minnesota,MN,0,Fond Du Lac,Reservation,2014-10-01,2015-09-30,2015_MN,2015-06-01,NA
+2015,Minnesota,MN,0,Fond Du Lac,Reservation,2014-10-01,2015-09-30,2015_MN,2015-07-01,NA
+2015,Minnesota,MN,0,Fond Du Lac,Reservation,2014-10-01,2015-09-30,2015_MN,2015-08-01,NA
+2015,Minnesota,MN,0,Fond Du Lac,Reservation,2014-10-01,2015-09-30,2015_MN,2015-09-01,NA
+2017,Minnesota,MN,0,Fond Du Lac,Reservation Area,2017-10-01,2018-09-30,2018_MN,2017-10-01,NA
+2017,Minnesota,MN,0,Fond Du Lac,Reservation Area,2017-10-01,2018-09-30,2018_MN,2017-11-01,NA
+2017,Minnesota,MN,0,Fond Du Lac,Reservation Area,2017-10-01,2018-09-30,2018_MN,2017-12-01,NA
+2018,Minnesota,MN,0,Fond Du Lac,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-01-01,NA
+2018,Minnesota,MN,0,Fond Du Lac,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-02-01,NA
+2018,Minnesota,MN,0,Fond Du Lac,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-03-01,NA
+2018,Minnesota,MN,0,Fond Du Lac,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-04-01,NA
+2018,Minnesota,MN,0,Fond Du Lac,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-05-01,NA
+2018,Minnesota,MN,0,Fond Du Lac,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-06-01,NA
+2018,Minnesota,MN,0,Fond Du Lac,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-07-01,NA
+2018,Minnesota,MN,0,Fond Du Lac,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-08-01,NA
+2018,Minnesota,MN,0,Fond Du Lac,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-09-01,NA
+2018,Minnesota,MN,0,Fond Du Lac,Reservation Area,2018-10-01,2019-09-30,2019_MN,2018-10-01,NA
+2018,Minnesota,MN,0,Fond Du Lac,Reservation Area,2018-10-01,2019-09-30,2019_MN,2018-11-01,NA
+2018,Minnesota,MN,0,Fond Du Lac,Reservation Area,2018-10-01,2019-09-30,2019_MN,2018-12-01,NA
+2019,Minnesota,MN,0,Fond Du Lac,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-01-01,NA
+2019,Minnesota,MN,0,Fond Du Lac,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-02-01,NA
+2019,Minnesota,MN,0,Fond Du Lac,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-03-01,NA
+2019,Minnesota,MN,0,Fond Du Lac,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-04-01,NA
+2019,Minnesota,MN,0,Fond Du Lac,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-05-01,NA
+2019,Minnesota,MN,0,Fond Du Lac,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-06-01,NA
+2019,Minnesota,MN,0,Fond Du Lac,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-07-01,NA
+2019,Minnesota,MN,0,Fond Du Lac,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-08-01,NA
+2019,Minnesota,MN,0,Fond Du Lac,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-09-01,NA
+2014,Minnesota,MN,0,Grand Portage,Reservation,2014-10-01,2015-09-30,2015_MN,2014-10-01,NA
+2014,Minnesota,MN,0,Grand Portage,Reservation,2014-10-01,2015-09-30,2015_MN,2014-11-01,NA
+2014,Minnesota,MN,0,Grand Portage,Reservation,2014-10-01,2015-09-30,2015_MN,2014-12-01,NA
+2015,Minnesota,MN,0,Grand Portage,Reservation,2014-10-01,2015-09-30,2015_MN,2015-01-01,NA
+2015,Minnesota,MN,0,Grand Portage,Reservation,2014-10-01,2015-09-30,2015_MN,2015-02-01,NA
+2015,Minnesota,MN,0,Grand Portage,Reservation,2014-10-01,2015-09-30,2015_MN,2015-03-01,NA
+2015,Minnesota,MN,0,Grand Portage,Reservation,2014-10-01,2015-09-30,2015_MN,2015-04-01,NA
+2015,Minnesota,MN,0,Grand Portage,Reservation,2014-10-01,2015-09-30,2015_MN,2015-05-01,NA
+2015,Minnesota,MN,0,Grand Portage,Reservation,2014-10-01,2015-09-30,2015_MN,2015-06-01,NA
+2015,Minnesota,MN,0,Grand Portage,Reservation,2014-10-01,2015-09-30,2015_MN,2015-07-01,NA
+2015,Minnesota,MN,0,Grand Portage,Reservation,2014-10-01,2015-09-30,2015_MN,2015-08-01,NA
+2015,Minnesota,MN,0,Grand Portage,Reservation,2014-10-01,2015-09-30,2015_MN,2015-09-01,NA
+2017,Minnesota,MN,0,Grand Portage,Reservation Area,2017-10-01,2018-09-30,2018_MN,2017-10-01,NA
+2017,Minnesota,MN,0,Grand Portage,Reservation Area,2017-10-01,2018-09-30,2018_MN,2017-11-01,NA
+2017,Minnesota,MN,0,Grand Portage,Reservation Area,2017-10-01,2018-09-30,2018_MN,2017-12-01,NA
+2018,Minnesota,MN,0,Grand Portage,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-01-01,NA
+2018,Minnesota,MN,0,Grand Portage,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-02-01,NA
+2018,Minnesota,MN,0,Grand Portage,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-03-01,NA
+2018,Minnesota,MN,0,Grand Portage,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-04-01,NA
+2018,Minnesota,MN,0,Grand Portage,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-05-01,NA
+2018,Minnesota,MN,0,Grand Portage,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-06-01,NA
+2018,Minnesota,MN,0,Grand Portage,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-07-01,NA
+2018,Minnesota,MN,0,Grand Portage,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-08-01,NA
+2018,Minnesota,MN,0,Grand Portage,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-09-01,NA
+2018,Minnesota,MN,0,Grand Portage,Reservation Area,2018-10-01,2019-09-30,2019_MN,2018-10-01,NA
+2018,Minnesota,MN,0,Grand Portage,Reservation Area,2018-10-01,2019-09-30,2019_MN,2018-11-01,NA
+2018,Minnesota,MN,0,Grand Portage,Reservation Area,2018-10-01,2019-09-30,2019_MN,2018-12-01,NA
+2019,Minnesota,MN,0,Grand Portage,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-01-01,NA
+2019,Minnesota,MN,0,Grand Portage,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-02-01,NA
+2019,Minnesota,MN,0,Grand Portage,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-03-01,NA
+2019,Minnesota,MN,0,Grand Portage,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-04-01,NA
+2019,Minnesota,MN,0,Grand Portage,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-05-01,NA
+2019,Minnesota,MN,0,Grand Portage,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-06-01,NA
+2019,Minnesota,MN,0,Grand Portage,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-07-01,NA
+2019,Minnesota,MN,0,Grand Portage,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-08-01,NA
+2019,Minnesota,MN,0,Grand Portage,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-09-01,NA
+2015,Minnesota,MN,0,Hubbard County,County,2015-10-01,2016-09-30,2016_MN,2015-10-01,27057
+2015,Minnesota,MN,0,Hubbard County,County,2015-10-01,2016-09-30,2016_MN,2015-11-01,27057
+2015,Minnesota,MN,0,Hubbard County,County,2015-10-01,2016-09-30,2016_MN,2015-12-01,27057
+2016,Minnesota,MN,0,Hubbard County,County,2015-10-01,2016-09-30,2016_MN,2016-01-01,27057
+2016,Minnesota,MN,0,Hubbard County,County,2015-10-01,2016-09-30,2016_MN,2016-02-01,27057
+2016,Minnesota,MN,0,Hubbard County,County,2015-10-01,2016-09-30,2016_MN,2016-03-01,27057
+2016,Minnesota,MN,0,Hubbard County,County,2015-10-01,2016-09-30,2016_MN,2016-04-01,27057
+2016,Minnesota,MN,0,Hubbard County,County,2015-10-01,2016-09-30,2016_MN,2016-05-01,27057
+2016,Minnesota,MN,0,Hubbard County,County,2015-10-01,2016-09-30,2016_MN,2016-06-01,27057
+2016,Minnesota,MN,0,Hubbard County,County,2015-10-01,2016-09-30,2016_MN,2016-07-01,27057
+2016,Minnesota,MN,0,Hubbard County,County,2015-10-01,2016-09-30,2016_MN,2016-08-01,27057
+2016,Minnesota,MN,0,Hubbard County,County,2015-10-01,2016-09-30,2016_MN,2016-09-01,27057
+2016,Minnesota,MN,0,Hubbard County,County,2016-10-01,2017-09-30,2017_MN,2016-10-01,27057
+2016,Minnesota,MN,0,Hubbard County,County,2016-10-01,2017-09-30,2017_MN,2016-11-01,27057
+2016,Minnesota,MN,0,Hubbard County,County,2016-10-01,2017-09-30,2017_MN,2016-12-01,27057
+2017,Minnesota,MN,0,Hubbard County,County,2016-10-01,2017-09-30,2017_MN,2017-01-01,27057
+2017,Minnesota,MN,0,Hubbard County,County,2016-10-01,2017-09-30,2017_MN,2017-02-01,27057
+2017,Minnesota,MN,0,Hubbard County,County,2016-10-01,2017-09-30,2017_MN,2017-03-01,27057
+2017,Minnesota,MN,0,Hubbard County,County,2016-10-01,2017-09-30,2017_MN,2017-04-01,27057
+2017,Minnesota,MN,0,Hubbard County,County,2016-10-01,2017-09-30,2017_MN,2017-05-01,27057
+2017,Minnesota,MN,0,Hubbard County,County,2016-10-01,2017-09-30,2017_MN,2017-06-01,27057
+2017,Minnesota,MN,0,Hubbard County,County,2016-10-01,2017-09-30,2017_MN,2017-07-01,27057
+2017,Minnesota,MN,0,Hubbard County,County,2016-10-01,2017-09-30,2017_MN,2017-08-01,27057
+2017,Minnesota,MN,0,Hubbard County,County,2016-10-01,2017-09-30,2017_MN,2017-09-01,27057
+2017,Minnesota,MN,0,Hubbard County,County,2017-10-01,2018-09-30,2018_MN,2017-10-01,27057
+2017,Minnesota,MN,0,Hubbard County,County,2017-10-01,2018-09-30,2018_MN,2017-11-01,27057
+2017,Minnesota,MN,0,Hubbard County,County,2017-10-01,2018-09-30,2018_MN,2017-12-01,27057
+2018,Minnesota,MN,0,Hubbard County,County,2017-10-01,2018-09-30,2018_MN,2018-01-01,27057
+2018,Minnesota,MN,0,Hubbard County,County,2017-10-01,2018-09-30,2018_MN,2018-02-01,27057
+2018,Minnesota,MN,0,Hubbard County,County,2017-10-01,2018-09-30,2018_MN,2018-03-01,27057
+2018,Minnesota,MN,0,Hubbard County,County,2017-10-01,2018-09-30,2018_MN,2018-04-01,27057
+2018,Minnesota,MN,0,Hubbard County,County,2017-10-01,2018-09-30,2018_MN,2018-05-01,27057
+2018,Minnesota,MN,0,Hubbard County,County,2017-10-01,2018-09-30,2018_MN,2018-06-01,27057
+2018,Minnesota,MN,0,Hubbard County,County,2017-10-01,2018-09-30,2018_MN,2018-07-01,27057
+2018,Minnesota,MN,0,Hubbard County,County,2017-10-01,2018-09-30,2018_MN,2018-08-01,27057
+2018,Minnesota,MN,0,Hubbard County,County,2017-10-01,2018-09-30,2018_MN,2018-09-01,27057
+2018,Minnesota,MN,0,Hubbard County,County,2018-10-01,2019-09-30,2019_MN,2018-10-01,27057
+2018,Minnesota,MN,0,Hubbard County,County,2018-10-01,2019-09-30,2019_MN,2018-11-01,27057
+2018,Minnesota,MN,0,Hubbard County,County,2018-10-01,2019-09-30,2019_MN,2018-12-01,27057
+2019,Minnesota,MN,0,Hubbard County,County,2018-10-01,2019-09-30,2019_MN,2019-01-01,27057
+2019,Minnesota,MN,0,Hubbard County,County,2018-10-01,2019-09-30,2019_MN,2019-02-01,27057
+2019,Minnesota,MN,0,Hubbard County,County,2018-10-01,2019-09-30,2019_MN,2019-03-01,27057
+2019,Minnesota,MN,0,Hubbard County,County,2018-10-01,2019-09-30,2019_MN,2019-04-01,27057
+2019,Minnesota,MN,0,Hubbard County,County,2018-10-01,2019-09-30,2019_MN,2019-05-01,27057
+2019,Minnesota,MN,0,Hubbard County,County,2018-10-01,2019-09-30,2019_MN,2019-06-01,27057
+2019,Minnesota,MN,0,Hubbard County,County,2018-10-01,2019-09-30,2019_MN,2019-07-01,27057
+2019,Minnesota,MN,0,Hubbard County,County,2018-10-01,2019-09-30,2019_MN,2019-08-01,27057
+2019,Minnesota,MN,0,Hubbard County,County,2018-10-01,2019-09-30,2019_MN,2019-09-01,27057
+2017,Minnesota,MN,0,Isanti County,County,2017-10-01,2018-09-30,2018_MN,2017-10-01,27059
+2017,Minnesota,MN,0,Isanti County,County,2017-10-01,2018-09-30,2018_MN,2017-11-01,27059
+2017,Minnesota,MN,0,Isanti County,County,2017-10-01,2018-09-30,2018_MN,2017-12-01,27059
+2018,Minnesota,MN,0,Isanti County,County,2017-10-01,2018-09-30,2018_MN,2018-01-01,27059
+2018,Minnesota,MN,0,Isanti County,County,2017-10-01,2018-09-30,2018_MN,2018-02-01,27059
+2018,Minnesota,MN,0,Isanti County,County,2017-10-01,2018-09-30,2018_MN,2018-03-01,27059
+2018,Minnesota,MN,0,Isanti County,County,2017-10-01,2018-09-30,2018_MN,2018-04-01,27059
+2018,Minnesota,MN,0,Isanti County,County,2017-10-01,2018-09-30,2018_MN,2018-05-01,27059
+2018,Minnesota,MN,0,Isanti County,County,2017-10-01,2018-09-30,2018_MN,2018-06-01,27059
+2018,Minnesota,MN,0,Isanti County,County,2017-10-01,2018-09-30,2018_MN,2018-07-01,27059
+2018,Minnesota,MN,0,Isanti County,County,2017-10-01,2018-09-30,2018_MN,2018-08-01,27059
+2018,Minnesota,MN,0,Isanti County,County,2017-10-01,2018-09-30,2018_MN,2018-09-01,27059
+2018,Minnesota,MN,0,Isanti County,County,2018-10-01,2019-09-30,2019_MN,2018-10-01,27059
+2018,Minnesota,MN,0,Isanti County,County,2018-10-01,2019-09-30,2019_MN,2018-11-01,27059
+2018,Minnesota,MN,0,Isanti County,County,2018-10-01,2019-09-30,2019_MN,2018-12-01,27059
+2019,Minnesota,MN,0,Isanti County,County,2018-10-01,2019-09-30,2019_MN,2019-01-01,27059
+2019,Minnesota,MN,0,Isanti County,County,2018-10-01,2019-09-30,2019_MN,2019-02-01,27059
+2019,Minnesota,MN,0,Isanti County,County,2018-10-01,2019-09-30,2019_MN,2019-03-01,27059
+2019,Minnesota,MN,0,Isanti County,County,2018-10-01,2019-09-30,2019_MN,2019-04-01,27059
+2019,Minnesota,MN,0,Isanti County,County,2018-10-01,2019-09-30,2019_MN,2019-05-01,27059
+2019,Minnesota,MN,0,Isanti County,County,2018-10-01,2019-09-30,2019_MN,2019-06-01,27059
+2019,Minnesota,MN,0,Isanti County,County,2018-10-01,2019-09-30,2019_MN,2019-07-01,27059
+2019,Minnesota,MN,0,Isanti County,County,2018-10-01,2019-09-30,2019_MN,2019-08-01,27059
+2019,Minnesota,MN,0,Isanti County,County,2018-10-01,2019-09-30,2019_MN,2019-09-01,27059
+2016,Minnesota,MN,0,Itasca County,County,2016-10-01,2017-09-30,2017_MN,2016-10-01,27061
+2016,Minnesota,MN,0,Itasca County,County,2016-10-01,2017-09-30,2017_MN,2016-11-01,27061
+2016,Minnesota,MN,0,Itasca County,County,2016-10-01,2017-09-30,2017_MN,2016-12-01,27061
+2017,Minnesota,MN,0,Itasca County,County,2016-10-01,2017-09-30,2017_MN,2017-01-01,27061
+2017,Minnesota,MN,0,Itasca County,County,2016-10-01,2017-09-30,2017_MN,2017-02-01,27061
+2017,Minnesota,MN,0,Itasca County,County,2016-10-01,2017-09-30,2017_MN,2017-03-01,27061
+2017,Minnesota,MN,0,Itasca County,County,2016-10-01,2017-09-30,2017_MN,2017-04-01,27061
+2017,Minnesota,MN,0,Itasca County,County,2016-10-01,2017-09-30,2017_MN,2017-05-01,27061
+2017,Minnesota,MN,0,Itasca County,County,2016-10-01,2017-09-30,2017_MN,2017-06-01,27061
+2017,Minnesota,MN,0,Itasca County,County,2016-10-01,2017-09-30,2017_MN,2017-07-01,27061
+2017,Minnesota,MN,0,Itasca County,County,2016-10-01,2017-09-30,2017_MN,2017-08-01,27061
+2017,Minnesota,MN,0,Itasca County,County,2016-10-01,2017-09-30,2017_MN,2017-09-01,27061
+2017,Minnesota,MN,0,Itasca County,County,2017-10-01,2018-09-30,2018_MN,2017-10-01,27061
+2017,Minnesota,MN,0,Itasca County,County,2017-10-01,2018-09-30,2018_MN,2017-11-01,27061
+2017,Minnesota,MN,0,Itasca County,County,2017-10-01,2018-09-30,2018_MN,2017-12-01,27061
+2018,Minnesota,MN,0,Itasca County,County,2017-10-01,2018-09-30,2018_MN,2018-01-01,27061
+2018,Minnesota,MN,0,Itasca County,County,2017-10-01,2018-09-30,2018_MN,2018-02-01,27061
+2018,Minnesota,MN,0,Itasca County,County,2017-10-01,2018-09-30,2018_MN,2018-03-01,27061
+2018,Minnesota,MN,0,Itasca County,County,2017-10-01,2018-09-30,2018_MN,2018-04-01,27061
+2018,Minnesota,MN,0,Itasca County,County,2017-10-01,2018-09-30,2018_MN,2018-05-01,27061
+2018,Minnesota,MN,0,Itasca County,County,2017-10-01,2018-09-30,2018_MN,2018-06-01,27061
+2018,Minnesota,MN,0,Itasca County,County,2017-10-01,2018-09-30,2018_MN,2018-07-01,27061
+2018,Minnesota,MN,0,Itasca County,County,2017-10-01,2018-09-30,2018_MN,2018-08-01,27061
+2018,Minnesota,MN,0,Itasca County,County,2017-10-01,2018-09-30,2018_MN,2018-09-01,27061
+2018,Minnesota,MN,0,Itasca County,County,2018-10-01,2019-09-30,2019_MN,2018-10-01,27061
+2018,Minnesota,MN,0,Itasca County,County,2018-10-01,2019-09-30,2019_MN,2018-11-01,27061
+2018,Minnesota,MN,0,Itasca County,County,2018-10-01,2019-09-30,2019_MN,2018-12-01,27061
+2019,Minnesota,MN,0,Itasca County,County,2018-10-01,2019-09-30,2019_MN,2019-01-01,27061
+2019,Minnesota,MN,0,Itasca County,County,2018-10-01,2019-09-30,2019_MN,2019-02-01,27061
+2019,Minnesota,MN,0,Itasca County,County,2018-10-01,2019-09-30,2019_MN,2019-03-01,27061
+2019,Minnesota,MN,0,Itasca County,County,2018-10-01,2019-09-30,2019_MN,2019-04-01,27061
+2019,Minnesota,MN,0,Itasca County,County,2018-10-01,2019-09-30,2019_MN,2019-05-01,27061
+2019,Minnesota,MN,0,Itasca County,County,2018-10-01,2019-09-30,2019_MN,2019-06-01,27061
+2019,Minnesota,MN,0,Itasca County,County,2018-10-01,2019-09-30,2019_MN,2019-07-01,27061
+2019,Minnesota,MN,0,Itasca County,County,2018-10-01,2019-09-30,2019_MN,2019-08-01,27061
+2019,Minnesota,MN,0,Itasca County,County,2018-10-01,2019-09-30,2019_MN,2019-09-01,27061
+2013,Minnesota,MN,0,Kanabec County,County,2013-10-01,2014-09-30,2014_MN,2013-10-01,27065
+2013,Minnesota,MN,0,Kanabec County,County,2013-10-01,2014-09-30,2014_MN,2013-11-01,27065
+2013,Minnesota,MN,0,Kanabec County,County,2013-10-01,2014-09-30,2014_MN,2013-12-01,27065
+2014,Minnesota,MN,0,Kanabec County,County,2013-10-01,2014-09-30,2014_MN,2014-01-01,27065
+2014,Minnesota,MN,0,Kanabec County,County,2013-10-01,2014-09-30,2014_MN,2014-02-01,27065
+2014,Minnesota,MN,0,Kanabec County,County,2013-10-01,2014-09-30,2014_MN,2014-03-01,27065
+2014,Minnesota,MN,0,Kanabec County,County,2013-10-01,2014-09-30,2014_MN,2014-04-01,27065
+2014,Minnesota,MN,0,Kanabec County,County,2013-10-01,2014-09-30,2014_MN,2014-05-01,27065
+2014,Minnesota,MN,0,Kanabec County,County,2013-10-01,2014-09-30,2014_MN,2014-06-01,27065
+2014,Minnesota,MN,0,Kanabec County,County,2013-10-01,2014-09-30,2014_MN,2014-07-01,27065
+2014,Minnesota,MN,0,Kanabec County,County,2013-10-01,2014-09-30,2014_MN,2014-08-01,27065
+2014,Minnesota,MN,0,Kanabec County,County,2013-10-01,2014-09-30,2014_MN,2014-09-01,27065
+2014,Minnesota,MN,0,Kanabec County,County,2014-10-01,2015-09-30,2015_MN,2014-10-01,27065
+2014,Minnesota,MN,0,Kanabec County,County,2014-10-01,2015-09-30,2015_MN,2014-11-01,27065
+2014,Minnesota,MN,0,Kanabec County,County,2014-10-01,2015-09-30,2015_MN,2014-12-01,27065
+2015,Minnesota,MN,0,Kanabec County,County,2014-10-01,2015-09-30,2015_MN,2015-01-01,27065
+2015,Minnesota,MN,0,Kanabec County,County,2014-10-01,2015-09-30,2015_MN,2015-02-01,27065
+2015,Minnesota,MN,0,Kanabec County,County,2014-10-01,2015-09-30,2015_MN,2015-03-01,27065
+2015,Minnesota,MN,0,Kanabec County,County,2014-10-01,2015-09-30,2015_MN,2015-04-01,27065
+2015,Minnesota,MN,0,Kanabec County,County,2014-10-01,2015-09-30,2015_MN,2015-05-01,27065
+2015,Minnesota,MN,0,Kanabec County,County,2014-10-01,2015-09-30,2015_MN,2015-06-01,27065
+2015,Minnesota,MN,0,Kanabec County,County,2014-10-01,2015-09-30,2015_MN,2015-07-01,27065
+2015,Minnesota,MN,0,Kanabec County,County,2014-10-01,2015-09-30,2015_MN,2015-08-01,27065
+2015,Minnesota,MN,0,Kanabec County,County,2014-10-01,2015-09-30,2015_MN,2015-09-01,27065
+2015,Minnesota,MN,0,Kanabec County,County,2015-10-01,2016-09-30,2016_MN,2015-10-01,27065
+2015,Minnesota,MN,0,Kanabec County,County,2015-10-01,2016-09-30,2016_MN,2015-11-01,27065
+2015,Minnesota,MN,0,Kanabec County,County,2015-10-01,2016-09-30,2016_MN,2015-12-01,27065
+2016,Minnesota,MN,0,Kanabec County,County,2015-10-01,2016-09-30,2016_MN,2016-01-01,27065
+2016,Minnesota,MN,0,Kanabec County,County,2015-10-01,2016-09-30,2016_MN,2016-02-01,27065
+2016,Minnesota,MN,0,Kanabec County,County,2015-10-01,2016-09-30,2016_MN,2016-03-01,27065
+2016,Minnesota,MN,0,Kanabec County,County,2015-10-01,2016-09-30,2016_MN,2016-04-01,27065
+2016,Minnesota,MN,0,Kanabec County,County,2015-10-01,2016-09-30,2016_MN,2016-05-01,27065
+2016,Minnesota,MN,0,Kanabec County,County,2015-10-01,2016-09-30,2016_MN,2016-06-01,27065
+2016,Minnesota,MN,0,Kanabec County,County,2015-10-01,2016-09-30,2016_MN,2016-07-01,27065
+2016,Minnesota,MN,0,Kanabec County,County,2015-10-01,2016-09-30,2016_MN,2016-08-01,27065
+2016,Minnesota,MN,0,Kanabec County,County,2015-10-01,2016-09-30,2016_MN,2016-09-01,27065
+2016,Minnesota,MN,0,Kanabec County,County,2016-10-01,2017-09-30,2017_MN,2016-10-01,27065
+2016,Minnesota,MN,0,Kanabec County,County,2016-10-01,2017-09-30,2017_MN,2016-11-01,27065
+2016,Minnesota,MN,0,Kanabec County,County,2016-10-01,2017-09-30,2017_MN,2016-12-01,27065
+2017,Minnesota,MN,0,Kanabec County,County,2016-10-01,2017-09-30,2017_MN,2017-01-01,27065
+2017,Minnesota,MN,0,Kanabec County,County,2016-10-01,2017-09-30,2017_MN,2017-02-01,27065
+2017,Minnesota,MN,0,Kanabec County,County,2016-10-01,2017-09-30,2017_MN,2017-03-01,27065
+2017,Minnesota,MN,0,Kanabec County,County,2016-10-01,2017-09-30,2017_MN,2017-04-01,27065
+2017,Minnesota,MN,0,Kanabec County,County,2016-10-01,2017-09-30,2017_MN,2017-05-01,27065
+2017,Minnesota,MN,0,Kanabec County,County,2016-10-01,2017-09-30,2017_MN,2017-06-01,27065
+2017,Minnesota,MN,0,Kanabec County,County,2016-10-01,2017-09-30,2017_MN,2017-07-01,27065
+2017,Minnesota,MN,0,Kanabec County,County,2016-10-01,2017-09-30,2017_MN,2017-08-01,27065
+2017,Minnesota,MN,0,Kanabec County,County,2016-10-01,2017-09-30,2017_MN,2017-09-01,27065
+2017,Minnesota,MN,0,Kanabec County,County,2017-10-01,2018-09-30,2018_MN,2017-10-01,27065
+2017,Minnesota,MN,0,Kanabec County,County,2017-10-01,2018-09-30,2018_MN,2017-11-01,27065
+2017,Minnesota,MN,0,Kanabec County,County,2017-10-01,2018-09-30,2018_MN,2017-12-01,27065
+2018,Minnesota,MN,0,Kanabec County,County,2017-10-01,2018-09-30,2018_MN,2018-01-01,27065
+2018,Minnesota,MN,0,Kanabec County,County,2017-10-01,2018-09-30,2018_MN,2018-02-01,27065
+2018,Minnesota,MN,0,Kanabec County,County,2017-10-01,2018-09-30,2018_MN,2018-03-01,27065
+2018,Minnesota,MN,0,Kanabec County,County,2017-10-01,2018-09-30,2018_MN,2018-04-01,27065
+2018,Minnesota,MN,0,Kanabec County,County,2017-10-01,2018-09-30,2018_MN,2018-05-01,27065
+2018,Minnesota,MN,0,Kanabec County,County,2017-10-01,2018-09-30,2018_MN,2018-06-01,27065
+2018,Minnesota,MN,0,Kanabec County,County,2017-10-01,2018-09-30,2018_MN,2018-07-01,27065
+2018,Minnesota,MN,0,Kanabec County,County,2017-10-01,2018-09-30,2018_MN,2018-08-01,27065
+2018,Minnesota,MN,0,Kanabec County,County,2017-10-01,2018-09-30,2018_MN,2018-09-01,27065
+2018,Minnesota,MN,0,Kanabec County,County,2018-10-01,2019-09-30,2019_MN,2018-10-01,27065
+2018,Minnesota,MN,0,Kanabec County,County,2018-10-01,2019-09-30,2019_MN,2018-11-01,27065
+2018,Minnesota,MN,0,Kanabec County,County,2018-10-01,2019-09-30,2019_MN,2018-12-01,27065
+2019,Minnesota,MN,0,Kanabec County,County,2018-10-01,2019-09-30,2019_MN,2019-01-01,27065
+2019,Minnesota,MN,0,Kanabec County,County,2018-10-01,2019-09-30,2019_MN,2019-02-01,27065
+2019,Minnesota,MN,0,Kanabec County,County,2018-10-01,2019-09-30,2019_MN,2019-03-01,27065
+2019,Minnesota,MN,0,Kanabec County,County,2018-10-01,2019-09-30,2019_MN,2019-04-01,27065
+2019,Minnesota,MN,0,Kanabec County,County,2018-10-01,2019-09-30,2019_MN,2019-05-01,27065
+2019,Minnesota,MN,0,Kanabec County,County,2018-10-01,2019-09-30,2019_MN,2019-06-01,27065
+2019,Minnesota,MN,0,Kanabec County,County,2018-10-01,2019-09-30,2019_MN,2019-07-01,27065
+2019,Minnesota,MN,0,Kanabec County,County,2018-10-01,2019-09-30,2019_MN,2019-08-01,27065
+2019,Minnesota,MN,0,Kanabec County,County,2018-10-01,2019-09-30,2019_MN,2019-09-01,27065
+2017,Minnesota,MN,0,Kittson County,County,2017-10-01,2018-09-30,2018_MN,2017-10-01,27069
+2017,Minnesota,MN,0,Kittson County,County,2017-10-01,2018-09-30,2018_MN,2017-11-01,27069
+2017,Minnesota,MN,0,Kittson County,County,2017-10-01,2018-09-30,2018_MN,2017-12-01,27069
+2018,Minnesota,MN,0,Kittson County,County,2017-10-01,2018-09-30,2018_MN,2018-01-01,27069
+2018,Minnesota,MN,0,Kittson County,County,2017-10-01,2018-09-30,2018_MN,2018-02-01,27069
+2018,Minnesota,MN,0,Kittson County,County,2017-10-01,2018-09-30,2018_MN,2018-03-01,27069
+2018,Minnesota,MN,0,Kittson County,County,2017-10-01,2018-09-30,2018_MN,2018-04-01,27069
+2018,Minnesota,MN,0,Kittson County,County,2017-10-01,2018-09-30,2018_MN,2018-05-01,27069
+2018,Minnesota,MN,0,Kittson County,County,2017-10-01,2018-09-30,2018_MN,2018-06-01,27069
+2018,Minnesota,MN,0,Kittson County,County,2017-10-01,2018-09-30,2018_MN,2018-07-01,27069
+2018,Minnesota,MN,0,Kittson County,County,2017-10-01,2018-09-30,2018_MN,2018-08-01,27069
+2018,Minnesota,MN,0,Kittson County,County,2017-10-01,2018-09-30,2018_MN,2018-09-01,27069
+2018,Minnesota,MN,0,Kittson County,County,2018-10-01,2019-09-30,2019_MN,2018-10-01,27069
+2018,Minnesota,MN,0,Kittson County,County,2018-10-01,2019-09-30,2019_MN,2018-11-01,27069
+2018,Minnesota,MN,0,Kittson County,County,2018-10-01,2019-09-30,2019_MN,2018-12-01,27069
+2019,Minnesota,MN,0,Kittson County,County,2018-10-01,2019-09-30,2019_MN,2019-01-01,27069
+2019,Minnesota,MN,0,Kittson County,County,2018-10-01,2019-09-30,2019_MN,2019-02-01,27069
+2019,Minnesota,MN,0,Kittson County,County,2018-10-01,2019-09-30,2019_MN,2019-03-01,27069
+2019,Minnesota,MN,0,Kittson County,County,2018-10-01,2019-09-30,2019_MN,2019-04-01,27069
+2019,Minnesota,MN,0,Kittson County,County,2018-10-01,2019-09-30,2019_MN,2019-05-01,27069
+2019,Minnesota,MN,0,Kittson County,County,2018-10-01,2019-09-30,2019_MN,2019-06-01,27069
+2019,Minnesota,MN,0,Kittson County,County,2018-10-01,2019-09-30,2019_MN,2019-07-01,27069
+2019,Minnesota,MN,0,Kittson County,County,2018-10-01,2019-09-30,2019_MN,2019-08-01,27069
+2019,Minnesota,MN,0,Kittson County,County,2018-10-01,2019-09-30,2019_MN,2019-09-01,27069
+2015,Minnesota,MN,0,Koochiching County,County,2015-10-01,2016-09-30,2016_MN,2015-10-01,27071
+2015,Minnesota,MN,0,Koochiching County,County,2015-10-01,2016-09-30,2016_MN,2015-11-01,27071
+2015,Minnesota,MN,0,Koochiching County,County,2015-10-01,2016-09-30,2016_MN,2015-12-01,27071
+2016,Minnesota,MN,0,Koochiching County,County,2015-10-01,2016-09-30,2016_MN,2016-01-01,27071
+2016,Minnesota,MN,0,Koochiching County,County,2015-10-01,2016-09-30,2016_MN,2016-02-01,27071
+2016,Minnesota,MN,0,Koochiching County,County,2015-10-01,2016-09-30,2016_MN,2016-03-01,27071
+2016,Minnesota,MN,0,Koochiching County,County,2015-10-01,2016-09-30,2016_MN,2016-04-01,27071
+2016,Minnesota,MN,0,Koochiching County,County,2015-10-01,2016-09-30,2016_MN,2016-05-01,27071
+2016,Minnesota,MN,0,Koochiching County,County,2015-10-01,2016-09-30,2016_MN,2016-06-01,27071
+2016,Minnesota,MN,0,Koochiching County,County,2015-10-01,2016-09-30,2016_MN,2016-07-01,27071
+2016,Minnesota,MN,0,Koochiching County,County,2015-10-01,2016-09-30,2016_MN,2016-08-01,27071
+2016,Minnesota,MN,0,Koochiching County,County,2015-10-01,2016-09-30,2016_MN,2016-09-01,27071
+2016,Minnesota,MN,0,Koochiching County,County,2016-10-01,2017-09-30,2017_MN,2016-10-01,27071
+2016,Minnesota,MN,0,Koochiching County,County,2016-10-01,2017-09-30,2017_MN,2016-11-01,27071
+2016,Minnesota,MN,0,Koochiching County,County,2016-10-01,2017-09-30,2017_MN,2016-12-01,27071
+2017,Minnesota,MN,0,Koochiching County,County,2016-10-01,2017-09-30,2017_MN,2017-01-01,27071
+2017,Minnesota,MN,0,Koochiching County,County,2016-10-01,2017-09-30,2017_MN,2017-02-01,27071
+2017,Minnesota,MN,0,Koochiching County,County,2016-10-01,2017-09-30,2017_MN,2017-03-01,27071
+2017,Minnesota,MN,0,Koochiching County,County,2016-10-01,2017-09-30,2017_MN,2017-04-01,27071
+2017,Minnesota,MN,0,Koochiching County,County,2016-10-01,2017-09-30,2017_MN,2017-05-01,27071
+2017,Minnesota,MN,0,Koochiching County,County,2016-10-01,2017-09-30,2017_MN,2017-06-01,27071
+2017,Minnesota,MN,0,Koochiching County,County,2016-10-01,2017-09-30,2017_MN,2017-07-01,27071
+2017,Minnesota,MN,0,Koochiching County,County,2016-10-01,2017-09-30,2017_MN,2017-08-01,27071
+2017,Minnesota,MN,0,Koochiching County,County,2016-10-01,2017-09-30,2017_MN,2017-09-01,27071
+2017,Minnesota,MN,0,Koochiching County,County,2017-10-01,2018-09-30,2018_MN,2017-10-01,27071
+2017,Minnesota,MN,0,Koochiching County,County,2017-10-01,2018-09-30,2018_MN,2017-11-01,27071
+2017,Minnesota,MN,0,Koochiching County,County,2017-10-01,2018-09-30,2018_MN,2017-12-01,27071
+2018,Minnesota,MN,0,Koochiching County,County,2017-10-01,2018-09-30,2018_MN,2018-01-01,27071
+2018,Minnesota,MN,0,Koochiching County,County,2017-10-01,2018-09-30,2018_MN,2018-02-01,27071
+2018,Minnesota,MN,0,Koochiching County,County,2017-10-01,2018-09-30,2018_MN,2018-03-01,27071
+2018,Minnesota,MN,0,Koochiching County,County,2017-10-01,2018-09-30,2018_MN,2018-04-01,27071
+2018,Minnesota,MN,0,Koochiching County,County,2017-10-01,2018-09-30,2018_MN,2018-05-01,27071
+2018,Minnesota,MN,0,Koochiching County,County,2017-10-01,2018-09-30,2018_MN,2018-06-01,27071
+2018,Minnesota,MN,0,Koochiching County,County,2017-10-01,2018-09-30,2018_MN,2018-07-01,27071
+2018,Minnesota,MN,0,Koochiching County,County,2017-10-01,2018-09-30,2018_MN,2018-08-01,27071
+2018,Minnesota,MN,0,Koochiching County,County,2017-10-01,2018-09-30,2018_MN,2018-09-01,27071
+2018,Minnesota,MN,0,Koochiching County,County,2018-10-01,2019-09-30,2019_MN,2018-10-01,27071
+2018,Minnesota,MN,0,Koochiching County,County,2018-10-01,2019-09-30,2019_MN,2018-11-01,27071
+2018,Minnesota,MN,0,Koochiching County,County,2018-10-01,2019-09-30,2019_MN,2018-12-01,27071
+2019,Minnesota,MN,0,Koochiching County,County,2018-10-01,2019-09-30,2019_MN,2019-01-01,27071
+2019,Minnesota,MN,0,Koochiching County,County,2018-10-01,2019-09-30,2019_MN,2019-02-01,27071
+2019,Minnesota,MN,0,Koochiching County,County,2018-10-01,2019-09-30,2019_MN,2019-03-01,27071
+2019,Minnesota,MN,0,Koochiching County,County,2018-10-01,2019-09-30,2019_MN,2019-04-01,27071
+2019,Minnesota,MN,0,Koochiching County,County,2018-10-01,2019-09-30,2019_MN,2019-05-01,27071
+2019,Minnesota,MN,0,Koochiching County,County,2018-10-01,2019-09-30,2019_MN,2019-06-01,27071
+2019,Minnesota,MN,0,Koochiching County,County,2018-10-01,2019-09-30,2019_MN,2019-07-01,27071
+2019,Minnesota,MN,0,Koochiching County,County,2018-10-01,2019-09-30,2019_MN,2019-08-01,27071
+2019,Minnesota,MN,0,Koochiching County,County,2018-10-01,2019-09-30,2019_MN,2019-09-01,27071
+2017,Minnesota,MN,0,Lake County,County,2017-10-01,2018-09-30,2018_MN,2017-10-01,27075
+2017,Minnesota,MN,0,Lake County,County,2017-10-01,2018-09-30,2018_MN,2017-11-01,27075
+2017,Minnesota,MN,0,Lake County,County,2017-10-01,2018-09-30,2018_MN,2017-12-01,27075
+2018,Minnesota,MN,0,Lake County,County,2017-10-01,2018-09-30,2018_MN,2018-01-01,27075
+2018,Minnesota,MN,0,Lake County,County,2017-10-01,2018-09-30,2018_MN,2018-02-01,27075
+2018,Minnesota,MN,0,Lake County,County,2017-10-01,2018-09-30,2018_MN,2018-03-01,27075
+2018,Minnesota,MN,0,Lake County,County,2017-10-01,2018-09-30,2018_MN,2018-04-01,27075
+2018,Minnesota,MN,0,Lake County,County,2017-10-01,2018-09-30,2018_MN,2018-05-01,27075
+2018,Minnesota,MN,0,Lake County,County,2017-10-01,2018-09-30,2018_MN,2018-06-01,27075
+2018,Minnesota,MN,0,Lake County,County,2017-10-01,2018-09-30,2018_MN,2018-07-01,27075
+2018,Minnesota,MN,0,Lake County,County,2017-10-01,2018-09-30,2018_MN,2018-08-01,27075
+2018,Minnesota,MN,0,Lake County,County,2017-10-01,2018-09-30,2018_MN,2018-09-01,27075
+2018,Minnesota,MN,0,Lake County,County,2018-10-01,2019-09-30,2019_MN,2018-10-01,27075
+2018,Minnesota,MN,0,Lake County,County,2018-10-01,2019-09-30,2019_MN,2018-11-01,27075
+2018,Minnesota,MN,0,Lake County,County,2018-10-01,2019-09-30,2019_MN,2018-12-01,27075
+2019,Minnesota,MN,0,Lake County,County,2018-10-01,2019-09-30,2019_MN,2019-01-01,27075
+2019,Minnesota,MN,0,Lake County,County,2018-10-01,2019-09-30,2019_MN,2019-02-01,27075
+2019,Minnesota,MN,0,Lake County,County,2018-10-01,2019-09-30,2019_MN,2019-03-01,27075
+2019,Minnesota,MN,0,Lake County,County,2018-10-01,2019-09-30,2019_MN,2019-04-01,27075
+2019,Minnesota,MN,0,Lake County,County,2018-10-01,2019-09-30,2019_MN,2019-05-01,27075
+2019,Minnesota,MN,0,Lake County,County,2018-10-01,2019-09-30,2019_MN,2019-06-01,27075
+2019,Minnesota,MN,0,Lake County,County,2018-10-01,2019-09-30,2019_MN,2019-07-01,27075
+2019,Minnesota,MN,0,Lake County,County,2018-10-01,2019-09-30,2019_MN,2019-08-01,27075
+2019,Minnesota,MN,0,Lake County,County,2018-10-01,2019-09-30,2019_MN,2019-09-01,27075
+2015,Minnesota,MN,0,Lake Of The Woods County,County,2015-10-01,2016-09-30,2016_MN,2015-10-01,27077
+2015,Minnesota,MN,0,Lake Of The Woods County,County,2015-10-01,2016-09-30,2016_MN,2015-11-01,27077
+2015,Minnesota,MN,0,Lake Of The Woods County,County,2015-10-01,2016-09-30,2016_MN,2015-12-01,27077
+2016,Minnesota,MN,0,Lake Of The Woods County,County,2015-10-01,2016-09-30,2016_MN,2016-01-01,27077
+2016,Minnesota,MN,0,Lake Of The Woods County,County,2015-10-01,2016-09-30,2016_MN,2016-02-01,27077
+2016,Minnesota,MN,0,Lake Of The Woods County,County,2015-10-01,2016-09-30,2016_MN,2016-03-01,27077
+2016,Minnesota,MN,0,Lake Of The Woods County,County,2015-10-01,2016-09-30,2016_MN,2016-04-01,27077
+2016,Minnesota,MN,0,Lake Of The Woods County,County,2015-10-01,2016-09-30,2016_MN,2016-05-01,27077
+2016,Minnesota,MN,0,Lake Of The Woods County,County,2015-10-01,2016-09-30,2016_MN,2016-06-01,27077
+2016,Minnesota,MN,0,Lake Of The Woods County,County,2015-10-01,2016-09-30,2016_MN,2016-07-01,27077
+2016,Minnesota,MN,0,Lake Of The Woods County,County,2015-10-01,2016-09-30,2016_MN,2016-08-01,27077
+2016,Minnesota,MN,0,Lake Of The Woods County,County,2015-10-01,2016-09-30,2016_MN,2016-09-01,27077
+2016,Minnesota,MN,0,Lake Of The Woods County,County,2016-10-01,2017-09-30,2017_MN,2016-10-01,27077
+2016,Minnesota,MN,0,Lake Of The Woods County,County,2016-10-01,2017-09-30,2017_MN,2016-11-01,27077
+2016,Minnesota,MN,0,Lake Of The Woods County,County,2016-10-01,2017-09-30,2017_MN,2016-12-01,27077
+2017,Minnesota,MN,0,Lake Of The Woods County,County,2016-10-01,2017-09-30,2017_MN,2017-01-01,27077
+2017,Minnesota,MN,0,Lake Of The Woods County,County,2016-10-01,2017-09-30,2017_MN,2017-02-01,27077
+2017,Minnesota,MN,0,Lake Of The Woods County,County,2016-10-01,2017-09-30,2017_MN,2017-03-01,27077
+2017,Minnesota,MN,0,Lake Of The Woods County,County,2016-10-01,2017-09-30,2017_MN,2017-04-01,27077
+2017,Minnesota,MN,0,Lake Of The Woods County,County,2016-10-01,2017-09-30,2017_MN,2017-05-01,27077
+2017,Minnesota,MN,0,Lake Of The Woods County,County,2016-10-01,2017-09-30,2017_MN,2017-06-01,27077
+2017,Minnesota,MN,0,Lake Of The Woods County,County,2016-10-01,2017-09-30,2017_MN,2017-07-01,27077
+2017,Minnesota,MN,0,Lake Of The Woods County,County,2016-10-01,2017-09-30,2017_MN,2017-08-01,27077
+2017,Minnesota,MN,0,Lake Of The Woods County,County,2016-10-01,2017-09-30,2017_MN,2017-09-01,27077
+2017,Minnesota,MN,0,Lake Of The Woods County,County,2017-10-01,2018-09-30,2018_MN,2017-10-01,27077
+2017,Minnesota,MN,0,Lake Of The Woods County,County,2017-10-01,2018-09-30,2018_MN,2017-11-01,27077
+2017,Minnesota,MN,0,Lake Of The Woods County,County,2017-10-01,2018-09-30,2018_MN,2017-12-01,27077
+2018,Minnesota,MN,0,Lake Of The Woods County,County,2017-10-01,2018-09-30,2018_MN,2018-01-01,27077
+2018,Minnesota,MN,0,Lake Of The Woods County,County,2017-10-01,2018-09-30,2018_MN,2018-02-01,27077
+2018,Minnesota,MN,0,Lake Of The Woods County,County,2017-10-01,2018-09-30,2018_MN,2018-03-01,27077
+2018,Minnesota,MN,0,Lake Of The Woods County,County,2017-10-01,2018-09-30,2018_MN,2018-04-01,27077
+2018,Minnesota,MN,0,Lake Of The Woods County,County,2017-10-01,2018-09-30,2018_MN,2018-05-01,27077
+2018,Minnesota,MN,0,Lake Of The Woods County,County,2017-10-01,2018-09-30,2018_MN,2018-06-01,27077
+2018,Minnesota,MN,0,Lake Of The Woods County,County,2017-10-01,2018-09-30,2018_MN,2018-07-01,27077
+2018,Minnesota,MN,0,Lake Of The Woods County,County,2017-10-01,2018-09-30,2018_MN,2018-08-01,27077
+2018,Minnesota,MN,0,Lake Of The Woods County,County,2017-10-01,2018-09-30,2018_MN,2018-09-01,27077
+2018,Minnesota,MN,0,Lake Of The Woods County,County,2018-10-01,2019-09-30,2019_MN,2018-10-01,27077
+2018,Minnesota,MN,0,Lake Of The Woods County,County,2018-10-01,2019-09-30,2019_MN,2018-11-01,27077
+2018,Minnesota,MN,0,Lake Of The Woods County,County,2018-10-01,2019-09-30,2019_MN,2018-12-01,27077
+2019,Minnesota,MN,0,Lake Of The Woods County,County,2018-10-01,2019-09-30,2019_MN,2019-01-01,27077
+2019,Minnesota,MN,0,Lake Of The Woods County,County,2018-10-01,2019-09-30,2019_MN,2019-02-01,27077
+2019,Minnesota,MN,0,Lake Of The Woods County,County,2018-10-01,2019-09-30,2019_MN,2019-03-01,27077
+2019,Minnesota,MN,0,Lake Of The Woods County,County,2018-10-01,2019-09-30,2019_MN,2019-04-01,27077
+2019,Minnesota,MN,0,Lake Of The Woods County,County,2018-10-01,2019-09-30,2019_MN,2019-05-01,27077
+2019,Minnesota,MN,0,Lake Of The Woods County,County,2018-10-01,2019-09-30,2019_MN,2019-06-01,27077
+2019,Minnesota,MN,0,Lake Of The Woods County,County,2018-10-01,2019-09-30,2019_MN,2019-07-01,27077
+2019,Minnesota,MN,0,Lake Of The Woods County,County,2018-10-01,2019-09-30,2019_MN,2019-08-01,27077
+2019,Minnesota,MN,0,Lake Of The Woods County,County,2018-10-01,2019-09-30,2019_MN,2019-09-01,27077
+2013,Minnesota,MN,0,Leech Lake,Reservation Area,2013-10-01,2014-09-30,2014_MN,2013-10-01,NA
+2013,Minnesota,MN,0,Leech Lake,Reservation Area,2013-10-01,2014-09-30,2014_MN,2013-11-01,NA
+2013,Minnesota,MN,0,Leech Lake,Reservation Area,2013-10-01,2014-09-30,2014_MN,2013-12-01,NA
+2014,Minnesota,MN,0,Leech Lake,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-01-01,NA
+2014,Minnesota,MN,0,Leech Lake,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-02-01,NA
+2014,Minnesota,MN,0,Leech Lake,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-03-01,NA
+2014,Minnesota,MN,0,Leech Lake,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-04-01,NA
+2014,Minnesota,MN,0,Leech Lake,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-05-01,NA
+2014,Minnesota,MN,0,Leech Lake,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-06-01,NA
+2014,Minnesota,MN,0,Leech Lake,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-07-01,NA
+2014,Minnesota,MN,0,Leech Lake,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-08-01,NA
+2014,Minnesota,MN,0,Leech Lake,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-09-01,NA
+2014,Minnesota,MN,0,Leech Lake,Reservation,2014-10-01,2015-09-30,2015_MN,2014-10-01,NA
+2014,Minnesota,MN,0,Leech Lake,Reservation,2014-10-01,2015-09-30,2015_MN,2014-11-01,NA
+2014,Minnesota,MN,0,Leech Lake,Reservation,2014-10-01,2015-09-30,2015_MN,2014-12-01,NA
+2015,Minnesota,MN,0,Leech Lake,Reservation,2014-10-01,2015-09-30,2015_MN,2015-01-01,NA
+2015,Minnesota,MN,0,Leech Lake,Reservation,2014-10-01,2015-09-30,2015_MN,2015-02-01,NA
+2015,Minnesota,MN,0,Leech Lake,Reservation,2014-10-01,2015-09-30,2015_MN,2015-03-01,NA
+2015,Minnesota,MN,0,Leech Lake,Reservation,2014-10-01,2015-09-30,2015_MN,2015-04-01,NA
+2015,Minnesota,MN,0,Leech Lake,Reservation,2014-10-01,2015-09-30,2015_MN,2015-05-01,NA
+2015,Minnesota,MN,0,Leech Lake,Reservation,2014-10-01,2015-09-30,2015_MN,2015-06-01,NA
+2015,Minnesota,MN,0,Leech Lake,Reservation,2014-10-01,2015-09-30,2015_MN,2015-07-01,NA
+2015,Minnesota,MN,0,Leech Lake,Reservation,2014-10-01,2015-09-30,2015_MN,2015-08-01,NA
+2015,Minnesota,MN,0,Leech Lake,Reservation,2014-10-01,2015-09-30,2015_MN,2015-09-01,NA
+2017,Minnesota,MN,0,Leech Lake,Reservation Area,2017-10-01,2018-09-30,2018_MN,2017-10-01,NA
+2017,Minnesota,MN,0,Leech Lake,Reservation Area,2017-10-01,2018-09-30,2018_MN,2017-11-01,NA
+2017,Minnesota,MN,0,Leech Lake,Reservation Area,2017-10-01,2018-09-30,2018_MN,2017-12-01,NA
+2018,Minnesota,MN,0,Leech Lake,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-01-01,NA
+2018,Minnesota,MN,0,Leech Lake,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-02-01,NA
+2018,Minnesota,MN,0,Leech Lake,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-03-01,NA
+2018,Minnesota,MN,0,Leech Lake,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-04-01,NA
+2018,Minnesota,MN,0,Leech Lake,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-05-01,NA
+2018,Minnesota,MN,0,Leech Lake,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-06-01,NA
+2018,Minnesota,MN,0,Leech Lake,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-07-01,NA
+2018,Minnesota,MN,0,Leech Lake,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-08-01,NA
+2018,Minnesota,MN,0,Leech Lake,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-09-01,NA
+2018,Minnesota,MN,0,Leech Lake,Reservation Area,2018-10-01,2019-09-30,2019_MN,2018-10-01,NA
+2018,Minnesota,MN,0,Leech Lake,Reservation Area,2018-10-01,2019-09-30,2019_MN,2018-11-01,NA
+2018,Minnesota,MN,0,Leech Lake,Reservation Area,2018-10-01,2019-09-30,2019_MN,2018-12-01,NA
+2019,Minnesota,MN,0,Leech Lake,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-01-01,NA
+2019,Minnesota,MN,0,Leech Lake,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-02-01,NA
+2019,Minnesota,MN,0,Leech Lake,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-03-01,NA
+2019,Minnesota,MN,0,Leech Lake,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-04-01,NA
+2019,Minnesota,MN,0,Leech Lake,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-05-01,NA
+2019,Minnesota,MN,0,Leech Lake,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-06-01,NA
+2019,Minnesota,MN,0,Leech Lake,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-07-01,NA
+2019,Minnesota,MN,0,Leech Lake,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-08-01,NA
+2019,Minnesota,MN,0,Leech Lake,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-09-01,NA
+2013,Minnesota,MN,0,Lower Sioux,Reservation Area,2013-10-01,2014-09-30,2014_MN,2013-10-01,NA
+2013,Minnesota,MN,0,Lower Sioux,Reservation Area,2013-10-01,2014-09-30,2014_MN,2013-11-01,NA
+2013,Minnesota,MN,0,Lower Sioux,Reservation Area,2013-10-01,2014-09-30,2014_MN,2013-12-01,NA
+2014,Minnesota,MN,0,Lower Sioux,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-01-01,NA
+2014,Minnesota,MN,0,Lower Sioux,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-02-01,NA
+2014,Minnesota,MN,0,Lower Sioux,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-03-01,NA
+2014,Minnesota,MN,0,Lower Sioux,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-04-01,NA
+2014,Minnesota,MN,0,Lower Sioux,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-05-01,NA
+2014,Minnesota,MN,0,Lower Sioux,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-06-01,NA
+2014,Minnesota,MN,0,Lower Sioux,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-07-01,NA
+2014,Minnesota,MN,0,Lower Sioux,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-08-01,NA
+2014,Minnesota,MN,0,Lower Sioux,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-09-01,NA
+2014,Minnesota,MN,0,Lower Sioux,Reservation,2014-10-01,2015-09-30,2015_MN,2014-10-01,NA
+2014,Minnesota,MN,0,Lower Sioux,Reservation,2014-10-01,2015-09-30,2015_MN,2014-11-01,NA
+2014,Minnesota,MN,0,Lower Sioux,Reservation,2014-10-01,2015-09-30,2015_MN,2014-12-01,NA
+2015,Minnesota,MN,0,Lower Sioux,Reservation,2014-10-01,2015-09-30,2015_MN,2015-01-01,NA
+2015,Minnesota,MN,0,Lower Sioux,Reservation,2014-10-01,2015-09-30,2015_MN,2015-02-01,NA
+2015,Minnesota,MN,0,Lower Sioux,Reservation,2014-10-01,2015-09-30,2015_MN,2015-03-01,NA
+2015,Minnesota,MN,0,Lower Sioux,Reservation,2014-10-01,2015-09-30,2015_MN,2015-04-01,NA
+2015,Minnesota,MN,0,Lower Sioux,Reservation,2014-10-01,2015-09-30,2015_MN,2015-05-01,NA
+2015,Minnesota,MN,0,Lower Sioux,Reservation,2014-10-01,2015-09-30,2015_MN,2015-06-01,NA
+2015,Minnesota,MN,0,Lower Sioux,Reservation,2014-10-01,2015-09-30,2015_MN,2015-07-01,NA
+2015,Minnesota,MN,0,Lower Sioux,Reservation,2014-10-01,2015-09-30,2015_MN,2015-08-01,NA
+2015,Minnesota,MN,0,Lower Sioux,Reservation,2014-10-01,2015-09-30,2015_MN,2015-09-01,NA
+2017,Minnesota,MN,0,Lower Sioux Community,Reservation Area,2017-10-01,2018-09-30,2018_MN,2017-10-01,NA
+2017,Minnesota,MN,0,Lower Sioux Community,Reservation Area,2017-10-01,2018-09-30,2018_MN,2017-11-01,NA
+2017,Minnesota,MN,0,Lower Sioux Community,Reservation Area,2017-10-01,2018-09-30,2018_MN,2017-12-01,NA
+2018,Minnesota,MN,0,Lower Sioux Community,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-01-01,NA
+2018,Minnesota,MN,0,Lower Sioux Community,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-02-01,NA
+2018,Minnesota,MN,0,Lower Sioux Community,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-03-01,NA
+2018,Minnesota,MN,0,Lower Sioux Community,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-04-01,NA
+2018,Minnesota,MN,0,Lower Sioux Community,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-05-01,NA
+2018,Minnesota,MN,0,Lower Sioux Community,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-06-01,NA
+2018,Minnesota,MN,0,Lower Sioux Community,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-07-01,NA
+2018,Minnesota,MN,0,Lower Sioux Community,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-08-01,NA
+2018,Minnesota,MN,0,Lower Sioux Community,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-09-01,NA
+2018,Minnesota,MN,0,Lower Sioux Community,Reservation Area,2018-10-01,2019-09-30,2019_MN,2018-10-01,NA
+2018,Minnesota,MN,0,Lower Sioux Community,Reservation Area,2018-10-01,2019-09-30,2019_MN,2018-11-01,NA
+2018,Minnesota,MN,0,Lower Sioux Community,Reservation Area,2018-10-01,2019-09-30,2019_MN,2018-12-01,NA
+2019,Minnesota,MN,0,Lower Sioux Community,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-01-01,NA
+2019,Minnesota,MN,0,Lower Sioux Community,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-02-01,NA
+2019,Minnesota,MN,0,Lower Sioux Community,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-03-01,NA
+2019,Minnesota,MN,0,Lower Sioux Community,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-04-01,NA
+2019,Minnesota,MN,0,Lower Sioux Community,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-05-01,NA
+2019,Minnesota,MN,0,Lower Sioux Community,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-06-01,NA
+2019,Minnesota,MN,0,Lower Sioux Community,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-07-01,NA
+2019,Minnesota,MN,0,Lower Sioux Community,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-08-01,NA
+2019,Minnesota,MN,0,Lower Sioux Community,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-09-01,NA
+2016,Minnesota,MN,0,Mahnomen County,County,2016-10-01,2017-09-30,2017_MN,2016-10-01,27087
+2016,Minnesota,MN,0,Mahnomen County,County,2016-10-01,2017-09-30,2017_MN,2016-11-01,27087
+2016,Minnesota,MN,0,Mahnomen County,County,2016-10-01,2017-09-30,2017_MN,2016-12-01,27087
+2017,Minnesota,MN,0,Mahnomen County,County,2016-10-01,2017-09-30,2017_MN,2017-01-01,27087
+2017,Minnesota,MN,0,Mahnomen County,County,2016-10-01,2017-09-30,2017_MN,2017-02-01,27087
+2017,Minnesota,MN,0,Mahnomen County,County,2016-10-01,2017-09-30,2017_MN,2017-03-01,27087
+2017,Minnesota,MN,0,Mahnomen County,County,2016-10-01,2017-09-30,2017_MN,2017-04-01,27087
+2017,Minnesota,MN,0,Mahnomen County,County,2016-10-01,2017-09-30,2017_MN,2017-05-01,27087
+2017,Minnesota,MN,0,Mahnomen County,County,2016-10-01,2017-09-30,2017_MN,2017-06-01,27087
+2017,Minnesota,MN,0,Mahnomen County,County,2016-10-01,2017-09-30,2017_MN,2017-07-01,27087
+2017,Minnesota,MN,0,Mahnomen County,County,2016-10-01,2017-09-30,2017_MN,2017-08-01,27087
+2017,Minnesota,MN,0,Mahnomen County,County,2016-10-01,2017-09-30,2017_MN,2017-09-01,27087
+2017,Minnesota,MN,0,Mahnomen County,County,2017-10-01,2018-09-30,2018_MN,2017-10-01,27087
+2017,Minnesota,MN,0,Mahnomen County,County,2017-10-01,2018-09-30,2018_MN,2017-11-01,27087
+2017,Minnesota,MN,0,Mahnomen County,County,2017-10-01,2018-09-30,2018_MN,2017-12-01,27087
+2018,Minnesota,MN,0,Mahnomen County,County,2017-10-01,2018-09-30,2018_MN,2018-01-01,27087
+2018,Minnesota,MN,0,Mahnomen County,County,2017-10-01,2018-09-30,2018_MN,2018-02-01,27087
+2018,Minnesota,MN,0,Mahnomen County,County,2017-10-01,2018-09-30,2018_MN,2018-03-01,27087
+2018,Minnesota,MN,0,Mahnomen County,County,2017-10-01,2018-09-30,2018_MN,2018-04-01,27087
+2018,Minnesota,MN,0,Mahnomen County,County,2017-10-01,2018-09-30,2018_MN,2018-05-01,27087
+2018,Minnesota,MN,0,Mahnomen County,County,2017-10-01,2018-09-30,2018_MN,2018-06-01,27087
+2018,Minnesota,MN,0,Mahnomen County,County,2017-10-01,2018-09-30,2018_MN,2018-07-01,27087
+2018,Minnesota,MN,0,Mahnomen County,County,2017-10-01,2018-09-30,2018_MN,2018-08-01,27087
+2018,Minnesota,MN,0,Mahnomen County,County,2017-10-01,2018-09-30,2018_MN,2018-09-01,27087
+2018,Minnesota,MN,0,Mahnomen County,County,2018-10-01,2019-09-30,2019_MN,2018-10-01,27087
+2018,Minnesota,MN,0,Mahnomen County,County,2018-10-01,2019-09-30,2019_MN,2018-11-01,27087
+2018,Minnesota,MN,0,Mahnomen County,County,2018-10-01,2019-09-30,2019_MN,2018-12-01,27087
+2019,Minnesota,MN,0,Mahnomen County,County,2018-10-01,2019-09-30,2019_MN,2019-01-01,27087
+2019,Minnesota,MN,0,Mahnomen County,County,2018-10-01,2019-09-30,2019_MN,2019-02-01,27087
+2019,Minnesota,MN,0,Mahnomen County,County,2018-10-01,2019-09-30,2019_MN,2019-03-01,27087
+2019,Minnesota,MN,0,Mahnomen County,County,2018-10-01,2019-09-30,2019_MN,2019-04-01,27087
+2019,Minnesota,MN,0,Mahnomen County,County,2018-10-01,2019-09-30,2019_MN,2019-05-01,27087
+2019,Minnesota,MN,0,Mahnomen County,County,2018-10-01,2019-09-30,2019_MN,2019-06-01,27087
+2019,Minnesota,MN,0,Mahnomen County,County,2018-10-01,2019-09-30,2019_MN,2019-07-01,27087
+2019,Minnesota,MN,0,Mahnomen County,County,2018-10-01,2019-09-30,2019_MN,2019-08-01,27087
+2019,Minnesota,MN,0,Mahnomen County,County,2018-10-01,2019-09-30,2019_MN,2019-09-01,27087
+2016,Minnesota,MN,0,Marshall County,County,2016-10-01,2017-09-30,2017_MN,2016-10-01,27089
+2016,Minnesota,MN,0,Marshall County,County,2016-10-01,2017-09-30,2017_MN,2016-11-01,27089
+2016,Minnesota,MN,0,Marshall County,County,2016-10-01,2017-09-30,2017_MN,2016-12-01,27089
+2017,Minnesota,MN,0,Marshall County,County,2016-10-01,2017-09-30,2017_MN,2017-01-01,27089
+2017,Minnesota,MN,0,Marshall County,County,2016-10-01,2017-09-30,2017_MN,2017-02-01,27089
+2017,Minnesota,MN,0,Marshall County,County,2016-10-01,2017-09-30,2017_MN,2017-03-01,27089
+2017,Minnesota,MN,0,Marshall County,County,2016-10-01,2017-09-30,2017_MN,2017-04-01,27089
+2017,Minnesota,MN,0,Marshall County,County,2016-10-01,2017-09-30,2017_MN,2017-05-01,27089
+2017,Minnesota,MN,0,Marshall County,County,2016-10-01,2017-09-30,2017_MN,2017-06-01,27089
+2017,Minnesota,MN,0,Marshall County,County,2016-10-01,2017-09-30,2017_MN,2017-07-01,27089
+2017,Minnesota,MN,0,Marshall County,County,2016-10-01,2017-09-30,2017_MN,2017-08-01,27089
+2017,Minnesota,MN,0,Marshall County,County,2016-10-01,2017-09-30,2017_MN,2017-09-01,27089
+2017,Minnesota,MN,0,Marshall County,County,2017-10-01,2018-09-30,2018_MN,2017-10-01,27089
+2017,Minnesota,MN,0,Marshall County,County,2017-10-01,2018-09-30,2018_MN,2017-11-01,27089
+2017,Minnesota,MN,0,Marshall County,County,2017-10-01,2018-09-30,2018_MN,2017-12-01,27089
+2018,Minnesota,MN,0,Marshall County,County,2017-10-01,2018-09-30,2018_MN,2018-01-01,27089
+2018,Minnesota,MN,0,Marshall County,County,2017-10-01,2018-09-30,2018_MN,2018-02-01,27089
+2018,Minnesota,MN,0,Marshall County,County,2017-10-01,2018-09-30,2018_MN,2018-03-01,27089
+2018,Minnesota,MN,0,Marshall County,County,2017-10-01,2018-09-30,2018_MN,2018-04-01,27089
+2018,Minnesota,MN,0,Marshall County,County,2017-10-01,2018-09-30,2018_MN,2018-05-01,27089
+2018,Minnesota,MN,0,Marshall County,County,2017-10-01,2018-09-30,2018_MN,2018-06-01,27089
+2018,Minnesota,MN,0,Marshall County,County,2017-10-01,2018-09-30,2018_MN,2018-07-01,27089
+2018,Minnesota,MN,0,Marshall County,County,2017-10-01,2018-09-30,2018_MN,2018-08-01,27089
+2018,Minnesota,MN,0,Marshall County,County,2017-10-01,2018-09-30,2018_MN,2018-09-01,27089
+2018,Minnesota,MN,0,Marshall County,County,2018-10-01,2019-09-30,2019_MN,2018-10-01,27089
+2018,Minnesota,MN,0,Marshall County,County,2018-10-01,2019-09-30,2019_MN,2018-11-01,27089
+2018,Minnesota,MN,0,Marshall County,County,2018-10-01,2019-09-30,2019_MN,2018-12-01,27089
+2019,Minnesota,MN,0,Marshall County,County,2018-10-01,2019-09-30,2019_MN,2019-01-01,27089
+2019,Minnesota,MN,0,Marshall County,County,2018-10-01,2019-09-30,2019_MN,2019-02-01,27089
+2019,Minnesota,MN,0,Marshall County,County,2018-10-01,2019-09-30,2019_MN,2019-03-01,27089
+2019,Minnesota,MN,0,Marshall County,County,2018-10-01,2019-09-30,2019_MN,2019-04-01,27089
+2019,Minnesota,MN,0,Marshall County,County,2018-10-01,2019-09-30,2019_MN,2019-05-01,27089
+2019,Minnesota,MN,0,Marshall County,County,2018-10-01,2019-09-30,2019_MN,2019-06-01,27089
+2019,Minnesota,MN,0,Marshall County,County,2018-10-01,2019-09-30,2019_MN,2019-07-01,27089
+2019,Minnesota,MN,0,Marshall County,County,2018-10-01,2019-09-30,2019_MN,2019-08-01,27089
+2019,Minnesota,MN,0,Marshall County,County,2018-10-01,2019-09-30,2019_MN,2019-09-01,27089
+2013,Minnesota,MN,0,Mille Lacs,Reservation Area,2013-10-01,2014-09-30,2014_MN,2013-10-01,NA
+2013,Minnesota,MN,0,Mille Lacs,Reservation Area,2013-10-01,2014-09-30,2014_MN,2013-11-01,NA
+2013,Minnesota,MN,0,Mille Lacs,Reservation Area,2013-10-01,2014-09-30,2014_MN,2013-12-01,NA
+2014,Minnesota,MN,0,Mille Lacs,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-01-01,NA
+2014,Minnesota,MN,0,Mille Lacs,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-02-01,NA
+2014,Minnesota,MN,0,Mille Lacs,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-03-01,NA
+2014,Minnesota,MN,0,Mille Lacs,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-04-01,NA
+2014,Minnesota,MN,0,Mille Lacs,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-05-01,NA
+2014,Minnesota,MN,0,Mille Lacs,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-06-01,NA
+2014,Minnesota,MN,0,Mille Lacs,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-07-01,NA
+2014,Minnesota,MN,0,Mille Lacs,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-08-01,NA
+2014,Minnesota,MN,0,Mille Lacs,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-09-01,NA
+2014,Minnesota,MN,0,Mille Lacs,Reservation,2014-10-01,2015-09-30,2015_MN,2014-10-01,NA
+2014,Minnesota,MN,0,Mille Lacs,Reservation,2014-10-01,2015-09-30,2015_MN,2014-11-01,NA
+2014,Minnesota,MN,0,Mille Lacs,Reservation,2014-10-01,2015-09-30,2015_MN,2014-12-01,NA
+2015,Minnesota,MN,0,Mille Lacs,Reservation,2014-10-01,2015-09-30,2015_MN,2015-01-01,NA
+2015,Minnesota,MN,0,Mille Lacs,Reservation,2014-10-01,2015-09-30,2015_MN,2015-02-01,NA
+2015,Minnesota,MN,0,Mille Lacs,Reservation,2014-10-01,2015-09-30,2015_MN,2015-03-01,NA
+2015,Minnesota,MN,0,Mille Lacs,Reservation,2014-10-01,2015-09-30,2015_MN,2015-04-01,NA
+2015,Minnesota,MN,0,Mille Lacs,Reservation,2014-10-01,2015-09-30,2015_MN,2015-05-01,NA
+2015,Minnesota,MN,0,Mille Lacs,Reservation,2014-10-01,2015-09-30,2015_MN,2015-06-01,NA
+2015,Minnesota,MN,0,Mille Lacs,Reservation,2014-10-01,2015-09-30,2015_MN,2015-07-01,NA
+2015,Minnesota,MN,0,Mille Lacs,Reservation,2014-10-01,2015-09-30,2015_MN,2015-08-01,NA
+2015,Minnesota,MN,0,Mille Lacs,Reservation,2014-10-01,2015-09-30,2015_MN,2015-09-01,NA
+2017,Minnesota,MN,0,Mille Lacs,Reservation Area,2017-10-01,2018-09-30,2018_MN,2017-10-01,NA
+2017,Minnesota,MN,0,Mille Lacs,Reservation Area,2017-10-01,2018-09-30,2018_MN,2017-11-01,NA
+2017,Minnesota,MN,0,Mille Lacs,Reservation Area,2017-10-01,2018-09-30,2018_MN,2017-12-01,NA
+2018,Minnesota,MN,0,Mille Lacs,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-01-01,NA
+2018,Minnesota,MN,0,Mille Lacs,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-02-01,NA
+2018,Minnesota,MN,0,Mille Lacs,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-03-01,NA
+2018,Minnesota,MN,0,Mille Lacs,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-04-01,NA
+2018,Minnesota,MN,0,Mille Lacs,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-05-01,NA
+2018,Minnesota,MN,0,Mille Lacs,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-06-01,NA
+2018,Minnesota,MN,0,Mille Lacs,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-07-01,NA
+2018,Minnesota,MN,0,Mille Lacs,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-08-01,NA
+2018,Minnesota,MN,0,Mille Lacs,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-09-01,NA
+2018,Minnesota,MN,0,Mille Lacs,Reservation Area,2018-10-01,2019-09-30,2019_MN,2018-10-01,NA
+2018,Minnesota,MN,0,Mille Lacs,Reservation Area,2018-10-01,2019-09-30,2019_MN,2018-11-01,NA
+2018,Minnesota,MN,0,Mille Lacs,Reservation Area,2018-10-01,2019-09-30,2019_MN,2018-12-01,NA
+2019,Minnesota,MN,0,Mille Lacs,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-01-01,NA
+2019,Minnesota,MN,0,Mille Lacs,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-02-01,NA
+2019,Minnesota,MN,0,Mille Lacs,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-03-01,NA
+2019,Minnesota,MN,0,Mille Lacs,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-04-01,NA
+2019,Minnesota,MN,0,Mille Lacs,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-05-01,NA
+2019,Minnesota,MN,0,Mille Lacs,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-06-01,NA
+2019,Minnesota,MN,0,Mille Lacs,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-07-01,NA
+2019,Minnesota,MN,0,Mille Lacs,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-08-01,NA
+2019,Minnesota,MN,0,Mille Lacs,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-09-01,NA
+2013,Minnesota,MN,0,Mille Lacs County,County,2013-10-01,2014-09-30,2014_MN,2013-10-01,27095
+2013,Minnesota,MN,0,Mille Lacs County,County,2013-10-01,2014-09-30,2014_MN,2013-11-01,27095
+2013,Minnesota,MN,0,Mille Lacs County,County,2013-10-01,2014-09-30,2014_MN,2013-12-01,27095
+2014,Minnesota,MN,0,Mille Lacs County,County,2013-10-01,2014-09-30,2014_MN,2014-01-01,27095
+2014,Minnesota,MN,0,Mille Lacs County,County,2013-10-01,2014-09-30,2014_MN,2014-02-01,27095
+2014,Minnesota,MN,0,Mille Lacs County,County,2013-10-01,2014-09-30,2014_MN,2014-03-01,27095
+2014,Minnesota,MN,0,Mille Lacs County,County,2013-10-01,2014-09-30,2014_MN,2014-04-01,27095
+2014,Minnesota,MN,0,Mille Lacs County,County,2013-10-01,2014-09-30,2014_MN,2014-05-01,27095
+2014,Minnesota,MN,0,Mille Lacs County,County,2013-10-01,2014-09-30,2014_MN,2014-06-01,27095
+2014,Minnesota,MN,0,Mille Lacs County,County,2013-10-01,2014-09-30,2014_MN,2014-07-01,27095
+2014,Minnesota,MN,0,Mille Lacs County,County,2013-10-01,2014-09-30,2014_MN,2014-08-01,27095
+2014,Minnesota,MN,0,Mille Lacs County,County,2013-10-01,2014-09-30,2014_MN,2014-09-01,27095
+2016,Minnesota,MN,0,Mille Lacs County,County,2016-10-01,2017-09-30,2017_MN,2016-10-01,27095
+2016,Minnesota,MN,0,Mille Lacs County,County,2016-10-01,2017-09-30,2017_MN,2016-11-01,27095
+2016,Minnesota,MN,0,Mille Lacs County,County,2016-10-01,2017-09-30,2017_MN,2016-12-01,27095
+2017,Minnesota,MN,0,Mille Lacs County,County,2016-10-01,2017-09-30,2017_MN,2017-01-01,27095
+2017,Minnesota,MN,0,Mille Lacs County,County,2016-10-01,2017-09-30,2017_MN,2017-02-01,27095
+2017,Minnesota,MN,0,Mille Lacs County,County,2016-10-01,2017-09-30,2017_MN,2017-03-01,27095
+2017,Minnesota,MN,0,Mille Lacs County,County,2016-10-01,2017-09-30,2017_MN,2017-04-01,27095
+2017,Minnesota,MN,0,Mille Lacs County,County,2016-10-01,2017-09-30,2017_MN,2017-05-01,27095
+2017,Minnesota,MN,0,Mille Lacs County,County,2016-10-01,2017-09-30,2017_MN,2017-06-01,27095
+2017,Minnesota,MN,0,Mille Lacs County,County,2016-10-01,2017-09-30,2017_MN,2017-07-01,27095
+2017,Minnesota,MN,0,Mille Lacs County,County,2016-10-01,2017-09-30,2017_MN,2017-08-01,27095
+2017,Minnesota,MN,0,Mille Lacs County,County,2016-10-01,2017-09-30,2017_MN,2017-09-01,27095
+2017,Minnesota,MN,0,Mille Lacs County,County,2017-10-01,2018-09-30,2018_MN,2017-10-01,27095
+2017,Minnesota,MN,0,Mille Lacs County,County,2017-10-01,2018-09-30,2018_MN,2017-11-01,27095
+2017,Minnesota,MN,0,Mille Lacs County,County,2017-10-01,2018-09-30,2018_MN,2017-12-01,27095
+2018,Minnesota,MN,0,Mille Lacs County,County,2017-10-01,2018-09-30,2018_MN,2018-01-01,27095
+2018,Minnesota,MN,0,Mille Lacs County,County,2017-10-01,2018-09-30,2018_MN,2018-02-01,27095
+2018,Minnesota,MN,0,Mille Lacs County,County,2017-10-01,2018-09-30,2018_MN,2018-03-01,27095
+2018,Minnesota,MN,0,Mille Lacs County,County,2017-10-01,2018-09-30,2018_MN,2018-04-01,27095
+2018,Minnesota,MN,0,Mille Lacs County,County,2017-10-01,2018-09-30,2018_MN,2018-05-01,27095
+2018,Minnesota,MN,0,Mille Lacs County,County,2017-10-01,2018-09-30,2018_MN,2018-06-01,27095
+2018,Minnesota,MN,0,Mille Lacs County,County,2017-10-01,2018-09-30,2018_MN,2018-07-01,27095
+2018,Minnesota,MN,0,Mille Lacs County,County,2017-10-01,2018-09-30,2018_MN,2018-08-01,27095
+2018,Minnesota,MN,0,Mille Lacs County,County,2017-10-01,2018-09-30,2018_MN,2018-09-01,27095
+2018,Minnesota,MN,0,Mille Lacs County,County,2018-10-01,2019-09-30,2019_MN,2018-10-01,27095
+2018,Minnesota,MN,0,Mille Lacs County,County,2018-10-01,2019-09-30,2019_MN,2018-11-01,27095
+2018,Minnesota,MN,0,Mille Lacs County,County,2018-10-01,2019-09-30,2019_MN,2018-12-01,27095
+2019,Minnesota,MN,0,Mille Lacs County,County,2018-10-01,2019-09-30,2019_MN,2019-01-01,27095
+2019,Minnesota,MN,0,Mille Lacs County,County,2018-10-01,2019-09-30,2019_MN,2019-02-01,27095
+2019,Minnesota,MN,0,Mille Lacs County,County,2018-10-01,2019-09-30,2019_MN,2019-03-01,27095
+2019,Minnesota,MN,0,Mille Lacs County,County,2018-10-01,2019-09-30,2019_MN,2019-04-01,27095
+2019,Minnesota,MN,0,Mille Lacs County,County,2018-10-01,2019-09-30,2019_MN,2019-05-01,27095
+2019,Minnesota,MN,0,Mille Lacs County,County,2018-10-01,2019-09-30,2019_MN,2019-06-01,27095
+2019,Minnesota,MN,0,Mille Lacs County,County,2018-10-01,2019-09-30,2019_MN,2019-07-01,27095
+2019,Minnesota,MN,0,Mille Lacs County,County,2018-10-01,2019-09-30,2019_MN,2019-08-01,27095
+2019,Minnesota,MN,0,Mille Lacs County,County,2018-10-01,2019-09-30,2019_MN,2019-09-01,27095
+2017,Minnesota,MN,0,Morrison County,County,2017-10-01,2018-09-30,2018_MN,2017-10-01,27097
+2017,Minnesota,MN,0,Morrison County,County,2017-10-01,2018-09-30,2018_MN,2017-11-01,27097
+2017,Minnesota,MN,0,Morrison County,County,2017-10-01,2018-09-30,2018_MN,2017-12-01,27097
+2018,Minnesota,MN,0,Morrison County,County,2017-10-01,2018-09-30,2018_MN,2018-01-01,27097
+2018,Minnesota,MN,0,Morrison County,County,2017-10-01,2018-09-30,2018_MN,2018-02-01,27097
+2018,Minnesota,MN,0,Morrison County,County,2017-10-01,2018-09-30,2018_MN,2018-03-01,27097
+2018,Minnesota,MN,0,Morrison County,County,2017-10-01,2018-09-30,2018_MN,2018-04-01,27097
+2018,Minnesota,MN,0,Morrison County,County,2017-10-01,2018-09-30,2018_MN,2018-05-01,27097
+2018,Minnesota,MN,0,Morrison County,County,2017-10-01,2018-09-30,2018_MN,2018-06-01,27097
+2018,Minnesota,MN,0,Morrison County,County,2017-10-01,2018-09-30,2018_MN,2018-07-01,27097
+2018,Minnesota,MN,0,Morrison County,County,2017-10-01,2018-09-30,2018_MN,2018-08-01,27097
+2018,Minnesota,MN,0,Morrison County,County,2017-10-01,2018-09-30,2018_MN,2018-09-01,27097
+2018,Minnesota,MN,0,Morrison County,County,2018-10-01,2019-09-30,2019_MN,2018-10-01,27097
+2018,Minnesota,MN,0,Morrison County,County,2018-10-01,2019-09-30,2019_MN,2018-11-01,27097
+2018,Minnesota,MN,0,Morrison County,County,2018-10-01,2019-09-30,2019_MN,2018-12-01,27097
+2019,Minnesota,MN,0,Morrison County,County,2018-10-01,2019-09-30,2019_MN,2019-01-01,27097
+2019,Minnesota,MN,0,Morrison County,County,2018-10-01,2019-09-30,2019_MN,2019-02-01,27097
+2019,Minnesota,MN,0,Morrison County,County,2018-10-01,2019-09-30,2019_MN,2019-03-01,27097
+2019,Minnesota,MN,0,Morrison County,County,2018-10-01,2019-09-30,2019_MN,2019-04-01,27097
+2019,Minnesota,MN,0,Morrison County,County,2018-10-01,2019-09-30,2019_MN,2019-05-01,27097
+2019,Minnesota,MN,0,Morrison County,County,2018-10-01,2019-09-30,2019_MN,2019-06-01,27097
+2019,Minnesota,MN,0,Morrison County,County,2018-10-01,2019-09-30,2019_MN,2019-07-01,27097
+2019,Minnesota,MN,0,Morrison County,County,2018-10-01,2019-09-30,2019_MN,2019-08-01,27097
+2019,Minnesota,MN,0,Morrison County,County,2018-10-01,2019-09-30,2019_MN,2019-09-01,27097
+2016,Minnesota,MN,0,Norman County,County,2016-10-01,2017-09-30,2017_MN,2016-10-01,27107
+2016,Minnesota,MN,0,Norman County,County,2016-10-01,2017-09-30,2017_MN,2016-11-01,27107
+2016,Minnesota,MN,0,Norman County,County,2016-10-01,2017-09-30,2017_MN,2016-12-01,27107
+2017,Minnesota,MN,0,Norman County,County,2016-10-01,2017-09-30,2017_MN,2017-01-01,27107
+2017,Minnesota,MN,0,Norman County,County,2016-10-01,2017-09-30,2017_MN,2017-02-01,27107
+2017,Minnesota,MN,0,Norman County,County,2016-10-01,2017-09-30,2017_MN,2017-03-01,27107
+2017,Minnesota,MN,0,Norman County,County,2016-10-01,2017-09-30,2017_MN,2017-04-01,27107
+2017,Minnesota,MN,0,Norman County,County,2016-10-01,2017-09-30,2017_MN,2017-05-01,27107
+2017,Minnesota,MN,0,Norman County,County,2016-10-01,2017-09-30,2017_MN,2017-06-01,27107
+2017,Minnesota,MN,0,Norman County,County,2016-10-01,2017-09-30,2017_MN,2017-07-01,27107
+2017,Minnesota,MN,0,Norman County,County,2016-10-01,2017-09-30,2017_MN,2017-08-01,27107
+2017,Minnesota,MN,0,Norman County,County,2016-10-01,2017-09-30,2017_MN,2017-09-01,27107
+2017,Minnesota,MN,0,Norman County,County,2017-10-01,2018-09-30,2018_MN,2017-10-01,27107
+2017,Minnesota,MN,0,Norman County,County,2017-10-01,2018-09-30,2018_MN,2017-11-01,27107
+2017,Minnesota,MN,0,Norman County,County,2017-10-01,2018-09-30,2018_MN,2017-12-01,27107
+2018,Minnesota,MN,0,Norman County,County,2017-10-01,2018-09-30,2018_MN,2018-01-01,27107
+2018,Minnesota,MN,0,Norman County,County,2017-10-01,2018-09-30,2018_MN,2018-02-01,27107
+2018,Minnesota,MN,0,Norman County,County,2017-10-01,2018-09-30,2018_MN,2018-03-01,27107
+2018,Minnesota,MN,0,Norman County,County,2017-10-01,2018-09-30,2018_MN,2018-04-01,27107
+2018,Minnesota,MN,0,Norman County,County,2017-10-01,2018-09-30,2018_MN,2018-05-01,27107
+2018,Minnesota,MN,0,Norman County,County,2017-10-01,2018-09-30,2018_MN,2018-06-01,27107
+2018,Minnesota,MN,0,Norman County,County,2017-10-01,2018-09-30,2018_MN,2018-07-01,27107
+2018,Minnesota,MN,0,Norman County,County,2017-10-01,2018-09-30,2018_MN,2018-08-01,27107
+2018,Minnesota,MN,0,Norman County,County,2017-10-01,2018-09-30,2018_MN,2018-09-01,27107
+2018,Minnesota,MN,0,Norman County,County,2018-10-01,2019-09-30,2019_MN,2018-10-01,27107
+2018,Minnesota,MN,0,Norman County,County,2018-10-01,2019-09-30,2019_MN,2018-11-01,27107
+2018,Minnesota,MN,0,Norman County,County,2018-10-01,2019-09-30,2019_MN,2018-12-01,27107
+2019,Minnesota,MN,0,Norman County,County,2018-10-01,2019-09-30,2019_MN,2019-01-01,27107
+2019,Minnesota,MN,0,Norman County,County,2018-10-01,2019-09-30,2019_MN,2019-02-01,27107
+2019,Minnesota,MN,0,Norman County,County,2018-10-01,2019-09-30,2019_MN,2019-03-01,27107
+2019,Minnesota,MN,0,Norman County,County,2018-10-01,2019-09-30,2019_MN,2019-04-01,27107
+2019,Minnesota,MN,0,Norman County,County,2018-10-01,2019-09-30,2019_MN,2019-05-01,27107
+2019,Minnesota,MN,0,Norman County,County,2018-10-01,2019-09-30,2019_MN,2019-06-01,27107
+2019,Minnesota,MN,0,Norman County,County,2018-10-01,2019-09-30,2019_MN,2019-07-01,27107
+2019,Minnesota,MN,0,Norman County,County,2018-10-01,2019-09-30,2019_MN,2019-08-01,27107
+2019,Minnesota,MN,0,Norman County,County,2018-10-01,2019-09-30,2019_MN,2019-09-01,27107
+2017,Minnesota,MN,0,Pennington County,County,2017-10-01,2018-09-30,2018_MN,2017-10-01,27113
+2017,Minnesota,MN,0,Pennington County,County,2017-10-01,2018-09-30,2018_MN,2017-11-01,27113
+2017,Minnesota,MN,0,Pennington County,County,2017-10-01,2018-09-30,2018_MN,2017-12-01,27113
+2018,Minnesota,MN,0,Pennington County,County,2017-10-01,2018-09-30,2018_MN,2018-01-01,27113
+2018,Minnesota,MN,0,Pennington County,County,2017-10-01,2018-09-30,2018_MN,2018-02-01,27113
+2018,Minnesota,MN,0,Pennington County,County,2017-10-01,2018-09-30,2018_MN,2018-03-01,27113
+2018,Minnesota,MN,0,Pennington County,County,2017-10-01,2018-09-30,2018_MN,2018-04-01,27113
+2018,Minnesota,MN,0,Pennington County,County,2017-10-01,2018-09-30,2018_MN,2018-05-01,27113
+2018,Minnesota,MN,0,Pennington County,County,2017-10-01,2018-09-30,2018_MN,2018-06-01,27113
+2018,Minnesota,MN,0,Pennington County,County,2017-10-01,2018-09-30,2018_MN,2018-07-01,27113
+2018,Minnesota,MN,0,Pennington County,County,2017-10-01,2018-09-30,2018_MN,2018-08-01,27113
+2018,Minnesota,MN,0,Pennington County,County,2017-10-01,2018-09-30,2018_MN,2018-09-01,27113
+2018,Minnesota,MN,0,Pennington County,County,2018-10-01,2019-09-30,2019_MN,2018-10-01,27113
+2018,Minnesota,MN,0,Pennington County,County,2018-10-01,2019-09-30,2019_MN,2018-11-01,27113
+2018,Minnesota,MN,0,Pennington County,County,2018-10-01,2019-09-30,2019_MN,2018-12-01,27113
+2019,Minnesota,MN,0,Pennington County,County,2018-10-01,2019-09-30,2019_MN,2019-01-01,27113
+2019,Minnesota,MN,0,Pennington County,County,2018-10-01,2019-09-30,2019_MN,2019-02-01,27113
+2019,Minnesota,MN,0,Pennington County,County,2018-10-01,2019-09-30,2019_MN,2019-03-01,27113
+2019,Minnesota,MN,0,Pennington County,County,2018-10-01,2019-09-30,2019_MN,2019-04-01,27113
+2019,Minnesota,MN,0,Pennington County,County,2018-10-01,2019-09-30,2019_MN,2019-05-01,27113
+2019,Minnesota,MN,0,Pennington County,County,2018-10-01,2019-09-30,2019_MN,2019-06-01,27113
+2019,Minnesota,MN,0,Pennington County,County,2018-10-01,2019-09-30,2019_MN,2019-07-01,27113
+2019,Minnesota,MN,0,Pennington County,County,2018-10-01,2019-09-30,2019_MN,2019-08-01,27113
+2019,Minnesota,MN,0,Pennington County,County,2018-10-01,2019-09-30,2019_MN,2019-09-01,27113
+2017,Minnesota,MN,0,Pine County,County,2017-10-01,2018-09-30,2018_MN,2017-10-01,27115
+2017,Minnesota,MN,0,Pine County,County,2017-10-01,2018-09-30,2018_MN,2017-11-01,27115
+2017,Minnesota,MN,0,Pine County,County,2017-10-01,2018-09-30,2018_MN,2017-12-01,27115
+2018,Minnesota,MN,0,Pine County,County,2017-10-01,2018-09-30,2018_MN,2018-01-01,27115
+2018,Minnesota,MN,0,Pine County,County,2017-10-01,2018-09-30,2018_MN,2018-02-01,27115
+2018,Minnesota,MN,0,Pine County,County,2017-10-01,2018-09-30,2018_MN,2018-03-01,27115
+2018,Minnesota,MN,0,Pine County,County,2017-10-01,2018-09-30,2018_MN,2018-04-01,27115
+2018,Minnesota,MN,0,Pine County,County,2017-10-01,2018-09-30,2018_MN,2018-05-01,27115
+2018,Minnesota,MN,0,Pine County,County,2017-10-01,2018-09-30,2018_MN,2018-06-01,27115
+2018,Minnesota,MN,0,Pine County,County,2017-10-01,2018-09-30,2018_MN,2018-07-01,27115
+2018,Minnesota,MN,0,Pine County,County,2017-10-01,2018-09-30,2018_MN,2018-08-01,27115
+2018,Minnesota,MN,0,Pine County,County,2017-10-01,2018-09-30,2018_MN,2018-09-01,27115
+2018,Minnesota,MN,0,Pine County,County,2018-10-01,2019-09-30,2019_MN,2018-10-01,27115
+2018,Minnesota,MN,0,Pine County,County,2018-10-01,2019-09-30,2019_MN,2018-11-01,27115
+2018,Minnesota,MN,0,Pine County,County,2018-10-01,2019-09-30,2019_MN,2018-12-01,27115
+2019,Minnesota,MN,0,Pine County,County,2018-10-01,2019-09-30,2019_MN,2019-01-01,27115
+2019,Minnesota,MN,0,Pine County,County,2018-10-01,2019-09-30,2019_MN,2019-02-01,27115
+2019,Minnesota,MN,0,Pine County,County,2018-10-01,2019-09-30,2019_MN,2019-03-01,27115
+2019,Minnesota,MN,0,Pine County,County,2018-10-01,2019-09-30,2019_MN,2019-04-01,27115
+2019,Minnesota,MN,0,Pine County,County,2018-10-01,2019-09-30,2019_MN,2019-05-01,27115
+2019,Minnesota,MN,0,Pine County,County,2018-10-01,2019-09-30,2019_MN,2019-06-01,27115
+2019,Minnesota,MN,0,Pine County,County,2018-10-01,2019-09-30,2019_MN,2019-07-01,27115
+2019,Minnesota,MN,0,Pine County,County,2018-10-01,2019-09-30,2019_MN,2019-08-01,27115
+2019,Minnesota,MN,0,Pine County,County,2018-10-01,2019-09-30,2019_MN,2019-09-01,27115
+2017,Minnesota,MN,0,Prairie Island Community,Reservation Area,2017-10-01,2018-09-30,2018_MN,2017-10-01,NA
+2017,Minnesota,MN,0,Prairie Island Community,Reservation Area,2017-10-01,2018-09-30,2018_MN,2017-11-01,NA
+2017,Minnesota,MN,0,Prairie Island Community,Reservation Area,2017-10-01,2018-09-30,2018_MN,2017-12-01,NA
+2018,Minnesota,MN,0,Prairie Island Community,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-01-01,NA
+2018,Minnesota,MN,0,Prairie Island Community,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-02-01,NA
+2018,Minnesota,MN,0,Prairie Island Community,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-03-01,NA
+2018,Minnesota,MN,0,Prairie Island Community,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-04-01,NA
+2018,Minnesota,MN,0,Prairie Island Community,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-05-01,NA
+2018,Minnesota,MN,0,Prairie Island Community,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-06-01,NA
+2018,Minnesota,MN,0,Prairie Island Community,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-07-01,NA
+2018,Minnesota,MN,0,Prairie Island Community,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-08-01,NA
+2018,Minnesota,MN,0,Prairie Island Community,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-09-01,NA
+2018,Minnesota,MN,0,Prairie Island Community,Reservation Area,2018-10-01,2019-09-30,2019_MN,2018-10-01,NA
+2018,Minnesota,MN,0,Prairie Island Community,Reservation Area,2018-10-01,2019-09-30,2019_MN,2018-11-01,NA
+2018,Minnesota,MN,0,Prairie Island Community,Reservation Area,2018-10-01,2019-09-30,2019_MN,2018-12-01,NA
+2019,Minnesota,MN,0,Prairie Island Community,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-01-01,NA
+2019,Minnesota,MN,0,Prairie Island Community,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-02-01,NA
+2019,Minnesota,MN,0,Prairie Island Community,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-03-01,NA
+2019,Minnesota,MN,0,Prairie Island Community,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-04-01,NA
+2019,Minnesota,MN,0,Prairie Island Community,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-05-01,NA
+2019,Minnesota,MN,0,Prairie Island Community,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-06-01,NA
+2019,Minnesota,MN,0,Prairie Island Community,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-07-01,NA
+2019,Minnesota,MN,0,Prairie Island Community,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-08-01,NA
+2019,Minnesota,MN,0,Prairie Island Community,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-09-01,NA
+2013,Minnesota,MN,0,Red Lake,Reservation Area,2013-10-01,2014-09-30,2014_MN,2013-10-01,NA
+2013,Minnesota,MN,0,Red Lake,Reservation Area,2013-10-01,2014-09-30,2014_MN,2013-11-01,NA
+2013,Minnesota,MN,0,Red Lake,Reservation Area,2013-10-01,2014-09-30,2014_MN,2013-12-01,NA
+2014,Minnesota,MN,0,Red Lake,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-01-01,NA
+2014,Minnesota,MN,0,Red Lake,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-02-01,NA
+2014,Minnesota,MN,0,Red Lake,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-03-01,NA
+2014,Minnesota,MN,0,Red Lake,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-04-01,NA
+2014,Minnesota,MN,0,Red Lake,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-05-01,NA
+2014,Minnesota,MN,0,Red Lake,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-06-01,NA
+2014,Minnesota,MN,0,Red Lake,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-07-01,NA
+2014,Minnesota,MN,0,Red Lake,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-08-01,NA
+2014,Minnesota,MN,0,Red Lake,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-09-01,NA
+2014,Minnesota,MN,0,Red Lake,Reservation,2014-10-01,2015-09-30,2015_MN,2014-10-01,NA
+2014,Minnesota,MN,0,Red Lake,Reservation,2014-10-01,2015-09-30,2015_MN,2014-11-01,NA
+2014,Minnesota,MN,0,Red Lake,Reservation,2014-10-01,2015-09-30,2015_MN,2014-12-01,NA
+2015,Minnesota,MN,0,Red Lake,Reservation,2014-10-01,2015-09-30,2015_MN,2015-01-01,NA
+2015,Minnesota,MN,0,Red Lake,Reservation,2014-10-01,2015-09-30,2015_MN,2015-02-01,NA
+2015,Minnesota,MN,0,Red Lake,Reservation,2014-10-01,2015-09-30,2015_MN,2015-03-01,NA
+2015,Minnesota,MN,0,Red Lake,Reservation,2014-10-01,2015-09-30,2015_MN,2015-04-01,NA
+2015,Minnesota,MN,0,Red Lake,Reservation,2014-10-01,2015-09-30,2015_MN,2015-05-01,NA
+2015,Minnesota,MN,0,Red Lake,Reservation,2014-10-01,2015-09-30,2015_MN,2015-06-01,NA
+2015,Minnesota,MN,0,Red Lake,Reservation,2014-10-01,2015-09-30,2015_MN,2015-07-01,NA
+2015,Minnesota,MN,0,Red Lake,Reservation,2014-10-01,2015-09-30,2015_MN,2015-08-01,NA
+2015,Minnesota,MN,0,Red Lake,Reservation,2014-10-01,2015-09-30,2015_MN,2015-09-01,NA
+2017,Minnesota,MN,0,Red Lake,Reservation Area,2017-10-01,2018-09-30,2018_MN,2017-10-01,NA
+2017,Minnesota,MN,0,Red Lake,Reservation Area,2017-10-01,2018-09-30,2018_MN,2017-11-01,NA
+2017,Minnesota,MN,0,Red Lake,Reservation Area,2017-10-01,2018-09-30,2018_MN,2017-12-01,NA
+2018,Minnesota,MN,0,Red Lake,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-01-01,NA
+2018,Minnesota,MN,0,Red Lake,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-02-01,NA
+2018,Minnesota,MN,0,Red Lake,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-03-01,NA
+2018,Minnesota,MN,0,Red Lake,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-04-01,NA
+2018,Minnesota,MN,0,Red Lake,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-05-01,NA
+2018,Minnesota,MN,0,Red Lake,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-06-01,NA
+2018,Minnesota,MN,0,Red Lake,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-07-01,NA
+2018,Minnesota,MN,0,Red Lake,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-08-01,NA
+2018,Minnesota,MN,0,Red Lake,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-09-01,NA
+2018,Minnesota,MN,0,Red Lake,Reservation Area,2018-10-01,2019-09-30,2019_MN,2018-10-01,NA
+2018,Minnesota,MN,0,Red Lake,Reservation Area,2018-10-01,2019-09-30,2019_MN,2018-11-01,NA
+2018,Minnesota,MN,0,Red Lake,Reservation Area,2018-10-01,2019-09-30,2019_MN,2018-12-01,NA
+2019,Minnesota,MN,0,Red Lake,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-01-01,NA
+2019,Minnesota,MN,0,Red Lake,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-02-01,NA
+2019,Minnesota,MN,0,Red Lake,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-03-01,NA
+2019,Minnesota,MN,0,Red Lake,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-04-01,NA
+2019,Minnesota,MN,0,Red Lake,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-05-01,NA
+2019,Minnesota,MN,0,Red Lake,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-06-01,NA
+2019,Minnesota,MN,0,Red Lake,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-07-01,NA
+2019,Minnesota,MN,0,Red Lake,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-08-01,NA
+2019,Minnesota,MN,0,Red Lake,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-09-01,NA
+2017,Minnesota,MN,0,Red Lake County,County,2017-10-01,2018-09-30,2018_MN,2017-10-01,27125
+2017,Minnesota,MN,0,Red Lake County,County,2017-10-01,2018-09-30,2018_MN,2017-11-01,27125
+2017,Minnesota,MN,0,Red Lake County,County,2017-10-01,2018-09-30,2018_MN,2017-12-01,27125
+2018,Minnesota,MN,0,Red Lake County,County,2017-10-01,2018-09-30,2018_MN,2018-01-01,27125
+2018,Minnesota,MN,0,Red Lake County,County,2017-10-01,2018-09-30,2018_MN,2018-02-01,27125
+2018,Minnesota,MN,0,Red Lake County,County,2017-10-01,2018-09-30,2018_MN,2018-03-01,27125
+2018,Minnesota,MN,0,Red Lake County,County,2017-10-01,2018-09-30,2018_MN,2018-04-01,27125
+2018,Minnesota,MN,0,Red Lake County,County,2017-10-01,2018-09-30,2018_MN,2018-05-01,27125
+2018,Minnesota,MN,0,Red Lake County,County,2017-10-01,2018-09-30,2018_MN,2018-06-01,27125
+2018,Minnesota,MN,0,Red Lake County,County,2017-10-01,2018-09-30,2018_MN,2018-07-01,27125
+2018,Minnesota,MN,0,Red Lake County,County,2017-10-01,2018-09-30,2018_MN,2018-08-01,27125
+2018,Minnesota,MN,0,Red Lake County,County,2017-10-01,2018-09-30,2018_MN,2018-09-01,27125
+2018,Minnesota,MN,0,Red Lake County,County,2018-10-01,2019-09-30,2019_MN,2018-10-01,27125
+2018,Minnesota,MN,0,Red Lake County,County,2018-10-01,2019-09-30,2019_MN,2018-11-01,27125
+2018,Minnesota,MN,0,Red Lake County,County,2018-10-01,2019-09-30,2019_MN,2018-12-01,27125
+2019,Minnesota,MN,0,Red Lake County,County,2018-10-01,2019-09-30,2019_MN,2019-01-01,27125
+2019,Minnesota,MN,0,Red Lake County,County,2018-10-01,2019-09-30,2019_MN,2019-02-01,27125
+2019,Minnesota,MN,0,Red Lake County,County,2018-10-01,2019-09-30,2019_MN,2019-03-01,27125
+2019,Minnesota,MN,0,Red Lake County,County,2018-10-01,2019-09-30,2019_MN,2019-04-01,27125
+2019,Minnesota,MN,0,Red Lake County,County,2018-10-01,2019-09-30,2019_MN,2019-05-01,27125
+2019,Minnesota,MN,0,Red Lake County,County,2018-10-01,2019-09-30,2019_MN,2019-06-01,27125
+2019,Minnesota,MN,0,Red Lake County,County,2018-10-01,2019-09-30,2019_MN,2019-07-01,27125
+2019,Minnesota,MN,0,Red Lake County,County,2018-10-01,2019-09-30,2019_MN,2019-08-01,27125
+2019,Minnesota,MN,0,Red Lake County,County,2018-10-01,2019-09-30,2019_MN,2019-09-01,27125
+2017,Minnesota,MN,0,Roseau County,County,2017-10-01,2018-09-30,2018_MN,2017-10-01,27135
+2017,Minnesota,MN,0,Roseau County,County,2017-10-01,2018-09-30,2018_MN,2017-11-01,27135
+2017,Minnesota,MN,0,Roseau County,County,2017-10-01,2018-09-30,2018_MN,2017-12-01,27135
+2018,Minnesota,MN,0,Roseau County,County,2017-10-01,2018-09-30,2018_MN,2018-01-01,27135
+2018,Minnesota,MN,0,Roseau County,County,2017-10-01,2018-09-30,2018_MN,2018-02-01,27135
+2018,Minnesota,MN,0,Roseau County,County,2017-10-01,2018-09-30,2018_MN,2018-03-01,27135
+2018,Minnesota,MN,0,Roseau County,County,2017-10-01,2018-09-30,2018_MN,2018-04-01,27135
+2018,Minnesota,MN,0,Roseau County,County,2017-10-01,2018-09-30,2018_MN,2018-05-01,27135
+2018,Minnesota,MN,0,Roseau County,County,2017-10-01,2018-09-30,2018_MN,2018-06-01,27135
+2018,Minnesota,MN,0,Roseau County,County,2017-10-01,2018-09-30,2018_MN,2018-07-01,27135
+2018,Minnesota,MN,0,Roseau County,County,2017-10-01,2018-09-30,2018_MN,2018-08-01,27135
+2018,Minnesota,MN,0,Roseau County,County,2017-10-01,2018-09-30,2018_MN,2018-09-01,27135
+2018,Minnesota,MN,0,Roseau County,County,2018-10-01,2019-09-30,2019_MN,2018-10-01,27135
+2018,Minnesota,MN,0,Roseau County,County,2018-10-01,2019-09-30,2019_MN,2018-11-01,27135
+2018,Minnesota,MN,0,Roseau County,County,2018-10-01,2019-09-30,2019_MN,2018-12-01,27135
+2019,Minnesota,MN,0,Roseau County,County,2018-10-01,2019-09-30,2019_MN,2019-01-01,27135
+2019,Minnesota,MN,0,Roseau County,County,2018-10-01,2019-09-30,2019_MN,2019-02-01,27135
+2019,Minnesota,MN,0,Roseau County,County,2018-10-01,2019-09-30,2019_MN,2019-03-01,27135
+2019,Minnesota,MN,0,Roseau County,County,2018-10-01,2019-09-30,2019_MN,2019-04-01,27135
+2019,Minnesota,MN,0,Roseau County,County,2018-10-01,2019-09-30,2019_MN,2019-05-01,27135
+2019,Minnesota,MN,0,Roseau County,County,2018-10-01,2019-09-30,2019_MN,2019-06-01,27135
+2019,Minnesota,MN,0,Roseau County,County,2018-10-01,2019-09-30,2019_MN,2019-07-01,27135
+2019,Minnesota,MN,0,Roseau County,County,2018-10-01,2019-09-30,2019_MN,2019-08-01,27135
+2019,Minnesota,MN,0,Roseau County,County,2018-10-01,2019-09-30,2019_MN,2019-09-01,27135
+2016,Minnesota,MN,0,Shakopee Mdekanton Sioux,Reservation,2016-10-01,2017-09-30,2017_MN,2016-10-01,NA
+2016,Minnesota,MN,0,Shakopee Mdekanton Sioux,Reservation,2016-10-01,2017-09-30,2017_MN,2016-11-01,NA
+2016,Minnesota,MN,0,Shakopee Mdekanton Sioux,Reservation,2016-10-01,2017-09-30,2017_MN,2016-12-01,NA
+2017,Minnesota,MN,0,Shakopee Mdekanton Sioux,Reservation,2016-10-01,2017-09-30,2017_MN,2017-01-01,NA
+2017,Minnesota,MN,0,Shakopee Mdekanton Sioux,Reservation,2016-10-01,2017-09-30,2017_MN,2017-02-01,NA
+2017,Minnesota,MN,0,Shakopee Mdekanton Sioux,Reservation,2016-10-01,2017-09-30,2017_MN,2017-03-01,NA
+2017,Minnesota,MN,0,Shakopee Mdekanton Sioux,Reservation,2016-10-01,2017-09-30,2017_MN,2017-04-01,NA
+2017,Minnesota,MN,0,Shakopee Mdekanton Sioux,Reservation,2016-10-01,2017-09-30,2017_MN,2017-05-01,NA
+2017,Minnesota,MN,0,Shakopee Mdekanton Sioux,Reservation,2016-10-01,2017-09-30,2017_MN,2017-06-01,NA
+2017,Minnesota,MN,0,Shakopee Mdekanton Sioux,Reservation,2016-10-01,2017-09-30,2017_MN,2017-07-01,NA
+2017,Minnesota,MN,0,Shakopee Mdekanton Sioux,Reservation,2016-10-01,2017-09-30,2017_MN,2017-08-01,NA
+2017,Minnesota,MN,0,Shakopee Mdekanton Sioux,Reservation,2016-10-01,2017-09-30,2017_MN,2017-09-01,NA
+2014,Minnesota,MN,0,Shakopee Mdewakanton,Reservation,2014-10-01,2015-09-30,2015_MN,2014-10-01,NA
+2014,Minnesota,MN,0,Shakopee Mdewakanton,Reservation,2014-10-01,2015-09-30,2015_MN,2014-11-01,NA
+2014,Minnesota,MN,0,Shakopee Mdewakanton,Reservation,2014-10-01,2015-09-30,2015_MN,2014-12-01,NA
+2015,Minnesota,MN,0,Shakopee Mdewakanton,Reservation,2014-10-01,2015-09-30,2015_MN,2015-01-01,NA
+2015,Minnesota,MN,0,Shakopee Mdewakanton,Reservation,2014-10-01,2015-09-30,2015_MN,2015-02-01,NA
+2015,Minnesota,MN,0,Shakopee Mdewakanton,Reservation,2014-10-01,2015-09-30,2015_MN,2015-03-01,NA
+2015,Minnesota,MN,0,Shakopee Mdewakanton,Reservation,2014-10-01,2015-09-30,2015_MN,2015-04-01,NA
+2015,Minnesota,MN,0,Shakopee Mdewakanton,Reservation,2014-10-01,2015-09-30,2015_MN,2015-05-01,NA
+2015,Minnesota,MN,0,Shakopee Mdewakanton,Reservation,2014-10-01,2015-09-30,2015_MN,2015-06-01,NA
+2015,Minnesota,MN,0,Shakopee Mdewakanton,Reservation,2014-10-01,2015-09-30,2015_MN,2015-07-01,NA
+2015,Minnesota,MN,0,Shakopee Mdewakanton,Reservation,2014-10-01,2015-09-30,2015_MN,2015-08-01,NA
+2015,Minnesota,MN,0,Shakopee Mdewakanton,Reservation,2014-10-01,2015-09-30,2015_MN,2015-09-01,NA
+2017,Minnesota,MN,0,Shakopee Mdewakanton Sioux Community Reservation,Reservation Area,2017-10-01,2018-09-30,2018_MN,2017-10-01,NA
+2017,Minnesota,MN,0,Shakopee Mdewakanton Sioux Community Reservation,Reservation Area,2017-10-01,2018-09-30,2018_MN,2017-11-01,NA
+2017,Minnesota,MN,0,Shakopee Mdewakanton Sioux Community Reservation,Reservation Area,2017-10-01,2018-09-30,2018_MN,2017-12-01,NA
+2018,Minnesota,MN,0,Shakopee Mdewakanton Sioux Community Reservation,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-01-01,NA
+2018,Minnesota,MN,0,Shakopee Mdewakanton Sioux Community Reservation,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-02-01,NA
+2018,Minnesota,MN,0,Shakopee Mdewakanton Sioux Community Reservation,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-03-01,NA
+2018,Minnesota,MN,0,Shakopee Mdewakanton Sioux Community Reservation,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-04-01,NA
+2018,Minnesota,MN,0,Shakopee Mdewakanton Sioux Community Reservation,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-05-01,NA
+2018,Minnesota,MN,0,Shakopee Mdewakanton Sioux Community Reservation,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-06-01,NA
+2018,Minnesota,MN,0,Shakopee Mdewakanton Sioux Community Reservation,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-07-01,NA
+2018,Minnesota,MN,0,Shakopee Mdewakanton Sioux Community Reservation,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-08-01,NA
+2018,Minnesota,MN,0,Shakopee Mdewakanton Sioux Community Reservation,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-09-01,NA
+2018,Minnesota,MN,0,Shakopee Mdewakanton Sioux Community Reservation,Reservation Area,2018-10-01,2019-09-30,2019_MN,2018-10-01,NA
+2018,Minnesota,MN,0,Shakopee Mdewakanton Sioux Community Reservation,Reservation Area,2018-10-01,2019-09-30,2019_MN,2018-11-01,NA
+2018,Minnesota,MN,0,Shakopee Mdewakanton Sioux Community Reservation,Reservation Area,2018-10-01,2019-09-30,2019_MN,2018-12-01,NA
+2019,Minnesota,MN,0,Shakopee Mdewakanton Sioux Community Reservation,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-01-01,NA
+2019,Minnesota,MN,0,Shakopee Mdewakanton Sioux Community Reservation,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-02-01,NA
+2019,Minnesota,MN,0,Shakopee Mdewakanton Sioux Community Reservation,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-03-01,NA
+2019,Minnesota,MN,0,Shakopee Mdewakanton Sioux Community Reservation,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-04-01,NA
+2019,Minnesota,MN,0,Shakopee Mdewakanton Sioux Community Reservation,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-05-01,NA
+2019,Minnesota,MN,0,Shakopee Mdewakanton Sioux Community Reservation,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-06-01,NA
+2019,Minnesota,MN,0,Shakopee Mdewakanton Sioux Community Reservation,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-07-01,NA
+2019,Minnesota,MN,0,Shakopee Mdewakanton Sioux Community Reservation,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-08-01,NA
+2019,Minnesota,MN,0,Shakopee Mdewakanton Sioux Community Reservation,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-09-01,NA
+2017,Minnesota,MN,0,St. Louis County,County,2017-10-01,2018-09-30,2018_MN,2017-10-01,27137
+2017,Minnesota,MN,0,St. Louis County,County,2017-10-01,2018-09-30,2018_MN,2017-11-01,27137
+2017,Minnesota,MN,0,St. Louis County,County,2017-10-01,2018-09-30,2018_MN,2017-12-01,27137
+2018,Minnesota,MN,0,St. Louis County,County,2017-10-01,2018-09-30,2018_MN,2018-01-01,27137
+2018,Minnesota,MN,0,St. Louis County,County,2017-10-01,2018-09-30,2018_MN,2018-02-01,27137
+2018,Minnesota,MN,0,St. Louis County,County,2017-10-01,2018-09-30,2018_MN,2018-03-01,27137
+2018,Minnesota,MN,0,St. Louis County,County,2017-10-01,2018-09-30,2018_MN,2018-04-01,27137
+2018,Minnesota,MN,0,St. Louis County,County,2017-10-01,2018-09-30,2018_MN,2018-05-01,27137
+2018,Minnesota,MN,0,St. Louis County,County,2017-10-01,2018-09-30,2018_MN,2018-06-01,27137
+2018,Minnesota,MN,0,St. Louis County,County,2017-10-01,2018-09-30,2018_MN,2018-07-01,27137
+2018,Minnesota,MN,0,St. Louis County,County,2017-10-01,2018-09-30,2018_MN,2018-08-01,27137
+2018,Minnesota,MN,0,St. Louis County,County,2017-10-01,2018-09-30,2018_MN,2018-09-01,27137
+2018,Minnesota,MN,0,St. Louis County,County,2018-10-01,2019-09-30,2019_MN,2018-10-01,27137
+2018,Minnesota,MN,0,St. Louis County,County,2018-10-01,2019-09-30,2019_MN,2018-11-01,27137
+2018,Minnesota,MN,0,St. Louis County,County,2018-10-01,2019-09-30,2019_MN,2018-12-01,27137
+2019,Minnesota,MN,0,St. Louis County,County,2018-10-01,2019-09-30,2019_MN,2019-01-01,27137
+2019,Minnesota,MN,0,St. Louis County,County,2018-10-01,2019-09-30,2019_MN,2019-02-01,27137
+2019,Minnesota,MN,0,St. Louis County,County,2018-10-01,2019-09-30,2019_MN,2019-03-01,27137
+2019,Minnesota,MN,0,St. Louis County,County,2018-10-01,2019-09-30,2019_MN,2019-04-01,27137
+2019,Minnesota,MN,0,St. Louis County,County,2018-10-01,2019-09-30,2019_MN,2019-05-01,27137
+2019,Minnesota,MN,0,St. Louis County,County,2018-10-01,2019-09-30,2019_MN,2019-06-01,27137
+2019,Minnesota,MN,0,St. Louis County,County,2018-10-01,2019-09-30,2019_MN,2019-07-01,27137
+2019,Minnesota,MN,0,St. Louis County,County,2018-10-01,2019-09-30,2019_MN,2019-08-01,27137
+2019,Minnesota,MN,0,St. Louis County,County,2018-10-01,2019-09-30,2019_MN,2019-09-01,27137
+2017,Minnesota,MN,0,Todd County,County,2017-10-01,2018-09-30,2018_MN,2017-10-01,27153
+2017,Minnesota,MN,0,Todd County,County,2017-10-01,2018-09-30,2018_MN,2017-11-01,27153
+2017,Minnesota,MN,0,Todd County,County,2017-10-01,2018-09-30,2018_MN,2017-12-01,27153
+2018,Minnesota,MN,0,Todd County,County,2017-10-01,2018-09-30,2018_MN,2018-01-01,27153
+2018,Minnesota,MN,0,Todd County,County,2017-10-01,2018-09-30,2018_MN,2018-02-01,27153
+2018,Minnesota,MN,0,Todd County,County,2017-10-01,2018-09-30,2018_MN,2018-03-01,27153
+2018,Minnesota,MN,0,Todd County,County,2017-10-01,2018-09-30,2018_MN,2018-04-01,27153
+2018,Minnesota,MN,0,Todd County,County,2017-10-01,2018-09-30,2018_MN,2018-05-01,27153
+2018,Minnesota,MN,0,Todd County,County,2017-10-01,2018-09-30,2018_MN,2018-06-01,27153
+2018,Minnesota,MN,0,Todd County,County,2017-10-01,2018-09-30,2018_MN,2018-07-01,27153
+2018,Minnesota,MN,0,Todd County,County,2017-10-01,2018-09-30,2018_MN,2018-08-01,27153
+2018,Minnesota,MN,0,Todd County,County,2017-10-01,2018-09-30,2018_MN,2018-09-01,27153
+2018,Minnesota,MN,0,Todd County,County,2018-10-01,2019-09-30,2019_MN,2018-10-01,27153
+2018,Minnesota,MN,0,Todd County,County,2018-10-01,2019-09-30,2019_MN,2018-11-01,27153
+2018,Minnesota,MN,0,Todd County,County,2018-10-01,2019-09-30,2019_MN,2018-12-01,27153
+2019,Minnesota,MN,0,Todd County,County,2018-10-01,2019-09-30,2019_MN,2019-01-01,27153
+2019,Minnesota,MN,0,Todd County,County,2018-10-01,2019-09-30,2019_MN,2019-02-01,27153
+2019,Minnesota,MN,0,Todd County,County,2018-10-01,2019-09-30,2019_MN,2019-03-01,27153
+2019,Minnesota,MN,0,Todd County,County,2018-10-01,2019-09-30,2019_MN,2019-04-01,27153
+2019,Minnesota,MN,0,Todd County,County,2018-10-01,2019-09-30,2019_MN,2019-05-01,27153
+2019,Minnesota,MN,0,Todd County,County,2018-10-01,2019-09-30,2019_MN,2019-06-01,27153
+2019,Minnesota,MN,0,Todd County,County,2018-10-01,2019-09-30,2019_MN,2019-07-01,27153
+2019,Minnesota,MN,0,Todd County,County,2018-10-01,2019-09-30,2019_MN,2019-08-01,27153
+2019,Minnesota,MN,0,Todd County,County,2018-10-01,2019-09-30,2019_MN,2019-09-01,27153
+2017,Minnesota,MN,0,Upper Sioux Community,Reservation Area,2017-10-01,2018-09-30,2018_MN,2017-10-01,NA
+2017,Minnesota,MN,0,Upper Sioux Community,Reservation Area,2017-10-01,2018-09-30,2018_MN,2017-11-01,NA
+2017,Minnesota,MN,0,Upper Sioux Community,Reservation Area,2017-10-01,2018-09-30,2018_MN,2017-12-01,NA
+2018,Minnesota,MN,0,Upper Sioux Community,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-01-01,NA
+2018,Minnesota,MN,0,Upper Sioux Community,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-02-01,NA
+2018,Minnesota,MN,0,Upper Sioux Community,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-03-01,NA
+2018,Minnesota,MN,0,Upper Sioux Community,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-04-01,NA
+2018,Minnesota,MN,0,Upper Sioux Community,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-05-01,NA
+2018,Minnesota,MN,0,Upper Sioux Community,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-06-01,NA
+2018,Minnesota,MN,0,Upper Sioux Community,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-07-01,NA
+2018,Minnesota,MN,0,Upper Sioux Community,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-08-01,NA
+2018,Minnesota,MN,0,Upper Sioux Community,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-09-01,NA
+2018,Minnesota,MN,0,Upper Sioux Community,Reservation Area,2018-10-01,2019-09-30,2019_MN,2018-10-01,NA
+2018,Minnesota,MN,0,Upper Sioux Community,Reservation Area,2018-10-01,2019-09-30,2019_MN,2018-11-01,NA
+2018,Minnesota,MN,0,Upper Sioux Community,Reservation Area,2018-10-01,2019-09-30,2019_MN,2018-12-01,NA
+2019,Minnesota,MN,0,Upper Sioux Community,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-01-01,NA
+2019,Minnesota,MN,0,Upper Sioux Community,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-02-01,NA
+2019,Minnesota,MN,0,Upper Sioux Community,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-03-01,NA
+2019,Minnesota,MN,0,Upper Sioux Community,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-04-01,NA
+2019,Minnesota,MN,0,Upper Sioux Community,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-05-01,NA
+2019,Minnesota,MN,0,Upper Sioux Community,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-06-01,NA
+2019,Minnesota,MN,0,Upper Sioux Community,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-07-01,NA
+2019,Minnesota,MN,0,Upper Sioux Community,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-08-01,NA
+2019,Minnesota,MN,0,Upper Sioux Community,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-09-01,NA
+2016,Minnesota,MN,0,Wadena County,County,2016-10-01,2017-09-30,2017_MN,2016-10-01,27159
+2016,Minnesota,MN,0,Wadena County,County,2016-10-01,2017-09-30,2017_MN,2016-11-01,27159
+2016,Minnesota,MN,0,Wadena County,County,2016-10-01,2017-09-30,2017_MN,2016-12-01,27159
+2017,Minnesota,MN,0,Wadena County,County,2016-10-01,2017-09-30,2017_MN,2017-01-01,27159
+2017,Minnesota,MN,0,Wadena County,County,2016-10-01,2017-09-30,2017_MN,2017-02-01,27159
+2017,Minnesota,MN,0,Wadena County,County,2016-10-01,2017-09-30,2017_MN,2017-03-01,27159
+2017,Minnesota,MN,0,Wadena County,County,2016-10-01,2017-09-30,2017_MN,2017-04-01,27159
+2017,Minnesota,MN,0,Wadena County,County,2016-10-01,2017-09-30,2017_MN,2017-05-01,27159
+2017,Minnesota,MN,0,Wadena County,County,2016-10-01,2017-09-30,2017_MN,2017-06-01,27159
+2017,Minnesota,MN,0,Wadena County,County,2016-10-01,2017-09-30,2017_MN,2017-07-01,27159
+2017,Minnesota,MN,0,Wadena County,County,2016-10-01,2017-09-30,2017_MN,2017-08-01,27159
+2017,Minnesota,MN,0,Wadena County,County,2016-10-01,2017-09-30,2017_MN,2017-09-01,27159
+2017,Minnesota,MN,0,Wadena County,County,2017-10-01,2018-09-30,2018_MN,2017-10-01,27159
+2017,Minnesota,MN,0,Wadena County,County,2017-10-01,2018-09-30,2018_MN,2017-11-01,27159
+2017,Minnesota,MN,0,Wadena County,County,2017-10-01,2018-09-30,2018_MN,2017-12-01,27159
+2018,Minnesota,MN,0,Wadena County,County,2017-10-01,2018-09-30,2018_MN,2018-01-01,27159
+2018,Minnesota,MN,0,Wadena County,County,2017-10-01,2018-09-30,2018_MN,2018-02-01,27159
+2018,Minnesota,MN,0,Wadena County,County,2017-10-01,2018-09-30,2018_MN,2018-03-01,27159
+2018,Minnesota,MN,0,Wadena County,County,2017-10-01,2018-09-30,2018_MN,2018-04-01,27159
+2018,Minnesota,MN,0,Wadena County,County,2017-10-01,2018-09-30,2018_MN,2018-05-01,27159
+2018,Minnesota,MN,0,Wadena County,County,2017-10-01,2018-09-30,2018_MN,2018-06-01,27159
+2018,Minnesota,MN,0,Wadena County,County,2017-10-01,2018-09-30,2018_MN,2018-07-01,27159
+2018,Minnesota,MN,0,Wadena County,County,2017-10-01,2018-09-30,2018_MN,2018-08-01,27159
+2018,Minnesota,MN,0,Wadena County,County,2017-10-01,2018-09-30,2018_MN,2018-09-01,27159
+2018,Minnesota,MN,0,Wadena County,County,2018-10-01,2019-09-30,2019_MN,2018-10-01,27159
+2018,Minnesota,MN,0,Wadena County,County,2018-10-01,2019-09-30,2019_MN,2018-11-01,27159
+2018,Minnesota,MN,0,Wadena County,County,2018-10-01,2019-09-30,2019_MN,2018-12-01,27159
+2019,Minnesota,MN,0,Wadena County,County,2018-10-01,2019-09-30,2019_MN,2019-01-01,27159
+2019,Minnesota,MN,0,Wadena County,County,2018-10-01,2019-09-30,2019_MN,2019-02-01,27159
+2019,Minnesota,MN,0,Wadena County,County,2018-10-01,2019-09-30,2019_MN,2019-03-01,27159
+2019,Minnesota,MN,0,Wadena County,County,2018-10-01,2019-09-30,2019_MN,2019-04-01,27159
+2019,Minnesota,MN,0,Wadena County,County,2018-10-01,2019-09-30,2019_MN,2019-05-01,27159
+2019,Minnesota,MN,0,Wadena County,County,2018-10-01,2019-09-30,2019_MN,2019-06-01,27159
+2019,Minnesota,MN,0,Wadena County,County,2018-10-01,2019-09-30,2019_MN,2019-07-01,27159
+2019,Minnesota,MN,0,Wadena County,County,2018-10-01,2019-09-30,2019_MN,2019-08-01,27159
+2019,Minnesota,MN,0,Wadena County,County,2018-10-01,2019-09-30,2019_MN,2019-09-01,27159
+2013,Minnesota,MN,0,White Earth,Reservation Area,2013-10-01,2014-09-30,2014_MN,2013-10-01,NA
+2013,Minnesota,MN,0,White Earth,Reservation Area,2013-10-01,2014-09-30,2014_MN,2013-11-01,NA
+2013,Minnesota,MN,0,White Earth,Reservation Area,2013-10-01,2014-09-30,2014_MN,2013-12-01,NA
+2014,Minnesota,MN,0,White Earth,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-01-01,NA
+2014,Minnesota,MN,0,White Earth,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-02-01,NA
+2014,Minnesota,MN,0,White Earth,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-03-01,NA
+2014,Minnesota,MN,0,White Earth,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-04-01,NA
+2014,Minnesota,MN,0,White Earth,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-05-01,NA
+2014,Minnesota,MN,0,White Earth,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-06-01,NA
+2014,Minnesota,MN,0,White Earth,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-07-01,NA
+2014,Minnesota,MN,0,White Earth,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-08-01,NA
+2014,Minnesota,MN,0,White Earth,Reservation Area,2013-10-01,2014-09-30,2014_MN,2014-09-01,NA
+2017,Minnesota,MN,0,White Earth,Reservation Area,2017-10-01,2018-09-30,2018_MN,2017-10-01,NA
+2017,Minnesota,MN,0,White Earth,Reservation Area,2017-10-01,2018-09-30,2018_MN,2017-11-01,NA
+2017,Minnesota,MN,0,White Earth,Reservation Area,2017-10-01,2018-09-30,2018_MN,2017-12-01,NA
+2018,Minnesota,MN,0,White Earth,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-01-01,NA
+2018,Minnesota,MN,0,White Earth,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-02-01,NA
+2018,Minnesota,MN,0,White Earth,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-03-01,NA
+2018,Minnesota,MN,0,White Earth,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-04-01,NA
+2018,Minnesota,MN,0,White Earth,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-05-01,NA
+2018,Minnesota,MN,0,White Earth,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-06-01,NA
+2018,Minnesota,MN,0,White Earth,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-07-01,NA
+2018,Minnesota,MN,0,White Earth,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-08-01,NA
+2018,Minnesota,MN,0,White Earth,Reservation Area,2017-10-01,2018-09-30,2018_MN,2018-09-01,NA
+2018,Minnesota,MN,0,White Earth,Reservation Area,2018-10-01,2019-09-30,2019_MN,2018-10-01,NA
+2018,Minnesota,MN,0,White Earth,Reservation Area,2018-10-01,2019-09-30,2019_MN,2018-11-01,NA
+2018,Minnesota,MN,0,White Earth,Reservation Area,2018-10-01,2019-09-30,2019_MN,2018-12-01,NA
+2019,Minnesota,MN,0,White Earth,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-01-01,NA
+2019,Minnesota,MN,0,White Earth,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-02-01,NA
+2019,Minnesota,MN,0,White Earth,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-03-01,NA
+2019,Minnesota,MN,0,White Earth,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-04-01,NA
+2019,Minnesota,MN,0,White Earth,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-05-01,NA
+2019,Minnesota,MN,0,White Earth,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-06-01,NA
+2019,Minnesota,MN,0,White Earth,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-07-01,NA
+2019,Minnesota,MN,0,White Earth,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-08-01,NA
+2019,Minnesota,MN,0,White Earth,Reservation Area,2018-10-01,2019-09-30,2019_MN,2019-09-01,NA
