@@ -4,6 +4,9 @@
 
 Use `1_code/run_refactor_pipeline.R` as the entrypoint for the refactored pipeline.
 
+- `--dry-run` prints the repository root, the requested stage(s), and the exact scripts that would run, then exits without executing any stage scripts or writing outputs.
+- `--stage <stage>` runs only the requested stage. `--stage all` runs ingest, descriptives, and reduced-form in sequence.
+
 Basic commands:
 
 ```sh
@@ -56,36 +59,36 @@ The ingest scripts resolve external data through the pointer files above rather 
 ### Ingest Scripts
 
 - `1_code/1_0_ingest/1_0_0_SNAP_waiver_ingest.R`: Builds the consolidated wide waiver artifacts.
-- `1_code/1_0_ingest/1_0_0b_waiver_ingest.R`: Standardizes waiver geographies and writes long-panel waiver artifacts plus comparison outputs.
-- `1_code/1_0_ingest/1_0_1_SNAP_retailer_ingest.R`: Cleans SNAP retailer data and writes retailer-level and county-year store-count artifacts.
-- `1_code/1_0_ingest/1_0_2_unemployment_rates.R`: Writes the unemployment panel used downstream.
-- `1_code/1_0_ingest/1_0_3_ACS_prep.R`: Writes ACS-derived processed artifacts used downstream.
-- `1_code/1_0_ingest/1_0_4_build_analysis_panel.R`: Merges processed inputs into the analysis-ready panel.
-- `1_code/1_0_ingest/shared_ingest_helpers.R`: Shared pathing and utility helpers used by ingest scripts.
+- `1_code/1_0_ingest/1_0_0b_waiver_ingest.R`: Standardizes waiver geographies and writes the long waiver panel used by the U.S. benchmark analysis. It also saves benchmark comparison artifacts for the waiver lineage.
+- `1_code/1_0_ingest/1_0_1_SNAP_retailer_ingest.R`: Cleans the SNAP retailer locator data and standardizes county geography. It writes retailer-level cleaned data and the county-year store-count panel used downstream.
+- `1_code/1_0_ingest/1_0_2_unemployment_rates.R`: Promotes the benchmark unemployment panel into the processed-data layout. It writes the unemployment artifact consumed by the merged analysis panel.
+- `1_code/1_0_ingest/1_0_3_ACS_prep.R`: Promotes ACS and population inputs into the processed-data layout. It writes the processed ACS and population artifacts used by the panel builder.
+- `1_code/1_0_ingest/1_0_4_build_analysis_panel.R`: Reproduces the benchmark county-year analysis panel for the U.S. descriptives and reduced-form pipeline. It merges waiver, SNAP, ACS, prices, wages, population, and unemployment inputs.
+- `1_code/1_0_ingest/shared_ingest_helpers.R`: Shared pathing and utility helpers for ingest scripts. It resolves the repo root, reads root-pointer text files, normalizes FIPS codes, and creates output directories.
 
-### Visualization Scripts
+### Descriptive Scripts
 
-- `1_code/1_1_descriptives/1_1_0_retailer_format_stock_index.R`
-- `1_code/1_1_descriptives/1_1_1_retailer_format_stock_index_rural.R`
-- `1_code/1_1_descriptives/1_1_2_county_conferral_growth_rural_share.R`
-- `1_code/1_1_descriptives/1_1_3_retail_format_pre_post.R`
-- `1_code/1_1_descriptives/1_1_4_ds_stock_trend_by_waiver.R`
-- `1_code/1_1_descriptives/shared_us_analysis_helpers.R`: Shared loaders, output paths, and reusable objects for descriptive scripts.
+- `1_code/1_1_descriptives/1_1_0_retailer_format_stock_index.R`: Creates the all-county retailer format stock index figure. It computes a 2010-based stock index across retail formats and saves the descriptive figure.
+- `1_code/1_1_descriptives/1_1_1_retailer_format_stock_index_rural.R`: Creates the rural-county retailer format stock index figure. It applies the same stock-index construction to the rural subset only.
+- `1_code/1_1_descriptives/1_1_2_county_conferral_growth_rural_share.R`: Creates the county waiver counts over time figure split by rural, urban, and total counties. It aggregates county-level waiver coverage by year and rural status.
+- `1_code/1_1_descriptives/1_1_3_retail_format_pre_post.R`: Creates the treated-county pre/post retail format growth figure split by rural versus non-rural counties. It summarizes treatment-period changes by retail format.
+- `1_code/1_1_descriptives/1_1_4_ds_stock_trend_by_waiver.R`: Creates the dollar-store stock trend figure by ever-waived county status. It compares average dollar-store stock paths for waived versus never-waived counties.
+- `1_code/1_1_descriptives/shared_us_analysis_helpers.R`: Shared loaders, output paths, and reusable objects for descriptive scripts. It assembles the descriptive context from the processed analysis panel, waiver panel, store counts, and RUCC data.
 
-### Transform/Clean Scripts
+### Reduced Form Scripts
 
-- `1_code/1_2_reduced_form/1_2_0_build_event_study_sample.R`
-- `1_code/1_2_reduced_form/1_2_1_event_study_total_ds.R`
-- `1_code/1_2_reduced_form/1_2_2_event_study_chain_super_market.R`
-- `1_code/1_2_reduced_form/1_2_3_event_study_chain_convenience_store.R`
-- `1_code/1_2_reduced_form/1_2_4_event_study_chain_multi_category.R`
-- `1_code/1_2_reduced_form/1_2_5_event_study_chain_medium_grocery.R`
-- `1_code/1_2_reduced_form/1_2_6_event_study_chain_small_grocery.R`
-- `1_code/1_2_reduced_form/1_2_7_event_study_chain_produce.R`
-- `1_code/1_2_reduced_form/1_2_8_event_study_chain_farmers_market.R`
-- `1_code/1_2_reduced_form/1_2_9_event_study_all_table.R`
-- `1_code/1_2_reduced_form/1_2_10_desc_stats_outcomes.R`
-- `1_code/1_2_reduced_form/shared_reduced_form_helpers.R`: Shared loaders, model wrappers, and export helpers for reduced-form scripts.
+- `1_code/1_2_reduced_form/1_2_0_build_event_study_sample.R`: Builds the event-study estimation sample from the processed benchmark analysis panel. It applies the benchmark sample restrictions and writes the reduced-form sample artifact.
+- `1_code/1_2_reduced_form/1_2_1_event_study_total_ds.R`: Estimates and exports the event-study results for total dollar stores. It writes both the figure and the companion regression table.
+- `1_code/1_2_reduced_form/1_2_2_event_study_chain_super_market.R`: Estimates and exports the event-study results for supermarkets. It writes the supermarket figure and table artifacts.
+- `1_code/1_2_reduced_form/1_2_3_event_study_chain_convenience_store.R`: Estimates and exports the event-study results for convenience stores. It writes the convenience-store figure and table artifacts.
+- `1_code/1_2_reduced_form/1_2_4_event_study_chain_multi_category.R`: Estimates and exports the event-study results for multi-category retailers. It writes the multi-category figure and table artifacts.
+- `1_code/1_2_reduced_form/1_2_5_event_study_chain_medium_grocery.R`: Estimates and exports the event-study results for medium grocery stores. It writes the medium-grocery figure and table artifacts.
+- `1_code/1_2_reduced_form/1_2_6_event_study_chain_small_grocery.R`: Estimates and exports the event-study results for small grocery stores. It writes the small-grocery figure and table artifacts.
+- `1_code/1_2_reduced_form/1_2_7_event_study_chain_produce.R`: Estimates and exports the event-study results for produce retailers. It writes the produce figure and table artifacts.
+- `1_code/1_2_reduced_form/1_2_8_event_study_chain_farmers_market.R`: Estimates and exports the event-study results for farmers markets. It writes the farmers-market figure and table artifacts.
+- `1_code/1_2_reduced_form/1_2_9_event_study_all_table.R`: Combines the reduced-form event-study models into a single summary table. It writes the multi-outcome ATT table artifact.
+- `1_code/1_2_reduced_form/1_2_10_desc_stats_outcomes.R`: Produces the descriptive statistics table for the reduced-form outcome variables. It writes the LaTeX summary-statistics table used with the reduced-form outputs.
+- `1_code/1_2_reduced_form/shared_reduced_form_helpers.R`: Shared loaders, model wrappers, and export helpers for reduced-form scripts. It centralizes event-study sample loading, model specification, labeling, and figure/table export paths.
 
 ### Output Files and Directories
 
@@ -123,3 +126,4 @@ The ingest scripts resolve external data through the pointer files above rather 
 ## Versioning and Change Log
 
 - `2026-03-16`: Added a pipeline-runner preamble for `1_code/run_refactor_pipeline.R` and populated the README with mechanical inventory, pathing, pipeline-order, and output-directory documentation.
+- `2026-03-16`: Expanded the script inventory with file-level descriptions based on code preambles and clarified the behavior of `--dry-run` in the pipeline runner section.

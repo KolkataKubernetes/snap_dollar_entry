@@ -1,5 +1,28 @@
 library(fixest)
-source("1_code/1_2_reduced_form/shared_reduced_form_helpers.R")
+script_dir <- local({
+  file_arg <- grep("^--file=", commandArgs(trailingOnly = FALSE), value = TRUE)
+
+  if (length(file_arg) > 0) {
+    return(dirname(normalizePath(sub("^--file=", "", file_arg[[1]]))))
+  }
+
+  if (requireNamespace("rstudioapi", quietly = TRUE) && rstudioapi::isAvailable()) {
+    active_path <- rstudioapi::getActiveDocumentContext()$path
+    if (nzchar(active_path)) {
+      return(dirname(normalizePath(active_path)))
+    }
+  }
+
+  for (frame in rev(sys.frames())) {
+    if (!is.null(frame$ofile)) {
+      return(dirname(normalizePath(frame$ofile)))
+    }
+  }
+
+  normalizePath(getwd())
+})
+
+source(file.path(script_dir, "shared_reduced_form_helpers.R"))
 
 models <- lapply(event_study_outcomes, run_event_study_model)
 names(models) <- event_study_outcomes

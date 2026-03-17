@@ -9,13 +9,15 @@
 # INPUTS:           `0_inputs/input_root.txt`
 #                   `2_processed_data/processed_root.txt`
 #                   `0_0_waivers/0_0_1_ABAWD_panels/*.xlsx`
-#                   `0_0_waivers/0_0_2_consolidated_panels/waiver_data_consolidated.csv`
 # OUTPUTS:          `2_0_waivers/2_0_0_waiver_data_consolidated_generated.rds`
-#                   `2_0_waivers/2_0_1_waiver_data_consolidated_benchmark.rds`
 #///////////////////////////////////////////////////////////////////////////////
 
 # Reference file:
 # - legacy/1_code/1_0_0_SNAP_waiver_ingest.R
+
+# -----------------------------
+# 0) Setup and configuration
+# -----------------------------
 
 library(dplyr)
 library(purrr)
@@ -24,7 +26,34 @@ library(readxl)
 library(lubridate)
 library(zoo)
 
-source("1_code/1_0_ingest/shared_ingest_helpers.R")
+# --- Set local pathing to allow for script to run within IDE
+
+script_dir <- local({
+  file_arg <- grep("^--file=", commandArgs(trailingOnly = FALSE), value = TRUE)
+
+  if (length(file_arg) > 0) {
+    return(dirname(normalizePath(sub("^--file=", "", file_arg[[1]]))))
+  }
+
+  if (requireNamespace("rstudioapi", quietly = TRUE) && rstudioapi::isAvailable()) {
+    active_path <- rstudioapi::getActiveDocumentContext()$path
+    if (nzchar(active_path)) {
+      return(dirname(normalizePath(active_path)))
+    }
+  }
+
+  for (frame in rev(sys.frames())) {
+    if (!is.null(frame$ofile)) {
+      return(dirname(normalizePath(frame$ofile)))
+    }
+  }
+
+  normalizePath(getwd())
+})
+
+source(file.path(script_dir, "shared_ingest_helpers.R"))
+
+# --- Helper function to define the months between the start and end date
 
 month_labels_between <- function(start_date, end_date) {
   if (is.na(start_date) || is.na(end_date)) {
@@ -37,6 +66,8 @@ month_labels_between <- function(start_date, end_date) {
   )
 }
 
+# --- Read paths for ingest, saving processed data
+
 repo_root <- get_repo_root()
 setwd(repo_root)
 
@@ -44,13 +75,11 @@ input_root <- read_root_path("0_inputs/input_root.txt")
 processed_root <- read_root_path("2_processed_data/processed_root.txt")
 
 waiver_input_dir <- file.path(input_root, "0_0_waivers", "0_0_1_ABAWD_panels")
-benchmark_wide_path <- file.path(
-  input_root,
-  "0_0_waivers",
-  "0_0_2_consolidated_panels",
-  "waiver_data_consolidated.csv"
-)
 waiver_output_dir <- ensure_dir(file.path(processed_root, "2_0_waivers"))
+
+# -----------------------------
+# 1) Data Ingest
+# -----------------------------
 
 waiver_files <- list.files(
   waiver_input_dir,
@@ -62,6 +91,12 @@ waiver_files <- list.files(
 if (!length(waiver_files)) {
   stop(sprintf("No waiver workbooks found in %s", waiver_input_dir))
 }
+
+# -----------------------------
+# 2) Data Transform ("Wide" dataset), create treatment indicator
+# -----------------------------
+
+# --- Create "Wide" File with month-year columns
 
 generated_wide <- waiver_files |>
   map(readxl::read_excel) |>
@@ -81,6 +116,8 @@ for (month_column in month_columns) {
   generated_wide[[month_column]] <- 0L
 }
 
+# --- Create month-year indicators for each row 
+
 for (row_index in seq_len(nrow(generated_wide))) {
   active_months <- month_labels_between(
     generated_wide$DATE_START[[row_index]],
@@ -92,22 +129,13 @@ for (row_index in seq_len(nrow(generated_wide))) {
   }
 }
 
-benchmark_wide <- readr::read_csv(benchmark_wide_path, show_col_types = FALSE) |>
-  mutate(
-    DATE_START = as.Date(DATE_START),
-    DATE_END = as.Date(DATE_END)
-  )
+# -----------------------------
+# 3) Save, close out
+# -----------------------------
 
 saveRDS(
   generated_wide,
   file.path(waiver_output_dir, "2_0_0_waiver_data_consolidated_generated.rds")
 )
-saveRDS(
-  benchmark_wide,
-  file.path(waiver_output_dir, "2_0_1_waiver_data_consolidated_benchmark.rds")
-)
 
 message(sprintf("Saved raw waiver ingest outputs to %s", waiver_output_dir))
-
-
-
