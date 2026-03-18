@@ -1,6 +1,7 @@
 library(dplyr)
 library(stringr)
 library(fixest)
+library(ggplot2)
 
 get_repo_root <- function() {
   file_arg <- grep("^--file=", commandArgs(trailingOnly = FALSE), value = TRUE)
@@ -29,14 +30,47 @@ ensure_reduced_form_dirs <- function() {
   dir.create(file.path("3_outputs", "tables"), recursive = TRUE, showWarnings = FALSE)
 }
 
+next_available_path <- function(path) {
+  if (!file.exists(path)) {
+    return(path)
+  }
+
+  base <- tools::file_path_sans_ext(path)
+  ext <- tools::file_ext(path)
+  index <- 1
+  candidate <- sprintf("%s_v%02d.%s", base, index, ext)
+
+  while (file.exists(candidate)) {
+    index <- index + 1
+    candidate <- sprintf("%s_v%02d.%s", base, index, ext)
+  }
+
+  candidate
+}
+
 reduced_form_plot_path <- function(filename) {
   ensure_reduced_form_dirs()
-  file.path("3_outputs", "3_2_reduced_form", filename)
+  next_available_path(file.path("3_outputs", "3_2_reduced_form", filename))
 }
 
 reduced_form_table_path <- function(filename) {
   ensure_reduced_form_dirs()
-  file.path("3_outputs", "tables", filename)
+  next_available_path(file.path("3_outputs", "tables", filename))
+}
+
+theme_im <- function(base_size = 12) {
+  theme_minimal(base_size = base_size) +
+    theme(
+      plot.title.position = "plot",
+      plot.caption.position = "plot",
+      panel.grid.minor = element_blank(),
+      panel.grid.major.x = element_line(linewidth = 0.3),
+      panel.grid.major.y = element_line(linewidth = 0.3),
+      legend.position = "top",
+      legend.title = element_text(face = "bold"),
+      plot.title = element_text(face = "bold"),
+      axis.title = element_text(face = "bold")
+    )
 }
 
 load_event_study_sample <- function() {
@@ -90,13 +124,51 @@ run_event_study_model <- function(var_name) {
   )
 }
 
+extract_event_profile <- function(model) {
+  event_coeftable <- as.data.frame(coeftable(model))
+  event_coeftable$term <- rownames(event_coeftable)
+  rownames(event_coeftable) <- NULL
+
+  event_confint <- as.data.frame(confint(model))
+  event_confint$term <- rownames(event_confint)
+  rownames(event_confint) <- NULL
+  names(event_confint)[1:2] <- c("conf_low", "conf_high")
+
+  event_coeftable |>
+    filter(grepl("^year::", term)) |>
+    left_join(event_confint, by = "term") |>
+    mutate(event_time = as.integer(sub("^year::", "", term))) |>
+    arrange(event_time)
+}
+
 save_event_study_artifact <- function(var_name, label, file_stub) {
   model <- run_event_study_model(var_name)
+  event_profile <- extract_event_profile(model)
 
-  pdf(reduced_form_plot_path(paste0(file_stub, ".pdf")), width = 8, height = 6)
-  iplot(model, sep = 0.2, main = "", pt.join = TRUE)
-  title(paste0("IHS(", label, ")"))
-  dev.off()
+  event_plot <- ggplot(
+    event_profile,
+    aes(x = event_time, y = Estimate)
+  ) +
+    geom_hline(yintercept = 0, linewidth = 0.4, color = "grey50") +
+    geom_vline(xintercept = 0, linewidth = 0.4, linetype = "dashed", color = "grey50") +
+    geom_errorbar(aes(ymin = conf_low, ymax = conf_high), width = 0.12, linewidth = 0.45, color = "#1B4F72") +
+    geom_line(linewidth = 0.7, color = "#1B4F72") +
+    geom_point(size = 2, color = "#1B4F72") +
+    scale_x_continuous(breaks = event_profile$event_time) +
+    labs(
+      title = paste0("IHS(", label, ")"),
+      x = "Event time",
+      y = "Coefficient"
+    ) +
+    theme_im(base_size = 12)
+
+  ggsave(
+    filename = reduced_form_plot_path(paste0(file_stub, ".pdf")),
+    plot = event_plot,
+    width = 8,
+    height = 6,
+    units = "in"
+  )
 
   etable(
     model,
