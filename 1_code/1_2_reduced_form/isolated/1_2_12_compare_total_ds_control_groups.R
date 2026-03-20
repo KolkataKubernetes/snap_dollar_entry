@@ -8,15 +8,15 @@
 # Last Updated:     March 17, 2026
 # Description:      Standalone comparison of Dollar Stores Sun-Abraham event
 #                   studies under the current eventually-treated control sample
-#                   and an alternative never-treated control sample.
+#                   and an alternative all-never-treated control sample.
 # INPUTS:           `2_9_analysis/2_9_0_us_analysis_panel.rds`
 #                   `2_processed_data/processed_root.txt`
 # PROCEDURES:       Rebuild both estimation samples, estimate both reduced-form
 #                   models, and save isolated comparison outputs.
-# OUTPUTS:          `3_outputs/3_2_reduced_form/3_2_12_event_study_ihs_total_ds_compare_controls*.pdf`
-#                   `3_outputs/tables/3_2_12_event_study_ihs_total_ds_compare_controls*.tex`
-#                   `3_outputs/tables/3_2_12_event_study_ihs_total_ds_compare_controls*_event_profile.csv`
-#                   `3_outputs/tables/3_2_12_event_study_ihs_total_ds_compare_controls*_att.csv`
+# OUTPUTS:          `3_outputs/3_2_reduced_form/isolated/3_2_12_event_study_ihs_total_ds_compare_controls*.pdf`
+#                   `3_outputs/3_0_tables/isolated/3_2_12_event_study_ihs_total_ds_compare_controls*.tex`
+#                   `3_outputs/3_0_tables/isolated/3_2_12_event_study_ihs_total_ds_compare_controls*_event_profile.csv`
+#                   `3_outputs/3_0_tables/isolated/3_2_12_event_study_ihs_total_ds_compare_controls*_att.csv`
 #///////////////////////////////////////////////////////////////////////////////
 
 library(dplyr)
@@ -57,8 +57,8 @@ read_root_path <- function(path_file) {
 }
 
 ensure_output_dirs <- function() {
-  dir.create(file.path("3_outputs", "3_2_reduced_form"), recursive = TRUE, showWarnings = FALSE)
-  dir.create(file.path("3_outputs", "tables"), recursive = TRUE, showWarnings = FALSE)
+  dir.create(file.path("3_outputs", "3_2_reduced_form", "isolated"), recursive = TRUE, showWarnings = FALSE)
+  dir.create(file.path("3_outputs", "3_0_tables", "isolated"), recursive = TRUE, showWarnings = FALSE)
 }
 
 next_available_path <- function(path) {
@@ -152,17 +152,15 @@ base_panel <- analysis_panel |>
     treated_group = eventYear2 != 10000,
     never_treated = eventYear2 == 10000
   ) |>
-  group_by(state_fips) |>
-  mutate(treated_state = sum(treated_group) > 0) |>
   group_by(county_fips) |>
   mutate(treated_county = sum(treated_group) > 0) |>
   ungroup()
 
 eventually_treated_sample <- base_panel |>
-  filter(year - eventYear2 >= -3, treated_state, treated_county)
+  filter(year - eventYear2 >= -3, treated_county)
 
 never_treated_sample <- base_panel |>
-  filter(treated_state, never_treated | year - eventYear2 >= -3)
+  filter(never_treated | year - eventYear2 >= -3)
 
 eventually_treated_model <- estimate_model(eventually_treated_sample)
 never_treated_model <- estimate_model(never_treated_sample)
@@ -208,16 +206,16 @@ comparison_plot <- ggplot(
 ensure_output_dirs()
 
 plot_path <- next_available_path(
-  file.path("3_outputs", "3_2_reduced_form", "3_2_12_event_study_ihs_total_ds_compare_controls.pdf")
+  file.path("3_outputs", "3_2_reduced_form", "isolated", "3_2_12_event_study_ihs_total_ds_compare_controls.pdf")
 )
 tex_path <- next_available_path(
-  file.path("3_outputs", "tables", "3_2_12_event_study_ihs_total_ds_compare_controls_att.tex")
+  file.path("3_outputs", "3_0_tables", "isolated", "3_2_12_event_study_ihs_total_ds_compare_controls_att.tex")
 )
 event_csv_path <- next_available_path(
-  file.path("3_outputs", "tables", "3_2_12_event_study_ihs_total_ds_compare_controls_event_profile.csv")
+  file.path("3_outputs", "3_0_tables", "isolated", "3_2_12_event_study_ihs_total_ds_compare_controls_event_profile.csv")
 )
 att_csv_path <- next_available_path(
-  file.path("3_outputs", "tables", "3_2_12_event_study_ihs_total_ds_compare_controls_att.csv")
+  file.path("3_outputs", "3_0_tables", "isolated", "3_2_12_event_study_ihs_total_ds_compare_controls_att.csv")
 )
 
 ggsave(plot_path, comparison_plot, width = 8, height = 6, units = "in")

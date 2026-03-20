@@ -15,8 +15,8 @@
 #                   post window (tau = 0:3), average the county-level log
 #                   changes within each format, and save the figure and summary
 #                   table.
-# OUTPUTS:          `3_outputs/3_1_descriptives/3_1_10_retail_format_pre_post_single_series.jpeg`
-#                   `3_outputs/3_1_descriptives/3_1_10_retail_format_pre_post_single_series.csv`
+# OUTPUTS:          `3_outputs/3_1_descriptives/3_1_1_retailers/3_1_1_8_retail_format_pre_post_single_series.jpeg`
+#                   `3_outputs/3_1_descriptives/3_1_1_retailers/3_1_1_8_retail_format_pre_post_single_series.csv`
 #///////////////////////////////////////////////////////////////////////////////
 
 library(dplyr)
@@ -108,7 +108,7 @@ p <- ggplot(
   )
 
 ggsave(
-  filename = descriptive_output_path("3_1_10_retail_format_pre_post_single_series.jpeg"),
+  filename = descriptive_output_path("3_1_1_8_retail_format_pre_post_single_series.jpeg"),
   plot = p,
   width = 9,
   height = 6,
@@ -117,5 +117,5 @@ ggsave(
 
 readr::write_csv(
   format_growth_summary,
-  descriptive_output_path("3_1_10_retail_format_pre_post_single_series.csv")
+  descriptive_output_path("3_1_1_8_retail_format_pre_post_single_series.csv")
 )

@@ -36,5 +36,5 @@ stargazer::stargazer(
   title = "Descriptive Statistics: Retail Outlets",
   label = "tab:desc_stats",
   digits = 2,
-  out = reduced_form_table_path("3_2_10_desc_stats_outcomes.tex")
+  out = reduced_form_table_path("3_2_0_0_1_desc_stats_outcomes.tex")
 )

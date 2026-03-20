@@ -12,8 +12,8 @@
 # PROCEDURES:       Load the shared descriptive context, compute a 2010-based
 #                   county-average dollar-store stock index by treatment
 #                   status, and save the figure and supporting table.
-# OUTPUTS:          `3_outputs/3_1_descriptives/3_1_11_ds_stock_growth_by_treatment_status.jpeg`
-#                   `3_outputs/3_1_descriptives/3_1_11_ds_stock_growth_by_treatment_status.csv`
+# OUTPUTS:          `3_outputs/3_1_descriptives/3_1_1_retailers/3_1_1_5_ds_stock_growth_by_treatment_status.jpeg`
+#                   `3_outputs/3_1_descriptives/3_1_1_retailers/3_1_1_5_ds_stock_growth_by_treatment_status.csv`
 #///////////////////////////////////////////////////////////////////////////////
 
 library(dplyr)
@@ -89,7 +89,7 @@ p <- ggplot(
   ctx$theme_im(base_size = 13)
 
 ggsave(
-  filename = descriptive_output_path("3_1_11_ds_stock_growth_by_treatment_status.jpeg"),
+  filename = descriptive_output_path("3_1_1_5_ds_stock_growth_by_treatment_status.jpeg"),
   plot = p,
   width = 10,
   height = 6,
@@ -98,5 +98,5 @@ ggsave(
 
 readr::write_csv(
   stock_growth,
-  descriptive_output_path("3_1_11_ds_stock_growth_by_treatment_status.csv")
+  descriptive_output_path("3_1_1_5_ds_stock_growth_by_treatment_status.csv")
 )

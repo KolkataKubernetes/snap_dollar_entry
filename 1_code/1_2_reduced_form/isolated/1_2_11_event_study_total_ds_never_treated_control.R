@@ -7,16 +7,18 @@
 # Current author:   Codex
 # Last Updated:     March 17, 2026
 # Description:      Standalone Sun-Abraham event study for Dollar Stores using
-#                   never-treated counties as the reference cohort.
+#                   all never-treated counties in the state/DC sample as the
+#                   reference cohort.
 # INPUTS:           `2_9_analysis/2_9_0_us_analysis_panel.rds`
 #                   `2_processed_data/processed_root.txt`
 # PROCEDURES:       Rebuild the 2014-2019 event-study sample while retaining
-#                   never-treated counties, estimate the Dollar Stores reduced
-#                   form, and save isolated event-study / ATT outputs.
-# OUTPUTS:          `3_outputs/3_2_reduced_form/3_2_11_event_study_ihs_total_ds_never_treated_control*.pdf`
-#                   `3_outputs/tables/3_2_11_event_study_ihs_total_ds_never_treated_control*.tex`
-#                   `3_outputs/tables/3_2_11_event_study_ihs_total_ds_never_treated_control*_event_profile.csv`
-#                   `3_outputs/tables/3_2_11_event_study_ihs_total_ds_never_treated_control*_att.csv`
+#                   all never-treated counties in the sample universe, estimate
+#                   the Dollar Stores reduced form, and save isolated
+#                   event-study / ATT outputs.
+# OUTPUTS:          `3_outputs/3_2_reduced_form/isolated/3_2_11_event_study_ihs_total_ds_never_treated_control*.pdf`
+#                   `3_outputs/3_0_tables/isolated/3_2_11_event_study_ihs_total_ds_never_treated_control*.tex`
+#                   `3_outputs/3_0_tables/isolated/3_2_11_event_study_ihs_total_ds_never_treated_control*_event_profile.csv`
+#                   `3_outputs/3_0_tables/isolated/3_2_11_event_study_ihs_total_ds_never_treated_control*_att.csv`
 #///////////////////////////////////////////////////////////////////////////////
 
 library(dplyr)
@@ -57,8 +59,8 @@ read_root_path <- function(path_file) {
 }
 
 ensure_output_dirs <- function() {
-  dir.create(file.path("3_outputs", "3_2_reduced_form"), recursive = TRUE, showWarnings = FALSE)
-  dir.create(file.path("3_outputs", "tables"), recursive = TRUE, showWarnings = FALSE)
+  dir.create(file.path("3_outputs", "3_2_reduced_form", "isolated"), recursive = TRUE, showWarnings = FALSE)
+  dir.create(file.path("3_outputs", "3_0_tables", "isolated"), recursive = TRUE, showWarnings = FALSE)
 }
 
 next_available_path <- function(path) {
@@ -114,10 +116,7 @@ event_study_sample <- analysis_panel |>
     treated_group = eventYear2 != 10000,
     never_treated = eventYear2 == 10000
   ) |>
-  group_by(state_fips) |>
-  mutate(treated_state = sum(treated_group) > 0) |>
-  ungroup() |>
-  filter(treated_state, never_treated | year - eventYear2 >= -3) |>
+  filter(never_treated | year - eventYear2 >= -3) |>
   mutate(state_year = paste(state, year))
 
 model <- feols(
@@ -159,16 +158,16 @@ att_results <- att_coeftable |>
 ensure_output_dirs()
 
 plot_path <- next_available_path(
-  file.path("3_outputs", "3_2_reduced_form", "3_2_11_event_study_ihs_total_ds_never_treated_control.pdf")
+  file.path("3_outputs", "3_2_reduced_form", "isolated", "3_2_11_event_study_ihs_total_ds_never_treated_control.pdf")
 )
 tex_path <- next_available_path(
-  file.path("3_outputs", "tables", "3_2_11_event_study_ihs_total_ds_never_treated_control_att.tex")
+  file.path("3_outputs", "3_0_tables", "isolated", "3_2_11_event_study_ihs_total_ds_never_treated_control_att.tex")
 )
 event_csv_path <- next_available_path(
-  file.path("3_outputs", "tables", "3_2_11_event_study_ihs_total_ds_never_treated_control_event_profile.csv")
+  file.path("3_outputs", "3_0_tables", "isolated", "3_2_11_event_study_ihs_total_ds_never_treated_control_event_profile.csv")
 )
 att_csv_path <- next_available_path(
-  file.path("3_outputs", "tables", "3_2_11_event_study_ihs_total_ds_never_treated_control_att.csv")
+  file.path("3_outputs", "3_0_tables", "isolated", "3_2_11_event_study_ihs_total_ds_never_treated_control_att.csv")
 )
 
 event_plot <- ggplot(

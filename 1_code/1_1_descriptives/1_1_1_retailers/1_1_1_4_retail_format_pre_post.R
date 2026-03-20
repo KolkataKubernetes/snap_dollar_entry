@@ -12,7 +12,7 @@
 # PROCEDURES:       Load the shared descriptive context, compute pre/post
 #                   treatment growth by format and rural status, and save the
 #                   figure.
-# OUTPUTS:          `3_outputs/3_1_descriptives/3_1_3_retail_format_pre_post.jpeg`
+# OUTPUTS:          `3_outputs/3_1_descriptives/3_1_1_retailers/3_1_1_4_retail_format_pre_post.jpeg`
 #///////////////////////////////////////////////////////////////////////////////
 
 library(dplyr)
@@ -88,7 +88,7 @@ p <- ggplot(
   ctx$theme_im(base_size = 13)
 
 ggsave(
-  filename = descriptive_output_path("3_1_3_retail_format_pre_post.jpeg"),
+  filename = descriptive_output_path("3_1_1_4_retail_format_pre_post.jpeg"),
   plot = p,
   width = 9,
   height = 6,

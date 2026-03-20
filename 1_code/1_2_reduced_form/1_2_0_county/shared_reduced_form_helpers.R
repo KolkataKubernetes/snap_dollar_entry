@@ -3,20 +3,54 @@ library(stringr)
 library(fixest)
 library(ggplot2)
 
-get_repo_root <- function() {
+get_script_path <- function() {
   file_arg <- grep("^--file=", commandArgs(trailingOnly = FALSE), value = TRUE)
 
   if (length(file_arg) > 0) {
-    script_path <- normalizePath(sub("^--file=", "", file_arg[[1]]))
-    return(normalizePath(file.path(dirname(script_path), "..", "..")))
+    return(normalizePath(sub("^--file=", "", file_arg[[1]])))
   }
 
   if (requireNamespace("rstudioapi", quietly = TRUE) && rstudioapi::isAvailable()) {
     script_path <- rstudioapi::getActiveDocumentContext()$path
-    return(normalizePath(file.path(dirname(script_path), "..", "..")))
+    if (nzchar(script_path)) {
+      return(normalizePath(script_path))
+    }
   }
 
-  normalizePath(getwd())
+  for (frame in rev(sys.frames())) {
+    if (!is.null(frame$ofile)) {
+      return(normalizePath(frame$ofile))
+    }
+  }
+
+  NA_character_
+}
+
+find_repo_root <- function(start_path) {
+  candidate <- normalizePath(start_path, winslash = "/", mustWork = FALSE)
+
+  if (!dir.exists(candidate)) {
+    candidate <- dirname(candidate)
+  }
+
+  repeat {
+    if (file.exists(file.path(candidate, "AGENTS.md")) && dir.exists(file.path(candidate, "1_code"))) {
+      return(candidate)
+    }
+
+    parent <- dirname(candidate)
+    if (identical(parent, candidate)) {
+      stop(sprintf("Could not locate repository root from '%s'.", start_path))
+    }
+
+    candidate <- parent
+  }
+}
+
+get_repo_root <- function() {
+  script_path <- get_script_path()
+  start_path <- if (!is.na(script_path)) script_path else getwd()
+  find_repo_root(start_path)
 }
 
 read_root_path <- function(path_file) {
@@ -25,9 +59,43 @@ read_root_path <- function(path_file) {
     str_remove_all("^['\"]|['\"]$")
 }
 
+map_output_component <- function(component) {
+  sub("^1_", "3_", component)
+}
+
+build_output_dir_path <- function(...) {
+  path_components <- Filter(
+    function(component) !is.null(component) && length(component) > 0,
+    list(...)
+  )
+  do.call(file.path, as.list(unlist(path_components, use.names = FALSE)))
+}
+
+reduced_form_output_subdir <- function() {
+  script_path <- get_script_path()
+
+  if (is.na(script_path)) {
+    return(character())
+  }
+
+  repo_root <- get_repo_root()
+  stage_root <- normalizePath(file.path(repo_root, "1_code", "1_2_reduced_form"), winslash = "/", mustWork = TRUE)
+  script_dir <- normalizePath(dirname(script_path), winslash = "/", mustWork = TRUE)
+  relative_dir <- sub(paste0("^", stage_root, "/?"), "", script_dir)
+
+  if (identical(relative_dir, script_dir) || identical(relative_dir, "")) {
+    return(character())
+  }
+
+  vapply(strsplit(relative_dir, "/", fixed = TRUE)[[1]], map_output_component, character(1))
+}
+
 ensure_reduced_form_dirs <- function() {
-  dir.create(file.path("3_outputs", "3_2_reduced_form"), recursive = TRUE, showWarnings = FALSE)
-  dir.create(file.path("3_outputs", "tables"), recursive = TRUE, showWarnings = FALSE)
+  plot_dir <- build_output_dir_path("3_outputs", "3_2_reduced_form", reduced_form_output_subdir())
+  table_dir <- build_output_dir_path("3_outputs", "3_0_tables", reduced_form_output_subdir())
+  dir.create(plot_dir, recursive = TRUE, showWarnings = FALSE)
+  dir.create(table_dir, recursive = TRUE, showWarnings = FALSE)
+  list(plot_dir = plot_dir, table_dir = table_dir)
 }
 
 next_available_path <- function(path) {
@@ -49,13 +117,13 @@ next_available_path <- function(path) {
 }
 
 reduced_form_plot_path <- function(filename) {
-  ensure_reduced_form_dirs()
-  next_available_path(file.path("3_outputs", "3_2_reduced_form", filename))
+  output_dirs <- ensure_reduced_form_dirs()
+  next_available_path(file.path(output_dirs$plot_dir, filename))
 }
 
 reduced_form_table_path <- function(filename) {
-  ensure_reduced_form_dirs()
-  next_available_path(file.path("3_outputs", "tables", filename))
+  output_dirs <- ensure_reduced_form_dirs()
+  next_available_path(file.path(output_dirs$table_dir, filename))
 }
 
 theme_im <- function(base_size = 12) {

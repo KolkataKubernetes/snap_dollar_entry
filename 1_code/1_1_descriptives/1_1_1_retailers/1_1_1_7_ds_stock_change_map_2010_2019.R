@@ -13,8 +13,8 @@
 #                   Dollar Store stock in 2010 and 2019, calculate percent
 #                   change relative to 2010, join to county polygons via `sf`,
 #                   and save the map and underlying county table.
-# OUTPUTS:          `3_outputs/3_1_descriptives/3_1_8_ds_stock_change_map_2010_2019.jpeg`
-#                   `3_outputs/3_1_descriptives/3_1_8_ds_stock_change_map_2010_2019.csv`
+# OUTPUTS:          `3_outputs/3_1_descriptives/3_1_1_retailers/3_1_1_7_ds_stock_change_map_2010_2019.jpeg`
+#                   `3_outputs/3_1_descriptives/3_1_1_retailers/3_1_1_7_ds_stock_change_map_2010_2019.csv`
 #///////////////////////////////////////////////////////////////////////////////
 
 library(dplyr)
@@ -108,7 +108,7 @@ p <- ggplot(map_data) +
   map_theme
 
 ggsave(
-  filename = descriptive_output_path("3_1_8_ds_stock_change_map_2010_2019.jpeg"),
+  filename = descriptive_output_path("3_1_1_7_ds_stock_change_map_2010_2019.jpeg"),
   plot = p,
   width = 11,
   height = 7,
@@ -117,6 +117,6 @@ ggsave(
 
 write.csv(
   ds_change,
-  descriptive_output_path("3_1_8_ds_stock_change_map_2010_2019.csv"),
+  descriptive_output_path("3_1_1_7_ds_stock_change_map_2010_2019.csv"),
   row.names = FALSE
 )

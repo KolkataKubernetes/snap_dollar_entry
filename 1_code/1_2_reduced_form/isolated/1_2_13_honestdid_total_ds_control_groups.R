@@ -9,7 +9,7 @@
 # Description:      Standalone HonestDiD sensitivity analysis for the Dollar
 #                   Stores Sun-Abraham event study under the current
 #                   eventually-treated control sample and the alternative
-#                   never-treated control sample.
+#                   all-never-treated control sample.
 # INPUTS:           `2_9_analysis/2_9_0_us_analysis_panel.rds`
 #                   `2_processed_data/processed_root.txt`
 # PROCEDURES:       Rebuild both estimation samples, estimate both reduced-form
@@ -17,9 +17,9 @@
 #                   matrix, and run the Roth-Rambachan relative-magnitudes
 #                   sensitivity analysis for the first post period and the
 #                   average post effect.
-# OUTPUTS:          `3_outputs/3_2_reduced_form/3_2_13_honestdid_total_ds_sensitivity_plots*.pdf`
-#                   `3_outputs/tables/3_2_13_honestdid_total_ds_summary*.csv`
-#                   `3_outputs/tables/3_2_13_honestdid_total_ds_detail*.csv`
+# OUTPUTS:          `3_outputs/3_2_reduced_form/isolated/3_2_13_honestdid_total_ds_sensitivity_plots*.pdf`
+#                   `3_outputs/3_0_tables/isolated/3_2_13_honestdid_total_ds_summary*.csv`
+#                   `3_outputs/3_0_tables/isolated/3_2_13_honestdid_total_ds_detail*.csv`
 #///////////////////////////////////////////////////////////////////////////////
 
 library(dplyr)
@@ -61,8 +61,8 @@ read_root_path <- function(path_file) {
 }
 
 ensure_output_dirs <- function() {
-  dir.create(file.path("3_outputs", "3_2_reduced_form"), recursive = TRUE, showWarnings = FALSE)
-  dir.create(file.path("3_outputs", "tables"), recursive = TRUE, showWarnings = FALSE)
+  dir.create(file.path("3_outputs", "3_2_reduced_form", "isolated"), recursive = TRUE, showWarnings = FALSE)
+  dir.create(file.path("3_outputs", "3_0_tables", "isolated"), recursive = TRUE, showWarnings = FALSE)
 }
 
 next_available_path <- function(path) {
@@ -234,17 +234,15 @@ base_panel <- analysis_panel |>
     treated_group = eventYear2 != 10000,
     never_treated = eventYear2 == 10000
   ) |>
-  group_by(state_fips) |>
-  mutate(treated_state = sum(treated_group) > 0) |>
   group_by(county_fips) |>
   mutate(treated_county = sum(treated_group) > 0) |>
   ungroup()
 
 eventually_treated_sample <- base_panel |>
-  filter(year - eventYear2 >= -3, treated_state, treated_county)
+  filter(year - eventYear2 >= -3, treated_county)
 
 never_treated_sample <- base_panel |>
-  filter(treated_state, never_treated | year - eventYear2 >= -3)
+  filter(never_treated | year - eventYear2 >= -3)
 
 models <- list(
   eventually_treated = estimate_model(eventually_treated_sample),
@@ -280,13 +278,13 @@ detailed_results <- bind_rows(lapply(results, function(x) {
 ensure_output_dirs()
 
 summary_path <- next_available_path(
-  file.path("3_outputs", "tables", "3_2_13_honestdid_total_ds_summary.csv")
+  file.path("3_outputs", "3_0_tables", "isolated", "3_2_13_honestdid_total_ds_summary.csv")
 )
 detail_path <- next_available_path(
-  file.path("3_outputs", "tables", "3_2_13_honestdid_total_ds_detail.csv")
+  file.path("3_outputs", "3_0_tables", "isolated", "3_2_13_honestdid_total_ds_detail.csv")
 )
 plot_path <- next_available_path(
-  file.path("3_outputs", "3_2_reduced_form", "3_2_13_honestdid_total_ds_sensitivity_plots.pdf")
+  file.path("3_outputs", "3_2_reduced_form", "isolated", "3_2_13_honestdid_total_ds_sensitivity_plots.pdf")
 )
 
 write.csv(summary_results, summary_path, row.names = FALSE)

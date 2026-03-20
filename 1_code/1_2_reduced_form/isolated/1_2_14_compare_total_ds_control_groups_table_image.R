@@ -8,15 +8,15 @@
 # Last Updated:     March 17, 2026
 # Description:      Render a slide-ready image table comparing the Dollar
 #                   Stores reduced-form estimates under eventually-treated and
-#                   never-treated control groups.
+#                   all-never-treated control groups.
 # INPUTS:           `2_9_analysis/2_9_0_us_analysis_panel.rds`
 #                   `2_processed_data/processed_root.txt`
 # PROCEDURES:       Rebuild both control-group samples, estimate both reduced-
 #                   form models, extract ATT and fit statistics, and save a
 #                   PNG/JPEG comparison table.
-# OUTPUTS:          `3_outputs/3_2_reduced_form/3_2_14_event_study_ihs_total_ds_compare_controls_table*.png`
-#                   `3_outputs/3_2_reduced_form/3_2_14_event_study_ihs_total_ds_compare_controls_table*.jpeg`
-#                   `3_outputs/tables/3_2_14_event_study_ihs_total_ds_compare_controls_table*.csv`
+# OUTPUTS:          `3_outputs/3_2_reduced_form/isolated/3_2_14_event_study_ihs_total_ds_compare_controls_table*.png`
+#                   `3_outputs/3_2_reduced_form/isolated/3_2_14_event_study_ihs_total_ds_compare_controls_table*.jpeg`
+#                   `3_outputs/3_0_tables/isolated/3_2_14_event_study_ihs_total_ds_compare_controls_table*.csv`
 #///////////////////////////////////////////////////////////////////////////////
 
 library(dplyr)
@@ -61,8 +61,8 @@ read_root_path <- function(path_file) {
 }
 
 ensure_output_dirs <- function() {
-  dir.create(file.path("3_outputs", "3_2_reduced_form"), recursive = TRUE, showWarnings = FALSE)
-  dir.create(file.path("3_outputs", "tables"), recursive = TRUE, showWarnings = FALSE)
+  dir.create(file.path("3_outputs", "3_2_reduced_form", "isolated"), recursive = TRUE, showWarnings = FALSE)
+  dir.create(file.path("3_outputs", "3_0_tables", "isolated"), recursive = TRUE, showWarnings = FALSE)
 }
 
 next_available_path <- function(path) {
@@ -141,17 +141,15 @@ base_panel <- analysis_panel |>
     treated_group = eventYear2 != 10000,
     never_treated = eventYear2 == 10000
   ) |>
-  group_by(state_fips) |>
-  mutate(treated_state = sum(treated_group) > 0) |>
   group_by(county_fips) |>
   mutate(treated_county = sum(treated_group) > 0) |>
   ungroup()
 
 eventually_treated_sample <- base_panel |>
-  filter(year - eventYear2 >= -3, treated_state, treated_county)
+  filter(year - eventYear2 >= -3, treated_county)
 
 never_treated_sample <- base_panel |>
-  filter(treated_state, never_treated | year - eventYear2 >= -3)
+  filter(never_treated | year - eventYear2 >= -3)
 
 eventually_treated_model <- estimate_model(eventually_treated_sample)
 never_treated_model <- estimate_model(never_treated_sample)
@@ -281,13 +279,13 @@ full_grob <- arrangeGrob(
 ensure_output_dirs()
 
 png_path <- next_available_path(
-  file.path("3_outputs", "3_2_reduced_form", "3_2_14_event_study_ihs_total_ds_compare_controls_table.png")
+  file.path("3_outputs", "3_2_reduced_form", "isolated", "3_2_14_event_study_ihs_total_ds_compare_controls_table.png")
 )
 jpeg_path <- next_available_path(
-  file.path("3_outputs", "3_2_reduced_form", "3_2_14_event_study_ihs_total_ds_compare_controls_table.jpeg")
+  file.path("3_outputs", "3_2_reduced_form", "isolated", "3_2_14_event_study_ihs_total_ds_compare_controls_table.jpeg")
 )
 csv_path <- next_available_path(
-  file.path("3_outputs", "tables", "3_2_14_event_study_ihs_total_ds_compare_controls_table.csv")
+  file.path("3_outputs", "3_0_tables", "isolated", "3_2_14_event_study_ihs_total_ds_compare_controls_table.csv")
 )
 
 grDevices::png(

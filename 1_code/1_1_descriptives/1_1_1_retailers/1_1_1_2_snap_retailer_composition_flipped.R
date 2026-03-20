@@ -13,8 +13,8 @@
 #                   stock across the four benchmark format groups, compute each
 #                   format's share in 2010 and 2019, and save the chart and the
 #                   plotted data.
-# OUTPUTS:          `3_outputs/3_1_descriptives/3_1_7_snap_retailer_composition_flipped.jpeg`
-#                   `3_outputs/3_1_descriptives/3_1_7_snap_retailer_composition_flipped.csv`
+# OUTPUTS:          `3_outputs/3_1_descriptives/3_1_1_retailers/3_1_1_2_snap_retailer_composition_flipped.jpeg`
+#                   `3_outputs/3_1_descriptives/3_1_1_retailers/3_1_1_2_snap_retailer_composition_flipped.csv`
 #///////////////////////////////////////////////////////////////////////////////
 
 library(dplyr)
@@ -87,7 +87,7 @@ p <- ggplot(
   ctx$theme_im(base_size = 13)
 
 ggsave(
-  filename = descriptive_output_path("3_1_7_snap_retailer_composition_flipped.jpeg"),
+  filename = descriptive_output_path("3_1_1_2_snap_retailer_composition_flipped.jpeg"),
   plot = p,
   width = 10,
   height = 6,
@@ -96,6 +96,6 @@ ggsave(
 
 write.csv(
   composition_data,
-  descriptive_output_path("3_1_7_snap_retailer_composition_flipped.csv"),
+  descriptive_output_path("3_1_1_2_snap_retailer_composition_flipped.csv"),
   row.names = FALSE
 )

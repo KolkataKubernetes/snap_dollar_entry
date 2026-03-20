@@ -5,7 +5,9 @@
 Construct and maintain a reproducible data pipeline to assemble, clean, visualize, describe, and do inference on SNAP ABAWD Waiver and Dollar Store Entry Data. 
 
 ## Working Directory
-- For now, only consider all items in the subfolder "Box". 
+- 0_inputs contains a .txt file to a Box folder that you should be able to access, as does 2_processed_data
+- 1_code contains all of the code you should edit. Update the readme habitually to reflect the changes we make during design 
+3_outputs contains outputs that will be used in Latex files and PowerPoint presentations
 
 ## Environment
 - We will primarily use R to explore, transform, visualize and analyze data.

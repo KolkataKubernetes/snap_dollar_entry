@@ -64,7 +64,44 @@ setwd(repo_root)
 rscript_bin <- normalizePath(file.path(R.home("bin"), "Rscript"), mustWork = TRUE)
 
 dir.create("3_outputs", recursive = TRUE, showWarnings = FALSE)
-dir.create("3_outputs/tables", recursive = TRUE, showWarnings = FALSE)
+dir.create("3_outputs/3_0_tables", recursive = TRUE, showWarnings = FALSE)
+
+extract_numeric_prefix <- function(path) {
+  file_stub <- tools::file_path_sans_ext(basename(path))
+  parts <- strsplit(file_stub, "_", fixed = TRUE)[[1]]
+  numeric_parts <- integer()
+
+  for (part in parts) {
+    if (!grepl("^[0-9]+$", part)) {
+      break
+    }
+
+    numeric_parts <- c(numeric_parts, as.integer(part))
+  }
+
+  numeric_parts
+}
+
+sort_stage_scripts <- function(paths) {
+  if (!length(paths)) {
+    return(paths)
+  }
+
+  prefixes <- lapply(paths, extract_numeric_prefix)
+  max_len <- max(lengths(prefixes))
+
+  padded_prefixes <- lapply(
+    prefixes,
+    function(prefix) c(prefix, rep(-1, max_len - length(prefix)))
+  )
+
+  ordering <- do.call(
+    order,
+    c(unname(as.data.frame(do.call(rbind, padded_prefixes))), list(paths))
+  )
+
+  paths[ordering]
+}
 
 discover_stage_scripts <- function(stage_dir) {
   if (!dir.exists(stage_dir)) {
@@ -74,12 +111,13 @@ discover_stage_scripts <- function(stage_dir) {
   stage_files <- list.files(
     stage_dir,
     pattern = "\\.[Rr]$",
-    full.names = FALSE
+    recursive = TRUE,
+    full.names = TRUE
   )
 
-  stage_files <- stage_files[!grepl("^shared_.*\\.[Rr]$", stage_files)]
+  stage_files <- stage_files[!grepl("(^|/)shared_.*\\.[Rr]$", stage_files)]
 
-  file.path(stage_dir, sort(stage_files))
+  sort_stage_scripts(stage_files)
 }
 
 stage_map <- list(

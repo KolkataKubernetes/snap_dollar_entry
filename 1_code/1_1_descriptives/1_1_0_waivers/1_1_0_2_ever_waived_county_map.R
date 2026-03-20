@@ -1,6 +1,6 @@
 #///////////////////////////////////////////////////////////////////////////////
 #----                              Preamble                                 ----
-# File name:        1_1_9_ever_waived_county_map.R
+# File name:        1_1_0_2_ever_waived_county_map.R
 # Previous author:  -
 # Current author:   Codex
 # Last Updated:     March 17, 2026
@@ -12,8 +12,8 @@
 # PROCEDURES:       Load the shared descriptive context, identify counties that
 #                   ever receive a county-level waiver, join to county polygons
 #                   via `sf`, and save the map and underlying county table.
-# OUTPUTS:          `3_outputs/3_1_descriptives/3_1_9_ever_waived_county_map.jpeg`
-#                   `3_outputs/3_1_descriptives/3_1_9_ever_waived_county_map.csv`
+# OUTPUTS:          `3_outputs/3_1_descriptives/3_1_0_waivers/3_1_0_2_ever_waived_county_map.jpeg`
+#                   `3_outputs/3_1_descriptives/3_1_0_waivers/3_1_0_2_ever_waived_county_map.csv`
 #///////////////////////////////////////////////////////////////////////////////
 
 library(dplyr)
@@ -111,7 +111,7 @@ p <- ggplot(map_data) +
   map_theme
 
 ggsave(
-  filename = descriptive_output_path("3_1_9_ever_waived_county_map.jpeg"),
+  filename = descriptive_output_path("3_1_0_2_ever_waived_county_map.jpeg"),
   plot = p,
   width = 11,
   height = 7,
@@ -120,6 +120,6 @@ ggsave(
 
 write.csv(
   ever_waived,
-  descriptive_output_path("3_1_9_ever_waived_county_map.csv"),
+  descriptive_output_path("3_1_0_2_ever_waived_county_map.csv"),
   row.names = FALSE
 )
