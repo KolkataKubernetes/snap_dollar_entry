@@ -3,10 +3,13 @@
 # File name:        1_0_1_3_SNAP_retailer_tract_panel.R
 # Previous author:  -
 # Current author:   Codex
-# Last Updated:     March 19, 2026
+# Last Updated:     March 20, 2026
 # Description:      Assign store-level SNAP rows to 2010 tracts and build the
 #                   tract-year retailer count panel used by the tract analysis
-#                   pipeline.
+#                   pipeline. The tract matcher now validates state labels
+#                   first, uses that state to narrow the spatial join, and
+#                   relies on county FIPS only for fallback diagnostics and
+#                   within-county nearest-tract assignment.
 # INPUTS:           `0_inputs/input_root.txt`
 #                   `2_processed_data/processed_root.txt`
 #                   `2_5_SNAP/2_5_0_snap_clean.rds`
@@ -154,27 +157,43 @@ snap_path <- file.path(snap_output_dir, "2_5_0_snap_clean.rds")
 
 ignored_state_fips <- c("60", "66", "69", "72", "78")
 county_scope <- get_county_scope(processed_root)
+state_lookup <- prepare_county_crosswalk(input_root) |>
+  make_state_lookup()
 tracts <- load_scope_tracts(input_root, processed_root) |>
-  select(tract_fips, county_fips, state_abbrev, geometry)
+  mutate(state_fips = substr(county_fips, 1, 2)) |>
+  select(tract_fips, county_fips, state_fips, state_abbrev, geometry)
+scope_state_fips <- sort(unique(tracts$state_fips))
 
 # -----------------------------
 # 3) Prepare the store-level tract assignment input
 # -----------------------------
 
-# --- Preserve the original county labels so tract diagnostics can compare back
+# --- Preserve the original county labels and validate state labels separately
 
 snap_clean <- readRDS(snap_path) |>
   mutate(
     store_row_id = row_number(),
     county_fips_original = normalize_fips(county_fips),
     state_fips_original = substr(county_fips_original, 1, 2),
-    state_abbrev = State,
-    in_scope = county_fips_original %in% county_scope,
-    ignored_fips = state_fips_original %in% ignored_state_fips
+    state_abbrev_original = toupper(trimws(State))
+  ) |>
+  left_join(
+    state_lookup |>
+      rename(state_abbrev_original = state_abbrev, state_fips_validated = state_fips),
+    by = "state_abbrev_original"
+  ) |>
+  mutate(
+    state_label_match = !is.na(state_fips_validated),
+    ignored_fips = state_fips_validated %in% ignored_state_fips,
+    county_in_scope = county_fips_original %in% county_scope,
+    in_scope = state_label_match & state_fips_validated %in% scope_state_fips & !ignored_fips,
+    state_label_consistent_with_county = is.na(state_fips_original) |
+      is.na(state_fips_validated) |
+      state_fips_original == state_fips_validated
   )
 
 scope_points <- snap_clean |>
-  filter(in_scope, !ignored_fips)
+  filter(in_scope, !is.na(Latitude), !is.na(Longitude))
 
 # -----------------------------
 # 4) Assign SNAP stores to tracts
@@ -183,12 +202,12 @@ scope_points <- snap_clean |>
 # --- Run the spatial point assignment state by state to keep the join tractable
 
 state_results <- map_dfr(
-  sort(unique(scope_points$state_abbrev)),
-  function(state_abbrev) {
+  sort(unique(scope_points$state_fips_validated)),
+  function(state_fips) {
     tracts_state <- tracts |>
-      filter(state_abbrev == !!state_abbrev)
+      filter(state_fips == !!state_fips)
     points_state <- scope_points |>
-      filter(state_abbrev == !!state_abbrev)
+      filter(state_fips_validated == !!state_fips)
 
     assign_state_points(points_state, tracts_state)
   }
@@ -204,11 +223,13 @@ snap_with_tracts <- snap_clean |>
   ) |>
   mutate(
     tract_fips = str_pad(tract_fips, width = 11, side = "left", pad = "0"),
+    state_fips = if_else(!is.na(tract_fips), substr(tract_fips, 1, 2), state_fips_validated),
     county_fips = case_when(
       !is.na(tract_fips) ~ substr(tract_fips, 1, 5),
       TRUE ~ county_fips_original
     ),
-    county_fips_match = is.na(tract_fips) | county_fips_original == county_fips
+    state_fips_match = is.na(tract_fips) | state_fips == state_fips_validated,
+    county_fips_match = is.na(tract_fips) | is.na(county_fips_original) | county_fips_original == county_fips
   )
 
 # -----------------------------
@@ -228,13 +249,18 @@ store_count_tract <- snap_with_tracts |>
 
 snap_tract_diagnostics <- tibble(
   total_rows = nrow(snap_with_tracts),
-  scope_rows = sum(snap_with_tracts$in_scope & !snap_with_tracts$ignored_fips),
+  state_label_matched_rows = sum(snap_with_tracts$state_label_match, na.rm = TRUE),
+  state_label_unmatched_rows = sum(!snap_with_tracts$state_label_match, na.rm = TRUE),
+  ignored_fips_rows = sum(snap_with_tracts$ignored_fips, na.rm = TRUE),
+  scope_rows = sum(snap_with_tracts$in_scope, na.rm = TRUE),
   matched_rows = sum(!is.na(snap_with_tracts$tract_fips)),
   point_in_polygon_rows = sum(snap_with_tracts$assignment_rule == "point_in_polygon", na.rm = TRUE),
   fallback_rows = sum(snap_with_tracts$assignment_rule == "nearest_tract_fallback", na.rm = TRUE),
-  out_of_scope_rows = sum(!snap_with_tracts$in_scope | snap_with_tracts$ignored_fips, na.rm = TRUE),
-  county_mismatch_rows = sum(!snap_with_tracts$county_fips_match, na.rm = TRUE),
-  unexpected_unmatched_rows = sum(snap_with_tracts$in_scope & !snap_with_tracts$ignored_fips & is.na(snap_with_tracts$tract_fips))
+  out_of_scope_rows = sum(!snap_with_tracts$in_scope, na.rm = TRUE),
+  state_mismatch_rows = sum(!snap_with_tracts$state_fips_match, na.rm = TRUE),
+  county_mismatch_rows = sum(!snap_with_tracts$county_fips_match & !is.na(snap_with_tracts$county_fips_original), na.rm = TRUE),
+  unexpected_unmatched_rows = sum(snap_with_tracts$in_scope & is.na(snap_with_tracts$tract_fips)),
+  assigned_missing_county_fips_rows = sum(!is.na(snap_with_tracts$tract_fips) & is.na(snap_with_tracts$county_fips_original), na.rm = TRUE)
 )
 
 # -----------------------------

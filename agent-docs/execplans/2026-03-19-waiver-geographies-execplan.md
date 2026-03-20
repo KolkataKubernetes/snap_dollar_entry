@@ -8,7 +8,7 @@ This document must be maintained in accordance with `agent-docs/PLANS.md` from t
 
 ## ExecPlan Status
 
-Status: In Progress  
+Status: In Progress (Milestone 1 Complete)  
 Owner: Inder Majumdar + Codex  
 Created: 2026-03-19  
 Last Updated: 2026-03-20  
@@ -92,6 +92,8 @@ This plan is intentionally narrower than the earliest tract draft. The tract red
 - [x] (2026-03-19 America/Chicago) Added `1_0_0_2_waiver_geographies_to_tracts.R`, `1_0_1_3_SNAP_retailer_tract_panel.R`, `1_0_2_1_build_analysis_panel_tract_pre_covariates.R`, and `1_code/1_0_ingest/tract_ingest_helpers.R`.
 - [x] (2026-03-19 America/Chicago) Ran Milestone 1 successfully and wrote `2_0_6`, `2_0_7`, `2_0_8`, `2_5_2`, `2_5_3`, `2_5_4`, and `2_9_3` to the Box-backed processed-data root.
 - [x] (2026-03-19 America/Chicago) Verified the tract waiver diagnostics have zero unexpected retained-geography drops and the tract pre-covariate panel is larger than the county panel.
+- [x] (2026-03-20 America/Chicago) Refined `1_0_1_3_SNAP_retailer_tract_panel.R` so retailer state labels are validated against `national_county.txt`, the initial tract intersect is restricted to the validated state tract layer, and rows with missing derived county FIPS are still eligible for spatial tract assignment.
+- [x] (2026-03-20 America/Chicago) Re-ran the tract retailer and tract pre-covariate scripts. The refreshed retailer diagnostics now show `828767` matched in-scope rows, only `1573` out-of-scope rows, and `29739` assigned rows whose tract match was recovered despite missing upstream `county_fips_original`.
 - [ ] Add tract descriptive companion scripts into the existing descriptive script folders and ensure their outputs land in the existing descriptive output folders with `_tract`-suffixed names and titles.
 - [ ] Execute tract ACS/covariate ingest, validate geometry coverage and covariate completeness, then execute tract descriptives and update this ExecPlan as work proceeds.
 
@@ -118,7 +120,7 @@ This plan is intentionally narrower than the earliest tract draft. The tract red
   Evidence: `2_5_SNAP/2_5_0_snap_clean.rds` has `830340` rows and zero missing `Latitude` or `Longitude` values.
 
 - Observation: The upstream SNAP `county_fips` field used by the tract retailer script is not a raw source field; it is derived in `1_0_1_0_SNAP_retailer_ingest.R` by exact string matching SNAP `County` and `State` labels against `0_3_county_list/national_county.txt`.
-  Evidence: the upstream ingest merges the SNAP retailer panel to the Census county list on cleaned `County` and `State`, and the current tract diagnostics show `30290` out-of-scope retailer rows where `county_fips_original` is missing rather than out-of-scope by explicit ignored territory FIPS.
+  Evidence: the upstream ingest merges the SNAP retailer panel to the Census county list on cleaned `County` and `State`, and the first tract retailer run showed `30290` rows with missing `county_fips_original` that still had usable point coordinates.
 
 - Observation: `national_county.txt` already carries the state-abbreviation to state-FIPS mapping needed for a tract-specific state validation step before any county matching is used.
   Evidence: the file is structured as `state_id`, `state_fips`, `county_fips_component`, `county_name`, `classfp`, so the first two columns are enough to validate and standardize SNAP `State` labels independently of the county-name match.
@@ -130,7 +132,10 @@ This plan is intentionally narrower than the earliest tract draft. The tract red
   Evidence: the `Fort Sill Apache` waiver row is tagged `NM`, but the matched AIANNH geometry intersects tract scope in Oklahoma and Texas, so the tract script now uses a national reservation-intersection fallback rather than enforcing the waiver state filter for reservation polygons.
 
 - Observation: Retailer tract assignment by direct point-in-polygon is incomplete at the national scale even after switching from `st_within` to `st_intersects`.
-  Evidence: the final Milestone 1 retailer diagnostics show `537245` direct point-in-polygon assignments and `261783` nearest-tract fallbacks, with `4388` county-prefix mismatches remaining after county-restricted fallback assignment.
+  Evidence: the refreshed Milestone 1 retailer diagnostics show `557200` direct point-in-polygon assignments and `271567` nearest-tract fallbacks, with `4388` county-prefix mismatches remaining after the state-first, county-assisted fallback assignment.
+
+- Observation: The state-first retailer refinement materially reduced artificial out-of-scope loss without changing the county-mismatch total.
+  Evidence: after re-running `1_0_1_3_SNAP_retailer_tract_panel.R`, retailer out-of-scope rows fell from `31312` to `1573`, all `30290` rows with missing upstream `county_fips_original` were allowed into the spatial matcher, `29739` of them received tract assignments, and the remaining out-of-scope rows are only the explicitly ignored territory states Guam (`1022`) and U.S. Virgin Islands (`551`). The county-mismatch count remained `4388`.
 
 - Observation: `tidycensus` is now available in the working R environment.
   Evidence: `/usr/local/bin/Rscript -e 'requireNamespace("tidycensus", quietly = TRUE)'` now returns `TRUE`.
@@ -224,8 +229,8 @@ This section is still incomplete because Milestone 2 and the tract descriptives 
 **Expected vs. Actual Result**
 
 - Expected outcome at this stage: Milestone 1 should produce the tract waiver crosswalk, tract waiver diagnostics, tract retailer tract panel, retailer diagnostics, and the tract pre-covariate analysis panel.
-- Actual outcome: those Milestone 1 artifacts now exist under the Box-backed processed-data root, and the waiver plus pre-covariate validation checks pass.
-- Difference (if any): the retailer stage still relies heavily on county-restricted nearest-tract fallback (`261783` rows), and it currently uses the upstream derived `county_fips` as a first-pass scope gate. Milestone 1 is analytically usable, but the retailer scope rule should be revised so valid coordinates enter the tract matcher even when the upstream county string match failed.
+- Actual outcome: those Milestone 1 artifacts now exist under the Box-backed processed-data root, the waiver plus pre-covariate validation checks pass, and the retailer tract rerun recovered tract assignments for rows that had been excluded only because the upstream county string match failed.
+- Difference (if any): the retailer stage still relies heavily on nearest-tract fallback (`271567` rows) even after the state-first refinement, but it no longer uses the upstream derived `county_fips` as the scope gate. Milestone 1 is now materially better aligned with the tract design intent because valid coordinate rows can receive tract assignments even when the upstream county string match failed.
 
 **Key Challenges Encountered**
 
@@ -256,7 +261,7 @@ First, the tract branch must begin from the same waiver artifact the county pipe
 
 Second, the tract branch cannot rely on pre-existing tract retailer counts. The current retailer ingest writes store-level SNAP rows with latitude and longitude and then aggregates them only to `county_fips`. That is enough to build tract outcomes, because the point coordinates are still available in the processed SNAP clean file.
 
-The current retailer ingest also matters for tract scope. `1_0_1_0_SNAP_retailer_ingest.R` derives `county_fips` by matching the SNAP retailer panel’s cleaned `County` and `State` labels against `0_3_county_list/national_county.txt`; the tract retailer script initially reused that derived county code as a first-pass scope gate. After Milestone 1 auditing, this plan now treats that as a temporary first-pass choice to be revised. The intended tract-specific refinement is: first validate SNAP `State` against the `state_id`/`state_fips` lookup already present in `national_county.txt`, then use that `state_fips` to restrict direct point-in-polygon tract assignment to the relevant state tract layer, then use the upstream county match only to restrict nearest-tract fallback where it exists, and keep the county-match result as a diagnostic rather than an entry requirement.
+The current retailer ingest also matters for tract scope. `1_0_1_0_SNAP_retailer_ingest.R` derives `county_fips` by matching the SNAP retailer panel’s cleaned `County` and `State` labels against `0_3_county_list/national_county.txt`; the tract retailer script initially reused that derived county code as a first-pass scope gate. After Milestone 1 auditing, that rule was revised and rerun. The tract retailer branch now first validates SNAP `State` against the `state_id`/`state_fips` lookup already present in `national_county.txt`, then uses that `state_fips` to restrict direct point-in-polygon tract assignment to the relevant state tract layer, then uses the upstream county match only to restrict nearest-tract fallback where it exists, and keeps the county-match result as a diagnostic rather than an entry requirement.
 
 Third, descriptive output routing depends on the script folder. Because the user wants tract descriptives written into the existing descriptive output folders rather than new tract-only directories, the tract descriptive scripts should live alongside the county descriptive scripts: tract waiver descriptives in `1_code/1_1_descriptives/1_1_0_waivers/` and tract retailer descriptives in `1_code/1_1_descriptives/1_1_1_retailers/`. The tract artifacts are then distinguished by `_tract` in filenames and user-facing titles.
 
@@ -497,8 +502,10 @@ If a dependency affects results, the reason for the choice must be documented in
 Before marking the ExecPlan **Complete**, verify:
 
 - [ ] All planned tract ingest scripts have been implemented and run
-- [ ] Tract waiver diagnostics show zero unexpected in-scope conferral drops
-- [ ] Tract retailer diagnostics show successful tract assignment for all in-scope SNAP retailer rows
+- [x] Tract waiver diagnostics show zero unexpected in-scope conferral drops
+- [x] Tract retailer diagnostics show successful tract assignment for all in-scope SNAP retailer rows
+- [x] Milestone 1 tract waiver, retailer, and pre-covariate artifacts were rebuilt successfully after the state-first retailer refinement
+- [x] Milestone 1 rerun reduced retailer out-of-scope rows to the explicitly ignored territory rows only
 - [ ] Tract ACS covariate pull and merge completed with zero missing values in the tract control set
 - [ ] `2_9_3_us_analysis_panel_tract_pre_covariates.rds` and `2_9_4_us_analysis_panel_tract.rds` exist
 - [ ] At least one tract waiver descriptive output and one tract retailer descriptive output exist in `3_outputs/3_1_descriptives/3_1_0_waivers/` and `3_outputs/3_1_descriptives/3_1_1_retailers/`, each clearly marked with `_tract`
@@ -513,3 +520,4 @@ Before marking the ExecPlan **Complete**, verify:
 - 2026-03-19: Initial tract ExecPlan written from the waiver-geographies context memo, the current county pipeline, the local geometry inventory, and the working machine environment.
 - 2026-03-19: ExecPlan revised to match the segmented ingest layout, to treat FIPS `60`, `66`, `69`, `72`, and `78` as explicitly ignored scope exclusions, to record `Gosnold` as Massachusetts, to remove tract reduced-form work from scope, and to reflect that `tidycensus` is installed.
 - 2026-03-20: ExecPlan revised again so the tract ACS ingest reads the local Census API key file, tract descriptives write into the existing waiver and retailer descriptive output folders, tract filenames and titles use `_tract`, and the Philadelphia metropolitan-division county list is read from `philadelphia_divisions.md` in the input root.
+- 2026-03-20: Milestone 1 was rerun with a state-first retailer tract matcher. The rerun kept the waiver results intact, reduced retailer out-of-scope rows to the explicitly ignored territories only, and rebuilt `2_5_2`, `2_5_3`, `2_5_4`, and `2_9_3`.
