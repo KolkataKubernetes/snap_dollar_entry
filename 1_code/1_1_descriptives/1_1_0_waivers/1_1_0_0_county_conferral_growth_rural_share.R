@@ -47,10 +47,10 @@ waiver_year_ts <- ctx$waiver_county_raw |>
   left_join(ctx$rucc, by = "county_fips") |>
   mutate(is_rural = coalesce(is_rural, FALSE)) |>
   mutate(county_group = if_else(is_rural, "Rural counties", "Urban counties")) |>
-  count(year, county_group, wt = 1, name = "waived_counties") |>
+  count(year, county_group, name = "waived_counties") |>
   bind_rows(
     ctx$waiver_county_raw |>
-      count(year, wt = 1, name = "waived_counties") |>
+      count(year, name = "waived_counties") |>
       mutate(county_group = "Total counties")
   ) |>
   arrange(year, county_group)

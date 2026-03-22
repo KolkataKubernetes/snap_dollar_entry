@@ -78,13 +78,24 @@ Ingest and reduced-form scripts resolve external data through the pointer files 
 - `1_code/1_0_ingest/1_0_1_covariates/1_0_1_1_unemployment_rates.R`: Writes the processed unemployment artifact used by the merged analysis panel.
 - `1_code/1_0_ingest/1_0_1_covariates/1_0_1_2_ACS_prep.R`: Writes the processed ACS, population, and ACS appendix artifacts used by the county panel builder.
 - `1_code/1_0_ingest/1_0_1_covariates/1_0_1_3_SNAP_retailer_tract_panel.R`: Assigns cleaned SNAP retailer rows to tracts and writes tract retailer diagnostics plus tract-year store counts.
+- `1_code/1_0_ingest/1_0_1_covariates/1_0_1_4_ACS_tract_prep.R`: Pulls review-stage annual ACS 5-year tract covariates for `2010:2020`, writes tract-level annual ACS diagnostics, and builds the review-stage tract covariate sidecar artifacts.
 - `1_code/1_0_ingest/1_0_1_covariates/shared_ingest_helpers.R`: Covariate-ingest helper file used inside the covariates subdirectory.
 - `1_code/1_0_ingest/1_0_1_covariates/1_0_1_3_SNAP_retailer_tract_matching.md`: Maintainer note documenting the state-first SNAP retailer tract-matching workflow and diagnostics.
 - `1_code/1_0_ingest/1_0_2_build_panel/1_0_2_0_build_analysis_panel.R`: Rebuilds the benchmark county-year analysis panel and companion summary artifact used by the descriptive and reduced-form stages.
 - `1_code/1_0_ingest/1_0_2_build_panel/1_0_2_1_build_analysis_panel_tract_pre_covariates.R`: Builds the tract-year analysis panel through the treatment and retailer-outcome layers, before tract covariates are merged.
+- `1_code/1_0_ingest/1_0_2_build_panel/1_0_2_2_build_analysis_panel_tract.R`: Merges review-stage tract ACS covariates onto the tract-year panel and writes review-stage tract panel sidecar artifacts and summaries.
 - `1_code/1_0_ingest/1_0_2_build_panel/shared_ingest_helpers.R`: Build-panel helper file used inside the panel subdirectory.
 - `1_code/1_0_ingest/shared_ingest_helpers.R`: Shared pathing and utility helpers for ingest scripts.
 - `1_code/1_0_ingest/tract_ingest_helpers.R`: Shared tract-ingest helpers for tract scope loading, geometry access, and geography-name normalization.
+
+### Current Tract ACS Review Exclusions
+
+The current review-stage annual ACS tract branch documents a small explicit `2011:2019` mismatch set that is still under review before Milestone 2 is rerun.
+
+- `15` unmatched tract IDs are in the Census `94xx` tract-code class associated with American Indian area tract coding rather than ordinary county-based tract numbering: `36053940101`, `36053940102`, `36053940103`, `36053940200`, `36053940300`, `36053940401`, `36053940403`, `36053940600`, `36053940700`, `36065940000`, `36065940100`, `36065940200`, `46113940500`, `46113940800`, and `46113940900`.
+- `11` additional unmatched tract IDs are ordinary-looking `2010` tract IDs that the annual ACS pull does not return in `2011:2019`: `02270000100`, `04019002701`, `04019002903`, `04019410501`, `04019410502`, `04019410503`, `04019470400`, `04019470500`, `06037930401`, `36085008900`, and `51515050100`.
+- The Census tract-code rationale for distinguishing these groups comes from the [Federal Register tract criteria](https://www2.census.gov/geo/pdfs/reference/fedreg/tract_criteria.pdf) and the [2010 Census PL 94-171 Technical Documentation](https://www2.census.gov/programs-surveys/decennial/2010/technical-documentation/complete-tech-docs/summary-file/pl94-171.pdf). In those sources, `94xx` codes are tied to American Indian area-associated tract coding, while `98xx` codes are the special land-use tract class and `99xx` codes are water-only tracts.
+- The much larger `2020` tract-universe mismatch remains a separate review issue and is not summarized by this `26`-tract exclusion list.
 
 ### Descriptive Scripts
 
@@ -136,6 +147,12 @@ Ingest and reduced-form scripts resolve external data through the pointer files 
   - `2_1_acs/2_1_2_population.rds`
   - `2_1_acs/2_1_3_Append_CountyDP03.rds`
   - `2_1_acs/2_1_4_Append_CountyDP04.rds`
+  - `2_1_acs/2_1_5_acs_tract_2010_raw.rds`
+  - `2_1_acs/2_1_6_acs_tract_2010_covariates.rds`
+  - `2_1_acs/2_1_7_acs_tract_match_summary.rds`
+  - `2_1_acs/2_1_8_acs_tract_2010_2020_raw.rds`
+  - `2_1_acs/2_1_9_acs_tract_2010_2020_covariates.rds`
+  - `2_1_acs/2_1_10_acs_tract_2010_2020_match_summary.rds`
   - `2_5_SNAP/2_5_0_snap_clean.rds`
   - `2_5_SNAP/2_5_1_store_count.rds`
   - `2_5_SNAP/2_5_2_snap_clean_with_tracts.rds`
@@ -145,6 +162,10 @@ Ingest and reduced-form scripts resolve external data through the pointer files 
   - `2_9_analysis/2_9_1_us_analysis_panel_summary.rds`
   - `2_9_analysis/2_9_2_event_study_sample.rds`
   - `2_9_analysis/2_9_3_us_analysis_panel_tract_pre_covariates.rds`
+  - `2_9_analysis/2_9_4_us_analysis_panel_tract.rds`
+  - `2_9_analysis/2_9_5_us_analysis_panel_tract_summary.rds`
+  - `2_9_analysis/2_9_6_us_analysis_panel_tract_timevarying_covariates.rds`
+  - `2_9_analysis/2_9_7_us_analysis_panel_tract_timevarying_summary.rds`
 - `3_outputs/3_1_descriptives/`
   - `3_1_0_waivers/`
   - `3_1_1_retailers/`
@@ -169,6 +190,7 @@ Ingest and reduced-form scripts resolve external data through the pointer files 
 ## Versioning and Change Log
 
 - `2026-03-20`: Updated the README mechanically to reflect the segmented ingest/descriptive/reduced-form paths now checked into `1_code/`, added the tract ingest files and tract processed artifacts created in Milestone 1, and added the tract retailer matching note in `1_code/1_0_ingest/1_0_1_covariates/`.
+- `2026-03-21`: Updated the README mechanically to add the tract ACS and tract final-panel scripts, the review-stage annual ACS tract sidecar artifacts, and the current documented annual-ACS tract exclusion set with the Census source URLs used to classify the `94xx` tract-code cases.
 - `2026-03-19`: Updated the README mechanically to match the completed pipeline inventory, including the additional descriptive scripts, the `1_2_11` reduced-form table-image script, the processed-data artifacts written under `processed_root.txt`, and the separation of `isolated/` sensitivity scripts into `TEMP/TEST Outputs`.
 - `2026-03-16`: Added a pipeline-runner preamble for `1_code/run_refactor_pipeline.R` and populated the README with mechanical inventory, pathing, pipeline-order, and output-directory documentation.
 - `2026-03-16`: Expanded the script inventory with file-level descriptions based on code preambles and clarified the behavior of `--dry-run` in the pipeline runner section.
