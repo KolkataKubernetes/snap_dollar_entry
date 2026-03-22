@@ -85,6 +85,23 @@ acs_tract_raw |>
   arrange(tract_class, state_abbrev, county_fips, tract_fips)
 
 
+## Classify unmatched tract codes across years
+
+acs_tract_raw |>
+  filter(is.na(GEOID), year %in% 2011:2019) |>
+  distinct(tract_fips, county_fips, state_abbrev) |>
+  mutate(
+    tract_code = stringr::str_sub(tract_fips, 6, 11),
+    tract_class = case_when(
+      stringr::str_detect(tract_code, "^94") ~ "94xx_ai_area_associated",
+      stringr::str_detect(tract_code, "^98") ~ "98xx_special_land_use",
+      stringr::str_detect(tract_code, "^99") ~ "99xx_water",
+      TRUE ~ "other"
+    )
+  ) |>
+  filter(tract_class == "other")
+
+
 
 
   
