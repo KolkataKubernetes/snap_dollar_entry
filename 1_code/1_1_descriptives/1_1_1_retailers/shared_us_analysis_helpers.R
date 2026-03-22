@@ -209,7 +209,7 @@ load_us_analysis_context <- function() {
 
   format_grid <- tidyr::crossing(
     county_fips = unique(county_panel$county_fips),
-    year = 2000:2020,
+    year = 2000:2019,
     format = names(format_groups)
   )
 

@@ -155,7 +155,7 @@ processed_root <- read_root_path("2_processed_data/processed_root.txt")
 snap_output_dir <- ensure_dir(file.path(processed_root, "2_5_SNAP"))
 snap_path <- file.path(snap_output_dir, "2_5_0_snap_clean.rds")
 
-ignored_state_fips <- c("60", "66", "69", "72", "78")
+ignored_state_fips <- c("02", "15", "60", "66", "69", "72", "78")
 county_scope <- get_county_scope(processed_root)
 state_lookup <- prepare_county_crosswalk(input_root) |>
   make_state_lookup()

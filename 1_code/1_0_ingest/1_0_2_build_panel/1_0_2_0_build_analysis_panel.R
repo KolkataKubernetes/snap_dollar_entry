@@ -11,15 +11,13 @@
 #                   `2_0_waivers/2_0_4_waived_data_consolidated_long.rds`
 #                   `2_5_SNAP/2_5_0_snap_clean.rds`
 #                   `2_5_SNAP/2_5_1_store_count.rds`
-#                   `2_1_acs/2_1_0_unemployment.rds`
-#                   `2_1_acs/2_1_2_population.rds`
-#                   `2_1_acs/2_1_3_Append_CountyDP03.rds`
+#                   `2_1_acs/2_1_12_acs_county_2000_2019_covariates.rds`
 #                   `0_4_prices/0_4_1_Wages_V2.csv`
-#                   `0_4_prices/0_4_2_Prices.csv`
-# PROCEDURES:       Load the processed ingest artifacts and raw prices inputs;
-#                   rebuild the benchmark entry counts, store stock counts,
-#                   treatment timing, and covariate merges; save the final
-#                   analysis-ready county-year panel as a processed `.rds`.
+# PROCEDURES:       Load the processed ingest artifacts, county ACS covariates,
+#                   and raw wage inputs; rebuild the benchmark entry counts,
+#                   store stock counts, treatment timing, and covariate merges;
+#                   save the final analysis-ready county-year panel as a
+#                   processed `.rds`.
 # OUTPUTS:          `2_9_analysis/2_9_0_us_analysis_panel.rds`
 #                   `2_9_analysis/2_9_1_us_analysis_panel_summary.rds`
 #///////////////////////////////////////////////////////////////////////////////
@@ -79,12 +77,8 @@ processed_root <- read_root_path("2_processed_data/processed_root.txt")
 waiver_path <- file.path(processed_root, "2_0_waivers", "2_0_4_waived_data_consolidated_long.rds")
 snap_clean_path <- file.path(processed_root, "2_5_SNAP", "2_5_0_snap_clean.rds")
 store_count_path <- file.path(processed_root, "2_5_SNAP", "2_5_1_store_count.rds")
-unemployment_path <- file.path(processed_root, "2_1_acs", "2_1_0_unemployment.rds")
-population_path <- file.path(processed_root, "2_1_acs", "2_1_2_population.rds")
-acs03_path <- file.path(processed_root, "2_1_acs", "2_1_3_Append_CountyDP03.rds")
-
+county_acs_path <- file.path(processed_root, "2_1_acs", "2_1_12_acs_county_2000_2019_covariates.rds")
 wages_path <- file.path(input_root, "0_4_prices", "0_4_1_Wages_V2.csv")
-prices_path <- file.path(input_root, "0_4_prices", "0_4_2_Prices.csv")
 
 processed_analysis_dir <- file.path(processed_root, "2_9_analysis")
 dir.create(processed_analysis_dir, recursive = TRUE, showWarnings = FALSE)
@@ -143,28 +137,28 @@ stock_outcome_columns <- c(
   "chain_nods_count"
 )
 
-#(1) Load processed ingest artifacts and raw prices inputs ---------------------
+#(1) Load processed ingest artifacts, county ACS covariates, and wages ---------
 waiver_long <- readRDS(waiver_path)
 snap_clean <- readRDS(snap_clean_path)
 store_count <- readRDS(store_count_path)
-unemployment_panel <- readRDS(unemployment_path)
-population_panel <- readRDS(population_path)
-acs03_panel <- readRDS(acs03_path)
+county_acs_covariates <- readRDS(county_acs_path) |>
+  transmute(
+    county_fips = as.integer(county_fips),
+    year = as.integer(year),
+    totalHH = as.numeric(totalHH),
+    meanInc = as.numeric(meanInc),
+    medianInc = as.numeric(medianInc),
+    income = as.numeric(income),
+    urate = as.numeric(urate),
+    population = as.numeric(population),
+    rent = as.numeric(rent)
+  )
 
 wages <- readr::read_csv(wages_path, show_col_types = FALSE) |>
   transmute(
     county_fips = as.integer(county_fips),
     year = as.integer(year),
     wage = as.numeric(wage)
-  )
-
-prices <- readr::read_csv(prices_path, show_col_types = FALSE) |>
-  rename(income = B20002_001) |>
-  transmute(
-    county_fips = as.integer(GEOID),
-    year = as.integer(year),
-    income = as.numeric(income),
-    rent = as.numeric(rent)
   )
 
 #(2) Rebuild benchmark entry and store stock panels ----------------------------
@@ -193,8 +187,8 @@ entry_panel <- snap_grouped |>
   )
 
 county_year_grid <- tidyr::crossing(
-  county_fips = as.integer(unique(acs03_panel$GEOID_COUNTY)),
-  year = 2000:2020
+  county_fips = sort(unique(county_acs_covariates$county_fips)),
+  year = 2000:2019
 )
 
 entry_panel <- county_year_grid |>
@@ -283,7 +277,6 @@ event2 <- analysis_panel |>
 analysis_panel <- analysis_panel |>
   left_join(event1, by = "county_fips") |>
   mutate(
-    treatment = if_else(year %in% 2010:2013, 1L, treatment),
     eventYear1 = if_else(!(county_fips %in% treated_counties), 2010L, eventYear1),
     tau1 = year - eventYear1
   ) |>
@@ -294,31 +287,8 @@ analysis_panel <- analysis_panel |>
   )
 
 #(4) Merge benchmark covariates ------------------------------------------------
-acs03_covariates <- acs03_panel |>
-  transmute(
-    county_fips = as.integer(GEOID_COUNTY),
-    year = as.integer(year),
-    totalHH = as.numeric(totalHH),
-    meanInc = as.numeric(meanInc),
-    medianInc = as.numeric(medianInc)
-  )
-
-population_covariates <- population_panel |>
-  transmute(
-    county_fips = as.integer(GEOID),
-    year = as.integer(year),
-    population = as.numeric(estimate)
-  )
-
-unemployment_covariates <- unemployment_panel |>
-  transmute(
-    county_fips = as.integer(GEOID),
-    year = as.integer(year),
-    urate = as.numeric(unemployment_rate)
-  )
 
 analysis_panel <- analysis_panel |>
-  left_join(prices, by = c("county_fips", "year")) |>
   left_join(wages, by = c("county_fips", "year")) |>
   group_by(year) |>
   mutate(
@@ -326,9 +296,7 @@ analysis_panel <- analysis_panel |>
     wage = if_else(is.na(wage), wage_st, wage)
   ) |>
   ungroup() |>
-  left_join(acs03_covariates, by = c("county_fips", "year")) |>
-  left_join(population_covariates, by = c("county_fips", "year")) |>
-  left_join(unemployment_covariates, by = c("county_fips", "year")) |>
+  left_join(county_acs_covariates, by = c("county_fips", "year")) |>
   arrange(county_fips, year)
 
 #(5) Save processed analysis panel --------------------------------------------

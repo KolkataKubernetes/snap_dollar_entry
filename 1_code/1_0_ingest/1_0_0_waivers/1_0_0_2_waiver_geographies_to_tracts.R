@@ -368,7 +368,7 @@ processed_root <- read_root_path("2_processed_data/processed_root.txt")
 waiver_output_dir <- ensure_dir(file.path(processed_root, "2_0_waivers"))
 waiver_path <- file.path(waiver_output_dir, "2_0_4_waived_data_consolidated_long.rds")
 
-ignored_state_fips <- c("60", "66", "69", "72", "78")
+ignored_state_fips <- c("02", "15", "60", "66", "69", "72", "78")
 excluded_loc_types <- c("Island", "Borough and Census Area", "Native Village Statistical Area")
 
 county_crosswalk <- prepare_county_crosswalk(input_root)

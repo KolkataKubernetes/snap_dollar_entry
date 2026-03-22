@@ -176,7 +176,7 @@ entry_panel <- snap_grouped |>
 
 tract_year_grid <- tidyr::crossing(
   tract_universe,
-  year = 2000:2020
+  year = 2000:2019
 )
 
 entry_panel <- tract_year_grid |>
@@ -272,7 +272,6 @@ event2 <- analysis_panel |>
 analysis_panel <- analysis_panel |>
   left_join(event1, by = "tract_fips") |>
   mutate(
-    treatment = if_else(year %in% 2010:2013, 1L, treatment),
     eventYear1 = if_else(!(tract_fips %in% treated_tracts), 2010L, eventYear1),
     tau1 = year - eventYear1
   ) |>

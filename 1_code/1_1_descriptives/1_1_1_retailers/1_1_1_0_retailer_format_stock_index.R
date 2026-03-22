@@ -44,7 +44,7 @@ ctx <- load_us_analysis_context()
 
 #(1) Build the retailer format stock index ------------------------------------
 format_trend <- ctx$format_stock |>
-  filter(year %in% 2010:2020) |>
+  filter(year %in% 2010:2019) |>
   group_by(year, format) |>
   summarise(mean_stock = mean(stock, na.rm = TRUE), .groups = "drop") |>
   group_by(format) |>
@@ -59,7 +59,7 @@ p <- ggplot(format_trend, aes(x = year, y = stock_index_2010, color = format, gr
   geom_line(linewidth = 1.1) +
   geom_point(size = 2) +
   scale_color_manual(values = ctx$format_colors, breaks = names(ctx$format_colors)) +
-  scale_x_continuous(breaks = 2010:2020) +
+  scale_x_continuous(breaks = 2010:2019) +
   labs(
     title = "Retailer Format Stock Index",
     subtitle = "County-average stock index (2010 = 100), all counties",
