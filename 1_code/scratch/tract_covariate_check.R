@@ -100,8 +100,3 @@ acs_tract_raw |>
     )
   ) |>
   filter(tract_class == "other")
-
-
-
-
-  

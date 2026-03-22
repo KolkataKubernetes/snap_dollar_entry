@@ -78,7 +78,7 @@ Ingest and reduced-form scripts resolve external data through the pointer files 
 - `1_code/1_0_ingest/1_0_1_covariates/1_0_1_1_unemployment_rates.R`: Writes the processed unemployment artifact used by the merged analysis panel.
 - `1_code/1_0_ingest/1_0_1_covariates/1_0_1_2_ACS_prep.R`: Writes the processed ACS, population, and ACS appendix artifacts used by the county panel builder.
 - `1_code/1_0_ingest/1_0_1_covariates/1_0_1_3_SNAP_retailer_tract_panel.R`: Assigns cleaned SNAP retailer rows to tracts and writes tract retailer diagnostics plus tract-year store counts.
-- `1_code/1_0_ingest/1_0_1_covariates/1_0_1_4_ACS_tract_prep.R`: Pulls review-stage annual ACS 5-year tract covariates for `2010:2020`, writes tract-level annual ACS diagnostics, and builds the review-stage tract covariate sidecar artifacts.
+- `1_code/1_0_ingest/1_0_1_covariates/1_0_1_4_ACS_tract_prep.R`: Pulls review-stage annual ACS 5-year tract covariates for retained ACS years `2010:2019`, writes tract-level annual ACS diagnostics, and builds the review-stage tract covariate sidecar artifacts.
 - `1_code/1_0_ingest/1_0_1_covariates/shared_ingest_helpers.R`: Covariate-ingest helper file used inside the covariates subdirectory.
 - `1_code/1_0_ingest/1_0_1_covariates/1_0_1_3_SNAP_retailer_tract_matching.md`: Maintainer note documenting the state-first SNAP retailer tract-matching workflow and diagnostics.
 - `1_code/1_0_ingest/1_0_2_build_panel/1_0_2_0_build_analysis_panel.R`: Rebuilds the benchmark county-year analysis panel and companion summary artifact used by the descriptive and reduced-form stages.
@@ -88,20 +88,21 @@ Ingest and reduced-form scripts resolve external data through the pointer files 
 - `1_code/1_0_ingest/shared_ingest_helpers.R`: Shared pathing and utility helpers for ingest scripts.
 - `1_code/1_0_ingest/tract_ingest_helpers.R`: Shared tract-ingest helpers for tract scope loading, geometry access, and geography-name normalization.
 
-### Current Tract ACS Review Exclusions
+### Current Tract ACS Exclusions Used by the 2019-Bounded Sidecar Branch
 
-The current review-stage annual ACS tract branch documents a small explicit `2011:2019` mismatch set that is still under review before Milestone 2 is rerun.
+The current review-stage annual ACS tract branch uses a small explicit `2011:2019` mismatch set as tract exclusions in the retained `2019`-bounded sidecar outputs.
 
 - `15` unmatched tract IDs are in the Census `94xx` tract-code class associated with American Indian area tract coding rather than ordinary county-based tract numbering: `36053940101`, `36053940102`, `36053940103`, `36053940200`, `36053940300`, `36053940401`, `36053940403`, `36053940600`, `36053940700`, `36065940000`, `36065940100`, `36065940200`, `46113940500`, `46113940800`, and `46113940900`.
 - `11` additional unmatched tract IDs are ordinary-looking `2010` tract IDs that the annual ACS pull does not return in `2011:2019`: `02270000100`, `04019002701`, `04019002903`, `04019410501`, `04019410502`, `04019410503`, `04019470400`, `04019470500`, `06037930401`, `36085008900`, and `51515050100`.
 - The Census tract-code rationale for distinguishing these groups comes from the [Federal Register tract criteria](https://www2.census.gov/geo/pdfs/reference/fedreg/tract_criteria.pdf) and the [2010 Census PL 94-171 Technical Documentation](https://www2.census.gov/programs-surveys/decennial/2010/technical-documentation/complete-tech-docs/summary-file/pl94-171.pdf). In those sources, `94xx` codes are tied to American Indian area-associated tract coding, while `98xx` codes are the special land-use tract class and `99xx` codes are water-only tracts.
-- The much larger `2020` tract-universe mismatch remains a separate review issue and is not summarized by this `26`-tract exclusion list.
+- The review-stage sidecar filenames retain the `_2010_2020_` stems for continuity, but the current retained sidecar contents stop at `2019`.
 
 ### Descriptive Scripts
 
 - `1_code/1_1_descriptives/1_1_0_waivers/1_1_0_0_county_conferral_growth_rural_share.R`: Writes the county waiver-counts-over-time figure.
 - `1_code/1_1_descriptives/1_1_0_waivers/1_1_0_1_ds_stock_trend_by_waiver.R`: Writes the dollar-store stock trend figure by ever-waived county status.
 - `1_code/1_1_descriptives/1_1_0_waivers/1_1_0_2_ever_waived_county_map.R`: Writes the county map of ever-waived status and a companion `.csv`.
+- `1_code/1_1_descriptives/1_1_0_waivers/1_1_0_3_tract_conferral_growth_rural_share.R`: Writes the tract waiver-counts-over-time figure from the tract waiver source.
 - `1_code/1_1_descriptives/1_1_0_waivers/shared_us_analysis_helpers.R`: Waiver descriptive helper file used inside the waiver descriptive subdirectory.
 - `1_code/1_1_descriptives/1_1_1_retailers/1_1_1_0_retailer_format_stock_index.R`: Writes the all-county retailer format stock-index figure.
 - `1_code/1_1_descriptives/1_1_1_retailers/1_1_1_1_retailer_format_stock_index_rural.R`: Writes the rural-county retailer format stock-index figure.
@@ -112,6 +113,7 @@ The current review-stage annual ACS tract branch documents a small explicit `201
 - `1_code/1_1_descriptives/1_1_1_retailers/1_1_1_6_snap_retailer_composition_ever_treated.R`: Writes the SNAP retailer composition figure split by ever-treated status.
 - `1_code/1_1_descriptives/1_1_1_retailers/1_1_1_7_ds_stock_change_map_2010_2019.R`: Writes the county map of 2010-2019 dollar-store stock change and companion `.csv`.
 - `1_code/1_1_descriptives/1_1_1_retailers/1_1_1_8_retail_format_pre_post_single_series.R`: Writes the single-series treated-county pre/post retail-format growth figure.
+- `1_code/1_1_descriptives/1_1_1_retailers/1_1_1_9_retailer_format_stock_index_tract.R`: Writes the tract retailer format stock-index figure.
 - `1_code/1_1_descriptives/1_1_1_retailers/shared_us_analysis_helpers.R`: Retailer descriptive helper file used inside the retailer descriptive subdirectory.
 - `1_code/1_1_descriptives/shared_us_analysis_helpers.R`: Shared descriptive helper file at the stage root.
 
@@ -189,6 +191,7 @@ The current review-stage annual ACS tract branch documents a small explicit `201
 
 ## Versioning and Change Log
 
+- `2026-03-21`: Updated the README mechanically to close out the current tract ExecPlan state: the tract ACS sidecar inventory now reflects the retained `2019` endpoint, the tract ACS exclusion note now matches the explicit exclusion set used in the retained sidecars, and the two initial tract descriptive scripts are now listed in the descriptive inventory.
 - `2026-03-20`: Updated the README mechanically to reflect the segmented ingest/descriptive/reduced-form paths now checked into `1_code/`, added the tract ingest files and tract processed artifacts created in Milestone 1, and added the tract retailer matching note in `1_code/1_0_ingest/1_0_1_covariates/`.
 - `2026-03-21`: Updated the README mechanically to add the tract ACS and tract final-panel scripts, the review-stage annual ACS tract sidecar artifacts, and the current documented annual-ACS tract exclusion set with the Census source URLs used to classify the `94xx` tract-code cases.
 - `2026-03-19`: Updated the README mechanically to match the completed pipeline inventory, including the additional descriptive scripts, the `1_2_11` reduced-form table-image script, the processed-data artifacts written under `processed_root.txt`, and the separation of `isolated/` sensitivity scripts into `TEMP/TEST Outputs`.
