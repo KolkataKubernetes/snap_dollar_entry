@@ -1,0 +1,101 @@
+%=========================================================
+% Second-Year Paper Template (LaTeX)
+% Authors: Alejandro Herrera Caicedo, Inder Majumdar
+%=========================================================
+
+\documentclass[12pt]{article}
+
+% ---------- Encoding & Language ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+
+% ---------- Page Layout ----------
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}       % For line spacing
+\doublespacing              % Common for papers
+\usepackage{lineno}
+\usepackage{threeparttable}
+
+% ---------- Math & Symbols ----------
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{bm}             % Bold math
+\usepackage{bbm}             % Bold math
+\usepackage{mathtools}      % Extra math tools
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min} % optional
+
+% ---------- Figures & Tables ----------
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}     % Subfigures
+\usepackage{booktabs}       % Nice tables
+\usepackage{float}          % H for precise float placement
+\usepackage{longtable}      % Multi-page tables if needed
+
+% ---------- References & Citations ----------
+\usepackage{natbib}         % Author-year citations
+
+% ---------- Formatting ----------
+\usepackage{microtype}      % Better typography
+\usepackage{enumitem}       % Control over lists
+\usepackage{hyperref}       % Clickable references
+\hypersetup{
+    colorlinks = true,
+    linkcolor  = blue,
+    citecolor  = blue,
+    urlcolor   = blue
+}
+\usepackage{environ, adjustbox}   % lets us redefine environments easily - for gt tables
+\usepackage{rotating}
+
+% ---------- Theorems (if needed) ----------
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+
+% ---------- Title Information ----------
+\title{Supply Side Responses to Target Subsidy Programs: Evidence from SNAP ABAWD Waivers and Dollar Store Expansion\\[0.5em]}
+\author{Alejandro Herrera Caicedo, Inder Majumdar \\ Department of Agricultural and Applied Economics \\ University of Wisconsin–Madison}
+\date{\today}
+
+% ---------- Figures ----------0
+\usepackage{tikz}
+\newcommand{\addaxeslabels}[4]{
+  \begin{tikzpicture}
+    \node[anchor=south west,inner sep=0] (img) {\includegraphics[width=#2\textwidth]{#1}};
+    \begin{scope}[x={(img.south east)},y={(img.north west)}]
+      % X-axis label
+      \node at (0.5, -0.06) {#3};
+      % Y-axis label
+      \node[rotate=90] at (-0.08, 0.5) {#4};
+    \end{scope}
+  \end{tikzpicture}
+}
+
+%=========================================================
+\begin{document}
+\linenumbers
+
+\maketitle
+
+\section{Introduction}
+
+\section{Data}
+
+\section{Institutional Context}
+
+\section{Empirical Framework}
+
+\section{Results}
+
+\section{Conclusion}
+
+\bibliographystyle{apalike} % Or "aer", "ecta", etc.
+\nocite{*}                      % <= TEMPORARY, remove later
+\bibliography{references} % references.bib file
+
+\end{document}
+
+\end{document}
