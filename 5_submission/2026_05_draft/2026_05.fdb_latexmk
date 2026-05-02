@@ -1,13 +1,13 @@
 # Fdb version 3
-["bibtex 12_25_draft"] 1776097418 "12_25_draft.aux" "12_25_draft.bbl" "12_25_draft" 1776097419
+["bibtex 2026_05"] 1776098259 "2026_05.aux" "2026_05.bbl" "2026_05" 1776098259
   "/usr/local/texlive/2022/texmf-dist/bibtex/bst/base/apalike.bst" 1292289607 24635 604dafcc79f521a11ea73e506e1fbd98 ""
-  "12_25_draft.aux" 1776097418 1511 8a097c41b208d463d5f96528966458cd "pdflatex"
+  "2026_05.aux" 1776098259 1511 8a097c41b208d463d5f96528966458cd "pdflatex"
   "references.bib" 0 -1 0 ""
   (generated)
-  "12_25_draft.bbl"
-  "12_25_draft.blg"
-["pdflatex"] 1776097418 "/Users/indermajumdar/Research/snap_dollar_entry/5_submission/2026_05_draft/12_25_draft.tex" "12_25_draft.pdf" "12_25_draft" 1776097419
-  "/Users/indermajumdar/Research/snap_dollar_entry/5_submission/2026_05_draft/12_25_draft.tex" 1776097418 3021 7b2b566ba908b371c04cbd0e879c41f8 ""
+  "2026_05.bbl"
+  "2026_05.blg"
+["pdflatex"] 1776098259 "/Users/indermajumdar/Research/snap_dollar_entry/5_submission/2026_05_draft/2026_05.tex" "2026_05.pdf" "2026_05" 1776098259
+  "/Users/indermajumdar/Research/snap_dollar_entry/5_submission/2026_05_draft/2026_05.tex" 1776098258 3021 7b2b566ba908b371c04cbd0e879c41f8 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/tfm/jknappen/ec/ecbx1728.tfm" 1136768653 3584 ad49a18d8515beef6d92d4d3f197d0fd ""
@@ -205,12 +205,12 @@
   "/usr/local/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1647878959 4410336 7d30a02e9fa9a16d7d1f8d037ba69641 ""
   "/usr/local/texlive/2022/texmf-var/web2c/pdftex/pdflatex.fmt" 1653061359 2826449 e7e1b7fe1875f8c1f0732264346f7b99 ""
   "/usr/local/texlive/2022/texmf.cnf" 1647878952 577 209b46be99c9075fd74d4c0369380e8c ""
-  "12_25_draft.aux" 1776097418 1511 8a097c41b208d463d5f96528966458cd "pdflatex"
-  "12_25_draft.bbl" 0 -1 0 "bibtex 12_25_draft"
-  "12_25_draft.out" 1776097418 629 6cf1106cb981dfa20967b034d398fc39 "pdflatex"
-  "12_25_draft.tex" 1776097418 3021 7b2b566ba908b371c04cbd0e879c41f8 ""
+  "2026_05.aux" 1776098259 1511 8a097c41b208d463d5f96528966458cd "pdflatex"
+  "2026_05.bbl" 0 -1 0 "bibtex 2026_05"
+  "2026_05.out" 1776098259 629 6cf1106cb981dfa20967b034d398fc39 "pdflatex"
+  "2026_05.tex" 1776098258 3021 7b2b566ba908b371c04cbd0e879c41f8 ""
   (generated)
-  "12_25_draft.aux"
-  "12_25_draft.log"
-  "12_25_draft.out"
-  "12_25_draft.pdf"
+  "2026_05.aux"
+  "2026_05.log"
+  "2026_05.out"
+  "2026_05.pdf"
