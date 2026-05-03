@@ -53,7 +53,8 @@ waiver_year_ts <- ctx$waiver_county_raw |>
       count(year, name = "waived_counties") |>
       mutate(county_group = "Total counties")
   ) |>
-  arrange(year, county_group)
+  arrange(year, county_group) |>
+  filter(year >= 2014)
 
 #(2) Save the figure -----------------------------------------------------------
 p <- ggplot(
