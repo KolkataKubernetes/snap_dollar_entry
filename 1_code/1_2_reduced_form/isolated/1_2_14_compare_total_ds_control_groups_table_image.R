@@ -121,7 +121,8 @@ estimate_model <- function(data) {
       sunab(eventYear2, year, ref.p = 0) +
       population + wage + meanInc + rent + urate |
       county_fips + year,
-    data = data
+    data = data,
+    vcov = ~county_fips
   )
 }
 

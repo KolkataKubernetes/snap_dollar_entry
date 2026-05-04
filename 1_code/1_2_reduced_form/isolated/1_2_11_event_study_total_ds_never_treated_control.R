@@ -124,7 +124,8 @@ model <- feols(
     sunab(eventYear2, year, ref.p = 0) +
     population + wage + meanInc + rent + urate |
     county_fips + year,
-  data = event_study_sample
+  data = event_study_sample,
+  vcov = ~county_fips
 )
 
 event_coeftable <- as.data.frame(coeftable(model))

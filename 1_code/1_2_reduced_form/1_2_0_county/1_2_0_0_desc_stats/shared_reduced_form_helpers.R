@@ -188,7 +188,8 @@ run_event_study_model <- function(var_name) {
         "population + wage + meanInc + rent + urate | county_fips + year"
       )
     ),
-    data = aba1
+    data = aba1,
+    vcov = ~county_fips
   )
 }
 
