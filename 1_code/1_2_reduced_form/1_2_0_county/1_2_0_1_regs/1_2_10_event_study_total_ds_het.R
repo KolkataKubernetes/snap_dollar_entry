@@ -23,6 +23,11 @@
 #                   `3_outputs/3_0_tables/3_2_0_county/3_2_0_1_regs/3_2_10_event_study_ihs_total_ds_het*.tex`
 #                   `3_outputs/3_2_reduced_form/3_2_0_county/3_2_0_1_regs/3_2_10_event_study_ihs_total_ds_het_metro_nonmetro*.pdf`
 #                   `3_outputs/3_0_tables/3_2_0_county/3_2_0_1_regs/3_2_10_event_study_ihs_total_ds_het_metro_nonmetro*.tex`
+# DEPENDENCIES:     `dplyr`, `fixest`, `ggplot2`, `readxl`
+# Review focus:     This script intentionally rebuilds the benchmark sample and
+#                   path/output helpers inline rather than sourcing the shared
+#                   helper file. Reviewers should verify the benchmark sample
+#                   logic, the RUCC merge, and the two RUCC grouping schemes.
 #///////////////////////////////////////////////////////////////////////////////
 
 library(dplyr)
@@ -31,6 +36,8 @@ library(ggplot2)
 library(readxl)
 
 #(0) Resolve paths -------------------------------------------------------------
+# This script is standalone by design, so it recreates the path and output
+# helpers locally rather than depending on `shared_reduced_form_helpers.R`.
 
 script_dir <- local({
   file_arg <- grep("^--file=", commandArgs(trailingOnly = FALSE), value = TRUE)
@@ -58,6 +65,10 @@ script_dir <- local({
 repo_root <- normalizePath(file.path(script_dir, "..", "..", "..", ".."))
 setwd(repo_root)
 
+# Purpose: read a one-line root-path pointer file used elsewhere in the repo.
+# Inputs: `path_file`, a repository-relative text file containing one path.
+# Returns: trimmed path string with surrounding quotes removed.
+# Side effects: reads from disk.
 read_root_path <- function(path_file) {
   path_value <- readLines(path_file, warn = FALSE)[[1]]
   path_value <- trimws(path_value)
@@ -65,6 +76,10 @@ read_root_path <- function(path_file) {
   sub("['\"]$", "", path_value)
 }
 
+# Purpose: create the fixed output folders used by this heterogeneity script.
+# Inputs: none.
+# Returns: list with `plot_dir` and `table_dir`.
+# Side effects: creates directories when missing.
 ensure_output_dirs <- function() {
   plot_dir <- file.path("3_outputs", "3_2_reduced_form", "3_2_0_county", "3_2_0_1_regs")
   table_dir <- file.path("3_outputs", "3_0_tables", "3_2_0_county", "3_2_0_1_regs")
@@ -75,6 +90,10 @@ ensure_output_dirs <- function() {
   list(plot_dir = plot_dir, table_dir = table_dir)
 }
 
+# Purpose: version output filenames instead of overwriting prior analytical artifacts.
+# Inputs: `path`, the preferred output path.
+# Returns: `path` itself or the next `_vNN` variant.
+# Side effects: checks the filesystem for existing outputs.
 next_available_path <- function(path) {
   if (!file.exists(path)) {
     return(path)
@@ -93,6 +112,10 @@ next_available_path <- function(path) {
   candidate
 }
 
+# Purpose: define the plot theme used by both RUCC heterogeneity figures.
+# Inputs: `base_size`, the theme base text size.
+# Returns: a ggplot theme object.
+# Side effects: none.
 theme_im <- function(base_size = 12) {
   theme_minimal(base_size = base_size) +
     theme(
@@ -108,10 +131,18 @@ theme_im <- function(base_size = 12) {
     )
 }
 
+# Purpose: format p-values for the ATT LaTeX tables.
+# Inputs: scalar `p_value`.
+# Returns: string representation with `<0.001` for very small values.
+# Side effects: none.
 format_p_value <- function(p_value) {
   ifelse(p_value < 0.001, "<0.001", sprintf("%.3f", p_value))
 }
 
+# Purpose: map p-values into the star convention shown in the ATT tables.
+# Inputs: scalar `p_value`.
+# Returns: significance-star string.
+# Side effects: none.
 significance_stars <- function(p_value) {
   ifelse(
     p_value < 0.01,
@@ -120,6 +151,10 @@ significance_stars <- function(p_value) {
   )
 }
 
+# Purpose: write the grouped ATT results into a compact LaTeX table.
+# Inputs: `att_results`, a grouped ATT summary table, and `output_path`.
+# Returns: no explicit return value.
+# Side effects: writes a `.tex` file to disk.
 write_att_table <- function(att_results, output_path) {
   table_lines <- c(
     "\\begingroup",
@@ -158,13 +193,18 @@ write_att_table <- function(att_results, output_path) {
 }
 
 #(1) Load the benchmark analysis panel and rebuild the event-study sample ------
+# Review focus: this should mirror the benchmark reduced-form sample logic so
+# the only new design choice in this script is the RUCC interaction.
 
 processed_root <- read_root_path("2_processed_data/processed_root.txt")
 analysis_panel <- readRDS(file.path(processed_root, "2_9_analysis", "2_9_0_us_analysis_panel.rds"))
 
 event_study_sample <- analysis_panel |>
   mutate(
+    # These benchmark helper variables are rebuilt inline because this file
+    # does not source the shared reduced-form helper script.
     lowq = total_ds + chain_convenience_store,
+    # Monetary covariates are scaled to thousands to match the benchmark model.
     rent = rent / 1000,
     meanInc = meanInc / 1000,
     zl = dplyr::lag(urate),
@@ -174,6 +214,8 @@ event_study_sample <- analysis_panel |>
   ) |>
   filter(year %in% 2014:2019) |>
   mutate(
+    # These sentinel values keep never-treated units in the sample while
+    # preserving the benchmark event-time filtering logic.
     tau2 = if_else(is.na(tau2), -1000, tau2),
     eventYear2 = if_else(is.na(eventYear2), 10000, eventYear2),
     treated_group = eventYear2 != 10000
@@ -186,10 +228,13 @@ event_study_sample <- analysis_panel |>
   filter(year - eventYear2 >= -3, treated_state, treated_county) |>
   mutate(
     state_year = paste(state, year),
+    # RUCC FIPS codes arrive as strings in the external workbook.
     county_fips_chr = sprintf("%05d", county_fips)
   )
 
 #(2) Load and merge the 2013 RUCC county codes --------------------------------
+# Review focus: this external workbook is the only non-benchmark input that
+# changes the analysis, so the join key and grouping definitions matter.
 
 input_root <- read_root_path("0_inputs/input_root.txt")
 rucc_path <- file.path(input_root, "0_7_Ruralurbancontinuumcodes2013.xls")
@@ -206,6 +251,8 @@ event_study_sample <- event_study_sample |>
   left_join(rucc_lookup, by = "county_fips_chr") |>
   filter(!is.na(rucc_2013)) |>
   mutate(
+    # The three-group scheme separates metro, adjacent non-metro, and
+    # non-adjacent non-metro counties.
     rucc_group_code_three = dplyr::case_when(
       rucc_2013 %in% 1:3 ~ 1L,
       rucc_2013 %in% c(4L, 6L, 8L) ~ 2L,
@@ -218,6 +265,7 @@ event_study_sample <- event_study_sample |>
       rucc_group_code_three == 3L ~ "Non-metro non-adjacent (RUCC 5, 7, 9)",
       TRUE ~ NA_character_
     ),
+    # The two-group scheme collapses all non-metro counties into one category.
     rucc_group_code_two = dplyr::case_when(
       rucc_2013 %in% 1:3 ~ 1L,
       rucc_2013 %in% 4:9 ~ 2L,
@@ -232,6 +280,8 @@ event_study_sample <- event_study_sample |>
   filter(!is.na(rucc_group_code_three), !is.na(rucc_group_code_two))
 
 #(3) Estimate the three-group RUCC-interacted Sun-Abraham model ----------------
+# Review focus: `no_agg = TRUE` keeps cohort-by-event-time coefficients so they
+# can later be aggregated within each RUCC group.
 
 heterogeneity_model_three <- feols(
   log(total_ds + sqrt(total_ds^2 + 1)) ~
@@ -243,6 +293,8 @@ heterogeneity_model_three <- feols(
 )
 
 #(4) Aggregate the three-group coefficients to event-time and ATT summaries ----
+# Aggregate the interacted event-study coefficients into group-specific event
+# profiles and group-specific ATT summaries for reporting.
 
 event_profile_results_three <- as.data.frame(
   aggregate(heterogeneity_model_three, "year::(-?[0-9]+).*factor\\(rucc_group_code_three\\)([0-9]+)$")
@@ -286,6 +338,8 @@ att_results_three <- att_results_three |>
   arrange(group_code)
 
 #(5) Build the three-group faceted event-study plot ----------------------------
+# This figure keeps the three RUCC groups in separate panels so reviewers can
+# compare event-time patterns without changing the underlying benchmark scales.
 
 event_plot_three <- ggplot(
   event_profile_results_three,
@@ -307,6 +361,8 @@ event_plot_three <- ggplot(
   theme_im(base_size = 12)
 
 #(6) Estimate the metro-vs-non-metro RUCC-interacted model --------------------
+# This second specification tests whether the finer three-group split matters
+# relative to a simpler metro versus non-metro partition.
 
 heterogeneity_model_two <- feols(
   log(total_ds + sqrt(total_ds^2 + 1)) ~
@@ -318,6 +374,8 @@ heterogeneity_model_two <- feols(
 )
 
 #(7) Aggregate the metro-vs-non-metro coefficients ----------------------------
+# Aggregate the interacted coefficients into the reporting format used for the
+# second comparison figure and ATT table.
 
 event_profile_results_two <- as.data.frame(
   aggregate(heterogeneity_model_two, "year::(-?[0-9]+).*factor\\(rucc_group_code_two\\)([0-9]+)$")
@@ -361,6 +419,8 @@ att_results_two <- att_results_two |>
   arrange(group_code)
 
 #(8) Build the metro-vs-non-metro faceted event-study plot --------------------
+# The plotting logic mirrors the three-group figure so visual differences come
+# from the grouping choice rather than from display conventions.
 
 event_plot_two <- ggplot(
   event_profile_results_two,
@@ -382,6 +442,8 @@ event_plot_two <- ggplot(
   theme_im(base_size = 12)
 
 #(9) Save both plots and both ATT tables --------------------------------------
+# Review focus: outputs are versioned, so repeated runs should add suffixes
+# rather than overwrite earlier heterogeneity artifacts.
 
 output_dirs <- ensure_output_dirs()
 

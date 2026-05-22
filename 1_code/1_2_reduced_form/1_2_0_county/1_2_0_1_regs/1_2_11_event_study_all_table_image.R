@@ -1,9 +1,29 @@
+#///////////////////////////////////////////////////////////////////////////////
+#----                              Preamble                                 ----
+# File name:        1_2_11_event_study_all_table_image.R
+# Description:      Estimate the benchmark county reduced form for every outlet
+#                   outcome and render a slide-ready image table of ATT and fit
+#                   statistics.
+# INPUTS:           `2_9_analysis/2_9_2_event_study_sample.rds`
+#                   `2_processed_data/processed_root.txt`
+# OUTPUTS:          `3_outputs/3_2_reduced_form/3_2_0_county/3_2_0_1_regs/3_2_11_event_study_ihs_all_table*.png`
+#                   `3_outputs/3_2_reduced_form/3_2_0_county/3_2_0_1_regs/3_2_11_event_study_ihs_all_table*.jpeg`
+#                   `3_outputs/3_0_tables/3_2_0_county/3_2_0_1_regs/3_2_11_event_study_ihs_all_table*.csv`
+# DEPENDENCIES:     `dplyr`, `grid`, `gridExtra`, `gtable`, `readr`,
+#                   `shared_reduced_form_helpers.R`
+# Review focus:     This is a presentation script rather than a new estimation
+#                   design. Reviewers should verify that the ATT values and fit
+#                   statistics remain consistent with the benchmark models and
+#                   with `1_2_9_event_study_all_table.R`.
+#///////////////////////////////////////////////////////////////////////////////
+
 library(dplyr)
 library(grid)
 library(gridExtra)
 library(gtable)
 library(readr)
 
+# Resolve the script directory so the local benchmark helper file can be sourced.
 script_dir <- local({
   file_arg <- grep("^--file=", commandArgs(trailingOnly = FALSE), value = TRUE)
 
@@ -27,8 +47,14 @@ script_dir <- local({
   normalizePath(getwd())
 })
 
+# Load the shared benchmark helpers that define the model and outcome registry.
 source(file.path(script_dir, "shared_reduced_form_helpers.R"))
 
+# Convert benchmark p-values into the significance star convention used in the image table.
+# Purpose: keep the display logic separate from the underlying model estimates.
+# Inputs: `p_value`, a scalar p-value.
+# Returns: character star code.
+# Side effects: none.
 signif_stars <- function(p_value) {
   case_when(
     is.na(p_value) ~ "",
@@ -39,10 +65,20 @@ signif_stars <- function(p_value) {
   )
 }
 
+# Format the ATT estimate and significance markers into one display cell.
+# Purpose: match slide-ready presentation formatting while keeping the standard error on its own row.
+# Inputs: numeric `estimate` and `p_value`.
+# Returns: formatted ATT string.
+# Side effects: none.
 format_att_cell <- function(estimate, p_value) {
   paste0(sprintf("%.4f", estimate), signif_stars(p_value))
 }
 
+# Pull the ATT and fit statistics that will populate one outcome column.
+# Purpose: reduce each benchmark model to the summary statistics shown in the presentation table.
+# Inputs: `model`, a fitted benchmark reduced-form model.
+# Returns: named list of formatted display values.
+# Side effects: none.
 extract_model_summary <- function(model) {
   att_summary <- summary(model, agg = "att")
   att_row <- as.data.frame(coeftable(att_summary)) |>
@@ -61,9 +97,11 @@ extract_model_summary <- function(model) {
   )
 }
 
+# Estimate one benchmark model per outcome using the shared helper function.
 models <- lapply(event_study_outcomes, run_event_study_model)
 names(models) <- event_study_outcomes
 
+# Summarize each model into the cells needed for the slide-ready image table.
 model_summaries <- lapply(models, extract_model_summary)
 
 column_labels <- c(
@@ -71,6 +109,7 @@ column_labels <- c(
   paste0(unname(event_study_labels), "\n(", seq_along(event_study_labels), ")")
 )
 
+# Assemble the presentation table skeleton before filling one column per outcome.
 table_df <- data.frame(
   row_label = c(
     "ATT",
@@ -86,6 +125,7 @@ table_df <- data.frame(
   stringsAsFactors = FALSE
 )
 
+# Populate one column per benchmark outcome in the registry order.
 for (outcome in event_study_outcomes) {
   summary_i <- model_summaries[[outcome]]
 
@@ -104,6 +144,7 @@ for (outcome in event_study_outcomes) {
 
 names(table_df) <- column_labels
 
+# Build the image-table grob used for both PNG and JPEG exports.
 cell_theme <- gridExtra::ttheme_minimal(
   base_size = 12,
   colhead = list(
@@ -176,6 +217,7 @@ for (row_i in separator_rows) {
   )
 }
 
+# Add a footnote that records the clustering rule and significance convention.
 footnote_grob <- textGrob(
   "Clustered (county_fips) standard-errors in parentheses\nSignif. Codes: ***: 0.01, **: 0.05, *: 0.1",
   x = unit(0, "npc"),
@@ -190,6 +232,7 @@ full_grob <- arrangeGrob(
   heights = unit.c(unit(1, "npc") - unit(0.55, "in"), unit(0.55, "in"))
 )
 
+# Save the slide-ready image table and its CSV representation using versioned output paths.
 png_path <- reduced_form_plot_path("3_2_11_event_study_ihs_all_table.png")
 jpeg_path <- reduced_form_plot_path("3_2_11_event_study_ihs_all_table.jpeg")
 csv_path <- reduced_form_table_path("3_2_11_event_study_ihs_all_table.csv")
