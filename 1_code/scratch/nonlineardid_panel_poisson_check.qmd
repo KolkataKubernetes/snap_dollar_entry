@@ -1,0 +1,215 @@
+---
+title: "Checking NonlinearDiD Panel Poisson Behavior"
+format:
+  html:
+    toc: true
+    code-fold: false
+execute:
+  echo: true
+  warning: true
+  message: false
+editor: visual
+---
+
+# Purpose
+
+This notebook checks whether the installed `NonlinearDiD` package appears to use a genuinely Poisson staggered panel estimator when we call:
+
+`nonlinear_attgt(..., data_type = "panel", outcome_model = "poisson")`
+
+The concern is that, for the panel-data branch, the package may instead be using the same outcome-change logic as its linear specification. If that is true, then the "Poisson" panel call would not be a valid nonlinear count-data replacement for the county staggered DID regressions in this repository.
+
+# What This Notebook Does
+
+The notebook does four things.
+
+1. It records the installed package version.
+2. It simulates count panel data using the package's own simulation helper.
+3. It runs the staggered panel estimator twice on the same simulated data:
+   once with `outcome_model = "poisson"` and once with `outcome_model = "linear"`.
+4. It checks whether the estimated `ATT(g,t)` values are exactly the same, and then prints the internal package functions that appear to drive this behavior.
+
+If the panel Poisson route is really distinct, we should generally expect at least some numerical differences relative to the panel linear route on simulated count data. If the results are exactly identical, that is strong evidence that the panel branch is not actually switching estimators.
+
+# Setup
+
+```{r}
+# Load the package that is under inspection.
+library(NonlinearDiD)
+
+# Record the installed version so the notebook result is tied to a specific build.
+packageVersion("NonlinearDiD")
+```
+
+# Simulate Count Panel Data
+
+```{r}
+# Set a seed so the simulation is exactly reproducible.
+set.seed(123)
+
+# Use the package's own count-panel simulator.
+# This is important because it avoids the criticism that the test data
+# were generated in some unusual way outside the package's intended use.
+sim_dat <- sim_count_panel(
+  n = 400,
+  nperiods = 6,
+  prop_treated = 0.4
+)
+
+# Take a quick look at the resulting data.
+str(sim_dat)
+head(sim_dat)
+summary(sim_dat$y)
+```
+
+# Run the Two Panel Specifications
+
+```{r}
+# Estimate the staggered panel model using the package's panel Poisson option.
+# This is the route we would want to trust for a count-outcome staggered DID.
+res_panel_poisson <- nonlinear_attgt(
+  data = sim_dat,
+  yname = "y",
+  tname = "period",
+  gname = "g",
+  idname = "id",
+  data_type = "panel",
+  outcome_model = "poisson",
+  control_group = "notyetreated",
+  doubly_robust = TRUE,
+  boot = FALSE
+)
+
+# Estimate the same staggered panel model, but ask for the linear outcome model instead.
+res_panel_linear <- nonlinear_attgt(
+  data = sim_dat,
+  yname = "y",
+  tname = "period",
+  gname = "g",
+  idname = "id",
+  data_type = "panel",
+  outcome_model = "linear",
+  control_group = "notyetreated",
+  doubly_robust = TRUE,
+  boot = FALSE
+)
+```
+
+# Compare the `ATT(g,t)` Results
+
+```{r}
+# Extract the group-time effect estimates from each run.
+att_poisson <- res_panel_poisson$attgt
+att_linear <- res_panel_linear$attgt
+
+# Show the first few rows side by side.
+comparison_table <- data.frame(
+  group = att_poisson$group,
+  time = att_poisson$time,
+  poisson_att = att_poisson$att,
+  linear_att = att_linear$att,
+  difference = att_poisson$att - att_linear$att
+)
+
+head(comparison_table, 12)
+```
+
+```{r}
+# Check equality directly.
+all_equal_result <- all.equal(att_poisson$att, att_linear$att)
+max_abs_diff <- max(abs(att_poisson$att - att_linear$att), na.rm = TRUE)
+
+all_equal_result
+max_abs_diff
+```
+
+```{r}
+# Print a compact summary that is easy to read when skimming the notebook.
+cat("Are the ATT(g,t) estimates exactly equal?\n")
+print(all_equal_result)
+
+cat("\nMaximum absolute difference across ATT(g,t) cells:\n")
+print(max_abs_diff)
+```
+
+# Compare More Than Just the Point Estimates
+
+```{r}
+# The call objects should differ because we asked for different outcome models.
+# That alone is not enough to show the estimator changed, so we compare the outputs.
+res_panel_poisson$args$outcome_model
+res_panel_linear$args$outcome_model
+```
+
+```{r}
+# Compare the full ATT(g,t) data frames where most substantive output lives.
+# If these are also identical or nearly identical, that strengthens the concern.
+identical(att_poisson, att_linear)
+
+# Show the columns so it is clear what is being compared.
+names(att_poisson)
+```
+
+# Inspect the Package Logic
+
+The next chunks print the internal package functions that appear relevant for the panel-data path. The goal is not to audit every line of the package. The narrower question is whether the panel branch actually routes the `outcome_model = "poisson"` request into a Poisson-specific outcome model.
+
+## `nonlinear_attgt()`
+
+```{r}
+# Print the main staggered DID entry point.
+print(nonlinear_attgt)
+```
+
+## `.compute_attgt_single()`
+
+```{r}
+# This internal helper decides what happens for one (g, t) cell.
+# We inspect it because it is the branching point for panel versus repeated cross-section data.
+getAnywhere(".compute_attgt_single")
+```
+
+## `.dr_attgt()`
+
+```{r}
+# This helper computes the doubly robust panel ATT object for one cell.
+# It is important because our calls above used doubly_robust = TRUE.
+getAnywhere(".dr_attgt")
+```
+
+## `.dr_att_linear()`
+
+```{r}
+# This helper is especially informative.
+# It works with DeltaY = Y1 - Y0 and then fits an outcome-regression on outcome changes.
+# That is linear-change logic, not a Poisson outcome-regression for counts.
+getAnywhere(".dr_att_linear")
+```
+
+## Optional Cross-Check: Two-Period Count DID Helper
+
+```{r}
+# Print the package's dedicated two-period Poisson DID helper.
+# This helps distinguish "the package has count DID functionality"
+# from "the staggered panel route is using that functionality."
+print(count_did_poisson)
+```
+
+# Interpretation
+
+Based on the simulation and the printed functions, the warning sign is not merely that the panel Poisson and panel linear results are similar. The stronger warning sign is that they are exactly identical in this simulation, while the internal panel path appears to route through outcome-change logic that does not visibly switch to a Poisson outcome model.
+
+That does **not** prove the entire package is unusable. It does suggest the following narrower conclusion:
+
+- the package appears to have a real two-period Poisson DID helper for count outcomes, but
+- the installed panel staggered route does not appear to activate a distinct Poisson estimator for panel data in the way we would need for the county staggered DID branch.
+
+For this repository, that means we should be cautious about describing `nonlinear_attgt(..., data_type = "panel", outcome_model = "poisson")` as a valid staggered Poisson replacement for the current county regressions unless this behavior is resolved or clarified.
+
+# Session Info
+
+```{r}
+# Record session information so the result can be reproduced later.
+sessionInfo()
+```
+

@@ -1,0 +1,291 @@
+---
+title: "Checking NonlinearDiD Panel Logit Behavior"
+format:
+  html:
+    toc: true
+    code-fold: false
+execute:
+  echo: true
+  warning: true
+  message: false
+editor: visual
+---
+
+# Purpose
+
+This notebook checks whether the installed `NonlinearDiD` package appears to use a genuinely logit-based staggered panel estimator when we call:
+
+`nonlinear_attgt(..., data_type = "panel", outcome_model = "logit")`
+
+The concern is parallel to the Poisson case. If the panel-data branch routes the default ATT estimand through linear outcome-change logic, then a call that looks like a staggered panel logit DID would not actually be giving us a distinct nonlinear binary-outcome estimator.
+
+# What This Notebook Does
+
+The notebook does five things.
+
+1. It records the installed package version.
+2. It simulates binary panel data using the package's own simulation helper.
+3. It compares the default staggered panel ATT estimates from `outcome_model = "logit"` and `outcome_model = "linear"`.
+4. It optionally compares the package's alternative binary estimands, `ape` and `odds_ratio`, across outcome-model settings.
+5. It prints the internal package functions that appear relevant for the panel binary-outcome path.
+
+The main question is simple. If the panel logit route is truly distinct, we should generally expect at least some numerical difference relative to the panel linear route on simulated binary panel data. If the results are exactly identical, that is a strong warning sign.
+
+# Setup
+
+```{r}
+library(NonlinearDiD)
+
+packageVersion("NonlinearDiD")
+```
+
+# Simulate Binary Panel Data
+
+```{r}
+# Set a seed so the simulation is reproducible.
+set.seed(321)
+
+# Use the package's own binary-panel simulator.
+sim_dat <- sim_binary_panel(
+  n = 500,
+  nperiods = 6,
+  prop_treated = 0.4
+)
+
+str(sim_dat)
+head(sim_dat)
+table(sim_dat$y)
+```
+
+# Default Panel ATT: Logit Versus Linear
+
+```{r}
+# This is the main comparison for a tract-level binary staggered DID use case.
+res_logit_att <- nonlinear_attgt(
+  data = sim_dat,
+  yname = "y",
+  tname = "period",
+  gname = "g",
+  idname = "id",
+  data_type = "panel",
+  outcome_model = "logit",
+  estimand = "att",
+  control_group = "notyetreated",
+  doubly_robust = TRUE,
+  boot = FALSE
+)
+
+res_linear_att <- nonlinear_attgt(
+  data = sim_dat,
+  yname = "y",
+  tname = "period",
+  gname = "g",
+  idname = "id",
+  data_type = "panel",
+  outcome_model = "linear",
+  estimand = "att",
+  control_group = "notyetreated",
+  doubly_robust = TRUE,
+  boot = FALSE
+)
+```
+
+```{r}
+att_logit <- res_logit_att$attgt
+att_linear <- res_linear_att$attgt
+
+comparison_att <- data.frame(
+  group = att_logit$group,
+  time = att_logit$time,
+  logit_att = att_logit$att,
+  linear_att = att_linear$att,
+  difference = att_logit$att - att_linear$att
+)
+
+head(comparison_att, 12)
+```
+
+```{r}
+all_equal_att <- all.equal(att_logit$att, att_linear$att)
+max_abs_diff_att <- max(abs(att_logit$att - att_linear$att), na.rm = TRUE)
+
+all_equal_att
+max_abs_diff_att
+```
+
+```{r}
+cat("ATT estimand: are logit and linear exactly equal?\n")
+print(all_equal_att)
+
+cat("\nATT estimand: maximum absolute difference across ATT(g,t) cells:\n")
+print(max_abs_diff_att)
+```
+
+# Optional Binary Estimands
+
+This section goes a little further than the core tract-level question. It checks whether the package's alternative binary estimands behave distinctly across `logit`, `probit`, and `linear` settings in the panel-data branch.
+
+## APE Comparison
+
+```{r}
+res_logit_ape <- nonlinear_attgt(
+  data = sim_dat,
+  yname = "y",
+  tname = "period",
+  gname = "g",
+  idname = "id",
+  data_type = "panel",
+  outcome_model = "logit",
+  estimand = "ape",
+  control_group = "notyetreated",
+  doubly_robust = TRUE,
+  boot = FALSE
+)
+
+res_probit_ape <- nonlinear_attgt(
+  data = sim_dat,
+  yname = "y",
+  tname = "period",
+  gname = "g",
+  idname = "id",
+  data_type = "panel",
+  outcome_model = "probit",
+  estimand = "ape",
+  control_group = "notyetreated",
+  doubly_robust = TRUE,
+  boot = FALSE
+)
+
+res_linear_ape <- nonlinear_attgt(
+  data = sim_dat,
+  yname = "y",
+  tname = "period",
+  gname = "g",
+  idname = "id",
+  data_type = "panel",
+  outcome_model = "linear",
+  estimand = "ape",
+  control_group = "notyetreated",
+  doubly_robust = TRUE,
+  boot = FALSE
+)
+```
+
+```{r}
+all.equal(res_logit_ape$attgt$att, res_linear_ape$attgt$att)
+all.equal(res_logit_ape$attgt$att, res_probit_ape$attgt$att)
+max(abs(res_logit_ape$attgt$att - res_linear_ape$attgt$att), na.rm = TRUE)
+max(abs(res_logit_ape$attgt$att - res_probit_ape$attgt$att), na.rm = TRUE)
+```
+
+## Odds-Ratio Comparison
+
+```{r}
+res_logit_or <- nonlinear_attgt(
+  data = sim_dat,
+  yname = "y",
+  tname = "period",
+  gname = "g",
+  idname = "id",
+  data_type = "panel",
+  outcome_model = "logit",
+  estimand = "odds_ratio",
+  control_group = "notyetreated",
+  doubly_robust = TRUE,
+  boot = FALSE
+)
+
+res_probit_or <- nonlinear_attgt(
+  data = sim_dat,
+  yname = "y",
+  tname = "period",
+  gname = "g",
+  idname = "id",
+  data_type = "panel",
+  outcome_model = "probit",
+  estimand = "odds_ratio",
+  control_group = "notyetreated",
+  doubly_robust = TRUE,
+  boot = FALSE
+)
+
+res_linear_or <- nonlinear_attgt(
+  data = sim_dat,
+  yname = "y",
+  tname = "period",
+  gname = "g",
+  idname = "id",
+  data_type = "panel",
+  outcome_model = "linear",
+  estimand = "odds_ratio",
+  control_group = "notyetreated",
+  doubly_robust = TRUE,
+  boot = FALSE
+)
+```
+
+```{r}
+all.equal(res_logit_or$attgt$att, res_linear_or$attgt$att)
+all.equal(res_logit_or$attgt$att, res_probit_or$attgt$att)
+max(abs(res_logit_or$attgt$att - res_linear_or$attgt$att), na.rm = TRUE)
+max(abs(res_logit_or$attgt$att - res_probit_or$attgt$att), na.rm = TRUE)
+```
+
+# Inspect the Package Logic
+
+The next chunks print the internal functions that seem most relevant for the panel binary-outcome path. The goal is to connect the simulation behavior to the apparent code path.
+
+## `nonlinear_attgt()`
+
+```{r}
+print(nonlinear_attgt)
+```
+
+## `.dr_attgt()`
+
+```{r}
+# This helper dispatches the doubly robust panel ATT computation by estimand.
+getAnywhere(".dr_attgt")
+```
+
+## `.dr_att_linear()`
+
+```{r}
+# For the default ATT estimand, this is the key concern.
+# It works with DeltaY = Y1 - Y0 and an outcome-regression on changes.
+getAnywhere(".dr_att_linear")
+```
+
+## `.dr_att_ape()`
+
+```{r}
+# This helper is relevant for the probability-scale APE.
+# It is useful to inspect because it appears to treat logit and probit the same way.
+getAnywhere(".dr_att_ape")
+```
+
+## `.dr_att_oddsratio()`
+
+```{r}
+# This helper is relevant for the odds-ratio estimand.
+# It is useful to inspect because the role of outcome_model appears limited here as well.
+getAnywhere(".dr_att_oddsratio")
+```
+
+# Interpretation
+
+If the default panel ATT comparison shows exact equality between `outcome_model = "logit"` and `outcome_model = "linear"`, that is strong evidence that the installed package is not giving us a distinct staggered panel logit ATT estimator for that use case.
+
+If the APE and odds-ratio sections also show exact or near-exact equality across settings, that would further weaken confidence that the panel binary-outcome branch is responding meaningfully to the requested nonlinear outcome model.
+
+The narrow takeaway for this repository is the following:
+
+- a tract-level staggered binary-outcome design should **not** automatically trust `NonlinearDiD` panel `logit` calls just because the function accepts `outcome_model = "logit"`;
+- we should verify the estimator path first or use a different implementation that explicitly documents the nonlinear staggered panel estimator we need.
+
+# Session Info
+
+```{r}
+sessionInfo()
+```
+
