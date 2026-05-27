@@ -1,28 +1,27 @@
 #///////////////////////////////////////////////////////////////////////////////
 #----                              Preamble                                 ----
 # File name:        shared_reduced_form_helpers.R
-# Description:      Shared helper functions for the county nonlinear reduced-
-#                   form Poisson branch. These helpers resolve repository
-#                   paths, load the branch-specific county sample, bridge from
-#                   R into Python `diff_diff.WooldridgeDiD`, and write versioned
-#                   figure/table/csv artifacts under `3_outputs`.
+# Description:      Shared helper functions for the county stock-Poisson
+#                   reduced-form branch. These helpers resolve repository
+#                   paths, load the branch-specific county stock sample, bridge
+#                   from R into Python `diff_diff.WooldridgeDiD`, and write
+#                   versioned figure/table/csv artifacts under `3_outputs`.
 # INPUTS:           `2_processed_data/processed_root.txt`
-#                   `2_9_analysis/2_9_3_county_poissonreg_sample.rds`
+#                   `2_9_analysis/2_9_5_county_stockpoissonreg_sample.rds`
 # OUTPUTS:          No direct outputs. Downstream scripts use these helpers to
 #                   write versioned `.pdf`, `.tex`, `.csv`, `.png`, and `.jpeg`
 #                   artifacts under `3_outputs`.
 # DEPENDENCIES:     `dplyr`, `ggplot2`, `reticulate`
 # Review focus:     Verify that the Python bridge targets
-#                   `diff_diff.WooldridgeDiD(method = "poisson")` with
-#                   `control_group = "never_treated"`, and that output names
-#                   remain versioned rather than overwriting prior artifacts.
+#                   `diff_diff.WooldridgeDiD(method = "poisson")` with stock
+#                   outcomes, `control_group = "never_treated"`, and
+#                   versioned output paths.
 #///////////////////////////////////////////////////////////////////////////////
 
 library(dplyr)
 library(ggplot2)
 library(reticulate)
 
-# Resolve the currently running script path across command line, RStudio, and sourced execution.
 get_script_path <- function() {
   file_arg <- grep("^--file=", commandArgs(trailingOnly = FALSE), value = TRUE)
 
@@ -46,7 +45,6 @@ get_script_path <- function() {
   NA_character_
 }
 
-# Walk upward from a file or directory until the repository root markers are found.
 find_repo_root <- function(start_path) {
   candidate <- normalizePath(start_path, winslash = "/", mustWork = FALSE)
 
@@ -68,30 +66,26 @@ find_repo_root <- function(start_path) {
   }
 }
 
-# Resolve the repository root for the currently executing reduced-form script.
 get_repo_root <- function() {
   script_path <- get_script_path()
   start_path <- if (!is.na(script_path)) script_path else getwd()
   find_repo_root(start_path)
 }
 
-# Read a one-line pointer file that stores an external root path.
 read_root_path <- function(path_file) {
   path_value <- readLines(path_file, warn = FALSE)[[1]]
   path_value <- trimws(path_value)
   gsub("^['\"]|['\"]$", "", path_value)
 }
 
-# Create the fixed output folders used by the county Poisson branch.
 ensure_reduced_form_dirs <- function() {
-  plot_dir <- file.path("3_outputs", "3_2_reduced_form", "3_2_0_county", "3_2_0_1b_poissonregs")
-  table_dir <- file.path("3_outputs", "3_0_tables", "3_2_0_county", "3_2_0_1b_poissonregs")
+  plot_dir <- file.path("3_outputs", "3_2_reduced_form", "3_2_0_county", "3_2_0_1b_stockpoissonregs")
+  table_dir <- file.path("3_outputs", "3_0_tables", "3_2_0_county", "3_2_0_1b_stockpoissonregs")
   dir.create(plot_dir, recursive = TRUE, showWarnings = FALSE)
   dir.create(table_dir, recursive = TRUE, showWarnings = FALSE)
   list(plot_dir = plot_dir, table_dir = table_dir)
 }
 
-# Version an output filename instead of overwriting an existing artifact.
 next_available_path <- function(path) {
   if (!file.exists(path)) {
     return(path)
@@ -110,19 +104,16 @@ next_available_path <- function(path) {
   candidate
 }
 
-# Build a versioned plot output path for the county Poisson branch.
 reduced_form_plot_path <- function(filename) {
   output_dirs <- ensure_reduced_form_dirs()
   next_available_path(file.path(output_dirs$plot_dir, filename))
 }
 
-# Build a versioned table output path for the county Poisson branch.
 reduced_form_table_path <- function(filename) {
   output_dirs <- ensure_reduced_form_dirs()
   next_available_path(file.path(output_dirs$table_dir, filename))
 }
 
-# Define the plotting theme used across county Poisson figures.
 theme_im <- function(base_size = 12) {
   theme_minimal(base_size = base_size) +
     theme(
@@ -138,34 +129,31 @@ theme_im <- function(base_size = 12) {
     )
 }
 
-# These registries define the benchmark outcome order and display labels.
 event_study_outcomes <- c(
-  "total_ds",
-  "chain_super_market",
-  "chain_convenience_store",
-  "chain_multi_category",
-  "chain_medium_grocery",
-  "chain_small_grocery",
-  "chain_produce",
-  "chain_farmers_market"
+  "total_ds_stock",
+  "chain_super_market_stock",
+  "chain_convenience_store_stock",
+  "chain_multi_category_stock",
+  "chain_medium_grocery_stock",
+  "chain_small_grocery_stock",
+  "chain_produce_stock",
+  "chain_farmers_market_stock"
 )
 
 event_study_labels <- c(
-  "Dollar Stores",
-  "Supermarkets",
-  "Convenience Stores",
-  "Multi Category",
-  "Medium Grocery",
-  "Small Grocery",
-  "Produce",
-  "Farmers Market"
+  "Dollar Store Stock",
+  "Supermarket Stock",
+  "Convenience Store Stock",
+  "Multi Category Stock",
+  "Medium Grocery Stock",
+  "Small Grocery Stock",
+  "Produce Stock",
+  "Farmers Market Stock"
 )
 
 names(event_study_labels) <- event_study_outcomes
 
 poisson_control_group <- "never_treated"
-
-# Match the benchmark county reduced-form controls in the nonlinear branch.
 poisson_covariates <- c("population", "wage", "meanInc", "rent", "urate")
 
 control_group_display_label <- function(control_group = poisson_control_group) {
@@ -177,35 +165,40 @@ control_group_display_label <- function(control_group = poisson_control_group) {
   )
 }
 
-# Load the branch-specific county Poisson sample.
 load_poisson_sample <- function() {
   repo_root <- get_repo_root()
   setwd(repo_root)
 
   processed_root <- read_root_path("2_processed_data/processed_root.txt")
-  readRDS(file.path(processed_root, "2_9_analysis", "2_9_3_county_poissonreg_sample.rds"))
+  readRDS(file.path(processed_root, "2_9_analysis", "2_9_5_county_stockpoissonreg_sample.rds"))
 }
 
-# Configure reticulate to use the requested conda environment.
 configure_diff_diff <- function() {
+  repo_root <- get_repo_root()
   python_path_override <- Sys.getenv("SNAP_DOLLAR_ENTRY_PYTHON", unset = "")
-  fallback_python <- "/private/tmp/snap_dollar_entry_diffdiff_arm/bin/python"
-  env_name <- Sys.getenv("SNAP_DOLLAR_ENTRY_CONDA_ENV", unset = "snap_dollar_entry")
+  local_python <- file.path(repo_root, ".venv-diffdiff-arm", "bin", "python")
 
   if (nzchar(python_path_override)) {
     reticulate::use_python(python_path_override, required = TRUE)
     return(invisible(NULL))
   }
 
-  if (file.exists(fallback_python)) {
-    reticulate::use_python(fallback_python, required = TRUE)
+  if (file.exists(local_python)) {
+    reticulate::use_python(local_python, required = TRUE)
     return(invisible(NULL))
   }
 
-  reticulate::use_condaenv(env_name, required = TRUE)
+  stop(
+    paste0(
+      "No compatible Python interpreter was found for diff-diff. ",
+      "Set SNAP_DOLLAR_ENTRY_PYTHON to an arm64 interpreter with diff-diff ",
+      "installed, or create the repo-local environment at ",
+      local_python,
+      "."
+    )
+  )
 }
 
-# Import the Python diff-diff module once per R session.
 get_diff_diff_module <- local({
   diff_diff_module <- NULL
 
@@ -219,7 +212,6 @@ get_diff_diff_module <- local({
   }
 })
 
-# Flatten Python-returned data frames so base R exporters can write them.
 normalize_results_df <- function(df) {
   if ("conf_int" %in% names(df)) {
     conf_low <- vapply(df$conf_int, function(x) x[[1]], numeric(1))
@@ -247,7 +239,6 @@ normalize_results_df <- function(df) {
   df
 }
 
-# Replace obviously non-estimable cells with missing values before export.
 sanitize_effect_df <- function(df) {
   required_cols <- intersect(c("att", "se", "t_stat", "p_value", "conf_int_lo", "conf_int_hi"), names(df))
 
@@ -280,15 +271,14 @@ sanitize_effect_df <- function(df) {
   df
 }
 
-# Build the model frame handed to Python WooldridgeDiD.
 build_poisson_model_frame <- function(var_name) {
   sample <- load_poisson_sample()
 
   if (!var_name %in% names(sample)) {
-    stop(sprintf("Outcome '%s' is not present in the Poisson sample.", var_name))
+    stop(sprintf("Outcome '%s' is not present in the stock-Poisson sample.", var_name))
   }
 
-  model_frame <- sample |>
+  sample |>
     transmute(
       county_fips = county_fips,
       year = year,
@@ -307,11 +297,8 @@ build_poisson_model_frame <- function(var_name) {
       outcome >= 0,
       if_all(all_of(poisson_covariates), is.finite)
     )
-
-  model_frame
 }
 
-# Fit the county Poisson Wooldridge ETWFE model for one outcome.
 run_event_study_model <- function(var_name) {
   diff_diff <- get_diff_diff_module()
   model_frame <- build_poisson_model_frame(var_name)
@@ -345,7 +332,6 @@ run_event_study_model <- function(var_name) {
   )
 }
 
-# Convert the Python Wooldridge results object into R data frames.
 collect_model_outputs <- function(model_bundle) {
   results <- model_bundle$results
 
@@ -379,12 +365,10 @@ collect_model_outputs <- function(model_bundle) {
   )
 }
 
-# Format p-values for table display.
 format_p_value <- function(p_value) {
   ifelse(is.na(p_value), "", ifelse(p_value < 0.001, "<0.001", sprintf("%.3f", p_value)))
 }
 
-# Map p-values into the star convention used in tables.
 significance_stars <- function(p_value) {
   ifelse(
     is.na(p_value),
@@ -393,17 +377,14 @@ significance_stars <- function(p_value) {
   )
 }
 
-# Format ATT values for table display, preserving missing failed estimates.
 format_att_value <- function(att, p_value) {
   ifelse(is.na(att), "Not estimable", paste0(sprintf("%.4f", att), significance_stars(p_value)))
 }
 
-# Format standard errors for table display, preserving missing failed estimates.
 format_se_value <- function(se) {
   ifelse(is.na(se), "", paste0("(", sprintf("%.4f", se), ")"))
 }
 
-# Format confidence intervals for table display, preserving missing failed estimates.
 format_ci_value <- function(conf_int_lo, conf_int_hi) {
   ifelse(
     is.na(conf_int_lo) | is.na(conf_int_hi),
@@ -412,7 +393,6 @@ format_ci_value <- function(conf_int_lo, conf_int_hi) {
   )
 }
 
-# Plot the aggregated event-study profile for one outcome.
 build_event_plot <- function(event_df, label) {
   if (nrow(event_df) == 0) {
     stop("No event-study aggregation rows are available to plot.")
@@ -426,7 +406,7 @@ build_event_plot <- function(event_df, label) {
     geom_point(size = 2, color = "#1B4F72") +
     scale_x_continuous(breaks = sort(unique(event_df$relative_period))) +
     labs(
-      title = paste0("Poisson ETWFE ATT: ", label),
+      title = paste0("Stock-Stock-Poisson ETWFE ATT: ", label),
       subtitle = paste0(
         "diff-diff WooldridgeDiD with ",
         control_group_display_label(),
@@ -438,7 +418,6 @@ build_event_plot <- function(event_df, label) {
     theme_im(base_size = 12)
 }
 
-# Write a one-row LaTeX summary table for one outcome.
 write_single_outcome_table <- function(simple_df, label, output_path) {
   row <- simple_df[1, ]
 
@@ -473,7 +452,6 @@ write_single_outcome_table <- function(simple_df, label, output_path) {
   writeLines(table_lines, con = output_path)
 }
 
-# Fit one outcome and save its plot, table, and audit CSVs.
 save_event_study_artifact <- function(var_name, label, file_stub) {
   model_bundle <- run_event_study_model(var_name)
   outputs <- collect_model_outputs(model_bundle)

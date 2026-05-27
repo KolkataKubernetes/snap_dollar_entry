@@ -1,14 +1,14 @@
 #///////////////////////////////////////////////////////////////////////////////
 #----                              Preamble                                 ----
 # File name:        1_2_11b_event_study_all_table_image_poissonreg.R
-# Description:      Estimate the county Poisson ETWFE reduced form for every
-#                   outlet outcome and render a slide-ready image table of
+# Description:      Estimate the county stock-Poisson ETWFE reduced form for every
+#                   stock outcome and render a slide-ready image table of
 #                   overall ATT and fit metadata.
-# INPUTS:           `2_9_analysis/2_9_3_county_poissonreg_sample.rds`
+# INPUTS:           `2_9_analysis/2_9_5_county_stockpoissonreg_sample.rds`
 #                   `2_processed_data/processed_root.txt`
-# OUTPUTS:          `3_outputs/3_2_reduced_form/3_2_0_county/3_2_0_1b_poissonregs/3_2_11b_event_study_ihs_all_table_poissonreg*.png`
-#                   `3_outputs/3_2_reduced_form/3_2_0_county/3_2_0_1b_poissonregs/3_2_11b_event_study_ihs_all_table_poissonreg*.jpeg`
-#                   `3_outputs/3_0_tables/3_2_0_county/3_2_0_1b_poissonregs/3_2_11b_event_study_ihs_all_table_poissonreg*.csv`
+# OUTPUTS:          `3_outputs/3_2_reduced_form/3_2_0_county/3_2_0_1b_stockpoissonregs/3_2_11b_event_study_all_table_stockpoissonreg*.png`
+#                   `3_outputs/3_2_reduced_form/3_2_0_county/3_2_0_1b_stockpoissonregs/3_2_11b_event_study_all_table_stockpoissonreg*.jpeg`
+#                   `3_outputs/3_0_tables/3_2_0_county/3_2_0_1b_stockpoissonregs/3_2_11b_event_study_all_table_stockpoissonreg*.csv`
 # DEPENDENCIES:     `dplyr`, `grid`, `gridExtra`, `gtable`,
 #                   `shared_reduced_form_helpers.R`
 # Review focus:     This is a presentation script rather than a new estimation
@@ -150,9 +150,9 @@ full_grob <- arrangeGrob(
   heights = unit.c(unit(1, "npc") - unit(0.7, "in"), unit(0.7, "in"))
 )
 
-png_path <- reduced_form_plot_path("3_2_11b_event_study_ihs_all_table_poissonreg.png")
-jpeg_path <- reduced_form_plot_path("3_2_11b_event_study_ihs_all_table_poissonreg.jpeg")
-csv_path <- reduced_form_table_path("3_2_11b_event_study_ihs_all_table_poissonreg.csv")
+png_path <- reduced_form_plot_path("3_2_11b_event_study_all_table_stockpoissonreg.png")
+jpeg_path <- reduced_form_plot_path("3_2_11b_event_study_all_table_stockpoissonreg.jpeg")
+csv_path <- reduced_form_table_path("3_2_11b_event_study_all_table_stockpoissonreg.csv")
 
 grDevices::png(filename = png_path, width = 3400, height = 1050, res = 240)
 grid.newpage()

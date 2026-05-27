@@ -1,18 +1,18 @@
 #///////////////////////////////////////////////////////////////////////////////
 #----                              Preamble                                 ----
 # File name:        1_2_1b_event_study_total_ds_poissonreg.R
-# Description:      Thin wrapper that runs the county Poisson ETWFE reduced
-#                   form for Dollar Stores using the shared helper script.
-# INPUTS:           `2_9_analysis/2_9_3_county_poissonreg_sample.rds`
+# Description:      Thin wrapper that runs the county stock-Poisson ETWFE reduced
+#                   form for Dollar Store stock using the shared helper script.
+# INPUTS:           `2_9_analysis/2_9_5_county_stockpoissonreg_sample.rds`
 #                   `2_processed_data/processed_root.txt`
-# OUTPUTS:          `3_outputs/3_2_reduced_form/3_2_0_county/3_2_0_1b_poissonregs/3_2_1b_event_study_ihs_total_ds_poissonreg*.pdf`
-#                   `3_outputs/3_0_tables/3_2_0_county/3_2_0_1b_poissonregs/3_2_1b_event_study_ihs_total_ds_poissonreg*.tex`
+# OUTPUTS:          `3_outputs/3_2_reduced_form/3_2_0_county/3_2_0_1b_stockpoissonregs/3_2_1b_event_study_total_ds_stockpoissonreg*.pdf`
+#                   `3_outputs/3_0_tables/3_2_0_county/3_2_0_1b_stockpoissonregs/3_2_1b_event_study_total_ds_stockpoissonreg*.tex`
 #                   matching audit CSV exports
 # DEPENDENCIES:     `shared_reduced_form_helpers.R`
 # Review focus:     The substantive estimation logic lives in the shared
 #                   helper, so the main thing to verify here is that the
 #                   outcome name, display label, and output stub match Dollar
-#                   Stores.
+#                   Store stock.
 #///////////////////////////////////////////////////////////////////////////////
 
 script_dir <- local({
@@ -39,4 +39,4 @@ script_dir <- local({
 })
 
 source(file.path(script_dir, "shared_reduced_form_helpers.R"))
-save_event_study_artifact("total_ds", "Dollar Stores", "3_2_1b_event_study_ihs_total_ds_poissonreg")
+save_event_study_artifact("total_ds_stock", "Dollar Store Stock", "3_2_1b_event_study_total_ds_stockpoissonreg")

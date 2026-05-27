@@ -1,11 +1,11 @@
 #///////////////////////////////////////////////////////////////////////////////
 #----                              Preamble                                 ----
 # File name:        1_2_9b_event_study_all_table_poissonreg.R
-# Description:      Estimate the county Poisson ETWFE reduced form for every
-#                   outlet outcome and export a combined overall ATT table.
-# INPUTS:           `2_9_analysis/2_9_3_county_poissonreg_sample.rds`
+# Description:      Estimate the county stock-Poisson ETWFE reduced form for every
+#                   stock outcome and export a combined overall ATT table.
+# INPUTS:           `2_9_analysis/2_9_5_county_stockpoissonreg_sample.rds`
 #                   `2_processed_data/processed_root.txt`
-# OUTPUTS:          `3_outputs/3_0_tables/3_2_0_county/3_2_0_1b_poissonregs/3_2_9b_event_study_ihs_all_poissonreg*.tex`
+# OUTPUTS:          `3_outputs/3_0_tables/3_2_0_county/3_2_0_1b_stockpoissonregs/3_2_9b_event_study_all_stockpoissonreg*.tex`
 #                   matching summary CSV export
 # DEPENDENCIES:     `dplyr`, `shared_reduced_form_helpers.R`
 # Review focus:     The column order and labels are inherited from
@@ -39,8 +39,8 @@ summary_df <- bind_rows(lapply(model_outputs, `[[`, "simple_df")) |>
     label = unname(event_study_labels[outcome])
   )
 
-tex_path <- reduced_form_table_path("3_2_9b_event_study_ihs_all_poissonreg.tex")
-csv_path <- reduced_form_table_path("3_2_9b_event_study_ihs_all_poissonreg.csv")
+tex_path <- reduced_form_table_path("3_2_9b_event_study_all_stockpoissonreg.tex")
+csv_path <- reduced_form_table_path("3_2_9b_event_study_all_stockpoissonreg.csv")
 
 table_lines <- c(
   "\\begingroup",

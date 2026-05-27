@@ -1,16 +1,16 @@
 #///////////////////////////////////////////////////////////////////////////////
 #----                              Preamble                                 ----
-# File name:        1_2_8b_event_study_chain_farmers_market_poissonreg.R
-# Description:      Thin wrapper that runs the county Poisson ETWFE reduced
-#                   form for Farmers Market outlets using the shared helper
+# File name:        1_2_6b_event_study_chain_small_grocery_poissonreg.R
+# Description:      Thin wrapper that runs the county stock-Poisson ETWFE reduced
+#                   form for small-grocery stock using the shared helper
 #                   script.
-# INPUTS:           `2_9_analysis/2_9_3_county_poissonreg_sample.rds`
+# INPUTS:           `2_9_analysis/2_9_5_county_stockpoissonreg_sample.rds`
 #                   `2_processed_data/processed_root.txt`
-# OUTPUTS:          versioned plot/table/csv artifacts for the farmers-market
+# OUTPUTS:          versioned plot/table/csv artifacts for the small-grocery
 #                   Poisson branch under `3_outputs`
 # DEPENDENCIES:     `shared_reduced_form_helpers.R`
 # Review focus:     Verify that the delegated outcome and output stub both
-#                   correspond to Farmers Market outlets.
+#                   correspond to Small-grocery stock.
 #///////////////////////////////////////////////////////////////////////////////
 
 script_dir <- local({
@@ -25,4 +25,4 @@ script_dir <- local({
 })
 
 source(file.path(script_dir, "shared_reduced_form_helpers.R"))
-save_event_study_artifact("chain_farmers_market", "Farmers Market", "3_2_8b_event_study_ihs_chain_farmers_market_poissonreg")
+save_event_study_artifact("chain_small_grocery_stock", "Small Grocery Stock", "3_2_6b_event_study_chain_small_grocery_stockpoissonreg")
