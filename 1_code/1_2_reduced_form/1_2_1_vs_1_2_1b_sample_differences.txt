@@ -1,0 +1,122 @@
+Differences between the samples used in:
+- 1_2_1_event-study_quick.R
+- 1_2_1b_event-study_quick_cs.R
+
+This note describes the scripts as they currently exist in this directory.
+
+1) Main source data
+
+1_2_1_event-study_quick.R
+- Uses two different inputs:
+  - data sample: 2_9_analysis/2_9_2_event_study_sample.rds
+  - panel sample: 2_9_analysis/2_9_0_us_analysis_panel.rds
+
+1_2_1b_event-study_quick_cs.R
+- Builds both samples directly from:
+  - 2_9_analysis/2_9_0_us_analysis_panel.rds
+
+
+2) Treated-only sample
+
+1_2_1_event-study_quick.R
+- The treated-only sample is the saved benchmark event-study sample
+  2_9_2_event_study_sample.rds.
+- That saved sample is not the full 2014-2019 county panel for every treated cohort.
+- It was built upstream with the restriction:
+  year - eventYear2 >= -3
+- It also keeps only counties/states that ever enter the treated universe.
+- Practical implication:
+  later-treated cohorts are truncated in early calendar years.
+  Example:
+  - cohort 2018 starts in 2015, not 2014
+  - cohort 2019 starts in 2016, not 2014 or 2015
+
+1_2_1b_event-study_quick_cs.R
+- The treated-only sample is rebuilt from analysis_panel each time.
+- It keeps:
+  - year %in% 2014:2019
+  - counties in states that ever have treated counties
+  - counties that ever become treated
+- It does NOT apply the benchmark restriction:
+  year - eventYear2 >= -3
+- Practical implication:
+  later-treated cohorts keep their earlier county-year observations when those
+  years exist in analysis_panel.
+
+
+3) Panel sample (treated + never treated)
+
+1_2_1_event-study_quick.R
+- Starts from analysis_panel.
+- Restricts to:
+  - year %in% 2014:2019
+  - tau2 >= -3 OR eventYear2 is missing
+- Then replaces missing eventYear2 with 9999.
+- Practical implication:
+  treated units are still limited to the benchmark 3-year pre window, while
+  never-treated units remain in the sample.
+
+1_2_1b_event-study_quick_cs.R
+- Starts from analysis_panel.
+- Restricts only to:
+  - year %in% 2014:2019
+- It does NOT apply tau2 >= -3.
+- Then replaces missing eventYear2 with 0, which is the did package convention
+  for never-treated units.
+- Practical implication:
+  treated units can keep longer pre-treatment histories than in 1_2_1.
+
+
+4) Never-treated coding
+
+1_2_1_event-study_quick.R
+- Missing eventYear2 is replaced with 9999 in the panel sample.
+- This is a convenient sentinel for the fixest / Sun-Abraham workflow used there.
+
+1_2_1b_event-study_quick_cs.R
+- Missing eventYear2 is replaced with 0 in the panel sample.
+- This is the convention expected by did::att_gt() for never-treated units.
+
+
+5) Panel balance handling inside estimation
+
+1_2_1_event-study_quick.R
+- Uses fixest::feols() with sunab(...).
+- The script itself checks county-year uniqueness, but it does not ask the
+  estimator to rebalance the panel the way did::att_gt() does.
+
+1_2_1b_event-study_quick_cs.R
+- Before each model, rows with missing outcome/covariates are dropped using
+  complete.cases().
+- Then did::att_gt() is called with:
+  allow_unbalanced_panel = TRUE
+- Practical implication:
+  the CS script now allows cohorts with incomplete time coverage to stay in the
+  estimation sample, which was the key change made to improve support for early
+  lead periods like e = -3.
+
+
+6) Why this matters for event-time support
+
+1_2_1_event-study_quick.R
+- The benchmark sample conventions are aligned to the Sun-Abraham regression
+  workflow and its saved benchmark sample.
+
+1_2_1b_event-study_quick_cs.R
+- The script was changed to use the fuller analysis_panel directly because the
+  benchmark treated-only sample was trimming away early years for later cohorts.
+- That trimming created support problems for Callaway-Sant'Anna when using
+  not-yet-treated controls and a universal base period.
+- Using analysis_panel directly plus allow_unbalanced_panel = TRUE improves the
+  availability of pre-period comparisons for the CS estimator.
+
+
+7) Bottom line
+
+1_2_1_event-study_quick.R
+- Closely follows the benchmark reduced-form sample already saved in
+  2_9_2_event_study_sample.rds and the benchmark 3-year pre-period convention.
+
+1_2_1b_event-study_quick_cs.R
+- Uses a less trimmed sample built directly from analysis_panel so that the
+  Callaway-Sant'Anna estimator has better support, especially for early leads.
