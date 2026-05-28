@@ -215,10 +215,19 @@ waiver_year <- if ("YEAR" %in% names(waiver_long)) {
   stop("Selected waiver panel is missing both `YEAR` and `year`.")
 }
 
+waiver_scope_raw <- if ("waiver_scope" %in% names(waiver_long)) {
+  waiver_long$waiver_scope
+} else if ("ENTIRE_STATE" %in% names(waiver_long)) {
+  if_else(as.integer(waiver_long$ENTIRE_STATE) == 1L, "statewide", "substate")
+} else {
+  stop("Selected waiver panel is missing both `waiver_scope` and `ENTIRE_STATE`.")
+}
+
 waiver_treatment <- waiver_long |>
   mutate(
     county_fips = as.integer(waiver_county_fips),
-    year = as.integer(waiver_year)
+    year = as.integer(waiver_year),
+    waiver_scope = as.character(waiver_scope_raw)
   ) |>
   filter(!is.na(county_fips), !is.na(year)) |>
   transmute(
@@ -226,15 +235,27 @@ waiver_treatment <- waiver_long |>
     year,
     countyname = LOC,
     type = LOC_TYPE,
+    waiver_scope,
     treatment = 1L
   ) |>
-  distinct()
+  distinct() |>
+  group_by(county_fips, year) |>
+  summarise(
+    countyname = first(countyname),
+    type = first(type),
+    waiver_scope = if_else(any(waiver_scope == "statewide"), "statewide", "substate"),
+    treatment = 1L,
+    .groups = "drop"
+  )
 
 treated_counties <- sort(unique(waiver_treatment$county_fips))
 
 analysis_panel <- waiver_treatment |>
   right_join(entry_panel, by = c("county_fips", "year")) |>
-  mutate(treatment = coalesce(treatment, 0L)) |>
+  mutate(
+    treatment = coalesce(treatment, 0L),
+    waiver_scope = coalesce(waiver_scope, "none")
+  ) |>
   left_join(store_stock_panel, by = c("county_fips", "year")) |>
   mutate(
     across(

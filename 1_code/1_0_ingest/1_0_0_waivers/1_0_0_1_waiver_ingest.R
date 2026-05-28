@@ -155,7 +155,8 @@ state_rows <- generated_long |>
   left_join(geo, by = c("STATE_ABBREV" = "STATE"), relationship = "many-to-many") |>
   mutate(
     LOC = COUNTYNAME,
-    LOC_TYPE = "County"
+    LOC_TYPE = "County",
+    waiver_scope = "statewide"
   ) |>
   select(-COUNTYNAME)
 
@@ -163,13 +164,17 @@ state_rows <- generated_long |>
 
 county_rows <- generated_long |>
   filter(LOC_TYPE == "County") |>
-  left_join(geo, by = c("LOC" = "COUNTYNAME", "STATE_ABBREV" = "STATE"))
+  left_join(geo, by = c("LOC" = "COUNTYNAME", "STATE_ABBREV" = "STATE")) |>
+  mutate(waiver_scope = "substate")
 
 # --- Preserve non-county, non-statewide rows without assigning county FIPS
 
 other_rows <- generated_long |>
   filter(LOC_TYPE != "County", ENTIRE_STATE != 1) |>
-  mutate(FIPS = NA_character_)
+  mutate(
+    FIPS = NA_character_,
+    waiver_scope = "substate"
+  )
 
 # --- Recombine standardized waiver rows into the final generated long panel
 

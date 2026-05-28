@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Checking NonlinearDiD Panel Logit Behavior</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="nonlineardid_panel_logit_check_files/libs/clipboard/clipboard.min.js"></script>
+<script src="nonlineardid_panel_logit_check_files/libs/quarto-html/quarto.js"></script>
+<script src="nonlineardid_panel_logit_check_files/libs/quarto-html/popper.min.js"></script>
+<script src="nonlineardid_panel_logit_check_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="nonlineardid_panel_logit_check_files/libs/quarto-html/anchor.min.js"></script>
+<link href="nonlineardid_panel_logit_check_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="nonlineardid_panel_logit_check_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="nonlineardid_panel_logit_check_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="nonlineardid_panel_logit_check_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="nonlineardid_panel_logit_check_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#purpose" id="toc-purpose" class="nav-link active" data-scroll-target="#purpose">Purpose</a></li>
+  <li><a href="#what-this-notebook-does" id="toc-what-this-notebook-does" class="nav-link" data-scroll-target="#what-this-notebook-does">What This Notebook Does</a></li>
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup">Setup</a></li>
+  <li><a href="#simulate-binary-panel-data" id="toc-simulate-binary-panel-data" class="nav-link" data-scroll-target="#simulate-binary-panel-data">Simulate Binary Panel Data</a></li>
+  <li><a href="#default-panel-att-logit-versus-linear" id="toc-default-panel-att-logit-versus-linear" class="nav-link" data-scroll-target="#default-panel-att-logit-versus-linear">Default Panel ATT: Logit Versus Linear</a></li>
+  <li><a href="#optional-binary-estimands" id="toc-optional-binary-estimands" class="nav-link" data-scroll-target="#optional-binary-estimands">Optional Binary Estimands</a>
+  <ul class="collapse">
+  <li><a href="#ape-comparison" id="toc-ape-comparison" class="nav-link" data-scroll-target="#ape-comparison">APE Comparison</a></li>
+  <li><a href="#odds-ratio-comparison" id="toc-odds-ratio-comparison" class="nav-link" data-scroll-target="#odds-ratio-comparison">Odds-Ratio Comparison</a></li>
+  </ul></li>
+  <li><a href="#inspect-the-package-logic" id="toc-inspect-the-package-logic" class="nav-link" data-scroll-target="#inspect-the-package-logic">Inspect the Package Logic</a>
+  <ul class="collapse">
+  <li><a href="#nonlinear_attgt" id="toc-nonlinear_attgt" class="nav-link" data-scroll-target="#nonlinear_attgt"><code>nonlinear_attgt()</code></a></li>
+  <li><a href="#dr_attgt" id="toc-dr_attgt" class="nav-link" data-scroll-target="#dr_attgt"><code>.dr_attgt()</code></a></li>
+  <li><a href="#dr_att_linear" id="toc-dr_att_linear" class="nav-link" data-scroll-target="#dr_att_linear"><code>.dr_att_linear()</code></a></li>
+  <li><a href="#dr_att_ape" id="toc-dr_att_ape" class="nav-link" data-scroll-target="#dr_att_ape"><code>.dr_att_ape()</code></a></li>
+  <li><a href="#dr_att_oddsratio" id="toc-dr_att_oddsratio" class="nav-link" data-scroll-target="#dr_att_oddsratio"><code>.dr_att_oddsratio()</code></a></li>
+  </ul></li>
+  <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation">Interpretation</a></li>
+  <li><a href="#session-info" id="toc-session-info" class="nav-link" data-scroll-target="#session-info">Session Info</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Checking NonlinearDiD Panel Logit Behavior</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="purpose" class="level1">
+<h1>Purpose</h1>
+<p>This notebook checks whether the installed <code>NonlinearDiD</code> package appears to use a genuinely logit-based staggered panel estimator when we call:</p>
+<p><code>nonlinear_attgt(..., data_type = "panel", outcome_model = "logit")</code></p>
+<p>The concern is parallel to the Poisson case. If the panel-data branch routes the default ATT estimand through linear outcome-change logic, then a call that looks like a staggered panel logit DID would not actually be giving us a distinct nonlinear binary-outcome estimator.</p>
+</section>
+<section id="what-this-notebook-does" class="level1">
+<h1>What This Notebook Does</h1>
+<p>The notebook does five things.</p>
+<ol type="1">
+<li>It records the installed package version.</li>
+<li>It simulates binary panel data using the package’s own simulation helper.</li>
+<li>It compares the default staggered panel ATT estimates from <code>outcome_model = "logit"</code> and <code>outcome_model = "linear"</code>.</li>
+<li>It optionally compares the package’s alternative binary estimands, <code>ape</code> and <code>odds_ratio</code>, across outcome-model settings.</li>
+<li>It prints the internal package functions that appear relevant for the panel binary-outcome path.</li>
+</ol>
+<p>The main question is simple. If the panel logit route is truly distinct, we should generally expect at least some numerical difference relative to the panel linear route on simulated binary panel data. If the results are exactly identical, that is a strong warning sign.</p>
+</section>
+<section id="setup" class="level1">
+<h1>Setup</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(NonlinearDiD)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'NonlinearDiD' was built under R version 4.5.2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">packageVersion</span>(<span class="st">"NonlinearDiD"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] '0.2.0'</code></pre>
+</div>
+</div>
+</section>
+<section id="simulate-binary-panel-data" class="level1">
+<h1>Simulate Binary Panel Data</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set a seed so the simulation is reproducible.</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">321</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the package's own binary-panel simulator.</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>sim_dat <span class="ot">&lt;-</span> <span class="fu">sim_binary_panel</span>(</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">n =</span> <span class="dv">500</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">nperiods =</span> <span class="dv">6</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">prop_treated =</span> <span class="fl">0.4</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(sim_dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   3000 obs. of  8 variables:
+ $ id     : int  1 1 1 1 1 1 2 2 2 2 ...
+ $ period : int  1 2 3 4 5 6 1 2 3 4 ...
+ $ y      : int  0 0 0 1 0 0 1 0 0 0 ...
+ $ g      : num  0 0 0 0 0 0 0 0 0 0 ...
+ $ D      : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ alpha_i: num  0.596 0.596 0.596 0.596 0.596 ...
+ $ x1     : num  -0.854 -0.854 -0.854 -0.854 -0.854 ...
+ $ x2     : int  0 0 0 0 0 0 1 1 1 1 ...
+ - attr(*, "true_att")= num [1:3] 0.3 0.3 0.3
+ - attr(*, "cohort_periods")= num [1:3] 2 4 5
+ - attr(*, "dgp")= chr "binary_logit"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sim_dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  id period y g D alpha_i      x1 x2
+1  1      1 0 0 0  0.5962 -0.8541  0
+2  1      2 0 0 0  0.5962 -0.8541  0
+3  1      3 0 0 0  0.5962 -0.8541  0
+4  1      4 1 0 0  0.5962 -0.8541  0
+5  1      5 0 0 0  0.5962 -0.8541  0
+6  1      6 0 0 0  0.5962 -0.8541  0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(sim_dat<span class="sc">$</span>y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+   0    1 
+1935 1065 </code></pre>
+</div>
+</div>
+</section>
+<section id="default-panel-att-logit-versus-linear" class="level1">
+<h1>Default Panel ATT: Logit Versus Linear</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This is the main comparison for a tract-level binary staggered DID use case.</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>res_logit_att <span class="ot">&lt;-</span> <span class="fu">nonlinear_attgt</span>(</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sim_dat,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">yname =</span> <span class="st">"y"</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">tname =</span> <span class="st">"period"</span>,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">gname =</span> <span class="st">"g"</span>,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">idname =</span> <span class="st">"id"</span>,</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">data_type =</span> <span class="st">"panel"</span>,</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome_model =</span> <span class="st">"logit"</span>,</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">estimand =</span> <span class="st">"att"</span>,</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">control_group =</span> <span class="st">"notyetreated"</span>,</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">doubly_robust =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">boot =</span> <span class="cn">FALSE</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>res_linear_att <span class="ot">&lt;-</span> <span class="fu">nonlinear_attgt</span>(</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sim_dat,</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">yname =</span> <span class="st">"y"</span>,</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">tname =</span> <span class="st">"period"</span>,</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">gname =</span> <span class="st">"g"</span>,</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">idname =</span> <span class="st">"id"</span>,</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">data_type =</span> <span class="st">"panel"</span>,</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome_model =</span> <span class="st">"linear"</span>,</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">estimand =</span> <span class="st">"att"</span>,</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">control_group =</span> <span class="st">"notyetreated"</span>,</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">doubly_robust =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">boot =</span> <span class="cn">FALSE</span></span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>att_logit <span class="ot">&lt;-</span> res_logit_att<span class="sc">$</span>attgt</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>att_linear <span class="ot">&lt;-</span> res_linear_att<span class="sc">$</span>attgt</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>comparison_att <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> att_logit<span class="sc">$</span>group,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">time =</span> att_logit<span class="sc">$</span>time,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">logit_att =</span> att_logit<span class="sc">$</span>att,</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">linear_att =</span> att_linear<span class="sc">$</span>att,</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">difference =</span> att_logit<span class="sc">$</span>att <span class="sc">-</span> att_linear<span class="sc">$</span>att</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(comparison_att, <span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   group time   logit_att  linear_att difference
+1      2    1  0.00000000  0.00000000          0
+2      2    2  0.16170926  0.16170926          0
+3      2    3  0.02702137  0.02702137          0
+4      2    4 -0.05475955 -0.05475955          0
+5      2    5  0.02327915  0.02327915          0
+6      2    6  0.16666667  0.16666667          0
+7      4    1 -0.06193269 -0.06193269          0
+8      4    2 -0.05558300 -0.05558300          0
+9      4    3  0.00000000  0.00000000          0
+10     4    4  0.02915020  0.02915020          0
+11     4    5  0.13927353  0.13927353          0
+12     4    6  0.13114590  0.13114590          0</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>all_equal_att <span class="ot">&lt;-</span> <span class="fu">all.equal</span>(att_logit<span class="sc">$</span>att, att_linear<span class="sc">$</span>att)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>max_abs_diff_att <span class="ot">&lt;-</span> <span class="fu">max</span>(<span class="fu">abs</span>(att_logit<span class="sc">$</span>att <span class="sc">-</span> att_linear<span class="sc">$</span>att), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>all_equal_att</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>max_abs_diff_att</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"ATT estimand: are logit and linear exactly equal?</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>ATT estimand: are logit and linear exactly equal?</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(all_equal_att)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">ATT estimand: maximum absolute difference across ATT(g,t) cells:</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ATT estimand: maximum absolute difference across ATT(g,t) cells:</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(max_abs_diff_att)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+</div>
+</section>
+<section id="optional-binary-estimands" class="level1">
+<h1>Optional Binary Estimands</h1>
+<p>This section goes a little further than the core tract-level question. It checks whether the package’s alternative binary estimands behave distinctly across <code>logit</code>, <code>probit</code>, and <code>linear</code> settings in the panel-data branch.</p>
+<section id="ape-comparison" class="level2">
+<h2 class="anchored" data-anchor-id="ape-comparison">APE Comparison</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>res_logit_ape <span class="ot">&lt;-</span> <span class="fu">nonlinear_attgt</span>(</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sim_dat,</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">yname =</span> <span class="st">"y"</span>,</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">tname =</span> <span class="st">"period"</span>,</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">gname =</span> <span class="st">"g"</span>,</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">idname =</span> <span class="st">"id"</span>,</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">data_type =</span> <span class="st">"panel"</span>,</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome_model =</span> <span class="st">"logit"</span>,</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">estimand =</span> <span class="st">"ape"</span>,</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">control_group =</span> <span class="st">"notyetreated"</span>,</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">doubly_robust =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">boot =</span> <span class="cn">FALSE</span></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>res_probit_ape <span class="ot">&lt;-</span> <span class="fu">nonlinear_attgt</span>(</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sim_dat,</span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">yname =</span> <span class="st">"y"</span>,</span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">tname =</span> <span class="st">"period"</span>,</span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">gname =</span> <span class="st">"g"</span>,</span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">idname =</span> <span class="st">"id"</span>,</span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">data_type =</span> <span class="st">"panel"</span>,</span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome_model =</span> <span class="st">"probit"</span>,</span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">estimand =</span> <span class="st">"ape"</span>,</span>
+<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">control_group =</span> <span class="st">"notyetreated"</span>,</span>
+<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">doubly_robust =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">boot =</span> <span class="cn">FALSE</span></span>
+<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-29"><a href="#cb26-29" aria-hidden="true" tabindex="-1"></a>res_linear_ape <span class="ot">&lt;-</span> <span class="fu">nonlinear_attgt</span>(</span>
+<span id="cb26-30"><a href="#cb26-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sim_dat,</span>
+<span id="cb26-31"><a href="#cb26-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">yname =</span> <span class="st">"y"</span>,</span>
+<span id="cb26-32"><a href="#cb26-32" aria-hidden="true" tabindex="-1"></a>  <span class="at">tname =</span> <span class="st">"period"</span>,</span>
+<span id="cb26-33"><a href="#cb26-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">gname =</span> <span class="st">"g"</span>,</span>
+<span id="cb26-34"><a href="#cb26-34" aria-hidden="true" tabindex="-1"></a>  <span class="at">idname =</span> <span class="st">"id"</span>,</span>
+<span id="cb26-35"><a href="#cb26-35" aria-hidden="true" tabindex="-1"></a>  <span class="at">data_type =</span> <span class="st">"panel"</span>,</span>
+<span id="cb26-36"><a href="#cb26-36" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome_model =</span> <span class="st">"linear"</span>,</span>
+<span id="cb26-37"><a href="#cb26-37" aria-hidden="true" tabindex="-1"></a>  <span class="at">estimand =</span> <span class="st">"ape"</span>,</span>
+<span id="cb26-38"><a href="#cb26-38" aria-hidden="true" tabindex="-1"></a>  <span class="at">control_group =</span> <span class="st">"notyetreated"</span>,</span>
+<span id="cb26-39"><a href="#cb26-39" aria-hidden="true" tabindex="-1"></a>  <span class="at">doubly_robust =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb26-40"><a href="#cb26-40" aria-hidden="true" tabindex="-1"></a>  <span class="at">boot =</span> <span class="cn">FALSE</span></span>
+<span id="cb26-41"><a href="#cb26-41" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all.equal</span>(res_logit_ape<span class="sc">$</span>attgt<span class="sc">$</span>att, res_linear_ape<span class="sc">$</span>attgt<span class="sc">$</span>att)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all.equal</span>(res_logit_ape<span class="sc">$</span>attgt<span class="sc">$</span>att, res_probit_ape<span class="sc">$</span>attgt<span class="sc">$</span>att)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(res_logit_ape<span class="sc">$</span>attgt<span class="sc">$</span>att <span class="sc">-</span> res_linear_ape<span class="sc">$</span>attgt<span class="sc">$</span>att), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.610657e-09</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(res_logit_ape<span class="sc">$</span>attgt<span class="sc">$</span>att <span class="sc">-</span> res_probit_ape<span class="sc">$</span>attgt<span class="sc">$</span>att), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+</div>
+</section>
+<section id="odds-ratio-comparison" class="level2">
+<h2 class="anchored" data-anchor-id="odds-ratio-comparison">Odds-Ratio Comparison</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>res_logit_or <span class="ot">&lt;-</span> <span class="fu">nonlinear_attgt</span>(</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sim_dat,</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">yname =</span> <span class="st">"y"</span>,</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">tname =</span> <span class="st">"period"</span>,</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">gname =</span> <span class="st">"g"</span>,</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">idname =</span> <span class="st">"id"</span>,</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">data_type =</span> <span class="st">"panel"</span>,</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome_model =</span> <span class="st">"logit"</span>,</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">estimand =</span> <span class="st">"odds_ratio"</span>,</span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">control_group =</span> <span class="st">"notyetreated"</span>,</span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">doubly_robust =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">boot =</span> <span class="cn">FALSE</span></span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>res_probit_or <span class="ot">&lt;-</span> <span class="fu">nonlinear_attgt</span>(</span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sim_dat,</span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">yname =</span> <span class="st">"y"</span>,</span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">tname =</span> <span class="st">"period"</span>,</span>
+<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">gname =</span> <span class="st">"g"</span>,</span>
+<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">idname =</span> <span class="st">"id"</span>,</span>
+<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">data_type =</span> <span class="st">"panel"</span>,</span>
+<span id="cb35-22"><a href="#cb35-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome_model =</span> <span class="st">"probit"</span>,</span>
+<span id="cb35-23"><a href="#cb35-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">estimand =</span> <span class="st">"odds_ratio"</span>,</span>
+<span id="cb35-24"><a href="#cb35-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">control_group =</span> <span class="st">"notyetreated"</span>,</span>
+<span id="cb35-25"><a href="#cb35-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">doubly_robust =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb35-26"><a href="#cb35-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">boot =</span> <span class="cn">FALSE</span></span>
+<span id="cb35-27"><a href="#cb35-27" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb35-28"><a href="#cb35-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-29"><a href="#cb35-29" aria-hidden="true" tabindex="-1"></a>res_linear_or <span class="ot">&lt;-</span> <span class="fu">nonlinear_attgt</span>(</span>
+<span id="cb35-30"><a href="#cb35-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sim_dat,</span>
+<span id="cb35-31"><a href="#cb35-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">yname =</span> <span class="st">"y"</span>,</span>
+<span id="cb35-32"><a href="#cb35-32" aria-hidden="true" tabindex="-1"></a>  <span class="at">tname =</span> <span class="st">"period"</span>,</span>
+<span id="cb35-33"><a href="#cb35-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">gname =</span> <span class="st">"g"</span>,</span>
+<span id="cb35-34"><a href="#cb35-34" aria-hidden="true" tabindex="-1"></a>  <span class="at">idname =</span> <span class="st">"id"</span>,</span>
+<span id="cb35-35"><a href="#cb35-35" aria-hidden="true" tabindex="-1"></a>  <span class="at">data_type =</span> <span class="st">"panel"</span>,</span>
+<span id="cb35-36"><a href="#cb35-36" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome_model =</span> <span class="st">"linear"</span>,</span>
+<span id="cb35-37"><a href="#cb35-37" aria-hidden="true" tabindex="-1"></a>  <span class="at">estimand =</span> <span class="st">"odds_ratio"</span>,</span>
+<span id="cb35-38"><a href="#cb35-38" aria-hidden="true" tabindex="-1"></a>  <span class="at">control_group =</span> <span class="st">"notyetreated"</span>,</span>
+<span id="cb35-39"><a href="#cb35-39" aria-hidden="true" tabindex="-1"></a>  <span class="at">doubly_robust =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb35-40"><a href="#cb35-40" aria-hidden="true" tabindex="-1"></a>  <span class="at">boot =</span> <span class="cn">FALSE</span></span>
+<span id="cb35-41"><a href="#cb35-41" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all.equal</span>(res_logit_or<span class="sc">$</span>attgt<span class="sc">$</span>att, res_linear_or<span class="sc">$</span>attgt<span class="sc">$</span>att)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all.equal</span>(res_logit_or<span class="sc">$</span>attgt<span class="sc">$</span>att, res_probit_or<span class="sc">$</span>attgt<span class="sc">$</span>att)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(res_logit_or<span class="sc">$</span>attgt<span class="sc">$</span>att <span class="sc">-</span> res_linear_or<span class="sc">$</span>attgt<span class="sc">$</span>att), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(res_logit_or<span class="sc">$</span>attgt<span class="sc">$</span>att <span class="sc">-</span> res_probit_or<span class="sc">$</span>attgt<span class="sc">$</span>att), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="inspect-the-package-logic" class="level1">
+<h1>Inspect the Package Logic</h1>
+<p>The next chunks print the internal functions that seem most relevant for the panel binary-outcome path. The goal is to connect the simulation behavior to the apparent code path.</p>
+<section id="nonlinear_attgt" class="level2">
+<h2 class="anchored" data-anchor-id="nonlinear_attgt"><code>nonlinear_attgt()</code></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(nonlinear_attgt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>function (data, yname, tname, gname, idname = NULL, data_type = c("panel", 
+    "repeated_cross_section"), weightsname = NULL, cluster_var = NULL, 
+    xformla = ~1, outcome_model = c("logit", "probit", "poisson", 
+        "negbin", "linear"), estimand = c("att", "ape", "odds_ratio"), 
+    control_group = c("nevertreated", "notyetreated"), doubly_robust = TRUE, 
+    boot = FALSE, nboot = 999, boot_type = c("multiplier", "empirical"), 
+    alpha = 0.05, parallel = FALSE, pl_cores = 2L, anticipation = 0L) 
+{
+    outcome_model &lt;- match.arg(outcome_model)
+    estimand &lt;- match.arg(estimand)
+    control_group &lt;- match.arg(control_group)
+    boot_type &lt;- match.arg(boot_type)
+    data_type &lt;- match.arg(data_type)
+    if (data_type == "panel" &amp;&amp; is.null(idname)) {
+        stop(paste0("'idname' is required for data_type = 'panel'.\n", 
+            "If your data are repeated cross-sections (different units each period),\n", 
+            "use data_type = 'repeated_cross_section' instead."))
+    }
+    if (estimand == "odds_ratio" &amp;&amp; !outcome_model %in% c("logit", 
+        "probit", "linear")) {
+        stop("'odds_ratio' estimand requires outcome_model = 'logit', 'probit', or 'linear'.")
+    }
+    required_cols &lt;- c(yname, tname, gname)
+    if (data_type == "panel") 
+        required_cols &lt;- c(required_cols, idname)
+    if (!is.null(weightsname)) 
+        required_cols &lt;- c(required_cols, weightsname)
+    if (!is.null(cluster_var)) 
+        required_cols &lt;- c(required_cols, cluster_var)
+    missing_cols &lt;- setdiff(required_cols, names(data))
+    if (length(missing_cols) &gt; 0) {
+        stop(paste("Missing columns in data:", paste(missing_cols, 
+            collapse = ", ")))
+    }
+    data &lt;- as.data.frame(data)
+    data[[gname]] &lt;- ifelse(is.na(data[[gname]]) | is.infinite(data[[gname]]), 
+        0, data[[gname]])
+    data$.sw &lt;- if (!is.null(weightsname)) {
+        w &lt;- data[[weightsname]]
+        if (any(is.na(w)) || any(w &lt; 0)) {
+            stop("'weightsname' must contain non-negative, non-missing values.")
+        }
+        as.numeric(w)
+    }
+    else {
+        rep(1, nrow(data))
+    }
+    tlist &lt;- sort(unique(data[[tname]]))
+    glist &lt;- sort(setdiff(unique(data[[gname]]), 0))
+    if (length(glist) == 0) 
+        stop("No treated units found (all gname values are 0 or missing).")
+    if (length(tlist) &lt; 2) 
+        stop("Need at least 2 time periods.")
+    attgt_list &lt;- vector("list", length(glist) * length(tlist))
+    idx &lt;- 0L
+    for (g in glist) {
+        for (t in tlist) {
+            idx &lt;- idx + 1L
+            pre_period &lt;- g - 1L - anticipation
+            attgt_list[[idx]] &lt;- .compute_attgt_single(data = data, 
+                yname = yname, tname = tname, idname = idname, 
+                gname = gname, xformla = xformla, g = g, t = t, 
+                base_period = pre_period, outcome_model = outcome_model, 
+                estimand = estimand, control_group = control_group, 
+                doubly_robust = doubly_robust, data_type = data_type)
+        }
+    }
+    attgt_df &lt;- do.call(rbind, lapply(attgt_list, function(x) {
+        if (is.null(x)) 
+            return(NULL)
+        data.frame(group = x$g, time = x$t, att = x$att, se = NA_real_, 
+            post = x$t &gt;= x$g, estimand = estimand, converged = x$converged, 
+            n_treated = x$n_treated, n_control = x$n_control)
+    }))
+    if (boot) {
+        attgt_df &lt;- .bootstrap_inference(attgt_df = attgt_df, 
+            data = data, yname = yname, tname = tname, idname = idname, 
+            gname = gname, xformla = xformla, outcome_model = outcome_model, 
+            estimand = estimand, control_group = control_group, 
+            doubly_robust = doubly_robust, nboot = nboot, boot_type = boot_type, 
+            alpha = alpha, anticipation = anticipation, parallel = parallel, 
+            pl_cores = pl_cores, data_type = data_type, cluster_var = cluster_var)
+    }
+    else {
+        attgt_df &lt;- .sandwich_se(attgt_df = attgt_df, data = data, 
+            yname = yname, tname = tname, idname = idname, gname = gname, 
+            xformla = xformla, outcome_model = outcome_model, 
+            alpha = alpha, data_type = data_type, cluster_var = cluster_var)
+    }
+    out &lt;- list(attgt = attgt_df, call = match.call(), args = list(yname = yname, 
+        tname = tname, idname = idname, gname = gname, xformla = xformla, 
+        outcome_model = outcome_model, estimand = estimand, control_group = control_group, 
+        data_type = data_type, weightsname = weightsname, cluster_var = cluster_var, 
+        doubly_robust = doubly_robust, alpha = alpha, tlist = tlist, 
+        glist = glist))
+    class(out) &lt;- "nonlinear_attgt"
+    out
+}
+&lt;bytecode: 0x116c393c0&gt;
+&lt;environment: namespace:NonlinearDiD&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="dr_attgt" class="level2">
+<h2 class="anchored" data-anchor-id="dr_attgt"><code>.dr_attgt()</code></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This helper dispatches the doubly robust panel ATT computation by estimand.</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">getAnywhere</span>(<span class="st">".dr_attgt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>A single object matching '.dr_attgt' was found
+It was found in the following places
+  namespace:NonlinearDiD
+with value
+
+function (sub_wide, yname, xformla, outcome_model, estimand) 
+{
+    Y0 &lt;- sub_wide[[paste0(yname, "_t0")]]
+    Y1 &lt;- sub_wide[[paste0(yname, "_t1")]]
+    D &lt;- sub_wide$D
+    sw &lt;- if (".sw" %in% names(sub_wide)) 
+        sub_wide$.sw
+    else rep(1, nrow(sub_wide))
+    ps_formula &lt;- stats::update(xformla, D ~ .)
+    environment(ps_formula) &lt;- environment()
+    ps_fit &lt;- suppressWarnings(stats::glm(ps_formula, data = sub_wide, 
+        family = stats::binomial(link = "logit"), weights = sw))
+    pscore &lt;- stats::predict(ps_fit, type = "response")
+    pscore &lt;- pmin(pmax(pscore, 1e-06), 1 - 1e-06)
+    att &lt;- switch(estimand, att = {
+        .dr_att_linear(Y0, Y1, D, pscore, sw, sub_wide, xformla, 
+            outcome_model)
+    }, odds_ratio = {
+        .dr_att_oddsratio(Y0, Y1, D, pscore, sw, sub_wide, xformla, 
+            outcome_model)
+    }, ape = {
+        .dr_att_ape(Y0, Y1, D, pscore, sw, sub_wide, xformla, 
+            outcome_model)
+    })
+    list(att = att, converged = TRUE)
+}
+&lt;bytecode: 0x1169dda80&gt;
+&lt;environment: namespace:NonlinearDiD&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="dr_att_linear" class="level2">
+<h2 class="anchored" data-anchor-id="dr_att_linear"><code>.dr_att_linear()</code></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For the default ATT estimand, this is the key concern.</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="co"># It works with DeltaY = Y1 - Y0 and an outcome-regression on changes.</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="fu">getAnywhere</span>(<span class="st">".dr_att_linear"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>A single object matching '.dr_att_linear' was found
+It was found in the following places
+  namespace:NonlinearDiD
+with value
+
+function (Y0, Y1, D, pscore, sw, sub_wide, xformla, outcome_model) 
+{
+    DeltaY &lt;- Y1 - Y0
+    controls_df &lt;- sub_wide[D == 0, , drop = FALSE]
+    controls_df$DY &lt;- Y1[D == 0] - Y0[D == 0]
+    sw_c &lt;- sw[D == 0]
+    or_formula &lt;- stats::update(xformla, DY ~ .)
+    environment(or_formula) &lt;- environment()
+    or_fit &lt;- suppressWarnings(stats::lm(or_formula, data = controls_df, 
+        weights = sw_c))
+    mu_hat &lt;- stats::predict(or_fit, newdata = sub_wide)
+    pD_w &lt;- stats::weighted.mean(D, sw)
+    w_treat &lt;- sw * D/pD_w
+    w_cont &lt;- sw * (1 - D) * pscore/(1 - pscore)/pD_w
+    dr_score &lt;- w_treat * DeltaY - w_cont * DeltaY + (w_treat - 
+        w_cont) * mu_hat
+    sum(dr_score)/sum(sw)
+}
+&lt;bytecode: 0x114ff7ca8&gt;
+&lt;environment: namespace:NonlinearDiD&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="dr_att_ape" class="level2">
+<h2 class="anchored" data-anchor-id="dr_att_ape"><code>.dr_att_ape()</code></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This helper is relevant for the probability-scale APE.</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="co"># It is useful to inspect because it appears to treat logit and probit the same way.</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="fu">getAnywhere</span>(<span class="st">".dr_att_ape"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>A single object matching '.dr_att_ape' was found
+It was found in the following places
+  namespace:NonlinearDiD
+with value
+
+function (Y0, Y1, D, pscore, sw, sub_wide, xformla, outcome_model) 
+{
+    if (outcome_model %in% c("logit", "probit")) {
+        controls_df &lt;- sub_wide[D == 0, , drop = FALSE]
+        controls_df$Y0c &lt;- Y0[D == 0]
+        controls_df$Y1c &lt;- Y1[D == 0]
+        sw_c &lt;- sw[D == 0]
+        f0_formula &lt;- stats::update(xformla, Y0c ~ .)
+        f1_formula &lt;- stats::update(xformla, Y1c ~ .)
+        environment(f0_formula) &lt;- environment()
+        environment(f1_formula) &lt;- environment()
+        fit0 &lt;- suppressWarnings(stats::glm(f0_formula, data = controls_df, 
+            family = stats::binomial(), weights = sw_c))
+        fit1 &lt;- suppressWarnings(stats::glm(f1_formula, data = controls_df, 
+            family = stats::binomial(), weights = sw_c))
+        treated_df &lt;- sub_wide[D == 1, , drop = FALSE]
+        sw_t &lt;- sw[D == 1]
+        p0_cf &lt;- stats::predict(fit0, newdata = treated_df, type = "response")
+        p1_cf &lt;- stats::predict(fit1, newdata = treated_df, type = "response")
+        sum(sw_t * ((Y1[D == 1] - Y0[D == 1]) - (p1_cf - p0_cf)))/sum(sw_t)
+    }
+    else {
+        .dr_att_linear(Y0, Y1, D, pscore, sw, sub_wide, xformla, 
+            outcome_model)
+    }
+}
+&lt;bytecode: 0x123cfcbd8&gt;
+&lt;environment: namespace:NonlinearDiD&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="dr_att_oddsratio" class="level2">
+<h2 class="anchored" data-anchor-id="dr_att_oddsratio"><code>.dr_att_oddsratio()</code></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This helper is relevant for the odds-ratio estimand.</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="co"># It is useful to inspect because the role of outcome_model appears limited here as well.</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="fu">getAnywhere</span>(<span class="st">".dr_att_oddsratio"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>A single object matching '.dr_att_oddsratio' was found
+It was found in the following places
+  namespace:NonlinearDiD
+with value
+
+function (Y0, Y1, D, pscore, sw, sub_wide, xformla, outcome_model) 
+{
+    eps &lt;- 1e-06
+    Y0_t &lt;- pmin(pmax(Y0, eps), 1 - eps)
+    Y1_t &lt;- pmin(pmax(Y1, eps), 1 - eps)
+    delta_logit &lt;- stats::qlogis(Y1_t) - stats::qlogis(Y0_t)
+    pD_w &lt;- stats::weighted.mean(D, sw)
+    w_treat &lt;- sw * D/pD_w
+    w_cont &lt;- sw * (1 - D) * pscore/(1 - pscore)/pD_w
+    controls_df &lt;- sub_wide[D == 0, , drop = FALSE]
+    controls_df$delta_l &lt;- delta_logit[D == 0]
+    sw_c &lt;- sw[D == 0]
+    or_formula &lt;- stats::update(xformla, delta_l ~ .)
+    environment(or_formula) &lt;- environment()
+    or_fit &lt;- suppressWarnings(stats::lm(or_formula, data = controls_df, 
+        weights = sw_c))
+    mu_hat &lt;- stats::predict(or_fit, newdata = sub_wide)
+    dr_score &lt;- w_treat * delta_logit - w_cont * delta_logit + 
+        (w_treat - w_cont) * mu_hat
+    exp(sum(dr_score)/sum(sw))
+}
+&lt;bytecode: 0x115d59d90&gt;
+&lt;environment: namespace:NonlinearDiD&gt;</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="interpretation" class="level1">
+<h1>Interpretation</h1>
+<p>If the default panel ATT comparison shows exact equality between <code>outcome_model = "logit"</code> and <code>outcome_model = "linear"</code>, that is strong evidence that the installed package is not giving us a distinct staggered panel logit ATT estimator for that use case.</p>
+<p>If the APE and odds-ratio sections also show exact or near-exact equality across settings, that would further weaken confidence that the panel binary-outcome branch is responding meaningfully to the requested nonlinear outcome model.</p>
+<p>The narrow takeaway for this repository is the following:</p>
+<ul>
+<li>a tract-level staggered binary-outcome design should <strong>not</strong> automatically trust <code>NonlinearDiD</code> panel <code>logit</code> calls just because the function accepts <code>outcome_model = "logit"</code>;</li>
+<li>we should verify the estimator path first or use a different implementation that explicitly documents the nonlinear staggered panel estimator we need.</li>
+</ul>
+</section>
+<section id="session-info" class="level1">
+<h1>Session Info</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>R version 4.5.1 (2025-06-13)
+Platform: aarch64-apple-darwin20
+Running under: macOS Tahoe 26.4.1
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
+
+locale:
+[1] C.UTF-8/C.UTF-8/C.UTF-8/C/C.UTF-8/C.UTF-8
+
+time zone: America/Chicago
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] NonlinearDiD_0.2.0
+
+loaded via a namespace (and not attached):
+ [1] vctrs_0.7.0        cli_3.6.5          knitr_1.50         rlang_1.1.7       
+ [5] xfun_0.52          generics_0.1.4     S7_0.2.1           jsonlite_2.0.0    
+ [9] glue_1.8.0         htmltools_0.5.8.1  scales_1.4.0       rmarkdown_2.29    
+[13] grid_4.5.1         tibble_3.3.0       evaluate_1.0.3     fastmap_1.2.0     
+[17] yaml_2.3.10        lifecycle_1.0.5    compiler_4.5.1     dplyr_1.1.4       
+[21] RColorBrewer_1.1-3 pkgconfig_2.0.3    htmlwidgets_1.6.4  farver_2.1.2      
+[25] digest_0.6.37      R6_2.6.1           tidyselect_1.2.1   pillar_1.10.2     
+[29] magrittr_2.0.4     tools_4.5.1        gtable_0.3.6       ggplot2_4.0.1     </code></pre>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

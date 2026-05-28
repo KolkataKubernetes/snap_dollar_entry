@@ -20,6 +20,12 @@
 # OUTPUTS:          `3_outputs/3_2_reduced_form/isolated/3_2_13_honestdid_total_ds_sensitivity_plots*.pdf`
 #                   `3_outputs/3_0_tables/isolated/3_2_13_honestdid_total_ds_summary*.csv`
 #                   `3_outputs/3_0_tables/isolated/3_2_13_honestdid_total_ds_detail*.csv`
+# DEPENDENCIES:     `dplyr`, `fixest`, `HonestDiD`, `ggplot2`
+# Review focus:     This script keeps the reduced-form specification fixed and
+#                   studies sensitivity to violations of parallel trends. The
+#                   key audit points are the control-group definitions, the
+#                   event-time aggregation, and the target vectors passed into
+#                   HonestDiD.
 #///////////////////////////////////////////////////////////////////////////////
 
 library(dplyr)
@@ -27,6 +33,7 @@ library(fixest)
 library(HonestDiD)
 library(ggplot2)
 
+# Resolve the script directory so this standalone file can find the repository root.
 script_dir <- local({
   file_arg <- grep("^--file=", commandArgs(trailingOnly = FALSE), value = TRUE)
 
@@ -53,6 +60,10 @@ script_dir <- local({
 repo_root <- normalizePath(file.path(script_dir, "..", "..", ".."))
 setwd(repo_root)
 
+# Purpose: read a one-line root-path pointer file used elsewhere in the repo.
+# Inputs: `path_file`, a repository-relative text file containing one path.
+# Returns: trimmed path string with surrounding quotes removed.
+# Side effects: reads from disk.
 read_root_path <- function(path_file) {
   path_value <- readLines(path_file, warn = FALSE)[[1]]
   path_value <- trimws(path_value)
@@ -60,81 +71,19 @@ read_root_path <- function(path_file) {
   sub("'$", "", path_value)
 }
 
-read_root_path_candidates <- function(path_file) {
-  path_values <- readLines(path_file, warn = FALSE)
-  path_values <- trimws(path_values)
-  path_values <- sub("^['\"]", "", path_values)
-  path_values <- sub("['\"]$", "", path_values)
-  path_values[nzchar(path_values)]
-}
-
-select_root_candidate <- function(candidates) {
-  if (!length(candidates)) {
-    return(NA_character_)
-  }
-
-  existing_candidates <- candidates[dir.exists(candidates)]
-  candidate_pool <- if (length(existing_candidates)) existing_candidates else candidates
-
-  if (.Platform$OS.type == "windows") {
-    windows_candidates <- candidate_pool[grepl("^[A-Za-z]:[\\\\/]", candidate_pool)]
-    if (length(windows_candidates)) {
-      return(windows_candidates[[1]])
-    }
-  }
-
-  unix_candidates <- candidate_pool[grepl("^/", candidate_pool)]
-  if (length(unix_candidates)) {
-    return(unix_candidates[[1]])
-  }
-
-  candidate_pool[[1]]
-}
-
-build_sibling_root <- function(reference_root, sibling_name) {
-  normalized_root <- gsub("[/\\\\]+$", "", reference_root)
-  file.path(dirname(normalized_root), sibling_name)
-}
-
-resolve_input_root <- function(path_file = "0_inputs/input_root.txt") {
-  candidates <- read_root_path_candidates(path_file)
-
-  if (!length(candidates)) {
-    stop(sprintf("No input root candidates found in '%s'.", path_file))
-  }
-
-  select_root_candidate(candidates)
-}
-
-resolve_processed_root <- function(
-  path_file = "2_processed_data/processed_root.txt",
-  input_path_file = "0_inputs/input_root.txt"
-) {
-  candidates <- read_root_path_candidates(path_file)
-  selected_candidate <- select_root_candidate(candidates)
-
-  if (!is.na(selected_candidate) && dir.exists(selected_candidate)) {
-    return(selected_candidate)
-  }
-
-  sibling_candidate <- build_sibling_root(resolve_input_root(input_path_file), "2_processed_data")
-
-  if (dir.exists(sibling_candidate)) {
-    return(sibling_candidate)
-  }
-
-  if (!is.na(selected_candidate)) {
-    return(selected_candidate)
-  }
-
-  sibling_candidate
-}
-
+# Purpose: create the isolated output folders for figures and tables.
+# Inputs: none.
+# Returns: no explicit return value.
+# Side effects: creates directories when missing.
 ensure_output_dirs <- function() {
   dir.create(file.path("3_outputs", "3_2_reduced_form", "isolated"), recursive = TRUE, showWarnings = FALSE)
   dir.create(file.path("3_outputs", "3_0_tables", "isolated"), recursive = TRUE, showWarnings = FALSE)
 }
 
+# Purpose: version output filenames instead of overwriting prior artifacts.
+# Inputs: `path`, the preferred output path.
+# Returns: `path` itself or the next `_vNN` variant.
+# Side effects: checks the filesystem for existing outputs.
 next_available_path <- function(path) {
   if (!file.exists(path)) {
     return(path)
@@ -153,6 +102,10 @@ next_available_path <- function(path) {
   candidate
 }
 
+# Purpose: define the shared plotting theme used in the HonestDiD sensitivity figures.
+# Inputs: `base_size`, the theme base text size.
+# Returns: a ggplot theme object.
+# Side effects: none.
 theme_im <- function(base_size = 12) {
   theme_minimal(base_size = base_size) +
     theme(
@@ -168,16 +121,30 @@ theme_im <- function(base_size = 12) {
     )
 }
 
+# Purpose: estimate the benchmark Dollar Stores reduced form on a supplied sample.
+# Inputs: `data`, an already-filtered county-year sample.
+# Returns: `fixest` model object.
+# Side effects: none.
 estimate_model <- function(data) {
   feols(
     log(total_ds + sqrt(total_ds^2 + 1)) ~
-      sunab(eventYear2, year, ref.p = 0) +
+      sunab(eventYear2, year, ref.p = -1) +
       population + wage + meanInc + rent + urate |
       county_fips + year,
-    data = data
+    data = data,
+    vcov = ~county_fips
   )
 }
 
+# Purpose: collapse cohort-specific Sun-Abraham coefficients into one event-time
+# summary per period for HonestDiD.
+# Inputs: `model`, a fitted Sun-Abraham reduced-form model.
+# Returns: list containing the aggregated coefficient vector, covariance matrix,
+#          event labels, and counts of pre and post periods.
+# Side effects: none.
+# Review focus: the weighting matrix uses cohort shares from the model matrix, so
+#               reviewers should confirm that this aggregation matches the target
+#               event-time interpretation they want to assess.
 extract_aggregated_event_study <- function(model) {
   raw_summary <- summary(model, agg = FALSE)
   coef_raw <- coef(raw_summary)
@@ -218,6 +185,14 @@ extract_aggregated_event_study <- function(model) {
   )
 }
 
+# Purpose: run HonestDiD for one target estimand and one control-group design.
+# Inputs: aggregated event-study object `agg_obj`, target vector `l_vec`,
+#         labels `control_group` and `target_name`, and the sensitivity grid `mbar_vec`.
+# Returns: list containing the original interval, robust intervals, and a one-row summary.
+# Side effects: none.
+# Review focus: `mbar_vec` is the grid of relative-magnitude bounds, and the
+#               reported breakdown value is the first `Mbar` where the robust
+#               interval covers zero within that grid.
 run_honestdid_target <- function(agg_obj, l_vec, control_group, target_name, mbar_vec) {
   original <- constructOriginalCS(
     betahat = agg_obj$betahat,
@@ -282,15 +257,15 @@ run_honestdid_target <- function(agg_obj, l_vec, control_group, target_name, mba
   )
 }
 
+# `Mbar` controls how large post-treatment violations may be relative to the
+# pre-period violations; the grid below is the range tested in this script.
 mbar_vec <- seq(0, 3, by = 0.25)
-target_specs <- list(
-  first_post = HonestDiD::basisVector(index = 1, size = 4),
-  average_post = rep(1 / 4, 4)
-)
 
-processed_root <- paste0(box_root, "data/2_processed_data")
+# Load the county analysis panel that will be rebuilt into the two control-group samples.
+processed_root <- read_root_path("2_processed_data/processed_root.txt")
 analysis_panel <- readRDS(file.path(processed_root, "2_9_analysis", "2_9_0_us_analysis_panel.rds"))
 
+# Rebuild the common base panel before defining the two competing control-group samples.
 base_panel <- analysis_panel |>
   mutate(
     rent = rent / 1000,
@@ -308,25 +283,38 @@ base_panel <- analysis_panel |>
   mutate(treated_county = sum(treated_group) > 0) |>
   ungroup()
 
+# Benchmark sample: eventually-treated counties only, with the benchmark event-time window.
 eventually_treated_sample <- base_panel |>
   filter(year - eventYear2 >= -3, treated_county)
 
+# Alternative sample: keep all never-treated counties in addition to the treated event-time window.
 never_treated_sample <- base_panel |>
   filter(never_treated | year - eventYear2 >= -3)
 
+# Estimate both control-group specifications before converting them to HonestDiD inputs.
 models <- list(
   eventually_treated = estimate_model(eventually_treated_sample),
   never_treated = estimate_model(never_treated_sample)
 )
 
+# Convert each fitted model into the aggregated event-time representation that HonestDiD expects.
 agg_objects <- lapply(models, extract_aggregated_event_study)
 
+# Evaluate each target estimand under each control-group design.
 results <- list()
 for (control_group in names(agg_objects)) {
+  agg_obj <- agg_objects[[control_group]]
+  # Build the HonestDiD target vectors from the realized number of post periods
+  # instead of assuming a fixed event-time support.
+  target_specs <- list(
+    first_post = HonestDiD::basisVector(index = 1, size = agg_obj$numPostPeriods),
+    average_post = rep(1 / agg_obj$numPostPeriods, agg_obj$numPostPeriods)
+  )
+
   for (target_name in names(target_specs)) {
     key <- paste(control_group, target_name, sep = "__")
     results[[key]] <- run_honestdid_target(
-      agg_obj = agg_objects[[control_group]],
+      agg_obj = agg_obj,
       l_vec = target_specs[[target_name]],
       control_group = control_group,
       target_name = target_name,
@@ -335,6 +323,7 @@ for (control_group in names(agg_objects)) {
   }
 }
 
+# Combine the per-target outputs into flat export tables for downstream review.
 summary_results <- bind_rows(lapply(results, `[[`, "summary"))
 detailed_results <- bind_rows(lapply(results, function(x) {
   bind_rows(
@@ -345,6 +334,7 @@ detailed_results <- bind_rows(lapply(results, function(x) {
   )
 }))
 
+# Create the isolated output folders and version all exported artifact names.
 ensure_output_dirs()
 
 summary_path <- next_available_path(
@@ -360,6 +350,8 @@ plot_path <- next_available_path(
 write.csv(summary_results, summary_path, row.names = FALSE)
 write.csv(detailed_results, detail_path, row.names = FALSE)
 
+# Plot one sensitivity figure per control-group/target pair so the breakdown in
+# robustness can be inspected visually rather than only from the summary table.
 pdf(plot_path, width = 8, height = 6)
 for (result_name in names(results)) {
   result_item <- results[[result_name]]
