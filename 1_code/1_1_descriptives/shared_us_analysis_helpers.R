@@ -60,6 +60,75 @@ read_root_path <- function(path_file) {
     str_remove_all("^['\"]|['\"]$")
 }
 
+read_root_path_candidates <- function(path_file) {
+  readLines(path_file, warn = FALSE) |>
+    str_trim() |>
+    str_remove_all("^['\"]|['\"]$") |>
+    (\(x) x[nzchar(x)])()
+}
+
+select_root_candidate <- function(candidates) {
+  if (!length(candidates)) {
+    return(NA_character_)
+  }
+
+  existing_candidates <- candidates[dir.exists(candidates)]
+  candidate_pool <- if (length(existing_candidates)) existing_candidates else candidates
+
+  if (.Platform$OS.type == "windows") {
+    windows_candidates <- candidate_pool[grepl("^[A-Za-z]:[\\\\/]", candidate_pool)]
+    if (length(windows_candidates)) {
+      return(windows_candidates[[1]])
+    }
+  }
+
+  unix_candidates <- candidate_pool[grepl("^/", candidate_pool)]
+  if (length(unix_candidates)) {
+    return(unix_candidates[[1]])
+  }
+
+  candidate_pool[[1]]
+}
+
+build_sibling_root <- function(reference_root, sibling_name) {
+  normalized_root <- gsub("[/\\\\]+$", "", reference_root)
+  file.path(dirname(normalized_root), sibling_name)
+}
+
+resolve_input_root <- function(path_file = "0_inputs/input_root.txt") {
+  candidates <- read_root_path_candidates(path_file)
+
+  if (!length(candidates)) {
+    stop(sprintf("No input root candidates found in '%s'.", path_file))
+  }
+
+  select_root_candidate(candidates)
+}
+
+resolve_processed_root <- function(
+  path_file = "2_processed_data/processed_root.txt",
+  input_path_file = "0_inputs/input_root.txt"
+) {
+  candidates <- read_root_path_candidates(path_file)
+  selected_candidate <- select_root_candidate(candidates)
+
+  if (!is.na(selected_candidate) && dir.exists(selected_candidate)) {
+    return(selected_candidate)
+  }
+
+  sibling_candidate <- build_sibling_root(resolve_input_root(input_path_file), "2_processed_data")
+
+  if (dir.exists(sibling_candidate)) {
+    return(sibling_candidate)
+  }
+
+  if (!is.na(selected_candidate)) {
+    return(selected_candidate)
+  }
+
+  sibling_candidate
+}
+
 theme_im <- function(base_size = 12) {
   theme_minimal(base_size = base_size) +
     theme(
@@ -111,6 +180,10 @@ build_output_dir_path <- function(...) {
 }
 
 descriptive_output_subdir <- function() {
+  if (exists("current_descriptive_subdir", inherits = TRUE)) {
+    return(get("current_descriptive_subdir", inherits = TRUE))
+  }
+
   script_path <- get_script_path()
 
   if (is.na(script_path)) {
@@ -143,8 +216,8 @@ load_us_analysis_context <- function() {
   repo_root <- get_repo_root()
   setwd(repo_root)
 
-  input_root <- read_root_path("0_inputs/input_root.txt")
-  processed_root <- read_root_path("2_processed_data/processed_root.txt")
+  input_root <- paste0(box_root, "data/0_inputs")
+  processed_root <- paste0(box_root, "data/2_processed_data")
 
   analysis_panel <- readRDS(file.path(processed_root, "2_9_analysis", "2_9_0_us_analysis_panel.rds"))
   store_count <- readRDS(file.path(processed_root, "2_5_SNAP", "2_5_1_store_count.rds")) |>

@@ -23,30 +23,8 @@
 library(dplyr)
 library(tibble)
 
-script_dir <- local({
-  file_arg <- grep("^--file=", commandArgs(trailingOnly = FALSE), value = TRUE)
-
-  if (length(file_arg) > 0) {
-    return(dirname(normalizePath(sub("^--file=", "", file_arg[[1]]))))
-  }
-
-  if (requireNamespace("rstudioapi", quietly = TRUE) && rstudioapi::isAvailable()) {
-    active_path <- rstudioapi::getActiveDocumentContext()$path
-    if (nzchar(active_path)) {
-      return(dirname(normalizePath(active_path)))
-    }
-  }
-
-  for (frame in rev(sys.frames())) {
-    if (!is.null(frame$ofile)) {
-      return(dirname(normalizePath(frame$ofile)))
-    }
-  }
-
-  normalizePath(getwd())
-})
-
-source(file.path(script_dir, "shared_ingest_helpers.R"))
+# --- Helper imports from masterfile roots
+source(file.path(ingest_root, "shared_ingest_helpers.R"))
 
 # -----------------------------
 # 1) Read paths and processed inputs
@@ -55,7 +33,7 @@ source(file.path(script_dir, "shared_ingest_helpers.R"))
 repo_root <- get_repo_root()
 setwd(repo_root)
 
-processed_root <- read_root_path("2_processed_data/processed_root.txt")
+processed_root <- paste0(box_root, "data/2_processed_data")
 processed_analysis_dir <- ensure_dir(file.path(processed_root, "2_9_analysis"))
 
 tract_pre_cov_path <- file.path(processed_root, "2_9_analysis", "2_9_3_us_analysis_panel_tract_pre_covariates.rds")

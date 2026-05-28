@@ -1,0 +1,153 @@
+#///////////////////////////////////////////////////////////////////////////////
+#----  0. Setup                                                             ----
+#///////////////////////////////////////////////////////////////////////////////
+library(data.table)
+library(fixest)
+library(dplyr)
+library(ggplot2)
+
+ihs = function(x) { log(x + sqrt(x^2 + 1)) }
+
+processed_root = file.path(box_root, 'data', '2_processed_data')
+data = readRDS(file.path(processed_root, "2_9_analysis", "2_9_2_event_study_sample.rds"))
+data = data.table(data)
+
+panel = readRDS(file.path(processed_root, "2_9_analysis", "2_9_0_us_analysis_panel.rds"))
+panel = data.table(panel)
+panel = panel[year %in% 2014:2019]
+panel = panel[tau2 >= -3 | is.na(tau2)]
+panel = panel[is.na(eventYear2), eventYear2:=9999]
+
+samples = list("data" = data, "panel" = panel)
+
+table(panel$eventYear2)
+table(panel$eventYear2, panel$year)
+
+# Panel and data should be balanced (N=1)
+panel[, .N, by = .(county_fips, year)][, table(N)]
+data[, .N, by = .(county_fips, year)][, table(N)]
+
+#///////////////////////////////////////////////////////////////////////////////
+#----  Loop over samples                                                    ----
+#///////////////////////////////////////////////////////////////////////////////
+controls  = "population + wage + meanInc + rent + urate"
+fe        = "county_fips + year"
+sunab_arg = "sunab(eventYear2, year, ref.p = -1)"
+
+outcomes = c("total_ds",
+             "chain_super_market",
+             "chain_convenience_store",
+             "chain_multi_category",
+             "chain_medium_grocery",
+             "chain_small_grocery",
+             "chain_produce",
+             "chain_farmers_market")
+
+pre_trend_pattern = "year::-[2-9]|year::-[0-9]{2}"
+
+for (samp_name in names(samples)) {
+  
+  samp = samples[[samp_name]]
+  cat("\n\n====", samp_name, "====\n")
+  
+  #/////////////////////////////////////////////////////////////////////////////
+  #----  1. Dollar-Store Entry: Three Specifications                        ----
+  #/////////////////////////////////////////////////////////////////////////////
+  
+  # Regressions ----------------------------------------------------------------
+  m1 = feols(as.formula(paste("ihs(total_ds) ~", sunab_arg, "+", controls, "|", fe)),
+             data = samp, cluster = ~county_fips)
+  
+  m2 = feols(as.formula(paste("total_ds ~",       sunab_arg, "+", controls, "|", fe)),
+             data = samp, cluster = ~county_fips)
+  
+  m3 = feols(as.formula(paste("total_ds > 0 ~",   sunab_arg, "+", controls, "|", fe)),
+             data = samp, cluster = ~county_fips)
+  
+  # Pre-trend Wald tests -------------------------------------------------------
+  cat("\n-- Wald tests:", samp_name, "--\n")
+  print(wald(m1, keep = pre_trend_pattern, vcov = ~county_fips))
+  print(wald(m2, keep = pre_trend_pattern, vcov = ~county_fips))
+  print(wald(m3, keep = pre_trend_pattern, vcov = ~county_fips))
+  
+  # Combined event-study plot --------------------------------------------------
+  png(file.path(git_root, "3_outputs/3_2_reduced_form/3_2_0_county",
+                paste0("3_2_0_0_three_specs_", samp_name, ".png")),
+      width = 800, height = 500)
+  iplot(
+    list("IHS" = m1, "Levels" = m2, "Indicator" = m3),
+    sep  = 0.25,
+    main = paste("Effect on Dollar-Store Entry -", samp_name)
+  )
+  legend("topleft",
+         legend = c("IHS", "Levels", "Indicator"),
+         col    = 1:3,
+         pch    = 20,
+         bty    = "n")
+  dev.off()
+  
+  #/////////////////////////////////////////////////////////////////////////////
+  #----  2. Entry by Format: Indicator Models                               ----
+  #/////////////////////////////////////////////////////////////////////////////
+  
+  # Regressions ----------------------------------------------------------------
+  models = lapply(setNames(outcomes, outcomes), function(y) {
+    fml = as.formula(paste0(
+      y, " > 0 ~ ", sunab_arg, " + ", controls, " | ", fe
+    ))
+    feols(fml, data = samp, cluster = ~county_fips)
+  })
+  
+  # ATT summary table ----------------------------------------------------------
+  cat("\n-- ATT table:", samp_name, "--\n")
+  print(etable(models, agg = 'ATT'))
+  
+  etable(models, agg = 'ATT',
+         tex = TRUE,
+         file = file.path(git_root, "3_outputs/3_2_reduced_form/3_2_0_county",
+                          paste0("1_2_1_event_study_quick_att_", samp_name, ".txt")))
+  
+  
+  #/////////////////////////////////////////////////////////////////////////////
+  #----  3. Output                                                          ----
+  #/////////////////////////////////////////////////////////////////////////////
+  
+  # Individual event-study plots -----------------------------------------------
+  for (nm in names(models)) {
+    png(file.path(git_root, "3_outputs/3_2_reduced_form/3_2_0_county",
+                  paste0("3_2_0_1_regs_indicator_", samp_name, "_", nm, ".png")),
+        width = 800, height = 500)
+    iplot(models[[nm]], main = paste(nm, "-", samp_name))
+    dev.off()
+  }
+  
+  # Faceted ggplot across all formats ------------------------------------------
+  plot_data = lapply(names(models), function(nm) {
+    df         = as.data.frame(iplot(models[[nm]], only.params = TRUE)$prms)
+    df$outcome = nm
+    df
+  }) |> bind_rows()
+  
+  outcome_labels = c(
+    "total_ds"                 = "Dollar Stores",
+    "chain_super_market"       = "Supermarkets",
+    "chain_convenience_store"  = "Convenience Stores",
+    "chain_multi_category"     = "Multi-Category Stores",
+    "chain_medium_grocery"     = "Medium Grocery",
+    "chain_small_grocery"      = "Small Grocery",
+    "chain_produce"            = "Produce Stores",
+    "chain_farmers_market"     = "Farmers Markets"
+  )
+  
+  p = ggplot(plot_data |> filter(!is_ref), aes(x = x, y = estimate)) +
+    geom_point() +
+    geom_errorbar(aes(ymin = ci_low, ymax = ci_high), width = 0.2) +
+    geom_hline(yintercept = 0,  linetype = "dashed") +
+    geom_vline(xintercept = -1, linetype = "dotted", color = "red") +
+    facet_wrap(~outcome, scales = "free_y", labeller = as_labeller(outcome_labels)) +
+    labs(x = "Relative Year", y = "Estimate on Entry by Format",
+         title = paste("Entry by Format -", samp_name)) +
+    theme_bw()
+  
+  plot(p)
+}

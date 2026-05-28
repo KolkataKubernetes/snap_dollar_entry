@@ -26,32 +26,8 @@ library(readxl)
 library(lubridate)
 library(zoo)
 
-# --- Set local pathing to allow for script to run within IDE
-
-script_dir <- local({
-  file_arg <- grep("^--file=", commandArgs(trailingOnly = FALSE), value = TRUE)
-
-  if (length(file_arg) > 0) {
-    return(dirname(normalizePath(sub("^--file=", "", file_arg[[1]]))))
-  }
-
-  if (requireNamespace("rstudioapi", quietly = TRUE) && rstudioapi::isAvailable()) {
-    active_path <- rstudioapi::getActiveDocumentContext()$path
-    if (nzchar(active_path)) {
-      return(dirname(normalizePath(active_path)))
-    }
-  }
-
-  for (frame in rev(sys.frames())) {
-    if (!is.null(frame$ofile)) {
-      return(dirname(normalizePath(frame$ofile)))
-    }
-  }
-
-  normalizePath(getwd())
-})
-
-source(file.path(script_dir, "shared_ingest_helpers.R"))
+# --- Helper imports from masterfile roots
+source(file.path(ingest_root, "shared_ingest_helpers.R"))
 
 # --- Helper function to define the months between the start and end date
 
@@ -67,13 +43,8 @@ month_labels_between <- function(start_date, end_date) {
 }
 
 # --- Read paths for ingest, saving processed data
-
-repo_root <- get_repo_root()
-setwd(repo_root)
-
-input_root <- read_root_path("0_inputs/input_root.txt")
-processed_root <- read_root_path("2_processed_data/processed_root.txt")
-
+input_root <- paste0(box_root, 'data/0_inputs') 
+processed_root <-  paste0(box_root, 'data/2_processed_data')
 waiver_input_dir <- file.path(input_root, "0_0_waivers", "0_0_1_ABAWD_panels")
 waiver_output_dir <- ensure_dir(file.path(processed_root, "2_0_waivers"))
 
@@ -87,6 +58,8 @@ waiver_files <- list.files(
   full.names = TRUE
 ) |>
   sort()
+
+waiver_files = waiver_files[!grepl('~', waiver_files)]
 
 if (!length(waiver_files)) {
   stop(sprintf("No waiver workbooks found in %s", waiver_input_dir))

@@ -39,12 +39,13 @@ script_dir <- local({
   normalizePath(getwd())
 })
 
-source(file.path(script_dir, "shared_us_analysis_helpers.R"))
+current_descriptive_subdir <- "3_1_1_retailers"
+source(file.path(descriptives_root, "shared_us_analysis_helpers.R"))
 
 repo_root <- get_repo_root()
 setwd(repo_root)
 
-processed_root <- read_root_path("2_processed_data/processed_root.txt")
+processed_root <- paste0(box_root, "data/2_processed_data")
 
 #(1) Load the tract panel and reshape retailer formats -------------------------
 tract_panel <- readRDS(

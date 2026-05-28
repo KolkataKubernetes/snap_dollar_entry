@@ -22,5 +22,6 @@ script_dir <- local({
   normalizePath(getwd())
 })
 
-source(file.path(script_dir, "shared_reduced_form_helpers.R"))
+current_reduced_form_subdir <- c("3_2_0_county", "3_2_0_1_regs")
+source(file.path(script_dir, "1_2_reduced_form", "1_2_0_county", "shared_reduced_form_helpers.R"))
 save_event_study_artifact("total_ds", "Dollar Stores", "3_2_1_event_study_ihs_total_ds")

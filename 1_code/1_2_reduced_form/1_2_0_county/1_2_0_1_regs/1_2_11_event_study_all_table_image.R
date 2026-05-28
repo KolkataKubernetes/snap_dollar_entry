@@ -27,7 +27,8 @@ script_dir <- local({
   normalizePath(getwd())
 })
 
-source(file.path(script_dir, "shared_reduced_form_helpers.R"))
+current_reduced_form_subdir <- c("3_2_0_county", "3_2_0_1_regs")
+source(file.path(script_dir, "1_2_reduced_form", "1_2_0_county", "shared_reduced_form_helpers.R"))
 
 signif_stars <- function(p_value) {
   case_when(

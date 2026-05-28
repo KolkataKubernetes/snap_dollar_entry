@@ -44,15 +44,16 @@ script_dir <- local({
   normalizePath(getwd())
 })
 
-source(file.path(script_dir, "shared_us_analysis_helpers.R"))
-source(file.path(dirname(dirname(script_dir)), "1_0_ingest", "shared_ingest_helpers.R"))
-source(file.path(dirname(dirname(script_dir)), "1_0_ingest", "tract_ingest_helpers.R"))
+current_descriptive_subdir <- "3_1_0_waivers"
+source(file.path(descriptives_root, "shared_us_analysis_helpers.R"))
+source(file.path(ingest_root, "shared_ingest_helpers.R"))
+source(file.path(ingest_root, "tract_ingest_helpers.R"))
 
 repo_root <- get_repo_root()
 setwd(repo_root)
 
-input_root <- read_root_path("0_inputs/input_root.txt")
-processed_root <- read_root_path("2_processed_data/processed_root.txt")
+input_root <- paste0(box_root, "data/0_inputs")
+processed_root <- paste0(box_root, "data/2_processed_data")
 
 #(1) Build tract waiver status -------------------------------------------------
 tract_panel <- readRDS(

@@ -31,31 +31,10 @@ library(tibble)
 library(tidyr)
 library(tidycensus)
 
-script_dir <- local({
-  file_arg <- grep("^--file=", commandArgs(trailingOnly = FALSE), value = TRUE)
+# --- Helper imports from masterfile roots
+source(file.path(ingest_root, "shared_ingest_helpers.R"))
+source(file.path(ingest_root, "tract_ingest_helpers.R"))
 
-  if (length(file_arg) > 0) {
-    return(dirname(normalizePath(sub("^--file=", "", file_arg[[1]]))))
-  }
-
-  if (requireNamespace("rstudioapi", quietly = TRUE) && rstudioapi::isAvailable()) {
-    active_path <- rstudioapi::getActiveDocumentContext()$path
-    if (nzchar(active_path)) {
-      return(dirname(normalizePath(active_path)))
-    }
-  }
-
-  for (frame in rev(sys.frames())) {
-    if (!is.null(frame$ofile)) {
-      return(dirname(normalizePath(frame$ofile)))
-    }
-  }
-
-  normalizePath(getwd())
-})
-
-source(file.path(script_dir, "shared_ingest_helpers.R"))
-source(file.path(dirname(script_dir), "tract_ingest_helpers.R"))
 
 # -----------------------------
 # 1) Helper functions
@@ -355,8 +334,8 @@ build_annual_acs_outputs <- function(acs_year, tract_scope, scope_states) {
 repo_root <- get_repo_root()
 setwd(repo_root)
 
-input_root <- read_root_path("0_inputs/input_root.txt")
-processed_root <- read_root_path("2_processed_data/processed_root.txt")
+input_root <- paste0(box_root, "data/0_inputs")
+processed_root <- paste0(box_root, "data/2_processed_data")
 
 acs_output_dir <- ensure_dir(file.path(processed_root, "2_1_acs"))
 api_key_path <- file.path(repo_root, "0_inputs", "census_apikey.md")

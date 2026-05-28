@@ -39,11 +39,12 @@ script_dir <- local({
   normalizePath(getwd())
 })
 
-source(file.path(script_dir, "shared_reduced_form_helpers.R"))
+current_reduced_form_subdir <- c("3_2_0_county", "3_2_0_1_regs")
+source(file.path(script_dir, "1_2_reduced_form", "1_2_0_county", "shared_reduced_form_helpers.R"))
 
 repo_root <- get_repo_root()
 setwd(repo_root)
-processed_root <- read_root_path("2_processed_data/processed_root.txt")
+processed_root <- paste0(box_root, "data/2_processed_data")
 
 analysis_panel <- readRDS(file.path(processed_root, "2_9_analysis", "2_9_0_us_analysis_panel.rds"))
 

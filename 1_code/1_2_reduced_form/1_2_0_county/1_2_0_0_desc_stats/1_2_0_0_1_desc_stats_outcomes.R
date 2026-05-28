@@ -23,7 +23,8 @@ script_dir <- local({
   normalizePath(getwd())
 })
 
-source(file.path(script_dir, "shared_reduced_form_helpers.R"))
+current_reduced_form_subdir <- c("3_2_0_county", "3_2_0_0_desc_stats")
+source(file.path(script_dir, "1_2_reduced_form", "1_2_0_county", "shared_reduced_form_helpers.R"))
 
 aba1 <- load_event_study_sample()
 outcomes_df <- as.data.frame(aba1[, event_study_outcomes, drop = FALSE])
