@@ -59,20 +59,21 @@ outcome_vars <- c(
   "chain_produce", "chain_farmers_market"
 )
 
+
 var_labels <- c(
   population             = "Population",
   wage                   = "Wage",
   meanInc                = "Mean Income",
   rent                   = "Rent",
   urate                  = "Unemployment Rate",
-  total_ds               = "Dollar Stores",
-  chain_super_market     = "Supermarkets",
-  chain_convenience_store = "Convenience Stores",
-  chain_multi_category   = "Multi-Category",
-  chain_medium_grocery   = "Medium Grocery",
-  chain_small_grocery    = "Small Grocery",
-  chain_produce          = "Produce",
-  chain_farmers_market   = "Farmers Markets"
+  total_ds               = "Entering Dollar Stores",
+  chain_super_market     = "Entering Supermarkets",
+  chain_convenience_store = "Entering Convenience Stores",
+  chain_multi_category   = "Entering Multi-Category",
+  chain_medium_grocery   = "Entering Medium Grocery",
+  chain_small_grocery    = "Entering Small Grocery",
+  chain_produce          = "Entering Produce",
+  chain_farmers_market   = "Entering Farmers Markets"
 )
 
 # ==============================================================================
