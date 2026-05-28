@@ -260,12 +260,6 @@ run_honestdid_target <- function(agg_obj, l_vec, control_group, target_name, mba
 # `Mbar` controls how large post-treatment violations may be relative to the
 # pre-period violations; the grid below is the range tested in this script.
 mbar_vec <- seq(0, 3, by = 0.25)
-# `first_post` isolates the first post-treatment period, while `average_post`
-# averages equally across the four post periods recovered from the aggregation.
-target_specs <- list(
-  first_post = HonestDiD::basisVector(index = 1, size = 4),
-  average_post = rep(1 / 4, 4)
-)
 
 # Load the county analysis panel that will be rebuilt into the two control-group samples.
 processed_root <- read_root_path("2_processed_data/processed_root.txt")
@@ -309,10 +303,18 @@ agg_objects <- lapply(models, extract_aggregated_event_study)
 # Evaluate each target estimand under each control-group design.
 results <- list()
 for (control_group in names(agg_objects)) {
+  agg_obj <- agg_objects[[control_group]]
+  # Build the HonestDiD target vectors from the realized number of post periods
+  # instead of assuming a fixed event-time support.
+  target_specs <- list(
+    first_post = HonestDiD::basisVector(index = 1, size = agg_obj$numPostPeriods),
+    average_post = rep(1 / agg_obj$numPostPeriods, agg_obj$numPostPeriods)
+  )
+
   for (target_name in names(target_specs)) {
     key <- paste(control_group, target_name, sep = "__")
     results[[key]] <- run_honestdid_target(
-      agg_obj = agg_objects[[control_group]],
+      agg_obj = agg_obj,
       l_vec = target_specs[[target_name]],
       control_group = control_group,
       target_name = target_name,

@@ -1,43 +1,19 @@
 #///////////////////////////////////////////////////////////////////////////////
 #----                              Preamble                                 ----
 # File name:        1_2_1_event_study_total_ds_logit.R
-# Description:      Thin wrapper that runs the census-tract binary ETWFE
-#                   reduced form for the tract-year dollar-store entry
-#                   indicator using the shared helper script.
+# Description:      Census-tract binary ETWFE wrapper retained as a commented-
+#                   out placeholder.
 # INPUTS:           `2_9_analysis/2_9_8_censustract_logit_sample.rds`
 #                   `2_processed_data/processed_root.txt`
 # OUTPUTS:          `3_outputs/3_2_reduced_form/3_2_1_censustract/3_2_1_event_study_total_ds_logit*.pdf`
 #                   `3_outputs/3_0_tables/3_2_1_censustract/3_2_1_event_study_total_ds_logit*.tex`
 #                   matching audit CSV exports
 # DEPENDENCIES:     `shared_reduced_form_helpers.R`
-# Review focus:     The substantive estimation logic lives in the shared
-#                   helper, so the main thing to verify here is that the tract
-#                   binary outcome name, display label, and output stub all
-#                   match the tract-year dollar-store entry specification.
+# Review focus:     Executable code is intentionally commented out per
+#                   maintainer instruction while the tract logit branch is
+#                   paused.
 #///////////////////////////////////////////////////////////////////////////////
-
-script_dir <- local({
-  file_arg <- grep("^--file=", commandArgs(trailingOnly = FALSE), value = TRUE)
-
-  if (length(file_arg) > 0) {
-    return(dirname(normalizePath(sub("^--file=", "", file_arg[[1]]))))
-  }
-
-  if (requireNamespace("rstudioapi", quietly = TRUE) && rstudioapi::isAvailable()) {
-    active_path <- rstudioapi::getActiveDocumentContext()$path
-    if (nzchar(active_path)) {
-      return(dirname(normalizePath(active_path)))
-    }
-  }
-
-  for (frame in rev(sys.frames())) {
-    if (!is.null(frame$ofile)) {
-      return(dirname(normalizePath(frame$ofile)))
-    }
-  }
-
-  normalizePath(getwd())
-})
-
-source(file.path(script_dir, "shared_reduced_form_helpers.R"))
-save_event_study_artifact("total_ds_entry", "Dollar Store Entry", "3_2_1_event_study_total_ds_logit")
+#
+# Paused on 2026-05-28. The tract event-study wrapper code has been commented
+# out intentionally so the `1_2_1_censustract/` branch remains in place without
+# executing inside the reduced-form pipeline.
