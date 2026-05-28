@@ -42,11 +42,13 @@ This repository is conditionally reproducible given access to external input dat
 - `1_code/1_2_reduced_form/1_2_0_county/`: County reduced-form scripts and helpers that are called by the pipeline runner.
 - `1_code/1_2_reduced_form/1_2_0_county/1_2_0_0_desc_stats/`: County reduced-form descriptive-statistics scripts and helpers.
 - `1_code/1_2_reduced_form/1_2_0_county/1_2_0_1_IHS_regs/`: Benchmark county IHS event-study scripts and helpers.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_6_lpm_entryindicator_regs/`: County LPM entry-indicator event-study scripts and helpers.
 - `1_code/1_2_reduced_form/1_2_0_county/1_2_0_2_distance_totalpop_regs/`: County total-population distance event-study scripts and helpers.
 - `1_code/1_2_reduced_form/1_2_0_county/1_2_0_2_stockpoissonregs/`: County stock-Poisson event-study scripts and helpers.
 - `1_code/1_2_reduced_form/1_2_0_county/1_2_0_3_stockregs/`: County stock-regression event-study scripts and helpers.
 - `1_code/1_2_reduced_form/1_2_0_county/1_2_0_4_distance_1_2_fpl_regs/`: County below-125-percent-FPL distance event-study scripts and helpers.
 - `1_code/1_2_reduced_form/1_2_0_county/1_2_0_5_distance_SNAP_recipients_regs/`: County SNAP-recipient distance event-study scripts and helpers.
+- `1_code/1_2_reduced_form/1_2_1_censustract/`: Retained census-tract reduced-form files whose executable code is currently commented out.
 - `1_code/1_2_reduced_form/isolated/`: Standalone reduced-form sensitivity scripts that are checked in but not called by `1_code/run_refactor_pipeline.R`.
 - `1_code/1_0_ingest/shared_ingest_helpers.R`: Shared pathing and utility helpers for the ingest stage.
 - `1_code/1_0_ingest/tract_ingest_helpers.R`: Shared tract-ingest helpers used by the tract waiver, retailer, and panel scripts.
@@ -134,6 +136,12 @@ The current review-stage annual ACS tract branch uses a small explicit `2011:201
 - `1_code/1_2_reduced_form/1_2_0_county/1_2_0_1_IHS_regs/1_2_0_1_10_event_study_total_ds_het.R`: Writes the grouped-RUCC heterogeneity figures and companion `.tex` tables for the benchmark county IHS branch.
 - `1_code/1_2_reduced_form/1_2_0_county/1_2_0_1_IHS_regs/1_2_0_1_11_event_study_all_table_image.R`: Writes image exports of the combined benchmark county IHS ATT table plus a companion `.csv`.
 - `1_code/1_2_reduced_form/1_2_0_county/1_2_0_1_IHS_regs/shared_reduced_form_helpers.R`: Shared helper file for the benchmark county IHS subdirectory.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_6_lpm_entryindicator_regs/1_2_0_6_0_build_event_study_sample.R`: Writes the processed county LPM entry-indicator event-study sample from the analysis panel.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_6_lpm_entryindicator_regs/1_2_0_6_1_event_study_total_ds.R` through `1_2_0_6_8_event_study_chain_farmers_market.R`: Write the county LPM entry-indicator event-study figures and companion `.tex` tables.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_6_lpm_entryindicator_regs/1_2_0_6_9_event_study_all_table.R`: Writes the combined ATT table across the county LPM entry-indicator outcomes.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_6_lpm_entryindicator_regs/1_2_0_6_10_event_study_total_ds_het.R`: Writes the grouped-RUCC heterogeneity figures and companion `.tex` tables for the county LPM entry-indicator branch.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_6_lpm_entryindicator_regs/1_2_0_6_11_event_study_all_table_image.R`: Writes image exports of the combined county LPM entry-indicator ATT table plus a companion `.csv`.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_6_lpm_entryindicator_regs/shared_reduced_form_helpers.R`: Shared helper file for the county LPM entry-indicator subdirectory.
 - `1_code/1_2_reduced_form/1_2_0_county/1_2_0_2_distance_totalpop_regs/1_2_0_2_0_build_event_study_sample.R`: Writes the processed county total-population distance event-study sample.
 - `1_code/1_2_reduced_form/1_2_0_county/1_2_0_2_distance_totalpop_regs/1_2_0_2_1_event_study_distance_dollar_stores.R` through `1_2_0_2_4_event_study_distance_multi_category.R`: Write the county total-population distance event-study figures and companion `.tex` tables.
 - `1_code/1_2_reduced_form/1_2_0_county/1_2_0_2_distance_totalpop_regs/1_2_0_2_10_event_study_distance_dollar_stores_urban_rural_het.R`: Writes the grouped-RUCC heterogeneity figure and companion `.tex` table for the county total-population distance branch.
@@ -158,6 +166,9 @@ The current review-stage annual ACS tract branch uses a small explicit `2011:201
 - `1_code/1_2_reduced_form/1_2_0_county/1_2_0_5_distance_SNAP_recipients_regs/1_2_0_5_10_event_study_distance_dollar_stores_urban_rural_het.R`: Writes the grouped-RUCC heterogeneity figure and companion `.tex` table for the county SNAP-recipient distance branch.
 - `1_code/1_2_reduced_form/1_2_0_county/1_2_0_5_distance_SNAP_recipients_regs/shared_reduced_form_helpers.R`: Shared helper file for the county SNAP-recipient distance subdirectory.
 - `1_code/1_2_reduced_form/1_2_0_county/shared_reduced_form_helpers.R`: Shared helper file at the county reduced-form root.
+- `1_code/1_2_reduced_form/1_2_1_censustract/1_2_0_build_event_study_sample_logit.R`: Retained as a commented-out census-tract logit sample-builder placeholder.
+- `1_code/1_2_reduced_form/1_2_1_censustract/1_2_1_event_study_total_ds_logit.R`: Retained as a commented-out census-tract ETWFE wrapper placeholder.
+- `1_code/1_2_reduced_form/1_2_1_censustract/shared_reduced_form_helpers.R`: Retained as a commented-out census-tract shared-helper placeholder.
 
 ### Output Files and Directories
 
@@ -192,6 +203,7 @@ The current review-stage annual ACS tract branch uses a small explicit `2011:201
   - `2_9_analysis/2_9_5_us_analysis_panel_tract_summary.rds`
   - `2_9_analysis/2_9_6_us_analysis_panel_tract_timevarying_covariates.rds`
   - `2_9_analysis/2_9_7_us_analysis_panel_tract_timevarying_summary.rds`
+  - `2_9_analysis/2_9_9_event_study_sample_lpm_entryindicator.rds`
 - `3_outputs/3_1_descriptives/`
   - `3_1_0_waivers/`
   - `3_1_1_retailers/`
@@ -203,6 +215,7 @@ The current review-stage annual ACS tract branch uses a small explicit `2011:201
   - `3_2_0_county/3_2_0_3_stockregs/`
   - `3_2_0_county/3_2_0_4_distance_1_2_fpl_regs/`
   - `3_2_0_county/3_2_0_5_distance_SNAP_recipients_regs/`
+  - `3_2_0_county/3_2_0_6_lpm_entryindicator_regs/`
   - `isolated/`
   - Reruns of reduced-form figure exports may append `_v01`, `_v02`, and so on to avoid overwriting existing files.
 - `3_outputs/3_0_tables/`
@@ -213,6 +226,7 @@ The current review-stage annual ACS tract branch uses a small explicit `2011:201
   - `3_2_0_county/3_2_0_3_stockregs/`
   - `3_2_0_county/3_2_0_4_distance_1_2_fpl_regs/`
   - `3_2_0_county/3_2_0_5_distance_SNAP_recipients_regs/`
+  - `3_2_0_county/3_2_0_6_lpm_entryindicator_regs/`
   - `isolated/`
   - Reruns of reduced-form table exports may append `_v01`, `_v02`, and so on to avoid overwriting existing files.
 
@@ -225,6 +239,8 @@ The current review-stage annual ACS tract branch uses a small explicit `2011:201
 
 ## Versioning and Change Log
 
+- `2026-05-28`: Updated the README mechanically to add the county LPM entry-indicator reduced-form branch, its processed sample artifact, and its mirrored reduced-form output directories.
+- `2026-05-28`: Updated the README mechanically to document the retained census-tract reduced-form files whose executable code is currently commented out.
 - `2026-05-28`: Updated the README mechanically to reflect the renamed county reduced-form subfolders, the aligned county reduced-form script filenames, the mirrored reduced-form output directories, and the `/usr/local/bin/Rscript` pipeline-runner examples.
 - `2026-03-21`: Updated the README mechanically to close out the current tract ExecPlan state: the tract ACS sidecar inventory now reflects the retained `2019` endpoint, the tract ACS exclusion note now matches the explicit exclusion set used in the retained sidecars, and the two initial tract descriptive scripts are now listed in the descriptive inventory.
 - `2026-03-20`: Updated the README mechanically to reflect the segmented ingest/descriptive/reduced-form paths now checked into `1_code/`, added the tract ingest files and tract processed artifacts created in Milestone 1, and added the tract retailer matching note in `1_code/1_0_ingest/1_0_1_covariates/`.
