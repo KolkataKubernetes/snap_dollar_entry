@@ -281,7 +281,7 @@ run_event_study_model <- function(var_name) {
       )
     ),
     data = aba1,
-    vcov = ~county_fips
+    cluster = ~county_fips
   )
 }
 

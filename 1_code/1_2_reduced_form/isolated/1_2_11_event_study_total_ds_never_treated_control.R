@@ -149,7 +149,7 @@ event_study_sample <- analysis_panel |>
 # Estimate the Dollar Stores reduced form under the all-never-treated control design.
 model <- feols(
   log(total_ds + sqrt(total_ds^2 + 1)) ~
-    sunab(eventYear2, year, ref.p = 0) +
+    sunab(eventYear2, year, ref.p = -1) +
     population + wage + meanInc + rent + urate |
     county_fips + year,
   data = event_study_sample,

@@ -128,7 +128,7 @@ theme_im <- function(base_size = 12) {
 estimate_model <- function(data) {
   feols(
     log(total_ds + sqrt(total_ds^2 + 1)) ~
-      sunab(eventYear2, year, ref.p = 0) +
+      sunab(eventYear2, year, ref.p = -1) +
       population + wage + meanInc + rent + urate |
       county_fips + year,
     data = data,

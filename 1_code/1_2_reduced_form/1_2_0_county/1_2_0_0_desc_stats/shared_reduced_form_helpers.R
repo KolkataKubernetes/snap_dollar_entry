@@ -276,7 +276,7 @@ run_event_study_model <- function(var_name) {
         " + sqrt(",
         var_name,
         "^2 + 1)) ~ ",
-        "sunab(eventYear2, year, ref.p = 0) + ",
+        "sunab(eventYear2, year, ref.p = -1) + ",
         "population + wage + meanInc + rent + urate | county_fips + year"
       )
     ),

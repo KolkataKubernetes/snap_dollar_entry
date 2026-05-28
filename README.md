@@ -10,11 +10,11 @@ Use `1_code/run_refactor_pipeline.R` as the entrypoint for the refactored pipeli
 Basic commands:
 
 ```sh
-Rscript 1_code/run_refactor_pipeline.R --dry-run
-Rscript 1_code/run_refactor_pipeline.R --stage ingest
-Rscript 1_code/run_refactor_pipeline.R --stage descriptives
-Rscript 1_code/run_refactor_pipeline.R --stage reduced_form
-Rscript 1_code/run_refactor_pipeline.R --stage all
+/usr/local/bin/Rscript 1_code/run_refactor_pipeline.R --dry-run
+/usr/local/bin/Rscript 1_code/run_refactor_pipeline.R --stage ingest
+/usr/local/bin/Rscript 1_code/run_refactor_pipeline.R --stage descriptives
+/usr/local/bin/Rscript 1_code/run_refactor_pipeline.R --stage reduced_form
+/usr/local/bin/Rscript 1_code/run_refactor_pipeline.R --stage all
 ```
 
 Accepted stages:
@@ -40,6 +40,13 @@ This repository is conditionally reproducible given access to external input dat
 - `1_code/1_1_descriptives/1_1_1_retailers/`: Retailer descriptive scripts and retailer descriptive helpers.
 - `1_code/1_2_reduced_form/`: Reduced-form sample, estimation, and export scripts run by `--stage reduced_form`.
 - `1_code/1_2_reduced_form/1_2_0_county/`: County reduced-form scripts and helpers that are called by the pipeline runner.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_0_desc_stats/`: County reduced-form descriptive-statistics scripts and helpers.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_1_IHS_regs/`: Benchmark county IHS event-study scripts and helpers.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_2_distance_totalpop_regs/`: County total-population distance event-study scripts and helpers.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_2_stockpoissonregs/`: County stock-Poisson event-study scripts and helpers.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_3_stockregs/`: County stock-regression event-study scripts and helpers.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_4_distance_1_2_fpl_regs/`: County below-125-percent-FPL distance event-study scripts and helpers.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_5_distance_SNAP_recipients_regs/`: County SNAP-recipient distance event-study scripts and helpers.
 - `1_code/1_2_reduced_form/isolated/`: Standalone reduced-form sensitivity scripts that are checked in but not called by `1_code/run_refactor_pipeline.R`.
 - `1_code/1_0_ingest/shared_ingest_helpers.R`: Shared pathing and utility helpers for the ingest stage.
 - `1_code/1_0_ingest/tract_ingest_helpers.R`: Shared tract-ingest helpers used by the tract waiver, retailer, and panel scripts.
@@ -121,18 +128,35 @@ The current review-stage annual ACS tract branch uses a small explicit `2011:201
 
 - `1_code/1_2_reduced_form/1_2_0_county/1_2_0_0_desc_stats/1_2_0_0_1_desc_stats_outcomes.R`: Writes the county reduced-form outcome summary-statistics table.
 - `1_code/1_2_reduced_form/1_2_0_county/1_2_0_0_desc_stats/shared_reduced_form_helpers.R`: Shared helper file for the county reduced-form descriptive-statistics subdirectory.
-- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_1_regs/1_2_0_build_event_study_sample.R`: Writes the processed county event-study sample from the benchmark analysis panel.
-- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_1_regs/1_2_1_event_study_total_ds.R`: Writes the total-dollar-store event-study figure and companion `.tex` table.
-- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_1_regs/1_2_2_event_study_chain_super_market.R`: Writes the supermarket event-study figure and companion `.tex` table.
-- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_1_regs/1_2_3_event_study_chain_convenience_store.R`: Writes the convenience-store event-study figure and companion `.tex` table.
-- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_1_regs/1_2_4_event_study_chain_multi_category.R`: Writes the multi-category event-study figure and companion `.tex` table.
-- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_1_regs/1_2_5_event_study_chain_medium_grocery.R`: Writes the medium-grocery event-study figure and companion `.tex` table.
-- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_1_regs/1_2_6_event_study_chain_small_grocery.R`: Writes the small-grocery event-study figure and companion `.tex` table.
-- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_1_regs/1_2_7_event_study_chain_produce.R`: Writes the produce event-study figure and companion `.tex` table.
-- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_1_regs/1_2_8_event_study_chain_farmers_market.R`: Writes the farmers-market event-study figure and companion `.tex` table.
-- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_1_regs/1_2_9_event_study_all_table.R`: Writes the combined ATT table across the county reduced-form outcomes.
-- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_1_regs/1_2_11_event_study_all_table_image.R`: Writes image exports of the combined ATT table plus a companion `.csv`.
-- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_1_regs/shared_reduced_form_helpers.R`: Shared helper file for the county reduced-form regression subdirectory.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_1_IHS_regs/1_2_0_1_0_build_event_study_sample.R`: Writes the processed county benchmark event-study sample from the analysis panel.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_1_IHS_regs/1_2_0_1_1_event_study_total_ds.R` through `1_2_0_1_8_event_study_chain_farmers_market.R`: Write the benchmark county IHS event-study figures and companion `.tex` tables.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_1_IHS_regs/1_2_0_1_9_event_study_all_table.R`: Writes the combined ATT table across the benchmark county IHS outcomes.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_1_IHS_regs/1_2_0_1_10_event_study_total_ds_het.R`: Writes the grouped-RUCC heterogeneity figures and companion `.tex` tables for the benchmark county IHS branch.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_1_IHS_regs/1_2_0_1_11_event_study_all_table_image.R`: Writes image exports of the combined benchmark county IHS ATT table plus a companion `.csv`.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_1_IHS_regs/shared_reduced_form_helpers.R`: Shared helper file for the benchmark county IHS subdirectory.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_2_distance_totalpop_regs/1_2_0_2_0_build_event_study_sample.R`: Writes the processed county total-population distance event-study sample.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_2_distance_totalpop_regs/1_2_0_2_1_event_study_distance_dollar_stores.R` through `1_2_0_2_4_event_study_distance_multi_category.R`: Write the county total-population distance event-study figures and companion `.tex` tables.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_2_distance_totalpop_regs/1_2_0_2_10_event_study_distance_dollar_stores_urban_rural_het.R`: Writes the grouped-RUCC heterogeneity figure and companion `.tex` table for the county total-population distance branch.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_2_distance_totalpop_regs/shared_reduced_form_helpers.R`: Shared helper file for the county total-population distance subdirectory.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_2_stockpoissonregs/1_2_0_2_0_build_event_study_sample.R`: Writes the processed county stock-Poisson event-study sample.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_2_stockpoissonregs/1_2_0_2_1_event_study_total_ds_poissonreg.R` through `1_2_0_2_8_event_study_chain_farmers_market_poissonreg.R`: Write the county stock-Poisson event-study figures, companion `.tex` tables, and audit CSV exports.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_2_stockpoissonregs/1_2_0_2_9_event_study_all_table_poissonreg.R`: Writes the combined county stock-Poisson ATT table and companion `.csv`.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_2_stockpoissonregs/1_2_0_2_11_event_study_all_table_image_poissonreg.R`: Writes image exports of the combined county stock-Poisson ATT table plus a companion `.csv`.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_2_stockpoissonregs/shared_reduced_form_helpers.R`: Shared helper file for the county stock-Poisson subdirectory.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_3_stockregs/1_2_0_3_0_build_event_study_sample.R`: Writes the processed county stock-regression event-study sample.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_3_stockregs/1_2_0_3_1_event_study_total_ds.R` through `1_2_0_3_8_event_study_chain_farmers_market.R`: Write the county stock-regression event-study figures and companion `.tex` tables.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_3_stockregs/1_2_0_3_9_event_study_all_table.R`: Writes the combined county stock-regression ATT table.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_3_stockregs/1_2_0_3_10_event_study_total_ds_het.R`: Writes the grouped-RUCC heterogeneity figures and companion `.tex` tables for the county stock-regression branch.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_3_stockregs/1_2_0_3_11_event_study_all_table_image.R`: Writes image exports of the combined county stock-regression ATT table plus a companion `.csv`.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_3_stockregs/shared_reduced_form_helpers.R`: Shared helper file for the county stock-regression subdirectory.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_4_distance_1_2_fpl_regs/1_2_0_4_0_build_event_study_sample.R`: Writes the processed county below-125-percent-FPL distance event-study sample.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_4_distance_1_2_fpl_regs/1_2_0_4_1_event_study_distance_dollar_stores.R` through `1_2_0_4_4_event_study_distance_multi_category.R`: Write the county below-125-percent-FPL distance event-study figures and companion `.tex` tables.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_4_distance_1_2_fpl_regs/1_2_0_4_10_event_study_distance_dollar_stores_urban_rural_het.R`: Writes the grouped-RUCC heterogeneity figure and companion `.tex` table for the county below-125-percent-FPL distance branch.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_4_distance_1_2_fpl_regs/shared_reduced_form_helpers.R`: Shared helper file for the county below-125-percent-FPL distance subdirectory.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_5_distance_SNAP_recipients_regs/1_2_0_5_0_build_event_study_sample.R`: Writes the processed county SNAP-recipient distance event-study sample.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_5_distance_SNAP_recipients_regs/1_2_0_5_1_event_study_distance_dollar_stores.R` through `1_2_0_5_4_event_study_distance_multi_category.R`: Write the county SNAP-recipient distance event-study figures and companion `.tex` tables.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_5_distance_SNAP_recipients_regs/1_2_0_5_10_event_study_distance_dollar_stores_urban_rural_het.R`: Writes the grouped-RUCC heterogeneity figure and companion `.tex` table for the county SNAP-recipient distance branch.
+- `1_code/1_2_reduced_form/1_2_0_county/1_2_0_5_distance_SNAP_recipients_regs/shared_reduced_form_helpers.R`: Shared helper file for the county SNAP-recipient distance subdirectory.
 - `1_code/1_2_reduced_form/1_2_0_county/shared_reduced_form_helpers.R`: Shared helper file at the county reduced-form root.
 
 ### Output Files and Directories
@@ -173,12 +197,22 @@ The current review-stage annual ACS tract branch uses a small explicit `2011:201
   - `3_1_1_retailers/`
 - `3_outputs/3_2_reduced_form/`
   - `3_2_0_county/3_2_0_0_desc_stats/`
-  - `3_2_0_county/3_2_0_1_regs/`
+  - `3_2_0_county/3_2_0_1_IHS_regs/`
+  - `3_2_0_county/3_2_0_2_distance_totalpop_regs/`
+  - `3_2_0_county/3_2_0_2_stockpoissonregs/`
+  - `3_2_0_county/3_2_0_3_stockregs/`
+  - `3_2_0_county/3_2_0_4_distance_1_2_fpl_regs/`
+  - `3_2_0_county/3_2_0_5_distance_SNAP_recipients_regs/`
   - `isolated/`
   - Reruns of reduced-form figure exports may append `_v01`, `_v02`, and so on to avoid overwriting existing files.
 - `3_outputs/3_0_tables/`
   - `3_2_0_county/3_2_0_0_desc_stats/`
-  - `3_2_0_county/3_2_0_1_regs/`
+  - `3_2_0_county/3_2_0_1_IHS_regs/`
+  - `3_2_0_county/3_2_0_2_distance_totalpop_regs/`
+  - `3_2_0_county/3_2_0_2_stockpoissonregs/`
+  - `3_2_0_county/3_2_0_3_stockregs/`
+  - `3_2_0_county/3_2_0_4_distance_1_2_fpl_regs/`
+  - `3_2_0_county/3_2_0_5_distance_SNAP_recipients_regs/`
   - `isolated/`
   - Reruns of reduced-form table exports may append `_v01`, `_v02`, and so on to avoid overwriting existing files.
 
@@ -191,6 +225,7 @@ The current review-stage annual ACS tract branch uses a small explicit `2011:201
 
 ## Versioning and Change Log
 
+- `2026-05-28`: Updated the README mechanically to reflect the renamed county reduced-form subfolders, the aligned county reduced-form script filenames, the mirrored reduced-form output directories, and the `/usr/local/bin/Rscript` pipeline-runner examples.
 - `2026-03-21`: Updated the README mechanically to close out the current tract ExecPlan state: the tract ACS sidecar inventory now reflects the retained `2019` endpoint, the tract ACS exclusion note now matches the explicit exclusion set used in the retained sidecars, and the two initial tract descriptive scripts are now listed in the descriptive inventory.
 - `2026-03-20`: Updated the README mechanically to reflect the segmented ingest/descriptive/reduced-form paths now checked into `1_code/`, added the tract ingest files and tract processed artifacts created in Milestone 1, and added the tract retailer matching note in `1_code/1_0_ingest/1_0_1_covariates/`.
 - `2026-03-21`: Updated the README mechanically to add the tract ACS and tract final-panel scripts, the review-stage annual ACS tract sidecar artifacts, and the current documented annual-ACS tract exclusion set with the Census source URLs used to classify the `94xx` tract-code cases.
