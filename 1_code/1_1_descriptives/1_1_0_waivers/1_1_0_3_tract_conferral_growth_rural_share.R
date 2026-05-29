@@ -43,13 +43,14 @@ script_dir <- local({
   normalizePath(getwd())
 })
 
-source(file.path(script_dir, "shared_us_analysis_helpers.R"))
+current_descriptive_subdir <- "3_1_0_waivers"
+source(file.path(descriptives_root, "shared_us_analysis_helpers.R"))
 
 repo_root <- get_repo_root()
 setwd(repo_root)
 
-input_root <- read_root_path("0_inputs/input_root.txt")
-processed_root <- read_root_path("2_processed_data/processed_root.txt")
+input_root <- paste0(box_root, "data/0_inputs")
+processed_root <- paste0(box_root, "data/2_processed_data")
 
 #(1) Load the tract waiver source and county rural-status lookup ---------------
 waiver_long_tract <- readRDS(

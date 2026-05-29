@@ -45,7 +45,8 @@ script_dir <- local({
   normalizePath(getwd())
 })
 
-source(file.path(script_dir, "shared_us_analysis_helpers.R"))
+current_descriptive_subdir <- "3_1_1_retailers"
+source(file.path(descriptives_root, "shared_us_analysis_helpers.R"))
 ctx <- load_us_analysis_context()
 
 #(1) Compute county-level Dollar Store change ----------------------------------

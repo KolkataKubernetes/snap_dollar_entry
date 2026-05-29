@@ -1,1 +1,2 @@
 '/Users/indermajumdar/Library/CloudStorage/Box-Box/SNAP Dollar Entry/data/0_inputs/'
+'C:\Users\aleja\Box\SNAP Dollar Entry\data\0_inputs'
