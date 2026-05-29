@@ -5,8 +5,25 @@ library(data.table)
 library(fixest)
 library(dplyr)
 library(ggplot2)
-
+library(readxl)
+rm(list=ls())
 ihs = function(x) { log(x + sqrt(x^2 + 1)) }
+
+# Directories
+  git_root <- dirname(dirname(dirname(dirname(dirname(rstudioapi::getActiveDocumentContext()$path)))))
+  code_root <- file.path(git_root, "1_code")
+  ingest_root <- file.path(code_root, "1_0_ingest")
+  descriptives_root <- file.path(code_root, "1_1_descriptives")
+  reduced_form_root <- file.path(code_root, "1_2_reduced_form")
+  setwd(git_root)
+  out_dir = file.path(git_root, "3_outputs/3_2_reduced_form/3_2_0_county")
+  
+  if (.Platform$OS.type == "windows") {
+    box_root <- "C:/Users/aleja/Box/SNAP Dollar Entry/"
+  } else {
+    box_root <- "/Users/indermajumdar/Library/CloudStorage/Box-Box/SNAP Dollar Entry"
+  }
+
 
 # Load samples (data = only treated, panel = only treated + never treated)
   processed_root = file.path(box_root, 'data', '2_processed_data')
@@ -43,81 +60,62 @@ ihs = function(x) { log(x + sqrt(x^2 + 1)) }
 
   samples = list("data" = data, "panel" = panel)
 
+#/////////////////////////////////////////////////////////////////////////////
+#----  0. Pre-trends
+#/////////////////////////////////////////////////////////////////////////////
+  # Prepare specifications
+  controls  = "population + wage + meanInc + rent + urate"
+  fe        = "county_fips + year"
+  sunab_arg = "sunab(eventYear2, year, ref.p = -1)"
+  
+  outcomes = c("total_ds",
+               "chain_super_market",
+               "chain_convenience_store",
+               "chain_multi_category",
+               "chain_medium_grocery",
+               "chain_small_grocery",
+               "chain_produce",
+               "chain_farmers_market")
+  
+  outcome_labels = c(
+    "total_ds"                 = "Dollar Stores",
+    "chain_super_market"       = "Supermarkets",
+    "chain_convenience_store"  = "Convenience Stores",
+    "chain_multi_category"     = "Multi-Category Stores",
+    "chain_medium_grocery"     = "Medium Grocery",
+    "chain_small_grocery"      = "Small Grocery",
+    "chain_produce"            = "Produce Stores",
+    "chain_farmers_market"     = "Farmers Markets"
+  )
+  
+  pre_trend_pattern = "year::-[2-9]|year::-[0-9]{2}"
+  
+  
+  
+  # Regressions ----------------------------------------------------------------
+  m3 = feols(as.formula(paste("total_ds > 0 ~",   sunab_arg, "+", controls, "|", fe)),
+             data = data, cluster = ~county_fips)
+  
+  # Pre-trend Wald tests -------------------------------------------------------
+  cat("\n-- Wald tests: --\n")
+  print(wald(m3, keep = pre_trend_pattern, vcov = ~county_fips))
+  
+  # Combined event-study plot --------------------------------------------------
+  iplot(m3)
+
+  
 #///////////////////////////////////////////////////////////////////////////////
 #----  Loop over samples                                                    ----
 #///////////////////////////////////////////////////////////////////////////////
-controls  = "population + wage + meanInc + rent + urate"
-fe        = "county_fips + year"
-sunab_arg = "sunab(eventYear2, year, ref.p = -1)"
-
-outcomes = c("total_ds",
-             "chain_super_market",
-             "chain_convenience_store",
-             "chain_multi_category",
-             "chain_medium_grocery",
-             "chain_small_grocery",
-             "chain_produce",
-             "chain_farmers_market")
-
-outcome_labels = c(
-  "total_ds"                 = "Dollar Stores",
-  "chain_super_market"       = "Supermarkets",
-  "chain_convenience_store"  = "Convenience Stores",
-  "chain_multi_category"     = "Multi-Category Stores",
-  "chain_medium_grocery"     = "Medium Grocery",
-  "chain_small_grocery"      = "Small Grocery",
-  "chain_produce"            = "Produce Stores",
-  "chain_farmers_market"     = "Farmers Markets"
-)
-
-pre_trend_pattern = "year::-[2-9]|year::-[0-9]{2}"
-out_dir = file.path(git_root, "3_outputs/3_2_reduced_form/3_2_0_county")
+  samples = list("data" = data, "panel" = panel)
 
 for (samp_name in names(samples)) {
-
+  #/////////////////////////////////////////////////////////////////////////////
+  #----  1. Entry by Format: Indicator Models                               ----
+  #/////////////////////////////////////////////////////////////////////////////
   samp = samples[[samp_name]]
   samp_label = ifelse(samp_name == "panel", "With Never Treated", "Only Treated")
-  cat("\n\n====", samp_name, "====\n")
-
-  #/////////////////////////////////////////////////////////////////////////////
-  #----  1. Dollar-Store Entry: Three Specifications                        ----
-  #/////////////////////////////////////////////////////////////////////////////
-
-  # Regressions ----------------------------------------------------------------
-  m1 = feols(as.formula(paste("ihs(total_ds) ~", sunab_arg, "+", controls, "|", fe)),
-             data = samp, cluster = ~county_fips)
-
-  m2 = feols(as.formula(paste("total_ds ~",       sunab_arg, "+", controls, "|", fe)),
-             data = samp, cluster = ~county_fips)
-
-  m3 = feols(as.formula(paste("total_ds > 0 ~",   sunab_arg, "+", controls, "|", fe)),
-             data = samp, cluster = ~county_fips)
-
-  # Pre-trend Wald tests -------------------------------------------------------
-  cat("\n-- Wald tests:", samp_name, "--\n")
-  print(wald(m1, keep = pre_trend_pattern, vcov = ~county_fips))
-  print(wald(m2, keep = pre_trend_pattern, vcov = ~county_fips))
-  print(wald(m3, keep = pre_trend_pattern, vcov = ~county_fips))
-
-  # Combined event-study plot --------------------------------------------------
-  png(file.path(out_dir, paste0("3_2_0_0_three_specs_", samp_name, ".png")),
-      width = 800, height = 500)
-  iplot(
-    list("IHS" = m1, "Levels" = m2, "Indicator" = m3),
-    sep  = 0.25,
-    main = paste("Effect on Dollar-Store Entry -", samp_label)
-  )
-  legend("topleft",
-         legend = c("IHS", "Levels", "Indicator"),
-         col    = 1:3,
-         pch    = 20,
-         bty    = "n")
-  dev.off()
-
-  #/////////////////////////////////////////////////////////////////////////////
-  #----  2. Entry by Format: Indicator Models                               ----
-  #/////////////////////////////////////////////////////////////////////////////
-
+  
   # Regressions ----------------------------------------------------------------
   models = lapply(setNames(outcomes, outcomes), function(y) {
     fml = as.formula(paste0(
@@ -163,7 +161,7 @@ for (samp_name in names(samples)) {
          plot = p, width = 9, height = 6)
 
   #/////////////////////////////////////////////////////////////////////////////
-  #----  3. Entry by Format × RUCC (Metro vs Non-Metro)                     ----
+  #----  2. Entry by Format × RUCC (Metro vs Non-Metro)                     ----
   #/////////////////////////////////////////////////////////////////////////////
 
   plot_data_rucc_all = list()
