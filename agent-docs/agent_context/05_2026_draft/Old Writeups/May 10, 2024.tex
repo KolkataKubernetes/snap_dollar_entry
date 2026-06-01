@@ -1,0 +1,257 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm,,enumerate,float,geometry,latexsym,bm}
+\usepackage{kpfonts}
+\usepackage{hyperref}
+\usepackage{apacite}
+\usepackage{epigraph}
+
+
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{xgames}
+\usetikzlibrary{shapes.geometric,positioning}
+\usepackage{amsmath}
+\usepackage{pgfplots}
+\usepackage[misc]{ifsym}
+%\bibliographystyle{apacite}
+
+
+% Spacing
+\setlength{\parindent}{0.45in}
+\setlength{\parskip}{6pt}
+\linespread{1.25}
+
+% Boxing examples
+\def\posskip{\vskip 2pt plus 2pt minus 2pt}
+\def\negskip{\vskip-8pt plus 2pt minus 2pt}
+\newcounter{fox}
+\makeatletter
+\def\fox{\@ifstar\@fox\@@fox}
+\long\def\@fox#1{\noindent\framebox{\begin{minipage}{0.984\textwidth}#1\end{minipage}}\ignorespaces}
+\def\@@fox{\@ifnextchar[{\fox@opt}{\fox@bgt}}
+\long\def\fox@bgt#1{\refstepcounter{fox}\noindent\framebox{\begin{minipage}{0.984\textwidth}\hfill{\color{gray}Fig.~\thefox}\par\vspace*{-1.5\baselineskip}#1\end{minipage}}\ignorespaces}
+\long\def\fox@opt[#1]#2{\ifstreq@bgt{#1}{a}{\refstepcounter{fox}}{}\noindent\framebox{\begin{minipage}{0.984\textwidth}\hfill{\color{gray}Fig.~\thefox.#1}\par\vspace*{-1.5\baselineskip}#2\end{minipage}}\ignorespaces}
+\makeatother
+
+
+
+%%%%% Change Geometry %%%%%
+%\geometry{a4paper, left=10mm, top=10mm, right=10mm, bottom=20mm}
+\geometry{letterpaper, margin=1in}
+\setlength\parindent{0pt}
+
+\title{handout_1}
+\author{Alejandro Herrera-Caicedo}
+\date{September 2023}
+
+\begin{document}
+	
+%%%%%%%%%%%%%% Heading %%%%%%%%%%%%%%%
+	
+% \textbf{}\\
+% December 20, 2023 \\
+% Alejandro Herrera-Caicedo \\
+% herreracaice@wisc.edu\\
+% \hrule
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{center}
+	\large\textbf{}
+\end{center}
+\renewcommand\labelitemi{--}
+
+%%%%%%%%%%%%%%% Questions %%%%%%%%%%%%%%%
+\vspace{-25mm}
+
+
+\begin{center}
+\Large \textbf{Research Proposal} \vspace{3pt}\\
+\normalsize Alejandro Herrera-Caicedo  \\ \tiny herreracaice@wisc.edu
+\end{center}
+
+
+
+% \section{Dollar Store's Expansion}
+
+% \textbf{Requirements.}  Write up a paper proposal that describes the research question, literature, data collection, model and estimation strategy. Try to aim for 2-3 pages at most.
+ 
+% \epigraph{When times are good, we do very good\\ and when times are bad, we do fabulous \\\textit{ Dollar General CEO Todd Vasos}}
+
+\textbf{Question.} This paper aims to address two main research questions. First, it seeks to determine whether there is a trade-off between economies of density and the cannibalization of sales within these expanding store networks. Second, it explores how the distribution network structure of dollar stores might respond to consumption subsidies, specifically those related to the Supplemental Nutrition Assistance Program (SNAP). By investigating these aspects, the study aims to contribute insights into the strategic decisions driving dollar store expansions, and if income subsidies play a role in entry.
+
+
+\textbf{Literature.}  This article develops a dynamic framework inspired by \citeauthor{holmes2011diffusion} \citeyear{holmes2011diffusion}, who analyzed Walmart's expansion strategy, focusing on the trade-offs between distribution costs and the cannibalization of sales at nearby stores. This model abstracts from competition, specifically ignoring Walmart's rivalry with K-Mart, and has been applied to study Amazon's distribution network by \citeauthor{houde2023nexus} \citeyear{houde2023nexus}, particularly in the context of how Nexus Tax Laws influence strategic decisions.
+
+Additionally, this project relates to studies on dollar store entry, which typically emphasize  strategic interactions. \citeauthor{caoui2022impact} \citeyear{caoui2022impact} introduced a model combining a Markov-Perfect entry game with spatial differentiation concepts to analyze the impact of new dollar stores on existing retailers. More pertinent to this proposal,  \citeauthor{chenarides2024dynamic} \citeyear{chenarides2024dynamic} offers a model that incorporates a demand side, aligning closely with the frameworks used in retail competition studies like those by \citeauthor{ellickson2020measuring} \citeyear{ellickson2020measuring}.
+
+
+
+
+% As the expansion asks for a dynamic framework, this article aligns to \citeauthor{holmes2011diffusion} \citeyear{holmes2011diffusion} analysis of Walmart's expansion. Abstracting away from competition concerns with its rival (K-mart), the article provided a tractable framework with a static demand and dynamic supply to illustrate the trade-off that a network faces in its expansion. For Walmart, the decision of opening a store must balance the distribution costs from building close to a distribution center, and the sales that will be cannibalized from nearby stores. This framework was later used by \citeauthor{houde2023nexus} \citeyear{houde2023nexus} for the analysis of Amazon distribution network, and how discriminatory tax-policies (Nexus Tax Laws) played a role in the shaping of amazon's distribution network. 
+
+% This work also relates to the growing literature on dollar stores. Structural work in the analysis of entry has focused on the strategic component of entry. First, \citeauthor{caoui2022impact} \citeyear{caoui2022impact} propose a demand-free model of the strategic entry of dollar stores and their effect on incumbent stores. Their model intertwines a Markov-Perfect entry game from \citeauthor{ericson1995markov} \citeyear{ericson1995markov} with the spatial differentiation from \citeauthor{seim2006empirical} \citeyear{seim2006empirical}. More pertinent to the specifications desired in this study, \citeauthor{chenarides2024dynamic} (2024) presents an entry game that integrates demand considerations, paralleling the demand side in \citeauthor{holmes2011diffusion} (2011) and other works in retail competition (e.g. \citeauthor{ellickson2020measuring}, 2020).
+
+% Finally, this work is also associated to the supply side implications of SNAP. From the demand side there has been extensive work on how the program affects consumption (), how its 
+
+% If possible add information on descriptives
+
+\textbf{Data.} Firstly, the SNAP Retailer Panel will be utilized to capture the entry patterns of retailers from 2010 to 2022. Efforts are ongoing to locate distribution centers that complement this data. Secondly, demographic and SNAP participation data will be drawn from the American Community Survey (ASC), focusing on the Census Tract Level with 5-year binned data.
+
+ Consumer expenditure patterns will be examined using the Kilts' Nielsen data.  Nielsen provides information on the weekly sales of 30.000-50.000 participating stores by Universal Product Code (UPC) price and quantity. This will be used to construct a measure of the sale revenues which will be fed into the model of demand. A contrast of this project with related works that involve a measurement of the revenues \cite{holmes2011diffusion,ellickson2020measuring,chenarides2024dynamic} is that they use data dedicated to store performance (Nielsen's Trade Dimensions) that I do not have access to.
+ 
+ %There are three hurdles with this data. The first one is that this doesn't involve the universe of stores. The second one is that it doesn't contain the universe of UPCs. Lastly but fixable, is that this data does not provide the name of the stores, but with the entry dates, the parent code, and the store type it will be possible to retrieve the identity of the dollar stores. Of course, the identity of the dollar stores wont be revealed in the draft. With this, the scanner data is going to be built to have a measure of the sales revenues which will be fed into the model of demand. A contrast of this project with related works that involve a measurement of the revenues \cite{holmes2011diffusion,ellickson2020measuring,chenarides2024dynamic} is that they use data dedicated to store performance (Nielsen's Trade Dimensions) that I do not have access to.
+
+ Finally, it remains to collect the different allotments in the thresholds for SNAP eligibility across states. While maximum allotments (benefits) are constant across states, state variability will span from state-level eligibility, minimum allotments, and size of households. 
+
+
+
+
+% \textbf{Method Overview.} The method involves modeling the expenditure in dollar stores and linking this to a model of dollar store network expansion, following a similar approach as Holmes \citeyear{holmes2011diffusion} and Houde, Newberry, and Seim \citeyear{houde2023nexus}, but in a more descriptive approach than what the full estimation would entail. 
+
+% \textbf{Descriptive Evidence Approach.} The first step is to provide a descriptive analysis on how changes in SNAP benefits affect the entry of dollar stores. To this extent, it is ideal (1) to conduct a difference-in-differences analysis to determine if the entry of dollar stores is correlated with increases in SNAP benefits, (2) and to perform an event study analysis to ensure that there is no reverse causality issue. That is, a concern is that as a dollar store opens, then consumers are more likely to enroll in SNAP to maximize their consumption. The difference-in-differences approach would proceed as follows. The entry of a dollar store $j$ in market $m$ at time $t$ is modeled by:
+
+% \[\text{Entry}_{jmt} =  \beta D_{jmt} +  \Gamma X_{mt} + \alpha_{j} + \alpha_{mt} + \varepsilon_{jmt}\]
+
+% Where $D_{jmt}$ represents four variables of interest: (1) an increase in SNAP benefits, (2) an increase in SNAP enrollment, and (3, 4) the decrease of these two values respectively. I will also run these analyses jointly. $X_{mt}$ represents the market demographics. Addressing the timing issue, it is challenging to determine if changes in SNAP directly influence changes in the entry, as changes in SNAP allotments typically occur simultaneously across most states, and differences across markets arise from variations in household size and enrollment. To circumvent this, one approach is to reverse the hypothesis and test whether the entry of any dollar stores encourages a higher number of enrollments in a market:
+
+
+% \[\text{Enrollment}_{mt} =  \sum_{\tau} \beta_{\tau}  \text{Enter}_{m\tau} +  \Gamma X_{mt} + \alpha_{j} + \alpha_{mt} + \varepsilon_{jmt}\]
+
+
+% For this, I will follow the approach by \citeauthor{callaway2021difference} (2021). 
+
+\textbf{Method Overview.} Following the methodologies of \citeauthor{houde2023nexus} (2023) and \citeauthor{holmes2011diffusion} (2011), this study will focus on estimating the demand side and employing instrumental functions to delineate network trade-offs. The analysis will utilize demand estimates to (1) assess revenue impacts and cannibalization, and (2) determine the upper and lower bounds for the supply-side parameters.
+
+
+%It is important to note that point (2) relies on the previous evidence that entry is influenced by the number of SNAP participants and not the other way around. Here I will rely on some modeling of the demand and supply side. The demand side is used to estimate revenues, which will help provide evidence on cannibalization, as well as establish the upper and lower bounds of the supply side primitives.
+
+\textit{Demand Side.}  Using a representative consumer framework, there are many ways to go around this. One is to adopt a CES that yields linear equation for the expenditure in dollar stores from the minimum expenditure function, another one is to employ a discrete choice model of store, and nest these probabilities in a non-linear regression that explains the store revenues. Either way, the model needs to incorporate two features, the first one is SNAP enrollment, and the second one is the preferences for store distance. This demand fill follow a similar specification to \citeauthor{holmes2011diffusion} (2011) and \citeauthor{ellickson2020measuring} (2020). The utility of census tract $i$'s representative consumer at time $t$  from buying in store $s$ is:
+
+\vspace{-10mm}
+
+
+\begin{align}
+    u_{ist} =\tau d_{it} + \tau d_{it} z_{it} + \gamma_0 x_s + \gamma_1 x_s  z_{it} + \varepsilon_{ist}  \quad \text{and} \quad  u_{i0t} = \lambda_0 w_i + \lambda_1 w_i z_i  + \varepsilon_{i0t} \quad \varepsilon_{ist} \overset{\text{i.i.d.}}{\sim} \text{T1EV}
+\end{align}
+
+With the consideration set being the stores in the census tract ($\mathcal{S}_{it}$). Here $d_{it}$ measures the distance from the store to the tract's centroid, $z_{it}$ captures the tract demographics, and $x_s$ is the store chain affiliation. For the purpose of this analysis, the demographics include the share of SNAP enrollments, and its interaction with average household size. It will also include average income, population, and access to vehicle. As it is conventional in this setting, the outside option is a function of the demographics $z_i$ and the population density $w_i$.  
+
+The predicted revenues will be $R_s = \sum_{s \in \mathcal{S}_{it}} \alpha \times p_{ist} \times n_{it}$. Where $p_{ist}$ is the model's implied probability of selecting the store, and $\alpha$ is a parameter to estimate that captures the spending per consumer. With this, the parameters can be estimated using Maximum Likelihood by assuming that the difference between the modeled and observed revenue follows a normal, or using Non-Linear Least Squares. 
+
+\textbf{Outcome 1:} One can provide evidence of cannibalization and economies of densities by measuring the incremental sales, by measuring the difference between the observed sales and the sales that would have occurred if the store had not opened. 
+
+\textit{Supply Side.}  An infinitely living, foward looking, {Dollar Store} is endowed at $t=0$ with a network $N_0$, and with a exogenous stock of warehouses, it maximizes its profit by selecting the sequence of store openings $\{N_t\}$, subject to the observed number of store openings at year $t$:
+
+\vspace{-8mm}
+
+
+\begin{align}
+    \max_{\{N_t\}_{t=0}}\sum_{t=0}^\infty \beta^{t-1} \left(\bar \mu_t\sum_{i}   R_{it}(N_t) - C_t^\text{Dist}(N_t) - C_t^\text{Labor} - F_t\right) \text{ subject to }  |N_t^*|-|N_{t-1}^*| 
+\end{align}
+
+ Where $\bar \mu_t$ adjusts for the margins, and the two $C_t$ represent the distance and labor costs. As it is convention, the firm faces linear distribution costs $C_t^{\text{Dist}}(N_t) = \theta_d \sum_{i}  d_{i}(N_t)$ where $d_{i}$ captures the distance to the closest warehouse. And being forward-looking, it selects the sequence of networks $N\equiv \{N_t\}_{t=0}$ that maximizes over its life's profits $\Pi(N)$. Importantly, I am yet to parameterize $C_t^{\text{Labor}}$.
+ 
+Under the forward looking approach, the model will imply inequalities where the observed opening of stores is better than the alternatives.  As in \citeauthor{holmes2011diffusion} (2010), I will use the analysis of \textit{pairwise re-sequenced} inequalities by \citeauthor{bajari2005measuring} (2005) and \citeauthor{fox2007semiparametric} (2007). Namely, one would consider counterfactual networks composed by swapping the opening of a store $j$ with that of another store $j'$. By defining such a counterfactual sequence as $N^{jj'}$, from the observed one $N^*$, the implied inequality is:
+
+\vspace{-15mm}
+
+
+\begin{align}
+    m_N \equiv \Pi(N^*) - \Pi(N^{jj'}) + \epsilon^{jj'} \geq 0
+\end{align}
+\vspace{-10mm}
+
+
+   Where $\epsilon^{jj'}$ is a measurement error. It is possible that this error is correlated with the revenue and cost variables. To address this concern, it is useful to incorporate an instrumental variable that is not related to the error but is capable of capturing the trade-offs associated with the firm's maximization problem. 
+   
+   
+   \textbf{Outcome 2:} In this instance, the objective is to use instrumental functions involving swaps that result in an increase in exposure to SNAP beneficiaries and an increase in cost distance to warehouses. Formally, define $Z^{jj'}_1 = \mathbf{1}\{\Delta SNAP^{jj'} > 0, C_d^{jj'} > 0\}$ and $Z^{jj'}_2 = \mathbf{1}\{\Delta SNAP^{jj'} < 0, C_d^{jj'} < 0\}$. Under this structure, define $Y^{jj'}$ as the difference in discounted gross profits between the observed outcome and the counterfactual outcome, and $X^{jj'}_d$ as the discounted distribution costs. With this, one could retrieve the upper and lower bounds of the distance primitives $\theta_d$ using the instruments:
+
+\vspace{-8mm}
+
+      \begin{align}
+          \mathbb{E}[Y^{jj'}-\theta_d X_d^{jj'} \mid Z^{1}_{jj'}] \geq 0 \iff \frac{\mathbb{E}[Y^{jj'}\mid Z^{1}_{jj'}]}{\mathbb{E}[X^{jj'}\mid Z^{1}_{jj'}]}\geq \theta_d  \Rightarrow \frac{\mathbb{E}[Y^{jj'}\mid Z^{2}_{jj'}]}{\mathbb{E}[X^{jj'}\mid Z^{2}_{jj'}]}\leq \theta_d 
+      \end{align}
+
+    This not only bounds the primitive but also serves as evidence for the importance of SNAP benefits. If there is a trade-off between distance to warehouses and exposure to SNAP benefits, one would expect a change in expected gross revenues to follow this pattern: as the distance increases, expected gross revenues are anticipated to increase ($\mathbb{E}[Y^{jj'} \mid Z^{1}_{jj'}] > 0$), and as the distance decreases, expected gross revenues are anticipated to decrease ($\mathbb{E}[Y^{jj'} \mid Z^{2}_{jj'}] < 0$).
+
+
+
+\textbf{Following steps.}  I have access to all necessary data for this project, including SNAP Retailer Panel, Nielsen Scanner data, and ACS data at the tract level. Three key data processing steps are required: First, while Nielsen data lacks store identities, combining entry dates, chain codes, and store types will allow us to identify dollar stores anonymously in the draft. Second, Nielsen doesn't have information for all stores: I will have to impute the revenues of the missing ones using as an input the observed nearby stores' revenues. Third, I need to extrapolate ACS data from its current 5-year aggregation level. After this, the demand can be estimated. Later, after imposing a parametrization of the cost function I will identify the relevant swaps for the calculation of $\theta_d$'s bounds.
+
+
+
+\newpage 
+
+% The demand side stems from a household $i$ with preferences over stores $j$ and varieties $\omega$: 
+
+% \[U_{it}(q_{it};B) =  \left(\sum_{j=0}^J \int v_{ijt}(\omega)^{\frac{1}{\sigma}} q_{ijt}(\omega)^{\frac{\sigma - 1}{\sigma}} dF_{jt}(\omega) \right)^{\frac{\sigma}{\sigma - 1}}\]
+
+% Subject to the budget constraint:
+
+
+% \[\sum_{j=0}^J \left( \int p_{jt}(\omega) q_{ijt}(\omega) dF_{jt}(\omega) \right) \leq B_{it}\]
+
+% Where $v_{ijt}(\omega) = \alpha_{ijt} \omega$. Under the pricing assumption that $\ln p_{jt}(\omega) = \rho_{jt} + \ln(\omega)$ we will have the the cost minimizing function is going to be:
+
+% \begin{align*}
+%     e_{ijt} & = \int B_{it} p_{jt}(\omega)^{1-\sigma}v_{ijt} P_{it}^{\sigma - 1} dF_{jt}(\omega)  =  B_{it} \alpha_{ijt} P_{it}^{\sigma - 1}  \exp(\rho_{jt})^{1-\sigma} \int  \omega^{2-\sigma}    dF_{jt}(\omega) \\
+% \end{align*}
+
+% Where $P_{it} = \left(\sum_{j'=0}^{3} \int p_{jt}(\omega_2)^{1-\sigma} v_{ijt}(\omega_2) dF(\omega_2)\right)^{\frac{1}{1-\sigma}}$ is the Dixit-Stiglitz price index. To be able to incorporate preferences for distance, further incorporate: $\alpha_{ijt} = \frac{\tilde \alpha_{ijt}}{(1+d_{ijt})^\tau}$.  As such, the log-linear function of relative spending on channel $j$ relative to the outside option ($j=0$):
+
+% \begin{align*}
+%     \tilde e_{ijt}  = & \ln(\tilde \alpha_{ijt}) - \ln(\tilde \alpha_{i0t}) 
+%       -\tau(\ln(1+d_{ijt}) - \ln(1+d_{i0t})) 
+%     + \big(1-\sigma \big)(\rho_{jt} - \rho_{0t}) 
+%     + \ln\left(\int \omega^{2-\sigma} dF_{jt} (\omega) \right) 
+% \end{align*}
+
+% This result is approximated with:
+
+% \[\tilde e_{ijt} = \xi_{jt}   + \lambda_j Z_{it} +  \gamma_j C_{it} + \bar \xi_i + \Delta \xi_{ct} - \tau d_{ijt} + \varepsilon_{ijt}\]
+
+%  Where $\xi_{jt}$ is a channel-year fixed effect, which captures the integral. $Z_{it}$ represents demographics of a representative household, and $C_{it}$ measures offline competition. $\bar \xi_i$ and $\Delta \xi_{ct}$ are introduced to capture the county idiosyncratic preferences, and coarser changes. The only departure from \citeauthor{houde2023nexus} (2023) is the introduction of the commuting desutility, captured by $d_{ijt}$. This estimation will serve for the computation of the counterfactual revenues. 
+
+
+% \textit{Supply Side.}  An infinitely living {Dollar Store} is endowed at $t=0$ with a network $N_0$, and with a exogenous stock of warehouses, faces a profit flow of:
+
+%        \[\pi_t(N_t)  =\bar \mu_t\sum_{i}   \underbrace{M_{it} e_{it}}_{R_{it}(N_t)} - C_t^\text{Dist}(N_t) - C_t^\text{Labor} - F_t \]
+
+%        Where $M_{it}$ is the size of the market, $\mu_t$ adjusts for the store margins, and the two $C_t$ represent the distance and labor costs. As it is convention, the firm faces linear distribution costs:
+
+%        \[C_t^{\text{Dist}}(N_t) = \theta_d \sum_{i}  d_{i}(N_t) \]
+     
+%        Where $d_{i}$ captures the distance to the closest warehouse. And being forward-looking, it selects the sequence of networks $N\equiv \{N_t\}_{t=0}$ that maximizes over its life's profits $\Pi(N)$
+       
+%        \[\max_{\{N_t\}_{t=0}}\sum_{t=0}^\infty \beta^{t-1} \pi_t(N_t) \text{ subject to }  |N_t^*|-|N_{t-1}^*|\]     
+
+%      Before fully estimating the model, one can provide evidence of cannibalization and economies of densities by measuring the incremental sales. That is, by measuring the difference between the observed sales and the sales that would have occurred if the store had not opened. For this, I will make use of the demand side. The full identification of this model would rely on moment inequalities. As in \citeauthor{holmes2011diffusion} (2010), I will use the analysis of \textit{pairwise re-sequenced} inequalities by \citeauthor{bajari2005measuring} (2005) and \citeauthor{fox2007semiparametric} (2007). Namely, one would consider counterfactual networks composed by swapping the opening of a store $j$ with that of another store $j'$. By defining such a counterfactual sequence as $N^{jj'}$, from the observed one $N^*$, the implied inequality is:
+
+% \[
+% m_N(\theta) \equiv \Pi(N^*; \theta) - \Pi(N^{jj'}; \theta) + \epsilon^{jj'} \geq 0
+% \]
+
+
+%    Where $\epsilon^{jj'}$ is a measurement error. It is possible that this error is correlated with the revenue and cost variables. To address this concern, it is useful to incorporate an instrumental variable that is not related to the error but is capable of capturing the trade-offs associated with the firm's maximization problem. In this instance, the objective is to use instrumental functions involving swaps that result in an increase in exposure to SNAP benefits and an increase in cost distance to warehouses. Formally, define $Z^{jj'}_1 = \mathbf{1}\{\Delta SNAP^{jj'} > 0, C_d^{jj'} > 0\}$ and $Z^{jj'}_2 = \mathbf{1}\{\Delta SNAP^{jj'} < 0, C_d^{jj'} < 0\}$. Under this structure, if we define $Y^{jj'}$ as the difference in gross profits between the observed outcome and the counterfactual outcome, and we consider that other costs are ``fixed," then one could retrieve the upper and lower bounds of the distance primitives $\theta_d$ using the instruments:
+
+
+%       \begin{align*}
+%           \mathbb{E}[Y^{jj'}-\theta_d X_d^{jj'} \mid Z^{1}_{jj'}] \geq 0 \iff \frac{\mathbb{E}[Y^{jj'}\mid Z^{1}_{jj'}]}{\mathbb{E}[X^{jj'}\mid Z^{1}_{jj'}]}\geq \theta_d  \Rightarrow \frac{\mathbb{E}[Y^{jj'}\mid Z^{2}_{jj'}]}{\mathbb{E}[X^{jj'}\mid Z^{2}_{jj'}]}\leq \theta_d 
+%       \end{align*}
+
+%     This not only bounds the primitive but also serves as evidence for the importance of SNAP benefits. If there is a trade-off between distance to warehouses and exposure to SNAP benefits, one would expect a change in expected gross revenues to follow this pattern: as the distance increases, expected gross revenues are anticipated to increase ($\mathbb{E}[Y^{jj'} \mid Z^{1}_{jj'}] > 0$), and as the distance decreases, expected gross revenues are anticipated to decrease ($\mathbb{E}[Y^{jj'} \mid Z^{2}_{jj'}] < 0$).
+
+
+
+% \textbf{Notes Houde.}
+% * Check Griecos paper. 
+
+\bibliography{references}
+\bibliographystyle{apacite}
+
+
+\end{document}  

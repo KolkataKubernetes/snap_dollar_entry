@@ -54,7 +54,7 @@ repo_root <- get_repo_root()
 setwd(repo_root)
 processed_root <- read_root_path("2_processed_data/processed_root.txt")
 
-#(1) Derive selected study years and county treatment status -------------------
+#(1) Derive selected study years -----------------------------------------------
 event_study_sample <- readRDS(file.path(processed_root, "2_9_analysis", "2_9_2_event_study_sample.rds"))
 study_years <- sort(unique(as.integer(event_study_sample$year)))
 selected_years <- c(
@@ -74,27 +74,43 @@ selected_year_lookup <- tibble(
   study_year = factor(selected_year_labels, levels = selected_year_labels)
 )
 
-county_lookup <- ctx$analysis_panel |>
-  filter(!is.na(county_fips), !is.na(state)) |>
+#(2) Build county geometry with sf --------------------------------------------
+data(county.fips, package = "maps")
+
+county_map <- maps::map("county", plot = FALSE, fill = TRUE)
+county_sf <- sf::st_as_sf(county_map) |>
+  mutate(polyname = ID) |>
+  left_join(county.fips, by = "polyname") |>
+  mutate(
+    county_fips = as.integer(fips),
+    state = county_fips %/% 1000L
+  ) |>
+  filter(!is.na(county_fips))
+
+state_map <- maps::map("state", plot = FALSE, fill = TRUE)
+state_sf <- sf::st_as_sf(state_map)
+
+#(3) Classify county waiver status from the waiver panel -----------------------
+county_lookup <- county_sf |>
+  st_drop_geometry() |>
   distinct(county_fips, state)
 
-eligible_state_years <- ctx$analysis_panel |>
-  filter(!is.na(state), year %in% selected_years) |>
-  group_by(state, year) |>
-  summarise(
-    eligible_county_map = any(waiver_scope %in% c("statewide", "substate")),
-    .groups = "drop"
-  )
-
-county_year_status <- ctx$analysis_panel |>
-  filter(!is.na(county_fips), !is.na(state), year %in% selected_years) |>
+county_year_status <- ctx$waiver_county_raw |>
+  filter(!is.na(county_fips), year %in% selected_years) |>
   transmute(
-    county_fips,
-    state,
-    year,
-    county_waived = waiver_scope %in% c("statewide", "substate")
+    county_fips = as.integer(county_fips),
+    state = county_fips %/% 1000L,
+    year = as.integer(year),
+    county_waived = TRUE
   ) |>
   distinct()
+
+eligible_state_years <- county_year_status |>
+  group_by(state, year) |>
+  summarise(
+    eligible_county_map = any(county_waived),
+    .groups = "drop"
+  )
 
 county_year_grid <- tidyr::crossing(
   county_lookup,
@@ -113,20 +129,8 @@ county_year_grid <- tidyr::crossing(
   ) |>
   left_join(selected_year_lookup, by = "year")
 
-#(2) Build county geometry with sf --------------------------------------------
-data(county.fips, package = "maps")
-
-county_map <- maps::map("county", plot = FALSE, fill = TRUE)
-county_sf <- sf::st_as_sf(county_map) |>
-  mutate(polyname = ID) |>
-  left_join(county.fips, by = "polyname") |>
-  mutate(county_fips = as.integer(fips))
-
-state_map <- maps::map("state", plot = FALSE, fill = TRUE)
-state_sf <- sf::st_as_sf(state_map)
-
 map_data <- county_sf |>
-  left_join(county_year_grid, by = "county_fips", relationship = "many-to-many") |>
+  left_join(county_year_grid, by = c("county_fips", "state"), relationship = "many-to-many") |>
   filter(!is.na(study_year))
 
 map_status_levels <- c("County-waived counties", "Other counties")
@@ -135,7 +139,7 @@ map_colors <- c(
   "Other counties" = unname(ctx$waiver_colors[["Never county-waived"]])
 )
 
-#(3) Draw the faceted maps ----------------------------------------------------
+#(4) Draw the faceted maps ----------------------------------------------------
 map_theme <- ctx$theme_im(base_size = 12) +
   theme(
     axis.text = element_blank(),

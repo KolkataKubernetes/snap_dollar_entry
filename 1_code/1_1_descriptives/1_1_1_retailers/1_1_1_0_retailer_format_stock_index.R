@@ -64,7 +64,7 @@ p <- ggplot(format_trend, aes(x = year, y = stock_index_2010, color = format, gr
     title = "Retailer Format Stock Index",
     subtitle = "County-average stock index (2010 = 100), all counties",
     x = "Year",
-    y = "Stock index (2010 = 100)",
+    y = "Stock Index (2010 = 100)",
     color = NULL
   ) +
   ctx$theme_im(base_size = 13)

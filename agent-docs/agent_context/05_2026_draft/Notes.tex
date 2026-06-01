@@ -1,0 +1,133 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm,,enumerate,float,geometry,latexsym,bm}
+\usepackage{kpfonts}
+\usepackage{hyperref}
+\usepackage{apacite}
+\usepackage{natbib}
+
+
+\usepackage{longtable,booktabs}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{longtable}
+
+\usepackage{caption}
+
+\usepackage{enumitem}
+%\bibliographystyle{apacite}
+
+
+% Spacing
+\setlength{\parindent}{0.5in}
+\setlength{\parskip}{6pt}
+\linespread{1.5}
+
+% Boxing examples
+\def\posskip{\vskip 2pt plus 2pt minus 2pt}
+\def\negskip{\vskip-8pt plus 2pt minus 2pt}
+\newcounter{fox}
+\makeatletter
+\def\fox{\@ifstar\@fox\@@fox}
+\long\def\@fox#1{\noindent\framebox{\begin{minipage}{0.984\textwidth}#1\end{minipage}}\ignorespaces}
+\def\@@fox{\@ifnextchar[{\fox@opt}{\fox@bgt}}
+\long\def\fox@bgt#1{\refstepcounter{fox}\noindent\framebox{\begin{minipage}{0.984\textwidth}\hfill{\color{gray}Fig.~\thefox}\par\vspace*{-1.5\baselineskip}#1\end{minipage}}\ignorespaces}
+\long\def\fox@opt[#1]#2{\ifstreq@bgt{#1}{a}{\refstepcounter{fox}}{}\noindent\framebox{\begin{minipage}{0.984\textwidth}\hfill{\color{gray}Fig.~\thefox.#1}\par\vspace*{-1.5\baselineskip}#2\end{minipage}}\ignorespaces}
+\makeatother
+
+
+
+%%%%% Change Geometry %%%%%
+%\geometry{a4paper, left=10mm, top=10mm, right=10mm, bottom=20mm}
+\geometry{letterpaper, margin=1in}
+\setlength\parindent{0pt}
+
+\title{handout_1}
+\author{Alejandro Herrera-Caicedo}
+\date{September 2023}
+
+\begin{document}
+	
+%%%%%%%%%%%%%% Heading %%%%%%%%%%%%%%%
+	
+% \textbf{}\\
+% December 20, 2023 \\
+% Alejandro Herrera-Caicedo \\
+% herreracaice@wisc.edu\\
+% \hrule
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{center}
+	\large\textbf{}
+\end{center}
+\renewcommand\labelitemi{--}
+
+%%%%%%%%%%%%%%% Questions %%%%%%%%%%%%%%%
+
+
+\begin{center}
+\Large {\textbf{Memo}\vspace{3pt}\\
+\end{center}
+
+
+\textbf{Dampening of demand side policies from supply side responses.} Governments often provide assistance to low income households through transfers, to alleviate potential under-consumption of goods as education, nutritional food, among others. An example of this is the Supplemental Nutrition Assistance Program (SNAP) in the United States, which provides in-kind transfers to low income households to address the under-consumption of food and alivianate poverty. The literature has focused on how the program had benefited households (cites) and how it has limited moral hazard effects (cites). Less clear is how these policies affect the supply side that serves the targeted households, and how the supply side can undermine the objectives of these transfers. For example, using data from Virginia, we document that counties that have an easier access to SNAP also experiment a greater entry of Dollar Stores and Convenience Stores (by 12\%) while no significant entry of other stores, which often offer limited nutritious food options. This suggests that supply-side reactions can shape, and potentially constrain, the ultimate impact of demand-side interventions. The objective of this project is to (1) provide more generalizable evidence for the united states, (2) document changes in consumption from SNAP induced entry of Dollar Stores and Convenience Stores, (3) develop and identify a model of entry of groceries stores and consumption to simulate policies where the entrants that have a limited offer cannot accept SNAP benefits right away. 
+
+
+
+
+\textit{Evidence.} 
+
+ 
+\textit{Data.} As most chain retailers accept SNAP payments, one can track their entry using the SNAP retail database. Consumption patters can be drawn from Nielsen scanner and Trip data. A limitation is that loose produce has limited coverage 
+
+\textit{Food deserts}
+
+
+\Section{May 14, 2025}
+\textit{Trip Data.} Pretty sure it is \textit{consumer-store-expenditure-date}, \textit{products?}. 
+\textit{Potential Counterfactual. } (1) What if every county waves it, flatten the competition across counties. (2) No one has a waiver. (3) 
+
+\section*{1. Status Updates}
+\begin{longtable}{p{4cm}p{10cm}}
+\toprule
+\textbf{Topic} & \textbf{Summary}\\
+\midrule
+Project management & Inder will adopt a project‑manager role after a kickoff meeting with his advisor.\\
+Field paper progress & Inder has reviewed the introduction, model, and results (estimation section pending).\\
+Research focus & Investigating whether SNAP ABAWD waivers crowd out higher‑quality food retailers by inducing dollar/convenience‑store entry.\\
+Instrument & Binary shifter: SNAP‑recipient access vs. distance to distribution centers. Evidence currently uses naïve bounds.\\
+Data landscape & Need nationwide waiver data; Nielsen consumer and scanner data via SSDC; 10‑K filings for Dollar Tree/Family Dollar (2009–2015).\\
+\bottomrule
+\end{longtable}
+
+\section*{2. Key Discussion Points}
+\begin{enumerate}[label=\arabic*.]
+    \item \textbf{Modeling choices}\\
+    Representative‑consumer framework (Holmes/Grieco) acceptable for now but may shift to CES/discrete choice; must clarify economic rationale for SNAP waivers.
+    \item \textbf{Counterfactuals}\\
+    Baseline; universal waiver; no waivers; welfare exercise based on entry and substitution patterns.
+    \item \textbf{Data \& coding logistics}\\
+    Scraping waiver data; GitHub for reduced form; heavy scanner work on server; standard repo layout.
+    \item \textbf{Literature \& framing}\\
+    Review Camila Schneider and food‑desert research; consider RDD on waiver thresholds.
+\end{enumerate}
+
+
+\section*{4. Next Steps}
+\begin{itemize}
+    \item Tentative next meeting: Week of May 19, 2025 (time via WhatsApp).
+    \item Agenda: waiver data status, GitHub workflow, identification \& counterfactual plan.
+\end{itemize}
+
+\bigskip
+\noindent\textit{Minutes prepared by ChatGPT on May 14, 2025.}
+
+
+% \textbf{Hunter.}
+\bibliography{references}
+\bibliographystyle{apacite}
+
+
+\end{document}  

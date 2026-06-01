@@ -1,0 +1,189 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm,,enumerate,float,geometry,latexsym,bm}
+\usepackage{kpfonts}
+\usepackage{hyperref}
+\usepackage{apacite}
+\usepackage{epigraph}
+
+
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{xgames}
+\usetikzlibrary{shapes.geometric,positioning}
+\usepackage{amsmath}
+\usepackage{pgfplots}
+
+%\bibliographystyle{apacite}
+
+
+% Spacing
+\setlength{\parindent}{0.5in}
+\setlength{\parskip}{6pt}
+\linespread{1.5}
+
+% Boxing examples
+\def\posskip{\vskip 2pt plus 2pt minus 2pt}
+\def\negskip{\vskip-8pt plus 2pt minus 2pt}
+\newcounter{fox}
+\makeatletter
+\def\fox{\@ifstar\@fox\@@fox}
+\long\def\@fox#1{\noindent\framebox{\begin{minipage}{0.984\textwidth}#1\end{minipage}}\ignorespaces}
+\def\@@fox{\@ifnextchar[{\fox@opt}{\fox@bgt}}
+\long\def\fox@bgt#1{\refstepcounter{fox}\noindent\framebox{\begin{minipage}{0.984\textwidth}\hfill{\color{gray}Fig.~\thefox}\par\vspace*{-1.5\baselineskip}#1\end{minipage}}\ignorespaces}
+\long\def\fox@opt[#1]#2{\ifstreq@bgt{#1}{a}{\refstepcounter{fox}}{}\noindent\framebox{\begin{minipage}{0.984\textwidth}\hfill{\color{gray}Fig.~\thefox.#1}\par\vspace*{-1.5\baselineskip}#2\end{minipage}}\ignorespaces}
+\makeatother
+
+
+
+%%%%% Change Geometry %%%%%
+%\geometry{a4paper, left=10mm, top=10mm, right=10mm, bottom=20mm}
+\geometry{letterpaper, margin=1in}
+\setlength\parindent{0pt}
+
+\title{handout_1}
+\author{Alejandro Herrera-Caicedo}
+\date{September 2023}
+
+\begin{document}
+	
+%%%%%%%%%%%%%% Heading %%%%%%%%%%%%%%%
+	
+% \textbf{}\\
+% December 20, 2023 \\
+% Alejandro Herrera-Caicedo \\
+% herreracaice@wisc.edu\\
+% \hrule
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{center}
+	\large\textbf{}
+\end{center}
+\renewcommand\labelitemi{--}
+
+%%%%%%%%%%%%%%% Questions %%%%%%%%%%%%%%%
+
+
+\begin{center}
+\Large {\textbf{April 19, 2024}}\vspace{3pt}\\
+Meeting With Famy \& Satyen
+%\normalsize Alejandro Herrera-Caicedo \footnote{ herreracaice@wisc.edu} \\
+\end{center}
+
+
+
+
+\section{The Industry Dynamics Effects of Low Income Assistance: \\The Case of Dollar Stores}
+
+\epigraph{When times are good, we do very good\\ and when times are bad, we do fabulous \\\textit{ Dollar General CEO Todd Vasos}}
+
+\textbf{Question.} How does low-income assistance affect the dollar store's dynamics? Should policy makers incorporate this in the SNAP certification?
+
+\textbf{This story doesn't work.} Dollar stores can capitalize transitory low-income assistance by quickly expanding, and readjusting once the policy ends. Dollar stores potentially yield a negative externality on their low-income household demographic \textbf{if} their expansion displaces local firms, \textbf{and} the post-policy readjustment is not followed by the re-entry of local firms. \textbf{It matters if:} The market is not viable for dollar stores with small costs, then it is likely not to be for the firms they displaced. \textbf{It doesn't matter if:} The re-entry of local firms is feasible if market is still profitable, but the large store-network is no longer viable. 
+
+\begin{itemize}
+    \item Why: Because exits are very rare, even if this happens in the future, the closures are not too widespread. 
+\end{itemize}
+
+\textbf{Other stories.} Another story would be that as the food desert literature has shown, entry of groceries do not affect the consumption of poor consumers. The externality, however can happen on the other side as dollar stores can worsen the consumption of non-poor consumers. 
+
+
+\textbf{Gameplan.} \textit{Weekend plan:}(1a) Descriptive analysis, what happens when a dollar store moves in? (There is already work on this: local stores disapear) I would like to add trips to local stores from the mobile gps data. (1b) What happens when a dollar store exits in a market where there is evidence of displacement? 
+
+\textit{After Oral Exam Plan}(2) Estimate a model of entry (not set if static/easy, or dynamic/hard), and  identify the primitives. (3) Policy analysis of SNAP, and how interaction with dollar stores can yield undesirable outcomes: displacement of local incumbents + exit of dollar stores when assistance decreases. 
+
+\textbf{Data.} \textit{In the bag.} Entry of stores, demographics at the ZIP level from the The American Community Survey (ACS). \textit{Remaining.} Consumer data from Nielsen (I need JF to send some emails), cellphone GPS tacker data (pretty sure this is open, but \textit{I have been wrong about stuff like this}). 
+
+
+\textbf{Context.} In previous years, dollar stores have been one of the fastest-growing establishments in the US. However, some franchises are slowing down due to the contraction of their consumption base, as low-income consumers are struggling with the current macroeconomic environment. As the US government introduces and withdraws low-income support, it affects the demand and potentially the entry and exit decisions of dollar stores. Furthermore, consumers will be hurt in the case that the dollar store exit is not compensated by the re-entry of displaced incumbents.
+
+
+\textbf{Contribution.} This would contribute to the literature on dollar stores, which has so far been concerned with the effects of the dollar store expansion on consumer habits \cite{schneier2023buck}, and incumbent grocery stores \cite{caoui2022impact}.  This would also contribute to the literature on how consumer subsidies affect industry dynamics, as in \citeauthor{bradt2023policy} JMP (2024) on how the subsidies for the consumption of green energy technologies affect its industry dynamics. As Bradt claims, there is not much work on how subsidies affect industry dynamics. 
+
+\textbf{Literature Results.} The literature on how store entry affects consumers and incumbents has yielded mixed results. While \cite{schneier2023buck} shows that the incumbents are not affected, \cite{caoui2022impact} finds the opposite. On how stimulating the demand affects the industry, Bradt (2024) finds that the subsidies serve to grow the clean energy industry, but less than a directly subsidizing entry.
+
+ 
+\textbf{Data. } The data on dollar store locations can be obtained from the Supplemental Nutrition Assistance Program (SNAP). For consumer data, I am hoping to use the Homescan (HMS) Nielsen data which is potentially available through Chicago Booth. 
+
+\textbf{Context for SNAP.} The relevant social assistance policy would be SNAP. SNAP provides nutritional assistance to low-income households in the United States. The eligibility depends on income and resources, work requirements, and special considerations for the elderly, disabled, and households with children. There is state-level heterogeneity for both the benefits and variations, as it is shown in Figure \ref{fig:SNAP_Changes}.
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Figures/9-21-23fa_f0-transformed.png}
+    \caption{Changes of SNAP's Allotments}
+    \label{fig:SNAP_Changes}
+\end{figure}
+
+
+\textbf{Gameplan Sketch.} I want to estimate a model of entry. After identifying the primitives, I hope to evaluate a policy where SNAP participation is limited for dollar stores with high risk of displacing incumbents.
+
+
+and after recovering the primitives, I hope to assess how changes in demand shape the market structure. 
+
+
+Policy for quality might induce consolidation.
+
+
+
+% \textbf{The Market Effects of  Mandatory Accommodations.} This would hope to replicate the the \citeauthor {ryan2012costs}  \citeyear{ryan2012costs}  in the setting of 
+
+% Think of the paper about cigarettes and regulation, or energy and regulation, but in the setting of healthcare in Colombia and both.  
+
+% While there are recent -conflicting- working papers on how the expansion of dollar stores has affected incumbent groceries (A,B)
+
+
+\section{Comments}
+
+The consideration set literature is still very early. You see actions that violate the complete information assumption. Too many people are picking dominated options. A non trivial fraction of people are 
+
+Violas Job market paper shows that information makes an impact on how the information affects the selection. The challenge is to identify a data variance that induces differences in the consideration set. COnsider that you have K choices.
+
+The K which is the number of alternatives. K has to be quite large to maket predictions that are binding. If I can find evidence that allows to say that some households are likely to have compelte information.
+
+For this project to work, it needs evidence that there is heterogeneity in the consideration set. 
+
+I need some descriptive evidence. 
+
+The wage gap is too high to justify that there are differences. Or you can see that people migrate to texas and florida. Depending on the choices, CBP to control for services and so on, then it would be clear that the migration is picking. 
+
+They make a big deal about a special regressor which is going to be the premium which allows to affect the housing. Location of where did you grew up as a consideration set. Some shifter. I need a shifter at the individual level. Read more about the special regressor. 
+
+It is likely that college graduates. IPUMS move more. Document the migration patterns. It is not a question in the sence: suppose that with complete information you will assume that.
+
+Once correclty estimating the preferences. The challenge of a wider consideration set, you do not need extreme .
+1. Counterfactual of the arbitrary K. 
+
+Limited consideration set is isomorphic to discrete choice with nested error. They wanted to send this paper before thinking about applciations of the paper. 
+
+
+
+\textbf{She doesn't care too much about dolalr stores}
+They prorportionally affect low income households. Externality, susidize austin to low income households, outside households benefit form this. Distributional effects that can benefito other income gorups, and other locations. 
+
+Anna Russo paper, she has (1) difference between inframarginal and intramarginal, additive: the policies are trying to target the marginal, but of often, as the goverments cannot target. What is nice, is that she documetns the marginal farmers, and the un marginal. 
+
+She proposes a second decission rule. If you can think about this question in that direction would be good. 
+
+Food desert is being studied by marketing people \textbf{Jessie Handbury} in downtow,n or poor cities you have a food desert. This requires afluent consumers.
+
+
+\section{Famy}
+
+Nicer neighborhood. Raj Chetty ran an experiment that improves information. 
+
+The times are worse, but demand is going down. 
+
+\textbf{To Do:} Jessie Handbury. 
+
+\section{Satyen \& Fammy}
+
+
+
+
+\bibliography{references}
+\bibliographystyle{apacite}
+
+
+\end{document}  

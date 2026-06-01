@@ -1,0 +1,264 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+
+% Bibliography - use only one system (natbib OR apacite, not both)
+\usepackage{natbib}
+\bibliographystyle{apalike}
+
+% Beamer theme
+\usetheme[progressbar=frametitle, numbering=fraction]{metropolis}
+\usepackage{appendixnumberbeamer}
+
+% Tables and figures
+\usepackage{booktabs}
+\usepackage[scale=2]{ccicons}
+\usepackage{caption}
+
+% Font setup (must come before unicode-math)
+\usepackage{fontspec}
+\setsansfont[BoldFont={IBM Plex Sans Bold}]{IBM Plex Sans}
+\setmonofont{IBM Plex Mono}
+
+% Math fonts
+\usepackage{unicode-math}
+\setmathfont{TeX Gyre Pagella Math}
+
+% Graphics and TikZ
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepgfplotslibrary{dateplot}
+\usetikzlibrary{shapes.geometric, arrows, chains, positioning, decorations.pathmorphing}
+\usepackage{svg}
+\usepackage{rotating}
+
+% Colors (define before using)
+\usepackage{xcolor}
+\definecolor{DarkGrey}{HTML}{353535}
+\definecolor{ECNURed}{HTML}{228B22}
+\definecolor{ECNUBrown}{RGB}{134,117,77}
+\colorlet{myred}{red!80!black}
+\colorlet{myblue}{blue!80!black}
+\colorlet{mygreen}{green!60!black}
+\colorlet{mydarkred}{myred!40!black}
+\colorlet{mydarkblue}{myblue!40!black}
+\colorlet{mydarkgreen}{mygreen!40!black}
+
+% TikZ styles
+\tikzset{>=latex}
+\tikzstyle{node}=[very thick,circle,draw=myblue,minimum size=22,inner sep=0.5,outer sep=0.6]
+\tikzstyle{connect}=[->,thick,mydarkblue,shorten >=1]
+\tikzset{
+  node 1/.style={node,mydarkgreen,draw=mygreen,fill=mygreen!25},
+  node 2/.style={node,mydarkblue,draw=myblue,fill=myblue!20},
+  node 3/.style={node,mydarkred,draw=myred,fill=myred!20},
+}
+\def\nstyle{int(\lay<\Nnodlen?min(2,\lay):3)}
+\tikzstyle{main} = [rectangle, minimum width=3cm, minimum height=2cm, text centered, text width=3cm, draw=black, fill=black!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+% Utilities
+\usepackage{xspace}
+\newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+\usepackage{etoolbox}
+\usepackage{listofitems}
+\usepackage{amsmath}
+
+% Lists
+\usepackage{enumitem}
+
+% Beamer colors
+\setbeamercolor{normal text}{fg=DarkGrey}
+\setbeamercolor{alerted text}{fg=ECNURed}
+\setbeamercolor{example text}{fg=ECNUBrown}
+\setbeamercolor{frametitle}{bg=white, fg=ECNURed}
+
+% Hyperlinks (load last among these packages)
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=ECNURed,
+    citecolor=teal,
+    urlcolor=blue!50!black,
+}
+
+% Title info
+\title{\alert{Entry Responses and Demand-Side Policy Effectiveness}\\
+SNAP Waivers \& Retailer Entry}
+\author{Herrera-Caicedo \& Majumdar}
+
+\begin{document}
+
+% Itemize/enumerate styling (inside document)
+\setlist[itemize]{label=\textcolor{ECNURed}{\textbullet}}
+\setlist[enumerate]{font=\color{ECNURed}}
+
+\maketitle
+
+
+% \section{Introduction}
+
+\begin{frame}{Research Question}
+\alert{\textbf{Motivation.}}
+  \begin{itemize}
+     \item Many assistance programs aim to improve access to essential goods through demand-side subsidies.
+     \item These policies typically assume market structure will remain the same.
+     \item However, large enough demand shifts can generate strategic supply responses.
+  \end{itemize}
+
+  \alert{\textbf{Entry responses are ambiguous.}}
+  \begin{itemize}
+     \item New entrants can lower prices downwards and increase variety.
+     \item New entrants are not necessarily offering what the policy targets. 
+  \end{itemize}
+
+  \alert{\textbf{Questions.}}
+  \begin{itemize}
+     \item Do retailers' entry behavior respond to SNAP expansions?
+     \item Do these responses ultimately affect SNAP intended policy outcome (food security)?
+  \end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Literature Review}
+This project bridges three strands of literature:
+\begin{itemize}
+    \item \alert{\textbf{SNAP and store choice.}} Benefit increases have modest direct effects on where recipients shop. A \$100 increase shifts $\sim$1pp of spending toward grocery stores \citep{cuffey2022effects}.
+    \item \alert{\textbf{Retailer composition and consumption.}} But the \emph{type} of retailer matters: dollar store entry reduces produce consumption by 7--30\%, concentrated among low-income households \citep{caoui2025dollar}.
+    \item \alert{\textbf{Capture of consumer aid.}} Work in the education literature has shown that financial aid for higher education has been captured by for-profit schools \citep{Cellini2010FinancialAidForProfit,CelliniGoldin2014FederalAidTuition}
+\end{itemize}
+\alert{This paper:} Do SNAP expansions induce retailer entry? If so, does the composition of entrants reinforce or undermine the policy's food security goals?
+\end{frame}
+
+\begin{frame}{Background: SNAP}
+\begin{itemize}
+    \item SNAP provides monthly transfers (\$177/person on average) redeemable at authorized food retailers.
+    \item Largest U.S. food assistance program: $\sim$42 million participants, $\sim$\$100 billion annually.
+    \item Eligibility based on income, assets, and household composition.
+    \item For able-bodied adults without dependents (ABAWDs), benefits are time-limited: 3 months in a 36-month period unless work requirements are met.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Source of Variation: ABAWD Waivers}
+\begin{itemize}
+    \item States can request \alert{waivers} of the ABAWD time limit for areas with:
+    \begin{itemize}
+        \item Unemployment $>$10\%, or
+        \item Insufficient jobs to provide employment
+    \end{itemize}
+    \item Waivers expand SNAP by removing the 3-month limit for this population.
+    \item WHY IS IT RELEVANT: SHOW $\%$ INCREASE FROM PAPERS. GRAY PAPER MAY BE A STARTING POINT
+    \item \alert{Key variation:} Waivers granted at the {\alert{county level}} and change over time with local labor market conditions.
+
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Data}
+\begin{itemize}
+    \item \alert{\textbf{Retailer Panel}.} We will measure presence in every US county using the SNAP retailer 
+    \item \alert{\textbf{SNAP Waivers.}} Manually collected all approved waivers in the United States.
+\end{itemiz\textbf{}e}
+\end{frame}
+
+
+\begin{frame}{Reduced form Model}
+\begin{equation}
+Y_{it} = \sum_{k=-3, k \neq 0}^{4} \beta_k D_{it}^k + \mathbf{X}_{it}'\gamma + \alpha_i + \lambda_t + \varepsilon_{it}
+\end{equation}
+
+Where:
+\begin{itemize}
+    \item $Y_{it}$ is the inverse hyperbolic sine (IHS) transformation of stores in county $i$ at time $t$
+    \item $D_{it}^k$ are event-time indicators equal to 1 when county $i$ is $k$ periods from treatment
+    \item $\mathbf{X}_{it}$ is a vector of time-varying controls including population, average wage, mean income, rent, and unemployment rate
+    \item $\alpha_i$ are county fixed effects
+    \item $\lambda_t$ are year fixed effects
+    \item $\varepsilon_{it}$ is the error term
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Descriptives}
+\input{Table/desc_stats_outcomes.tex}
+\end{frame}
+
+
+
+\begin{frame}{Motivating Evidence: Dollar Stores}
+\begin{columns}
+    \begin{column}{0.5\textwidth}
+        \begin{figure}
+            \centering
+            \includegraphics[width=\linewidth]{Figures/event_study_ihs_total_ds.pdf}
+            \caption{IHS(Dollar Stores)}
+            \label{fig:labor_demand}
+        \end{figure}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+        \scalebox{0.6}{\input{Table/event_study_ihs_total_ds.tex}}
+    \end{column}
+\end{columns}
+\end{frame}
+
+
+
+\begin{frame}{Motivating Evidence: Other Retailers}
+\scalebox{0.6}{\input{Table/event_study_ihs_all.tex}}
+
+\begin{itemize}
+    \item Pre-trends coefficients for \alert{convenience stores} and \alert{farmers market} are noisy and not flat.
+\end{itemize}
+
+\hfill \hyperlink{slide:convenience_sore}{\beamergotobutton{Convenience store}}
+\hyperlink{slide:farmers_market}{\beamergotobutton{Farmers Market}}
+
+\end{frame}
+
+
+
+
+
+\begin{frame}[allowframebreaks]{References}
+    \bibliography{references}
+\end{frame}
+
+
+
+\begin{frame}{Motivating Evidence: Convenience Stores}
+\label{slide:convenience_sore}
+
+\begin{columns}
+    \begin{column}{0.5\textwidth}
+        \begin{figure}
+            \centering
+            \includegraphics[width=\linewidth]{Figures/event_study_ihs_chain_convenience_store.pdf}
+            \caption{IHS(Convinience Stores)}
+            \label{fig:labor_demand}
+        \end{figure}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+        \scalebox{0.6}{\input{Table/event_study_ihs_chain_convenience_store}}
+    \end{column}
+\end{columns}
+\end{frame}
+
+
+\begin{frame}{Motivating Evidence: Farmers Market}
+\label{slide:farmers_market}
+\begin{columns}
+    \begin{column}{0.5\textwidth}
+        \begin{figure}
+            \centering
+            \includegraphics[width=\linewidth]{Figures/event_study_ihs_chain_farmers_market.pdf}
+            \caption{IHS(Farmers Market)}
+            \label{fig:labor_demand}
+        \end{figure}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+        \scalebox{0.6}{\input{Table/event_study_ihs_chain_farmers_market}}
+    \end{column}
+\end{columns}
+\end{frame}
+
+\end{document}
