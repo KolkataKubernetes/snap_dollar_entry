@@ -1,0 +1,21 @@
+\begin{table}[ht]
+\centering
+\caption{Moment Conditions and Distance Trade-offs}
+\begin{tabular}{lcccccc}
+\toprule
+ & \multicolumn{3}{c}{Lower bound: $\lambda_d$} & \multicolumn{3}{c}{Upper bound: $\lambda_d$} \\
+& \multicolumn{3}{c}{$Z^{jj'}_2 = \mathbf{1}\{\Delta SNAP^{jj'} < 0, X_d^{jj'} < 0\}$}  & \multicolumn{3}{c}{$Z^{jj'}_1 = \mathbf{1}\{\Delta SNAP^{jj'} > 0, X_d^{jj'} > 0\}$}\\
+\cmidrule(lr){2-4} \cmidrule(lr){5-7}
+& N & $\mathbb{E}[Y\mid Z_2]$ & $\mathbb{E}[X_d\mid Z_2]$ & N & $\mathbb{E}[Y\mid Z_1]$ & $\mathbb{E}[X_d\mid Z_1]$ \\
+\midrule
+ &531,174 & -201.584 & -640.081 & 524,125 & 208.891 & 647.840 \\
+\midrule
+\multicolumn{2}{l}{{Bounds:} $\frac{E(Y|Z)}{E(X_d|Z)}$} &  & & \\
+ & & 0.314 & & 0.322 \\
+\bottomrule
+\end{tabular}
+ \captionsetup{font=small, width=.75\textwidth}
+\caption*{Note: $\beta=0.95$. The profit function is estimated at an annual frequency, using thousands of dollars (2023). The distance units are measured in kilometers.}
+\label{tab:supplybounds}
+
+\end{table}

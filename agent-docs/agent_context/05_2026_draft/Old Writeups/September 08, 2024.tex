@@ -1,0 +1,123 @@
+\documentclass[11.5pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm,enumerate,float,geometry,latexsym,bm}
+\usepackage{kpfonts}
+\usepackage{hyperref}
+\usepackage{apacite}
+\usepackage{epigraph}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{caption}
+\usepackage{multirow}
+
+\usetikzlibrary{shapes.geometric,positioning}
+\usepackage{pgfplots}
+\usepackage[misc]{ifsym}
+
+% Enhanced document geometry
+\geometry{letterpaper, margin=1in}
+
+% Spacing and paragraph formatting
+\setlength{\parindent}{0.5in}
+\setlength{\parskip}{1pt}
+\linespread{1.5}
+
+% Title and author information
+\title{}
+\author{Alejandro Herrera-Caicedo }
+\date{September 2024}
+
+\begin{document}
+
+% Title page
+\maketitle
+
+\section{Summarized Questions}
+
+
+\textbf{Question 1: A Reduced Form Paper}
+Should I prioritize a full reduced-form analysis, or keep it as a side project? If I pursue this, I’ll need data for all states, but Virginia was initially chosen for convenience. I believe that a broader approach would be more valuable, but it is significantly costlier. 
+
+\textbf{Question 2: Structural Model Feasibility/Credibility}
+Is it credible to build a structural model of competition with consumer panel data (Homescan), focusing on sales across store types and distinguishing between healthy and unhealthy goods? I would depart slightly from Elickson et al. (2021) by modeling household expenditure decisions. Is this a viable path? A sketch of the model is presented in the detailed version of this question.
+
+\textbf{Question 3: Market Inefficiencies.} If dollar stores crowd out healthy alternatives, and the crowding out affects the health of consumers, wouldn't there be a social cost that the dollar store is not facing? An alternative could involve modeling consumer beliefs and incomplete information, as seen in Barahona et al. (2023) or Corradini (2024). I show some potential venues in the detailed version of this question. 
+
+\textbf{Question 4: Moral Hazard in SNAP}
+Could examining moral hazard in SNAP, where incentives for household purchases don’t align with policymakers’ goals, be a worthwhile angle? I’m hesitant since pilots have been assessed, but perhaps supply-side reactions could provide new insights.
+
+
+
+\section{Detailed Questions}
+
+
+
+\textbf{Question 1.} \textbf{A Reduced Form Paper}. Should I prioritize a full-blown reduced-form version of the paper? Or should I do this as a side-project? The reduced form version of the article examinated how the roll-out of exemptions for households to enroll in SNAP entailed an increase in the number of dollar stores (and convenience stores).  The Gray et. al. (2023) article for which the Virginia variation was borrowed, relied on not only the staggered roll-out but also on micro-data on enrollment from households (even non-eligible ones). They focus on Virginia because they analyze the effect of the waivers on employment decisions, for which they only have microdata for Virginians. In my field paper the selection of Virginia doesn't follow much of a logic, besides that the data was ready-made and I was time constrained. My hunch is that if I had to do a full-blown version of this part of the paper I would have to get the data for all states, which I believe it is documented. 
+
+
+
+
+\textbf{Question 2. } \textbf{ Structural Model Feasibility/Credibility}. Should I 
+prioritize the structural side modeling? I think that 
+a structural model of competition with a well-defined demand is going to be difficult as there are papers that are doing a good job around it with really good data\footnote{Census-like data for store's sales.}. From your experience, would it be believable to infer sales (and competition) from consumer panel data (homescan)? If so, I could use homescan to (1) model competition across stores, (2) distinguish consumption between healthy-unhealthy goods. Here I barely departure from Elickson, Grieco and Khvastunov (2021), where the household decides to allocate its expenditure unit towards healthy/unhealthy\footnote{Assume a mapping of goods to this binary category.} expenditure, and decides where to expend this unit. 
+
+\begin{enumerate}
+    \item Household has a unit of expenditure and decides to allocate it between healthy or unhealthy consumption.
+    \item After deciding if the unit is allocated to healthy or unhealthy consumption, it decides \textit{in which store} to spend the unit (all available options, not only dollar stores). The errors are correlated at the store-brand level. 
+    \item Revenues from store $s$, in market $m$ at time $t$ would be:
+
+    \[R_{smt} (\cdot) = \sum_{i \in I_{mt}} \text{Survey Weight}_{it} \times \text{Income}_{it} \times \underbrace{\alpha}_{\text{Grocery Budget Share (parameter)}} \times \left(\sigma_{ist}^{\text{Healthy}} (\cdot) + \sigma_{ist}^{\text{Non-Healthy}} (\cdot) \right)   \]
+\end{enumerate}
+
+For the scaling, one would have to use the projection weight and hope that the sampling is representative of the market level. A natural appeal of using this data is that I could match the micro-moments for the SNAP targets, as the household demographics would be observed. Then I could use the parameters for the demand for the supply side. 
+
+\textbf{Question 3: Potential Market Inefficiencies and Avenues.}
+When dollar stores or convenience stores enter, they do not internalize the displacement of healthier options, which can negatively affect consumer health. \underline{Does this seem like an overreach?}
+
+As you pointed out, an alternative approach could be to model this from a belief perspective, where households hold incorrect beliefs about the health consequences of their consumption. This approach seems more straightforward. It provides an opportunity to use a model of incomplete information, similar to Barahona, Otero, Otero (BOO; ECMA, 2023) or Corradini (2024), where agents form expectations about the repercussions of their decisions based on their available information set.
+
+In the BOO's model, the policy analyzed involved implementing front-of-package labels. Corradini’s model, on the other hand, includes prior beliefs and a quality signal (if available) to inform the agent's decision-making process.
+
+
+%This is outside of the paper. Competition outlook: 
+
+\[\mathbb{E}[u_{ijt}|I_{ijt}] =  \underbrace{\delta_{ijt}}_{\text{Stochastic Experience Utility}} - \underbrace{\alpha_i p_{jt}}_{\text{Price Desutility}} - \underbrace{\mathbb{E}[w_{jt}'\mid I_{jt}] \phi_i}_{\text{Health Desutility}} \]
+
+
+Both articles exploit the availability of the information. Potential information changes
+
+\textit{1. Changes in the labels}. In \textbf{2020} the labeling requirements changed, but as shown in Figure 1, the changes are succint. 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Screenshot 2024-09-08 205104.png}
+    \caption{Back of Package Labeling}
+    \label{fig:enter-label}
+\end{figure}
+
+Required evidence: show that consumers react to the change in labels. Interestingly, firms have been encouraged to put front of package labels (as in BOO's Chile implementation, but less implicit). Pros: mandatory, cons: covid year. 
+
+
+\textit{2. Questionable Information.} In early 2009 a group of food producers and retailers launched a front of package information to recognize certain foods as \textit{Smart Choices}. However, the program was labeling sugary food as a healthy alternative, generating outcry, and it ended in October of the very same year. Pros: deceptive information, not the retailer decision. Cons: it only affected a group of goods. 
+
+\newpage 
+
+\textbf{Question 4: Moral Hazard from a Public Policy Perspective.}
+An inefficiency may also arise due to moral hazard. The policymaker provides a subsidy with the intention of improving the nutritional outcomes of certain households. However, since there is no monitoring of household expenditures, the incentives for what households choose to purchase do not necessarily align with the policymaker’s goals. This idea connects to the debate surrounding pilots where the SNAP incentive is augmented with rebates for healthy food consumption. 
+
+A potential counterfactual could assess the policy’s effectiveness on a larger scale. \textbf{Would this be a worthwhile avenue to explore?} I am on the fence as the pilot has been already assessed, but perhaps one can argue that the supply side would not react to such a localized intervention. Furthermore, I am not aware of articles that specifically discuss the moral hazard associated with such policies.
+
+
+
+
+
+
+\newpage
+
+
+
+% References
+\newpage
+
+
+\end{document}

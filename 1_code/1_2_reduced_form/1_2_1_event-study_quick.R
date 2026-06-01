@@ -219,4 +219,44 @@ for (samp_name in names(samples)) {
   
   ggsave(file.path(out_dir, paste0("1_2_1_es_quick_att_", samp_name, "_metro_comparison.png")),
          plot = p_rucc, width = 9, height = 6)
+  
+  selected_outcomes = c("total_ds", "chain_convenience_store")
+  
+  p_rucc_selected = ggplot(
+    plot_data_rucc_combined |> filter(!is_ref, outcome %in% selected_outcomes),
+    aes(x = x, y = estimate, color = metro_group, shape = metro_group)
+  ) +
+    geom_point(position = position_dodge(width = 0.4)) +
+    geom_errorbar(aes(ymin = ci_low, ymax = ci_high),
+                  width = 0.2, position = position_dodge(width = 0.4)) +
+    geom_hline(yintercept = 0, linetype = "dashed") +
+    geom_vline(xintercept = -1, linetype = "dotted", color = "red") +
+    facet_wrap(~outcome, nrow = 1, scales = "free_y",
+               labeller = as_labeller(outcome_labels)) +
+    labs(x = "Relative Year", y = "Estimate on Entry by Format",
+         title = paste("Dollar vs Convenience Store Entry -", samp_label, "- Metro vs Non-Metro"),
+         color = "RUCC Group", shape = "RUCC Group") +
+    theme_bw()
+  
+  ggsave(file.path(out_dir, paste0("1_2_1_es_quick_att_", samp_name, "_metro_comparison_dollar_convenience.png")),
+         plot = p_rucc_selected, width = 9, height = 4)
+  
+  p_rucc_small_grocery = ggplot(
+    plot_data_rucc_combined |> filter(!is_ref, outcome == "chain_small_grocery"),
+    aes(x = x, y = estimate, color = metro_group, shape = metro_group)
+  ) +
+    geom_point(position = position_dodge(width = 0.4)) +
+    geom_errorbar(aes(ymin = ci_low, ymax = ci_high),
+                  width = 0.2, position = position_dodge(width = 0.4)) +
+    geom_hline(yintercept = 0, linetype = "dashed") +
+    geom_vline(xintercept = -1, linetype = "dotted", color = "red") +
+    facet_wrap(~outcome, nrow = 1, scales = "free_y",
+               labeller = as_labeller(outcome_labels)) +
+    labs(x = "Relative Year", y = "Estimate on Entry by Format",
+         title = paste("Small Grocery Entry -", samp_label, "- Metro vs Non-Metro"),
+         color = "RUCC Group", shape = "RUCC Group") +
+    theme_bw()
+  
+  ggsave(file.path(out_dir, paste0("1_2_1_es_quick_att_", samp_name, "_metro_comparison_small_grocery.png")),
+         plot = p_rucc_small_grocery, width = 6, height = 4)
 }

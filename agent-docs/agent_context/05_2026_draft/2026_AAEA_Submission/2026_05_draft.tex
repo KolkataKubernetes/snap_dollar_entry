@@ -1,0 +1,665 @@
+%=========================================================
+% Second-Year Paper Template (LaTeX)
+% Authors: Alejandro Herrera Caicedo, Inder Majumdar
+%=========================================================
+
+\documentclass[12pt]{article}
+
+% ---------- Encoding & Language ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+
+% ---------- Page Layout ----------
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}       % For line spacing
+\onehalfspacing % 1.5 
+\usepackage{lineno}
+\usepackage{threeparttable}
+
+% ---------- Math & Symbols ----------
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{bm}             % Bold math
+\usepackage{bbm}             % Bold math
+\usepackage{mathtools}      % Extra math tools
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min} % optional
+
+% ---------- Figures & Tables ----------
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}     % Subfigures
+\usepackage{booktabs}       % Nice tables
+\usepackage{float}          % H for precise float placement
+\usepackage{longtable}      % Multi-page tables if needed
+\usepackage[normalem]{ulem}
+
+% ---------- References & Citations ----------
+\usepackage{natbib}         % Author-year citations
+
+% ---------- Formatting ----------
+\usepackage{microtype}      % Better typography
+\usepackage{enumitem}       % Control over lists
+\usepackage{hyperref}       % Clickable references
+\hypersetup{
+    colorlinks = true,
+    linkcolor  = blue,
+    citecolor  = blue,
+    urlcolor   = blue
+}
+\usepackage{environ, adjustbox}   % lets us redefine environments easily - for gt tables
+\usepackage{rotating}
+
+% ---------- appendix ----------
+
+\usepackage[toc,page]{appendix}
+
+% ---------- Theorems (if needed) ----------
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+
+% ---------- Title Information ----------
+\title{Supply Side Responses to Target Subsidy Programs: Evidence from SNAP ABAWD Waivers and Dollar Store Expansion\\[0.5em]}
+\author{Alejandro Herrera-Caicedo, Inder Majumdar\\ University of Wisconsin-Madison}
+\date{\today}
+
+
+
+
+% ---------- Figures ----------0
+\usepackage{tikz}
+\newcommand{\addaxeslabels}[4]{
+  \begin{tikzpicture}
+    \node[anchor=south west,inner sep=0] (img) {\includegraphics[width=#2\textwidth]{#1}};
+    \begin{scope}[x={(img.south east)},y={(img.north west)}]
+      % X-axis label
+      \node at (0.5, -0.06) {#3};
+      % Y-axis label
+      \node[rotate=90] at (-0.08, 0.5) {#4};
+    \end{scope}
+  \end{tikzpicture}
+}
+
+%=========================================================
+\begin{document}
+\linenumbers
+
+\begin{titlepage}
+\centering
+
+
+{\Large \textbf{Entry Dynamics and Demand-Side Subsidies:}}\\[0.25em]
+{\Large \textbf{Evaluating the Impact of SNAP ABAWD Waivers on Retailer Entry}}\\[2.5em]
+
+
+{\large Alejandro Herrera-Caicedo}\\
+{\large University of Wisconsin-Madison}\\
+{\large alejandro.herreracaicedo@wisc.edu}\\[1em]
+
+{\large Inder A. Majumdar}\\
+{\large University of Wisconsin-Madison}\\
+{\large imajumdar@wisc.edu}\\[2.5em]
+
+{\large Selected Presentation -- Lightning Session}\\[0.5em]
+{\large Prepared for presentation at the 2026 AAEA Annual Meeting}\\
+{\large Kansas City, MO}\\
+{\large July 26--28, 2026}\\[2.5em]
+
+
+\begin{center}
+\textit{Incomplete and preliminary draft. \\
+Please do not cite.}
+\end{center}
+
+
+
+\vfill
+
+\begin{minipage}{0.9\textwidth}
+\small
+Copyright 2026 by Alejandro Herrera-Caicedo and Inder A. Majumdar. 
+All rights reserved. Readers may make verbatim copies of this document for 
+non-commercial purposes by any means, provided that this copyright notice 
+appears on all such copies.
+\end{minipage}
+
+\end{titlepage}
+
+
+\maketitle
+
+\begin{center}
+\textit{Incomplete and preliminary draft prepared for the AAEA Annual Meeting. \\
+Please do not cite.}
+\end{center}
+
+
+\textit{Abstract.} The Supplemental Nutrition Assistance Program (SNAP) is designed to improve food access among low-income households and support nutritional outcomes. Prior work evaluating the impact of SNAP expansion has predominantly focused on demand-side responses, while impacts on the retail landscape that supplies consumers have remained largely unstudied. To that end, we consider the waivers of the Able-Bodied Adults Without Dependents (ABAWD) time limit as an intensive-margin increase in SNAP benefit duration. Exploiting variation in the timing of waiver conferral, we find that ABAWD waiver conferral is associated with a 6.2  and 6.7 percentage point increase in the probability of dollar-store and convenience store entry, a pattern not observed for other retail formats. While recent work on the expansion of retail formats as dollar-stores raises concerns about the crowding out of supermarkets, our estimates are most pronounced in non-metro underserved areas, where retail access is already limited. The results suggest that targeted expansions in SNAP access can reshape local retail markets.
+
+\newpage
+\section{Introduction}
+
+\textbf{Intro/Motivation.} Many government programs target vulnerable households by subsidizing consumption of specific goods and services, such as food, health care, or education. These programs may operate not only through changes in household demand, but also through supply-side responses that reshape the markets serving subsidy recipients. Although much of the existing literature studies how program design affects household consumption choices, relatively little work examines whether changes in subsidy design alter firm entry incentives and, in turn, the set of goods and services available to consumers. While positive subsidy shifts expand the budget constraint/retail demand, this shift is not necessarily large enough to induce entry and improve product variety. 
+
+
+We study supply-side reactions to one of the largest in-kind transfer programs in the United States: the Supplemental Nutritional Assistance Program (SNAP). In particular, we evaluate how localized expansions in SNAP access affect entry across retailer formats. Able-Bodied Adults Without Dependents (ABAWD), \textbf{placeholder: potential statistic showing relevance of policy shifter} are subject to a three-month time limit for SNAP benefits within any three-year period unless they meet work-related requirements or qualify for an exemption. They can satisfy these requirements by working at least 20 hours per week on average, participating in a qualifying employment or training program, or engaging in workfare programs\footnote{These requirements are codified in 7 C.F.R. \S 273.24}. States may request waivers of the ABAWD time limit for areas with sufficiently high unemployment, or if there is an insufficient number of jobs. Once a waiver is in place, ABAWDs living in covered areas are not subject to the three-month limit even if they do not satisfy the ABAWD-specific work requirement. We exploit the timing of local waivers that suspend the  ABAWD  time limit as an intensive-margin increase in SNAP provision to evaluate how localized expansions in SNAP subsidy provision affect entry across retailer formats.
+
+We digitize waiver applications submitted by states, together with formal Food and Nutrition Service (FNS) response letters detailing approval status, covered areas, and waiver validity periods. We then merge waiver records with SNAP retailer location data publicly released by FNS, exploiting variation in waiver timing to identify how entry behavior changes following waiver conferral. 
+
+We find heterogeneous supply-side responses across retail formats with effects pronounced in rural counties. ABAWD waiver adoption is associated with a 6.2 and 6.6 percentage points (pps) increase in dollar-store and convenience store entry.  We do not find evidence of comparable responses among supermarkets, grocery stores, or farmers markets in the short run. Our results persist across urban and rural county definitions. While we do not find evidence of waiver conferral increasing entry in other retail modes, this should be interpreted as equilibrium net effects: they may reflect both weak direct responses to higher SNAP purchasing power and offsetting deterrence from increased competition.
+
+
+This paper contributes to  the literature on SNAP and in-kind transfers, which has primarily documented their direct effects on household consumption \citep{hoynes2009consumption,ratcliffe2011snap,kim2016snap,hastings2018snap} and labor-supply decisions \citep{hoynes2012work,han2022impact,gray2023employed}. Previous work on supply side responses has focused on how SNAP affects pricing \citep{leung2023government}, and product variety decisions \citep{byrne2022welfare}. We complement this work by studying retailer entry, showing that SNAP can affect food access not only through prices, but also through the composition of establishments serving local markets.
+
+
+We contribute to the growing literature on small-format retail entry and household consumption, which so far has mainly focused on the proliferation of dollar stores in the US. The  implications of dollar store entry on consumption are ambiguous: they could increase product variety but also crowd out retail formats with greater varieties such as supermarkets.\footnote{Supermarkets operate on thin margins and rely on packaged "center aisle" goods and cross-category expenditures for profitability \citep{malinovskaya2026destination}, making competition from small-formats a deterrent for incumbent and potential grocery stores.} A growing empirical literature examines this tension. Recent work by  \cite{schneier2025dollarstore} finds that dollar store entry expands the household choice set without significantly impacting local retail competition. These findings are consistent with research in the public health literature that suggests that convenience stores allow households to do ``filler'' trips to complement their consumption in between super-market trips \citep{harnack2019importance}. However, \cite{caoui2026impact} document that dollar-store expansion reduces nearby grocery-store presence and lowers fresh produce consumption among lower-income households with high travel costs. Their estimates suggest that grocery-store exits induced by dollar-store expansion may partially mediate reductions in fresh produce purchases. Although our reduced-form specifications cannot determine whether more ``desirable'' alternatives were deterred by dollar-store entry, our results show that SNAP expansions may reshape local retail markets in ways that extend beyond household demand responses. In particular, the supply-side response we estimate is concentrated in a retail format whose nutritional implications are contested, rather than in formats more directly aligned with the program's food-access objectives. 
+
+Our results suggest that the relationship between SNAP program design and consumption behavior operate not only through shifts in the household budget constraint, but through the composition of retailers available to low income households. Nonetheless, our estimates should not be interpreted as the effect of a broad increase in SNAP generosity. Instead, the variation we exploit comes from localized expansions in SNAP access for ABAWDs through the suspension of the ABAWD time limit. As a result, our estimates are best interpreted as local responses of SNAP-authorized retailers to changes in expected SNAP purchasing power among this specific population. 
+
+
+As we mentioned before, our results represent a ``net effect'' that does not distinguish whether other retailers would have entered in the absence of small-format retail entry, as the entry with deterrence and entry without deterrence are observationally equivalent, and different implications for policy makers. Federal policies now permitting states to apply for consumption restrictions that limit how SNAP benefits may be spent might limit entry into markets that would otherwise remain underserved. Alternatively, these policies might mitigate the deterrence that arises from small format entry, inducing entry by large retailers. Future work will be focused on using methods from the empirical industrial organization  literature to disentangle these two scenarios by modeling an the entry decision of retailers, while incorporating how household demand is affected by the policy design. 
+
+
+
+\section{Data}
+
+\subsection{SNAP Retailer Data}
+
+We use the USDA Food and Nutrition Service (FNS) Historical SNAP Retailer Locator, which reports each SNAP-authorized retailer’s store name, address, coordinates, store type, authorization date, and authorization end date. We classify retailers into analysis categories using a two-step procedure. First, we use store names to identify recognizable chains, including Dollar General, Dollar Tree, Family Dollar, Walmart, Target, and major grocery and convenience chains. Chains are then assigned to a broader format category. Second, for stores that do not match a predefined chain-name pattern, we use the FNS Store Type field to assign the retailer to a broader format category. \textbf{Appendix \ref{app:retail_groups}} documents the mapping from raw store names and store types into the retail-format groups used in the analysis.
+
+Using authorization and end dates from the FNS retailer panel, we construct two county-year measures of SNAP retailer presence for store format \(g\) in county \(c\) and year \(t\). First, we define store stocks as the number of SNAP-authorized stores active in year \(t\), which we use in descriptive tables and figures to show how retail-format presence evolves over time:
+\begin{equation}
+    Stock_{cgt} = \sum_i \mathbf{1}\{c_i = c,\; g_i = g,\; a_i \le t \le e_i\}
+\end{equation}
+
+Second, we define store entries as the number of new SNAP authorizations in year \(t\):
+\begin{equation}
+    Entry_{cgt} = \sum_i \mathbf{1}\{c_i = c,\; g_i = g,\; a_i = t\}
+\end{equation}
+
+Here, \(a_i\) denotes store \(i\)’s SNAP authorization year and \(e_i\) its SNAP end year. Stock outcomes are used for the desriptive analysis, whereas flows are used for the empirical model and reduced form results.
+
+When the end date is missing, we treat the store as active through the end of the study period. We assume that store \textit{i} receives EBT authorization in the same year that they enter a given county. We believe this assumption is reasonable for chain formats, as the FNS must make a store eligibility determination within 45 days of an application. Dollar store business models are oriented towards lower income consumers, many of which are SNAP eligible. Management from   \cite{dollargeneral2025form10k} has reported in its 10-K reports that changes in SNAP are a material concern for future financial growth. While administrative data on application timing are not available, SNAP participation is nearly universal among large dollar store chains, with EBT applications managed centrally.
+
+\subsection{ABAWD Waivers}
+
+FNS publishes ABAWD waiver applications submitted by states, along with formal response letters that detail approval status, areas covered by the waiver, and the date range for which the waiver is valid. Approved waivers may apply to an entire state or to specific sub-state regions. In cases where waivers target sub-state regions, FNS response letters explicitly enumerate the covered areas and dates for which the waiver is in effect. These areas are defined using a variety of administrative and economic units, including counties, towns, census designated areas, and labor market areas (LMAs).
+
+We use FNS approval letters to construct a panel dataset of ABAWD waiver coverage from 2012 to 2020. For each state-year combination, we manually extract all listed waiver areas, the area's geographic classification, and the associated start and end dates. Because waiver coverage is defined over multiple geographic units, we define treatment at the county-year level only when waiver coverage can be linked directly to a county: specifically, a county is assigned to treatment if it is either covered by a statewide waiver or is explicitly listed as a waived county in the FNS materials. While some waivers apply to sub-county areas, our primary analysis is conducted at the county level due to limitations on retailer and consumer panel geolocation. Our empirical design uses an "ever treated" treatment definition. Once a county first receives ABAWD waiver coverage during the sample period, all subsequent county-year observations are coded as treated for the remainder of the event study window. 
+
+%specifically, a county is treated in year \textit{t} if it is covered by a statewide waiver or is explicitly listed as a waived county in the FNS materials. While some waivers apply to sub-county areas, our primary analysis is conducted at the county level due to limitations on retailer and consumer panel geolocation.\\ 
+
+This aggregation introduces potential measurement error when waiver coverage does not align perfectly with county boundaries: counties containing both treated and untreated subregions may be misclassified. Insofar as this misclassification is classical (i.e., the likelihood of misclassification is not correlated with changes in retailer format entry), we expect this misclassification to only attenuate our estimates towards zero. We discuss the implications of this misspecification on our regression results in Section 6.
+
+%Despite this potential bias, our descriptive results indicate a positive relationship between waiver coverage and dollar store entry, suggesting that the true effect may be even greater. \textbf{Consistent with this point of view, we compare regression results between "eventually treated" and "never treated" control groups, and find that the eventually treated control group yields higher regression coefficient results (REFERENCE FIG).} Confirming the robustness of our results with an analysis at the census tract level is a priority for future work.
+
+\subsection{US Census Demographics}
+
+We use covariates from the American Community Survey (ACS) 5-year estimates and County Business Patterns (CBP) to construct annual measures of local economic conditions. We pull county-level ACS data separately for each year from 2010 through 2019 and merge those estimates with the county-level waiver panel. From the ACS, we construct measures of local income, rental costs, and labor-market conditions. The county panel includes an income measure, a rent measure, and an unemployment rate, where the unemployment rate is calculated as the ratio of unemployed individuals to the civilian labor force using ACS employment status. We also retain county-level size controls from the ACS panel and merge these variables to the retailer and waiver data by county and year.\footnote{County covariates are drawn from annual ACS 5-year estimates. In the current pipeline, income is constructed from Table B20002 ($B20002\_001E$), household counts from Table B11001 ($B11001\_001E$), rent from Table B25064 ($B25064\_001E$), and unemployment from ACS employment-status tabulations using Table B23025 ($B23025\_003E$, $B23025\_005E$) where available, with a fallback to the relevant B23001 cells when necessary.
+} We derive county-level wage data from yearly CBP reports.
+
+
+%\subsection{Nielsen Data}
+
+%\begin{itemize}
+%    \item Might redact this if we don't include Nielsen data in the August draft
+%    \item Describe Nielsen Consumer panel, Nielsen scanner data.
+%\end{itemize}
+
+
+
+\section{Institutional Context}
+
+\subsection{SNAP Program}
+
+Previously called the Food Stamp Program, SNAP is the single largest nutritional subsidy program in the United States. As of the end of Fiscal year 2024, SNAP has provided almost \$99.8 Billion in program benefits to over 12.3\% of the population (\href{https://www.ers.usda.gov/topics/food-nutrition-assistance/supplemental-nutrition-assistance-program-snap/key-statistics-and-research}{cite}). During that fiscal year, SNAP served an average of 41.7 million participants per month with monthly benefits averaging \$187.20. The program is characterized by substantial interstate heterogeneity with respect to participation: \textbf{Figure \ref{fig:state_participation}} below shows this variation, with participation rates ranging from as low as 4.8\% to as high as 21.2\% of the total state population (\href{https://www.ers.usda.gov/topics/food-nutrition-assistance/supplemental-nutrition-assistance-program-snap/key-statistics-and-research}{SOURCE FOR FIGURE}).
+
+Although the program is federally administered and managed by FNS, individual state health and human services departments are responsible for issuing benefits and determining household eligibility (\href{https://www.usda.gov/sites/default/files/documents/snap_fact_sheet.pdf}{cite}). Each state has its own application process following federal guidelines. State agencies determine eligibility by evaluating gross monthly income, net income, and assets (\href{https://www.cbpp.org/research/food-assistance/a-quick-guide-to-snap-eligibility-and-benefits}{cite}). Households are generally ineligible for benefits if their gross income before deductions exceeds 130\% of the Federal Poverty Line or if their net income exceeds 100\% of the federal poverty line. Exceptions are made for households with at least one member over the age of 60, or one member with a stated disability. Similarly, households are ineligible for SNAP if they have more than \$3,000 in assets, or \$4,500 for households with an older or disabled household member. Many states have raised net income or asset limits via Broad-Based Category Eligibility (BBCE).
+
+Once approved, households receive SNAP benefits on an Electronic Benefits Transfer (EBT) card each month, which they can use to purchase approved food and beverages at any SNAP-approved retailer. Benefits are disbursed according to a monthly issuance schedule, with each state issuing its own guidance on when benefits will be disbursed. SNAP eligibility is reassessed typically at 6 or 12 month intervals during a re-certification process. The majority of attrition from SNAP happens at an around these re-certification deadlines \citep{gray2023employed,hastings2018snap}.
+
+\subsubsection{ABAWD Work Requirements and Waivers}
+
+SNAP eligibility is constrained by both a general and ABAWD work requirement. The ABAWD work requirement is the more restrictive of the two, and was first enacted in 1996. ABAWDs are currently defined as being between the age of 18-54 who do not report a dependent in the household, or do not meet a limited set of criteria such as pregnancy, veteran status, or homelessness (\href{https://www.fns.usda.gov/snap/work-requirements}{cite}). ABAWDs who do not either work, participate in a job training program, or do approved community service for at least 80 hours a month may only receive benefits for a maximum of three months within a three year period. 
+
+ABAWD waivers, also known as "time limit" waivers, suspend the three month participation limit and increase the duration over which ABAWDS may receive SNAP benefits from 3 to 36 months within a three-year period. While ABAWD waivers do not exempt recipients from the general work requirements, the general requirements are far less restrictive than the ABAWD-specific time limit provisions. States submit waiver applications that detail the proposed areas with supporting materials to FNS, who in turn determines waiver eligibility under the authority granted in \href{https://www.ecfr.gov/current/title-7/subtitle-B/chapter-II/subchapter-C/part-273/subpart-G/section-273.24#p-273.24(f)}{7 Code of Federal Regulations (CFR) 273.24(f)}. The regulation permits waivers for areas with unemployment rates above 10 percent or areas deemed to have an insufficient number of jobs.
+
+In practice, FNS historically interpreted the ``insufficient jobs'' criterion using several administrative benchmarks articulated in the CFR and described in the 2019 Federal Register Rulemaking Notice. These benchmarks included: 
+
+\begin{itemize}
+    \item 12-month average employment rate over 10\%
+    \item 24-month unemployment rate 20\% above the national average
+    \item Labor Surplus Area (LSA) designation by the BLS
+    \item State qualification for extended federal unemployment insurance benefits
+    \item Other evidence of insufficient jobs, such as evidence of declining industries or other exceptional economic circumstances.
+\end{itemize}
+
+For the duration of an approved waiver, ABAWDs residing in the specified geographic areas may continue to receive benefits beyond the 3 month time limit even if they do not satisfy the ABAWD-specific work requirement. In 2009, the American Recovery and Reinvestment Act (ARRA) suspended the ABAWD time limit nationwide through September 20th, 2010. Following the expiration of the ARRA suspension, most states continued to operate under waivers between 2010 and 2013. However, waiver usage became substantially more heterogeneous as the labor market began to recover after the recession. For example, at the end of 2013, 45 states operated at least one approved ABAWD waiver, the majority of which were statewide. by the end of 2017, only 33 states maintained active waivers, and just 9 of those waivers applied statewide. \textbf{FIGURE CALLOUT HERE}\\
+
+Beginning in 2019, the Trump administration sought to narrow ABAWD waiver eligibility through regulatory changes proposed by USDA. A 2019 Federal Register notice raised concerns involving the geographic aggregation of waiver areas. Under the existing framework, states could combine contiguous areas into single waiver areas when submitting waiver applications. USDA argued that this flexibility allowed for state authorities to expand coverage by combining high-unemployment areas with nearby low-unemployment areas that would have not independently qualified for waiver status. As a result, the notice proposed tighter evidentiary standards for waiver approval. Proposed changes include restricting the geographic aggregation of waiver areas, imposing additional unemployment rate thresholds for qualification under the insufficient jobs criterion listed above, and limiting the use of Labor Surplus Area designations. Although USDA finalized many of these changes in late 2019, implementation was halted following federal litigation and the onset of the COVID-19 pandemic.
+
+\begin{figure}
+    \centering
+    \includegraphics[width = 0.8\textwidth]{2026_AAEA_Submission/Figures/state_participation_rate_map.png}
+    \caption{Fig Caption Here}
+    \label{fig:state_participation}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width = 0.8\textwidth]{2026_AAEA_Submission/Figures/BBCE_2025.png}
+    \caption{Fig Caption Here}
+    \label{fig:BBCE_2025}
+\end{figure}
+
+
+\subsection{Dollar Stores}
+
+Dollar General pioneered the modern dollar store concept in 1955. Unlike other discount retailers that compete through restricting product assortments or extensively relying on private-label products, dollar stores combine moderate product variety with low operating costs. Typical dollar stores occupy between 8-12,000 square feet of space, stock roughly 10,000 to 12,000 SKUs, cost less than \$250,000 to open and employ relatively few workers. Nationwide store openings began to accelerate in the wake of the 2008 financial crisis: Between 2010 and and 2021, the number of dollar stores expanded from fewer than 20,000 stores to almost 35,000 stores. By 2021, half of all new retail store openings in the US were chain dollar stores (\href{https://ilsr.org/wp-content/uploads/2023/01/ILSR-Report-The-Dollar-Store-Invasion-2023.pdf}{cite}).
+
+Market entry strategies have evolved over time. Interviews with Dollar General executives in 2011 emphasized the role of of dollar stores as "fill-in trip" destinations for a broad range of consumers, including higher-income households making supplemental shopping trips near existing large retailers (\href{https://www.nytimes.com/2011/08/21/magazine/the-dollar-store-economy.html}{cite}). By the mid-2010s, however, executives increasingly emphasized expansion into low-density communities underserved by big retailers. Public statements from Dollar General executives described a focus on smaller stores that could generate a profit in communities with under 1,000 households, with the target household earning below \$40,000 annually. In a 2017 interview, an executive at Dollar General noted "We went where they ain't... [We open] where Wal-Mart's 40 miles away and we can meet those people's needs." (\href{https://www.wsj.com/articles/how-dollar-general-became-rural-americas-store-of-choice-1512401992}{cite}).
+
+% There has been significant debate on the welfare implications of the growth of the dollar store format. On one hand, dollar stores may expand retail access by lowering travel costs and introducing lower-priced consumption options into underserved markets. On the other hand, because grocery retailers operate with thin margins on perishables and rely disproportionately on packaged “center aisle” goods for profitability, increased dollar-store competition may reduce the viability of incumbent grocery stores. The resulting equilibrium effects could alter both local market structure and household food access. A growing empirical literature examines these competing mechanisms. Recent work by  \cite{schneier2025dollarstore} finds that dollar store entry expands the household choice set without significantly impacting entry. Other work has complemented these findings by uncovering evidence that supermarket entry does not have a statistically significant impact on healthy eating \citep{allcott2019food}. These findings are consistent with research in the public health literature showing that rural poor households tend to use dollar stores for "filler trips", but will invest in freezers for infrequent supermarket visits (\href{https://pmc.ncbi.nlm.nih.gov/articles/PMC6836802/}{Harnack et al. 2019}). In contrast, Caoui et al. (2026) document that dollar-store expansion reduces nearby grocery-store presence and lowers fresh produce consumption among lower-income households with high travel costs. Their estimates suggest that grocery-store exits induced by dollar-store expansion may partially mediate reductions in fresh produce purchases. 
+
+\section{Motivating Descriptives}
+
+Two descriptive patterns motivate the empirical analysis. First, ABAWD waiver exposure is neither static nor purely statewide: over time, states shift from broad statewide waivers to narrower county carveouts, and within waived states many counties remain untreated in some years. Second, dollar store growth substantially outpaces other SNAP-authorized retail formats over the same period and is geographically widespread. Both the policy environment and the retail landscape vary meaningfully across counties and over time.
+
+We first illustrate in \ref{fig:Waivergrowth} an increase in counties covered by the ABAWD waiver from 2014 onwards, with coverage increases especially pronounced in rural counties. We then see in figure \ref{fig:annual_waiver_status_counts} that increased county-level waive adoption mainly arose from the transition from state-level waivers after the expiration of provisions put in place during the financial crisis. We then show in figure \ref{fig:retail_format_growth} that this transition coincides with a period of rapid dollar store expansion. Finally, we see in figure \ref{fig:dollarStore} that dollar store expansion was broad-based rather than concentrated in any single region, motivating our empirical strategy.
+
+We first illustrate in \ref{fig:annual_waiver_status_counts} an increase in counties covered by the ABAWD waiver from 2014 onwards, with coverage increases especially pronounced in rural counties. 
+
+increased adoption of county-wide waivers in 2014, which came from the transition from state-level waivers after the expiration of provisions put in place during the financial crisis.
+
+\subsection{ABAWD Waivers}
+
+As discussed above, FNS allowed states to request waivers for geographic units other than individual counties, including labor market areas, metropolitan divisions, towns, and reservations. This flexibility mattered because it allowed states to construct waiver areas around broader labor markets rather than strictly around county-by-county eligibility. Pennsylvania's use of the Philadelphia Metropolitan Division is illustrative: that waiver geography bundled Bucks, Chester, Delaware, Montgomery, and Philadelphia Counties into a single labor-market area. In settings like this, county treatment can reflect inclusion in a broader administrative waiver area rather than a stand-alone county determination.\\
+
+Figure \ref{fig:Waivergrowth} plots the number of counties covered by explicit county-level waivers over time, split by rural and urban status. A first takeaway is that county-level waiver use was highly time-varying. The first plotted year, 2014, is a low point with only 247 county-waived counties. County-level waiver coverage then rises sharply to 1,873 counties in 2015 before gradually receding to 920 by 2019. This figure should be read together with the state-level scope measure below: because Figure \ref{fig:Waivergrowth} counts explicit county-level waivers only, the unusually low 2014 count does not imply that waiver use disappeared. Instead, it marks a transition away from the near-ubiquitous statewide coverage of the immediate post-recession period and toward a regime in which fewer areas were waived and a larger share of waiver activity occurred through more targeted carveouts. A second takeaway is that rural counties consistently account for the majority of county-waived areas, representing roughly 60 to 66 percent of county-waived counties in each year from 2014 to 2019.
+
+\begin{figure}
+    \centering
+    \includegraphics[
+      width=0.8\textwidth,
+      trim=0 0 0 200,
+      clip
+    ]{2026_AAEA_Submission/Figures/3_1_0_0_county_conferral_growth_rural_share.jpeg}
+    \caption{County ABAWD Waviers by Year}
+    \label{fig:Waivergrowth}
+\end{figure}
+
+Figure \ref{fig:annual_waiver_status_counts} clarifies how the scope of waiver use changed across states. In 2012 and 2013, 35 and 34 states in the county analysis panel coverage, respectively, operated statewide waivers, while only four states in each year used county waivers. By 2014, statewide waivers had nearly disappeared, with only three statewide-waiver states and six county-waiver states. Waiver activity broadened again in 2015, but in a different form: by 2016, 22 states used county waivers while only 8 retained statewide waivers, and by 2019 county waivers remained present in 21 states while statewide waivers had fallen to just 2. State governments moved away from broad statewide relief toward more spatially selective waiver administration. That shift is important for the empirical design because it creates within-state county-level variation in treatment exposure.
+
+\begin{figure}
+    \centering
+        \includegraphics[
+      width=0.8\textwidth,
+      trim=0 0 0 200,
+      clip
+    ]{2026_AAEA_Submission/Figures/3_1_0_5_annual_state_waiver_status_counts.jpeg}
+    \caption{Annual ABAWD Waiver Status Across States}
+    \label{fig:annual_waiver_status_counts}
+\end{figure}
+
+Figure \ref{fig:Waivercountystatus} maps counties that were ever assigned a county-level waiver during the analysis period. County-level waiver exposure is geographically broad rather than concentrated in a small number of isolated distressed places. In our county panel, 64.4 percent of counties are ever county-waived. The map shows especially broad county-level exposure across much of the South and West, alongside more persistent untreated areas in parts of the Great Plains, Texas, and northern New England. This wide spatial footprint is useful empirically because it indicates that county-level waiver treatment is not confined to one narrow region of the country.
+
+\begin{figure}
+    \centering
+    \includegraphics[
+      width=0.8\textwidth,
+      trim=0 0 0 200,
+      clip
+    ]{2026_AAEA_Submission/Figures/3_1_0_2_ever_waived_county_map.jpeg}
+    \caption{Counties Ever Assigned a County-Level Waiver}
+    \label{fig:Waivercountystatus}
+\end{figure}
+
+Figure \ref{fig:Waivercountystatusmap} turns from ever-treated status to treatment timing and within-state scope. The figure colors both statewide and county-level waiver exposure, but isolates directly county-waived counties within each treated state-year. In 2014, only 179 counties are directly county-waived, compared with 578 other counties located in states with some waiver activity; equivalently, only 23.6 percent of counties in waiver-active states are directly county-waived. By 2016 that share rises to 52.3 percent, and by 2019 it remains elevated at 45.4 percent. The maps therefore show that treatment timing is heterogeneous not only across states, but also within states. Some states move from no waiver to partial waiver coverage, others move from statewide waivers to more selective county carveouts, and others lose waiver coverage entirely. This staggered and spatially incomplete rollout is the source of identifying variation exploited in the reduced-form analysis.
+
+\begin{figure}
+    \centering
+    \includegraphics[
+      width=0.8\textwidth,
+      trim=0 0 0 400,
+      clip
+    ]{2026_AAEA_Submission/Figures/3_1_0_6_county_waiver_county_map.jpeg}
+    \caption{ABAWD Waiver Geography in Selected Analysis Years}
+    \label{fig:Waivercountystatusmap}
+\end{figure}
+
+\subsection{Retailer Formats}
+
+Figure \ref{fig:retail_format_growth} uses SNAP retailer location data to trace county-average retailer stock by format, normalized to 2010 = 100. Dollar stores exhibit the strongest sustained expansion over the decade, growing by  60 percent. Convenience stores also expand, but much more modestly, ending the period at an index value of roughly 125. In contrast, multi-category retailers grow by only 17\%, while supermarkets are essentially flat to slightly declining and end the decade below their 2010 level. Notably, dollar store growth outpaces convenience stores by the middle of the decade and then continues to separate from the other retail formats. Growth in SNAP-authorized retail access during the 2010s was disproportionately driven by dollar stores rather than by supermarkets or big-box formats.
+
+\begin{figure}
+    \centering
+        \includegraphics[
+      width=0.8\textwidth,
+      trim=0 0 0 200,
+      clip
+    ]{2026_AAEA_Submission/Figures/3_1_1_0_retailer_format_stock_index.jpeg}
+    \caption{Retailer Format Growth}
+    \label{fig:retail_format_growth}
+\end{figure}
+
+Figure \ref{fig:ds_stock_change} shows that dollar store expansion was geographically broad rather than confined to a few local hotspots. Among counties with at least one dollar store in 2010, the median county increased dollar store stock by 50 percent by 2019, the mean increase was 72.3 percent, 81.3 percent of counties experienced positive growth, and 31 percent at least doubled their stock. At the same time, 16.5 percent of counties had no dollar stores in 2010, which is why those counties appear in gray and do not contribute to the displayed percent-change distribution. Even with that caveat, the map makes clear that the expansion of dollar stores was a national phenomenon with substantial cross-county heterogeneity in intensity.
+
+\begin{figure}[H]
+    \centering
+        \includegraphics[
+      width=0.8\textwidth,
+      trim=0 0 0 200,
+      clip
+    ]{2026_AAEA_Submission/Figures/3_1_1_7_ds_stock_change_map_2010_2019.jpeg}
+    \caption{Dollar Store Growth by County (2010-2019)}
+    \label{fig:ds_stock_change}
+\end{figure}
+
+
+\subsection{Summary Statistics}
+
+Table \ref{tab:desc_stats} summarizes the the key statistics at the county level, conditional on wether they received a waiver or not. We identify that counties that receive the waiver are systematically different than those who don't. In particular, waivers are more likely in larger, lower-income counties with higher rents and unemployment.
+
+There are also significant differences in terms of the number of stores across all retail formats. Overall, entities that are treated exhibit a larger number of stores across all retail formats. Most importantly, the distribution of stores by county is skewed to the left with the average of stores by county being below one. 
+
+
+
+Given these persistent differences between treated and never-treated counties, our preferred specifications drop never-treated units so that identification comes from comparisons across counties that eventually receive a waiver. This restriction also reduces the risk of control-group contamination, since some counties without a county-wide waiver may have been partially treated through waivers granted at a more granular geographic level. In appendix specifications that include never-treated counties, the results remain directionally robust.
+
+
+\input{2026_AAEA_Submission/Tables/3_1_2_0_descriptive_stats}
+
+%However, we report in the appendix that our main results are robust to including never-treated counties.
+
+In Table \ref{tab:weighted-distance-evertreated} we  turn our attention to the access to retail options. For each  county we compute an average of the distance of each census tract to the nearest SNAP retailer, weighted by total population, population below 1.25 times the Federal Poverty Line (FPL) and the number of SNAP recipient households. Similar to previous work in the food access literature, we find that rural counties have meaningful differences in weighted distances relative to urban counties. Furthermore, we show that across urban and rural counties\footnote{We label a county as urban if its 2023's Rural Urban Continuum Code (RUCC) is at most 3, and otherwise as a rural county.} treated units appear to have a lower weighted distance than never-treated. 
+
+\begin{table}[!htbp]
+\centering
+\caption{Population-Weighted Distance to Nearest SNAP Retailer by Ever-Treated Status}
+\label{tab:weighted-distance-evertreated}
+\begin{threeparttable}
+\small
+\begin{tabular}{llcc}
+\toprule
+Retail format & Weighting population & Ever-treated & Never-treated \\
+\midrule
+\multicolumn{4}{l}{\textit{Urban counties}} \\
+Dollar stores & Total population & 3.58 & 4.10 \\
+              & Below 1.25$\times$ FPL & 3.36 & 3.82 \\
+              & SNAP recipient households & 3.24 & 3.63 \\
+Convenience stores & Total population & 2.10 & 2.62 \\
+              & Below 1.25$\times$ FPL & 1.93 & 2.44 \\
+              & SNAP recipient households & 1.86 & 2.30 \\
+Supermarkets & Total population & 4.32 & 6.03 \\
+              & Below 1.25$\times$ FPL & 4.15 & 5.86 \\
+              & SNAP recipient households & 4.07 & 5.77 \\
+Multi-category & Total population & 6.91 & 7.59 \\
+              & Below 1.25$\times$ FPL & 6.82 & 7.48 \\
+              & SNAP recipient households & 6.72 & 7.37 \\
+\midrule
+\multicolumn{4}{l}{\textit{Rural counties}} \\
+Dollar stores & Total population & 9.32 & 9.74 \\
+              & Below 1.25$\times$ FPL & 9.16 & 9.45 \\
+              & SNAP recipient households & 8.88 & 9.16 \\
+Convenience stores & Total population & 5.06 & 7.06 \\
+              & Below 1.25$\times$ FPL & 4.93 & 6.84 \\
+              & SNAP recipient households & 4.76 & 6.58 \\
+Supermarkets & Total population & 9.75 & 15.69 \\
+              & Below 1.25$\times$ FPL & 9.60 & 15.52 \\
+              & SNAP recipient households & 9.38 & 15.25 \\
+Multi-category & Total population & 17.40 & 21.06 \\
+              & Below 1.25$\times$ FPL & 17.27 & 20.87 \\
+              & SNAP recipient households & 17.06 & 20.67 \\
+\bottomrule
+\end{tabular}
+
+\begin{tablenotes}[flushleft]
+\footnotesize
+\item \textit{Notes:} Entries report mean county-level population-weighted distance, in miles, from census tract centroids to the nearest SNAP-authorized retailer in each format. Distances are weighted separately by total population, population below 1.25 times the federal poverty line, and SNAP recipient households. Counties are classified according to whether they were ever assigned an ABAWD waiver during the analysis period.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\newpage 
+
+\section{Empirical Framework}
+
+A challenge analyzing SNAP is that its eligibility rules and benefit formulas are broadly standardized federally. To approach this, we use ABAWD time-limit waivers as a source of variation in SNAP participation \citep{ganong_liebman_2018,gray2023employed}. We contribute to this literature by providing a novel national panel of county-level waivers, which we use to study how changes in SNAP access affect the retail landscape. 
+
+For a given county $c$ at year $t$ we estimate:
+
+\begin{align}
+    y_{ct} = \sum_{\tau \neq 0}\phi_\tau D_{ct}^\tau + X_{ct} \Lambda + \delta_c + \delta_t  +\nu_{ct} 
+\end{align}
+
+Where $y_{ct}$ is the inverse hyperbolic sine (IHS) of the number of dollar stores in county $c$ at year $t$ and $D_{ct}^\tau$ indicates wether a county is $\tau$ years away from being treated for the first time. $X_{ct}$ controls for demographic characteristics using county-level averages, including unemployment rate, available population, mean income, average wage and average rent. Finally we include county and year fixed effects. To address potential staggered treatment and dynamic treatment effects, we estimate this equation using \citet{sun2021estimating}, while clustering errors at the county level.
+
+Running isolated event studies for each retail mode prevents us from separating the direct effect of a waiver on a given mode from the indirect effect of competitors in other modes. If ABAWD waivers increase demand across SNAP-authorized formats, and these formats are substitutes for consumers, then estimating the dollar-store response in isolation may understate the direct dollar-store response to the waivers. The direct effect should be null at worst, but the estimated coefficient conflates two distinct forces: insufficient demand expansion to justify entry, and deterrence from the entry of competing formats. As such, our estimates capture a net-effect of direct responses from retailers and indirect responses from competing formats. 
+
+\section{Results}
+
+Figure \ref{fig:event_study_ds_new} shows how the likelihood of each retail mode changes after the waiver onset. Pre-treatment coefficients across modes are for the most part insignificant. We observe that the -2 coefficient for Dollar Stores is significant and negative, however when we test for joint nullity for the pre-exposure coefficients we cannot reject the null. While our preferred specification excludes counties that were never treated, our results similar when including these counties (See Figure \ref{fig:event_study_ds_new_nevertreated} in the appendix).  
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{2026_AAEA_Submission/Figures/1_2_1_es_quick_att_data_all_formats.png}
+    \caption{Event Studies by retail mode}
+    \label{fig:event_study_ds_new}
+\end{figure}
+
+
+Table \ref{tab:att_nonmetro} shows the average treatment effects associated to the event studies above. After the conferral of a waiver, dollar stores and convenience store entry probability increases by  6.2 and 6.7 pps. On the other hand, small groceries and farmer markets see a decrease of 4.9 pps However, their pre-event coefficients are too imprecise to rule out differential trends. We therefore interpret these negative estimates cautiously and do not view them as strong causal evidence. 
+
+\begin{table}[!htbp]
+\centering
+\caption{Average Treatment Effects on Retailer Presence: Non-Metro Counties}
+\label{tab:att_nonmetro}
+\begin{threeparttable}
+\begin{tabular}{lccccc}
+\toprule
+Outcome & ATT & S.E. & County FE & Year FE & Controls \\
+\midrule
+Dollar Stores      &  0.0634**  & (0.0285) & Yes & Yes & Yes \\
+Supermarkets       & -0.0165    & (0.0217) & Yes & Yes & Yes \\
+Convenience Stores &  0.0661*** & (0.0251) & Yes & Yes & Yes \\
+Multi-Category     & -0.0251*   & (0.0130) & Yes & Yes & Yes \\
+Medium Grocery     &  0.0201    & (0.0226) & Yes & Yes & Yes \\
+Small Grocery      & -0.0490**  & (0.0216) & Yes & Yes & Yes \\
+Produce Stores     & -0.0076    & (0.0104) & Yes & Yes & Yes \\
+Farmers Markets    & -0.0495**  & (0.0212) & Yes & Yes & Yes \\
+\midrule
+Observations       & \multicolumn{5}{c}{11,939} \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item \textit{Notes:} The table reports average treatment effects on retailer presence for non-metro counties. Standard errors, clustered by county, are reported in parentheses. All specifications include county and year fixed effects. Controls include population, wages, mean income, rent, and unemployment rate.
+$^{*} p<0.10$, $^{**} p<0.05$, $^{***} p<0.01$.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+We performed an heterogeneity analysis by segmenting our sample between metro and non-metro counties using the Rural-Urban Continuum Codes (RUCC). The results are shown in Figure \ref{fig:event_study_ds_new}, illustrate that the result for dollar stores and convenience stores is consistent across county types. We cannot interpret null-results as the waiver being uneffective attracting other types of retail, as these coefficients confound the direct effect on their own demand, and the indirect effect from potential competitor entry. 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{2026_AAEA_Submission/Figures/1_2_1_es_quick_att_data_metro_comparison.png}
+    \caption{Event Studies by Metro vs Non-Metro}
+    \label{fig:event_study_ds_new}
+\end{figure}
+
+
+A limitation of this analysis is that we measure retail presence using a panel of stores that accept SNAP benefits. A potential concern is that some dollar stores may already be physically present in a county but strategically choose when to become SNAP-authorized. In that case, our estimates would capture changes in SNAP authorization rather than store entry. While we are not aware of direct evidence that dollar stores systematically delay initial SNAP authorization, we argue that the result would remain  meaningful from a policy perspective. If ABAWD waivers induce existing dollar stores to accept SNAP, this still expands the set of retailers where SNAP recipients can use their benefits.
+
+
+% Given the baseline number of dollar stores per county  (0.6), a back-of-the-envelope estimate across the 2,010 treated counties suggests that the roll-out of the policy is associated with an increase of roughly 120 dollar stores. Relative to the national stock of dollar stores, this aggregate effect is modest. However, the county-level estimate still suggests that dollar-store presence responds to subsidies targeted at a specific low-income population in a non-negligible way.
+
+
+
+
+% The reason is that other formats may absorb part of the demand shock. Under this interpretation, our estimate can be viewed as a conservative measure of the dollar-store response. More generally, however, the estimate should be interpreted as a reduced-form equilibrium effect rather than a primitive in a entry-game. 
+
+% \section{Potential Implications for retail access}
+
+% For each census tract, I extract annual 5-year ACS estimates of the following:
+% \begin{itemize}
+%     \item Total population
+%     \item Total population below 1.25x federal poverty line
+%     \item Total population that received SNAP benefits within the last year
+% \end{itemize}
+
+% I take the centroid of each census tract, and calculate the distance to the nearest retailer for each retailer format group. I repeat this by year. The table below summarizes how these population weighted distances have changed:
+
+% \begin{table}[!htbp]
+% \centering
+% \caption{Population-Weighted Distance to Nearest SNAP Retailer by Format}
+% \label{tab:weighted-distance-snapshot}
+% \begin{threeparttable}
+% \small
+% \begin{tabular}{llccc}
+% \toprule
+% Retail format & Weighting population & 2014 & 2019 & Change \\
+% \midrule
+% \multicolumn{5}{l}{\textit{Urban counties}} \\
+% Dollar stores & Total population & 3.75 & 3.18 & -0.56 \\
+%               & Below 1.25$\times$ FPL & 3.51 & 2.96 & -0.55 \\
+%               & SNAP recipient households & 3.36 & 2.85 & -0.51 \\
+% Convenience stores & Total population & 2.26 & 2.31 & 0.05 \\
+%               & Below 1.25$\times$ FPL & 2.09 & 2.13 & 0.04 \\
+%               & SNAP recipient households & 2.00 & 2.05 & 0.05 \\
+% Supermarkets & Total population & 4.86 & 4.79 & -0.07 \\
+%               & Below 1.25$\times$ FPL & 4.69 & 4.60 & -0.09 \\
+%               & SNAP recipient households & 4.60 & 4.50 & -0.10 \\
+% Multi-category & Total population & 7.13 & 7.05 & -0.08 \\
+%               & Below 1.25$\times$ FPL & 7.02 & 6.92 & -0.10 \\
+%               & SNAP recipient households & 6.92 & 6.85 & -0.08 \\
+% \midrule
+% \multicolumn{5}{l}{\textit{Rural counties}} \\
+% Dollar stores & Total population & 9.48 & 7.41 & -2.07 \\
+%               & Below 1.25$\times$ FPL & 9.27 & 7.24 & -2.03 \\
+%               & SNAP recipient households & 8.99 & 7.05 & -1.94 \\
+% Convenience stores & Total population & 5.82 & 5.62 & -0.19 \\
+%               & Below 1.25$\times$ FPL & 5.65 & 5.46 & -0.20 \\
+%               & SNAP recipient households & 5.45 & 5.26 & -0.19 \\
+% Supermarkets & Total population & 11.99 & 12.08 & 0.09 \\
+%               & Below 1.25$\times$ FPL & 11.84 & 11.92 & 0.08 \\
+%               & SNAP recipient households & 11.60 & 11.71 & 0.12 \\
+% Multi-category & Total population & 18.78 & 18.96 & 0.18 \\
+%               & Below 1.25$\times$ FPL & 18.63 & 18.82 & 0.19 \\
+%               & SNAP recipient households & 18.42 & 18.63 & 0.21 \\
+% \bottomrule
+% \end{tabular}
+% \begin{tablenotes}[flushleft]
+% \footnotesize
+% \item \textit{Notes:} Entries report mean county-level population-weighted distance, in miles, from census tract centroids to the nearest SNAP-authorized retailer in each format. Distances are weighted separately by total population, population below 1.25 times the federal poverty line, and SNAP recipient households. Urban and rural classifications are based on county status. The change column reports 2019 minus 2014.
+% \end{tablenotes}
+% \end{threeparttable}
+% \end{table}
+
+
+% The figure below shows weighted distance trends, specifically for dollar stores, broken out by urban rural continuum code:
+
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=0.75\linewidth]{2026_AAEA_Submission/Figures/3_1_2_2_weighted_distance_trend_dollar_stores.jpeg}
+%     \caption{weighted average distance to nearest dollar store}
+%     \label{fig:weightdist_dollarstores}
+% \end{figure}
+
+% With the exception of convenience stores, we see that dollar stores are the closest option for SNAP recipients. The below doesn't take prices into account, and convenience store markups are likely higher than their dollar store counterparts.
+
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=0.75\linewidth]{2026_AAEA_Submission/Figures/3_1_2_4_snap_recipient_household_format_trends.jpeg}
+%     \caption{weighted average distance to nearest retailer by retailer format group amongst SNAP recipients}
+%     \label{fig:weightdist_dollarstores}
+% \end{figure}
+
+
+
+
+
+
+
+
+
+\section{Conclusion}
+
+\bibliographystyle{apalike} % Or "aer", "ecta", etc.
+\bibliography{references} % references.bib file
+
+\begin{appendices}
+\renewcommand{\thetable}{A\arabic{table}}
+\renewcommand{\thefigure}{A\arabic{table}}
+\setcounter{table}{0}
+
+
+\section{Mapping store names and types to retail format groups} \label{app:retail_groups}
+
+Table \ref{tab:retailer-name-rules} summarizes the store groupings used in the analysis. After these matches are applied, the cleaned labels are standardized to a common format by adding a \texttt{chain\_} prefix and replacing spaces or apostrophes with underscores. For example, Dollar General becomes \texttt{chain\_dollar\_general} and Trader Joe's becomes \texttt{chain\_trader\_joe\_s}.
+
+
+\begin{table}[!htbp]
+\centering
+\caption{Name-Based Overrides Used to Build Cleaned Retailer Labels}
+\label{tab:retailer-name-rules}
+\small
+\begin{tabular}{p{0.23\linewidth}p{0.68\linewidth}}
+\hline
+Cleaned label family & Store-name patterns matched first \\
+\hline
+Dollar-store & Dollar General; Dollar Tree; Family Dollar \\
+Convenience & 7-Eleven; Circle K; Speedway \\
+Multi-category & Walmart; Target \\
+Supermarket & Albertsons; Aldi; Fred Meyer; Giant Eagle; Giant Food; Ingles Markets; Kroger; Meijer; Publix; Safeway; Save A Lot; Save Mart; Smart \& Final; Stater Bros; Stop \& Shop; Supervalu; Trader Joe's; Weis Markets; Whole Foods; Wild Oats; Winn-Dixie; Raley's; Roundy's; H-E-B \\
+\hline
+\end{tabular}
+\end{table}
+
+When a retailer does not match one of the name-based overrides in Table \ref{tab:retailer-name-rules}, the pipeline falls back to the raw SNAP \texttt{Store Type}, as shown in Table \ref{tab:retailer-storetype-rules}.
+
+\begin{table}[!htbp]
+\centering
+\caption{Fallback from Raw SNAP Store Type to Cleaned Retailer Label}
+\label{tab:retailer-storetype-rules}
+\small
+\begin{tabular}{p{0.48\linewidth}p{0.36\linewidth}}
+\hline
+Raw SNAP \texttt{Store Type} & Cleaned label \\
+\hline
+Convenience Store & \texttt{chain\_convenience\_store} \\
+Supermarket & \texttt{chain\_super\_market} \\
+Farmers' Market & \texttt{chain\_farmers\_market} \\
+Large Grocery Store & \texttt{chain\_large\_grocery} \\
+Medium Grocery Store & \texttt{chain\_medium\_grocery} \\
+Small Grocery Store & \texttt{chain\_small\_grocery} \\
+Fruits/Veg Specialty & \texttt{chain\_produce} \\
+\hline
+\end{tabular}
+\end{table}
+
+The cleaned retailer labels are then aggregated into the format groups used in the paper. The descriptive analysis focuses on four benchmark groups: dollar stores, convenience stores, supermarkets, and multi-category retailers. The reduced-form analysis uses those same benchmark groups and additionally estimates separate outcomes for medium grocery, small grocery, produce specialty stores, and farmers' markets.
+
+
+\newpage 
+\section{Appendix Figures}
+\renewcommand{\thetable}{B\arabic{table}}
+\renewcommand{\thefigure}{B\arabic{table}}
+\setcounter{table}{1}
+\setcounter{figure}{1}
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{2026_AAEA_Submission/Figures/1_2_1_es_quick_att_panel_all_formats.png}
+    \caption{Event Studies by Retail Mode (with Never Treated)}
+    \label{fig:event_study_ds_new_nevertreated}
+\end{figure}
+
+
+\end{appendices}
+
+\end{document}
+

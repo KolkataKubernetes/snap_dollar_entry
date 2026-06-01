@@ -1,0 +1,336 @@
+%=========================================================
+% Second-Year Paper Template (LaTeX)
+% Authors: Alejandro Herrera Caicedo, Inder Majumdar
+%=========================================================
+
+\documentclass[12pt]{article}
+
+% ---------- Encoding & Language ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+
+% ---------- Page Layout ----------
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}       % For line spacing
+\doublespacing              % Common for papers
+\usepackage{lineno}
+\usepackage{threeparttable}
+
+% ---------- Math & Symbols ----------
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{bm}             % Bold math
+\usepackage{bbm}             % Bold math
+\usepackage{mathtools}      % Extra math tools
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min} % optional
+
+% ---------- Figures & Tables ----------
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}     % Subfigures
+\usepackage{booktabs}       % Nice tables
+\usepackage{float}          % H for precise float placement
+\usepackage{longtable}      % Multi-page tables if needed
+
+% ---------- References & Citations ----------
+\usepackage{natbib}         % Author-year citations
+
+% ---------- Formatting ----------
+\usepackage{microtype}      % Better typography
+\usepackage{enumitem}       % Control over lists
+\usepackage{hyperref}       % Clickable references
+\hypersetup{
+    colorlinks = true,
+    linkcolor  = blue,
+    citecolor  = blue,
+    urlcolor   = blue
+}
+\usepackage{environ, adjustbox}   % lets us redefine environments easily - for gt tables
+\usepackage{rotating}
+
+% ---------- Theorems (if needed) ----------
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+
+% ---------- Title Information ----------
+\title{Scratch Paper}
+\date{\today}
+
+% ---------- Figures ----------0
+\usepackage{tikz}
+\newcommand{\addaxeslabels}[4]{
+  \begin{tikzpicture}
+    \node[anchor=south west,inner sep=0] (img) {\includegraphics[width=#2\textwidth]{#1}};
+    \begin{scope}[x={(img.south east)},y={(img.north west)}]
+      % X-axis label
+      \node at (0.5, -0.06) {#3};
+      % Y-axis label
+      \node[rotate=90] at (-0.08, 0.5) {#4};
+    \end{scope}
+  \end{tikzpicture}
+}
+
+%=========================================================
+\begin{document}
+\linenumbers
+
+\maketitle
+
+\section{Setting}
+\textit{Household problem.}
+Consider a household $i$ making a grocery. The household has food resources
+\[
+M_i=m_i+F_i,
+\]
+where $m_i$ is the household's cash food budget and $F_i$ denotes food-stamp
+benefits. The household $i$ is also characterized by the number of people in the household $n_i$. The household chooses which store $j\in\mathcal J$ to visit and, conditional
+on that store, chooses a basket of healthy and unhealthy food. Let
+$(x_{ijh},x_{iju})$ denote the quantities of healthy and unhealthy food purchased by
+household $i$ at store $j$. Store $j$ has category-specific price indices $p^h_j$ and
+$p^u_j$.
+
+Conditional on choosing store $j$, the household's indirect utility is
+\[
+V_{ij}(M_i)
+=
+\max_{x_{ijh},x_{iju}\geq 0}
+u_i(x_{ijh},x_{iju})
+\]
+subject to
+\[
+p^h_j x_{ijh}+p^u_j x_{iju}\leq M_i.
+\]
+
+The store chosen for the trip is
+\[
+j_i^*
+=
+\arg\max_{j\in\mathcal J}
+\left\{
+V_{ij}(M_i)+\varepsilon_{ij}
+\right\},
+\]
+where $\varepsilon_{ij}$ captures idiosyncratic trip-level preferences for store $j$.
+
+Assuming $\varepsilon_{ij}$ follows the standard type-I extreme value, the probability that a household of type $i$ chooses store $j$ is
+\[
+s_{ij}
+=
+\frac{\exp\{V_{ij}\}}
+{\sum_{k\in\mathcal J}\exp\{V_{ik}\}}.
+\]
+
+
+
+\textit{Household problem: restricted transfer.} There is a growing political push to expand the household's purchasing power over eligible food goods, but cannot be used to purchase non-eligible goods. Suppose healthy food is SNAP-eligible, while unhealthy food must be purchased with cash. Conditional on choosing store $j$, the household solves
+\[
+V_{ij}(m_i)
+=
+\max_{x_{ijh},x_{iju}\geq 0}
+u_i(x_{ijh},x_{iju})
+\]
+subject to
+\[
+p^h_j x_{ijh}+p^u_j x_{iju}\leq M_i
+\]
+and
+\[
+p^u_j x_{iju}\leq  m_i.
+\]
+
+
+
+\textit{Firm's Problem.} Each potential firm $j$ chooses whether to enter the market,
+\[
+a_j\in\{0,1\}.
+\]
+Let
+\[
+\mathcal J(a)=\{j:a_j=1\}
+\]
+denote the set of active stores. If firm $j$ enters, its market share is
+\[
+\sigma_j(a)
+=
+\int
+\frac{\exp\{V_{ij}\}}
+{\sum_{k\in\mathcal J(a)}\exp\{V_{ik}\}}
+\,dF_i.
+\]
+If each trip generates average expenditure $m$ and the firm earns a margin $\mu_j$ per
+dollar of expenditure, firm $j$'s profit is
+\[
+\pi_j(a)
+=
+a_j
+\left[
+\mu_j
+\int
+M
+\frac{\exp\{V_{ij}\}}
+{\sum_{k\in\mathcal J(a)}\exp\{V_{ik}\}}
+\,dF_i
+-
+\phi_j
+\right],
+\]
+where $\phi_j$ is the fixed cost of entry.
+
+Firm $j$ enters if and only if
+\[
+a_j=1
+\quad \text{if and only if} \quad
+\pi_j(a_j=1,a_{-j})\geq 0.
+\]
+
+For the purpose of this toy model, I treat the category price indices $p^h_j$ and
+$p^u_j$ as exogenous. In practice, this is an important equilibrium object because
+food-stamp benefits may affect not only household food resources, but also the prices
+charged by retailers.
+
+\section{Parametric Assumptions and Equilibrium}
+
+\textit{Utility function.} Assume that the function follows a Cobb-Douglas:
+
+\[
+u_i(x_{ijh},x_{iju})
+=
+\alpha_i \log x_{ijh}
++
+(1-\alpha_i)\log x_{iju},
+\]
+where $\alpha_i\in(0,1)$ captures the household's preference for healthy food. Conditional on visiting store $j$, the household solves
+\[
+V_{ij}
+=
+\max_{x_{ijh},x_{iju}\geq 0}
+\alpha_i \log x_{ijh}
++
+(1-\alpha_i)\log x_{iju}
+\]
+subject to
+\[
+p^h_jx_{ijh}+p^u_jx_{iju}\leq M_i
+\]
+and
+\[
+p^u_jx_{iju}\leq  m_i.
+\]
+The second constraint captures the restricted-transfer problem: spending on unhealthy
+food must be financed with cash resources. Without the restricted-transfer constraint, the household would choose
+\[
+x^0_{ijh}
+=
+\frac{\alpha_i M_i}{p^h_j},
+\qquad
+x^0_{iju}
+=
+\frac{(1-\alpha_i)M_i}{p^u_j}.
+\]
+
+The restricted-transfer constraint does not bind if
+\[
+p^u_jx^0_{iju}\leq m_i,
+\]
+or equivalently,
+\[
+(1-\alpha_i)M_i\leq  m_i.
+\]
+
+Therefore, if the restriction does not bind, indirect utility is
+\[
+V^N_{ij}
+=
+\alpha_i
+\log\left(
+\frac{\alpha_i M_i}{p^h_j}
+\right)
++
+(1-\alpha_i)
+\log\left(
+\frac{(1-\alpha_i)M_i}{p^u_j}
+\right).
+\]
+
+
+If the restricted-transfer constraint binds, then
+\[
+p^u_jx_{iju}=m_i,
+\]
+so
+\[
+x^B_{iju}
+=
+\frac{m_i}{p^u_j}.
+\]
+Since the total budget also binds,
+\[
+p^h_jx_{ijh}+p^u_jx_{iju}=M_i,
+\]
+which implies
+\[
+x^B_{ijh}
+=
+\frac{F_i}{p^h_j}.
+\]
+
+Thus, if the restriction binds, indirect utility is
+\[
+V^B_{ij}
+=
+\alpha_i
+\log\left(
+\frac{F_i}{p^h_j}
+\right)
++
+(1-\alpha_i)
+\log\left(
+\frac{m_i}{p^u_j}
+\right).
+\]
+
+The indirect utility from visiting store $j$ can therefore be written as
+\[
+V_{ij}
+=
+\begin{cases}
+\alpha_i\log\left(\frac{\alpha_i M_i}{p^h_j}\right)
++
+(1-\alpha_i)\log\left(\frac{(1-\alpha_i)M_i}{p^u_j}\right),
+&
+\text{if } (1-\alpha_i)M_i\leq m_i,
+\\[1em]
+\alpha_i\log\left(\frac{F_i}{p^h_j}\right)
++
+(1-\alpha_i)\log\left(\frac{m_i}{p^u_j}\right),
+&
+\text{if } (1-\alpha_i)M_i>m_i.
+\end{cases}
+\]
+
+More concisely:
+
+\[
+V_{ij}
+=
+\alpha_i\log\left(
+\frac{M_i-\min\{(1-\alpha_i)M_i,\;m_i\}}{p^h_j}
+\right)
++
+(1-\alpha_i)\log\left(
+\frac{\min\{(1-\alpha_i)M_i,\;m_i\}}{p^u_j}
+\right).
+\]
+
+This characterizes the demand which pins down the best response of the firm.
+
+\textit{Entry game equilibrium.} Existence is guaranteed to exist as the number of players and actions is finite. As it is common in these settings, uniqueness is not feasible.
+
+% \textbf{Identification.} In a given market a household of a given type will always make the same purchasing decisions, so we have to average people around with a representative type. The identifying variation for demand must come from observed heterogeneity in household types and from variation in the choice sets and prices induced by differences in market structure. In practice, this amounts to comparing similar households across markets with different configurations of stores.
+
+\end{document}
+
+\end{document}

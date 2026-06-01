@@ -1,0 +1,424 @@
+\documentclass[11.5pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm,enumerate,float,geometry,latexsym,bm}
+\usepackage{kpfonts}
+\usepackage{hyperref}
+\usepackage{apacite}
+\usepackage{epigraph}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{caption}
+\usepackage{multirow}
+
+\usetikzlibrary{shapes.geometric,positioning}
+\usepackage{pgfplots}
+\usepackage[misc]{ifsym}
+
+% Enhanced document geometry
+\geometry{letterpaper, margin=1in}
+
+% Spacing and paragraph formatting
+\setlength{\parindent}{0.5in}
+\setlength{\parskip}{6pt}
+\linespread{1.5}
+
+% Title and author information
+\title{Doing Fabulous In Bad Times\footnote{From Dollar General's CEO quote ``We do very good in good times, and fabulous in bad times.''} \\ Dollar Store Expansion \& Nutritional Assistance}
+\author{Alejandro Herrera-Caicedo }
+\date{August 2024}
+
+\begin{document}
+
+% Title page
+\maketitle
+\begin{abstract}
+    During the last decades dollar stores have significantly expanded in the U.S., predominantly serving to lower-income communities. This paper studies the role of policy distortions in driving the observed spatial distribution of dollar stores away from an efficient allocation. To provide empirical evidence of these inefficiencies, I estimate a model that integrates static demand estimation with a dynamic framework for store location decisions. I discuss the potential implications of this distortion to nutritional inequality, an issue of increasing concern in the U.S.
+    
+    
+\end{abstract}
+
+
+% Introduction -------------------------------------------------------------------------------------------------------------------------------
+\section{Introduction}
+
+% Literature Review ---------------------------------------------------------------------------------------------------------------------------
+
+
+During the last decades dollar stores have expanded significantly, outpacing other food retailers. Its rapid expansion has been a current matter of public policy, as these stores disproportionately cater to low-income households, and in some instances are the only food retailer in the market. Both the literature, and policy makers have primarily focused on how this expansion has crowded out local fresh produce retailers, potentially contributing to the phenomena of food deserts in the United States, and exacerbating the consumption of nutrient-poor food by low-income households, a group that disproportionately suffers of higher rates of hypertension, diabetes, cardiovascular diseases, obesity, and dental diseases \cite{shenkin2010using}. These nutrition concerns have been approached by providing subsidies to households\footnote{On 2009 Nielsen's Research pointed out that 45\% of their consumer base are low-income households, that earn less than 30.000 a year \cite{nielsen2009dollarstores}}, most notably through the Supplemental Nutritional Assistance Program (SNAP), whose budget has nearly doubled from \$17 billion in 2000 to \$119 billion in 2022. While the attention of policymakers and academics has been on how household choices and outcomes improve with this program, the extent to which the supply side may react to this policy has remained understudied. This should be of importance, as the target of the assistance program is likely to overlap with the core consumer of dollar stores. As such, this article aims to provide evidence on how suppliers respond to this policy, which could influence household nutrition outcomes.
+
+
+%While both the attention of policy makers, and academics have been focusing on how households health incomes improve with this program, the extent for which the supply side may react to this has remained understudied. The aim of this article is to provide evidence on how suppliers react to this policy, which would play a role on the household nutrition outcomes.
+
+%Understanding its rapid expansion is a matter of public policy, as these stores disproportionately cater to low-income households, and in some instances are the only food retailer market. Anecdotally, their fast expansion have also been linked to health hazards\footnote{On February of 2024, Dollar Tree stores were selling recalled applesauce contaminated with lead. On the very same month, Family Dollar warehouses were experiencing rodent infestations. And previously in October of 2023, Dollar Generalwas deemed a Severe Violator of OSHA by the Department of Labor.} 
+
+
+
+%Simultaneously, the Supplemental Nutritional Assistance Program (SNAP) benefits have also grown significantly during the last decade ($\sim$100B in 2010 to 200B in 2020). 
+
+
+%There are two reasons to infer that the SNAP resources can affect the market landscape, first, dollar stores disproportionally enter markets with a larger share of low-income households \cite{caoui2022impact}, there is value in understanding how policies to assist low-income consumers shape the market where they consume. Second, after the expiration of the pandemic SNAP benefits, discount retailers have announced that they have experienced a loss of sales. The consulting firm PYMENTS.com projected in 2023 that the decrease of SNAP would hurt dollar stores as, according to them, SNAP associated sales represented the 10\% of dollar stores sales\footnote{You can find their note \href{https://www.pymnts.com/economy/2023/loss-of-snap-and-grocery-inflation-push-consumers-off-hunger-cliff/}{\textbf{here}}}. Furthermore, Family Dollar's CEO pointed the reduction of SNAP benefits as one of the reason for the contraction of their consumer base, and the subsequent permanent closure of thousands of stores in 2024. 
+
+%This article asks if dollar stores' decision to enter into a market is affected by SNAP, and provides evidence of a trade-off between entering nearby warehouses and entering a market where there is a larger availability of SNAP households. As it is conventional in the literature, I study and quantify the trade-off between economies of density and the cannibalization of sales within these expanding store networks. 
+
+This article explores whether dollar stores' decisions to enter a market are influenced by the presence of SNAP households by asking two questions: Does the policy affect entry into the market? And if so, do dollar stores face a trade-off between entering nearby warehouses and markets with higher availability of SNAP households? By addressing these questions, the article sheds light on how unintended supply-side interactions with the policy might dampen the expected reach of the nutrition program.
+
+
+%Furthermore, I contribute to the literature by analyzing a potential new trade-off, regarding how the distribution network structure of dollar stores might respond to the availability of consumption subsidies for households.
+
+To that end, I conduct two exercises. First, I provide reduced form evidence that the number of Dollar Stores increases when requirements for households to access SNAP are waived. Specifically, for an able-bodied adult without dependents (ABAWD) aged 18-49 to access SNAP, they must work at least 80 hours each month. I exploit the waiver of this restriction in Virginia, which was gradually implemented and removed, finding that the number of Dollar Stores in a county increases by 5\% when the waivers are announced. However, this result appears to be driven by a single firm, which is the one studied in the structural portion of this article. This variation is important for SNAP access, as \citeauthor{gray2023employed} (2023) have shown that these work requirements significantly increase exits from incumbent beneficiaries by 64\% and reduce participation of potential beneficiaries by 53\%.
+
+
+In the second exercise, I have estimated a model with static demand and dynamic supply, where the consumers pre-allocate a budget to spend in an undisclosed dollar store, and the dollar store dynamically decides where to open its new stores. The model allows for the measurement of cannibalization, by quantifying for each store's opening what is the incremental sales, profits, and costs. In the analysis of Walmart, \citeauthor{holmes2011diffusion} showed that incremental sales decreased with the time since Walmart entered the market. In contrast, I find evidence against cannibalization, as it takes a considerable amount of time for a market to be saturated so that the incremental sales go down. Moreover, finding that less profitable stores are opening first suggest that there can be  underlying mechanisms at play that are beyond the scope of this paper. Potential explanations could be that dollar stores are engaging on pre-emptive entry\footnote{The literature on pre-emptive entry \cite{ellison2011strategic,gil2021preemptive} rationalize present value loses by arguing that a firm can opt to enter early into a \textit{medium} sized market with the intention of preventing competitors from entering.}, or a learning process of where to optimally allocate the stores. 
+
+
+%Less profitable stores being opened first, might suggest that the dollar store might be engaging in pre-emptive entering to prevent the competitors entry,
+
+
+
+
+
+
+For the supply side estimation, the only parameter is the distance to warehouses cost for which I won't provide a sharp confidence region. However, I do calculate a naive estimate of the parameter which serves two purposes: (1) provides an initial bound for the distance parameter, (2) a well-defined bound (i.e. implied lower bound is lower than the implied upper bound) serves as evidence of the trade-off between distance to warehouses and being nearby SNAP users: being further away from the distribution center and having access to more SNAP users entails a greater gross profit, but (mechanically) greater distribution costs. The opposite holds is also true. The naive estimate yields a well-defined bound, providing that the distribution costs are between 31.4 and 32.2 thousand dollars (2023) per 100 kilometers each year. %, which is approximately ten times higher than similar estimates done for Amazon by \citeauthor{houde2023nexus} \citeyear{houde2023nexus}, but orders of magnitude lower than the estimates done for Walmart by \citeauthor{holmes2011diffusion} \citeyear{holmes2011diffusion}. \textbf{Rewrite this} 
+
+%where being 100 kilometers closer to the distribution center implied savings of around 560.000 dollars.
+
+
+The structural model employs data from multiple sources. The demand estimation relies on the aggregation of total sales, for which I use the volume of sales implied by the Kilts-Nielsen Scanner Data. I use demographics from the American Community Survey (ACS) at the county level. For the dollar store problem, I require the sequence of store openings, that I measured using the U.S. Department of Agriculture's SNAP Retailer Panel, which provides the exact geographic location of the dollar stores and the timing in which the store accepted SNAP's EBT payments. In addition to this, the supply required information on the sale's margins, the labor costs, and the land costs. The margins and labor-force are measured form the dollar store's reported 10K fillings, while the county's wages come from the County Business Patterns (CBP) payroll and employment measures in the retail industry, and rents are approximated using the residential rates from the ACS. 
+
+This article contributes to three strands of the literature. First, to the works on the expansion of discount retail in the United States, and more specifically on the growing literature on the expansion of dollar stores and their effect on the retail landscape. Close to this article, there is  \citeauthor{caoui2022impact} \citeyear{caoui2022impact}, which has shown that dollar stores compete intensively in the food retail market, and that their entry is associated to the closure of competing stores, and the decline of consumption of fresh produce. Similarly,  \citeauthor{chenarides2021dollar} \citeyear{chenarides2021dollar} have shown the entry of dollar stores in food deserts increase the likelihood that they remain that way. Furthermore, \citeauthor{chenarides2024dynamic} \citeyear{chenarides2024dynamic} has shown that the entry of dollar stores crowds out small independent retailers. Interestingly, \citeauthor{schneier2023buck} \citeyear{schneier2023buck} do not find crowding out effects to dollar store entry, but do show that households tend to shop more on average at the dollar store. This article build upon the literature, by distancing from the olipolistic concerns associated to the dollar store entry, and focusing more on the single-agent trade-offs that a dollar store faces when entering a market, pertaining to the economies of density (being cheaper to build nearby distribution centers), and access to more SNAP beneficiaries.
+
+Second, this research contributes to the literature on food access and nutrition. \citeauthor{allcott2019food} \citeyear{allcott2019food} conducted a structural analysis of nutritional inequality in the U.S., estimating a demand model for groceries. Their findings indicate that low-income households do not significantly shift their consumption towards healthier options even when they are presented with the same choices and prices as high-income households. By examining these supply-side responses, this study offers new insights into the broader implications of SNAP on the retail landscape, which by extension will influence household's grocery purchases. 
+
+
+Finally, to the literature on the impacts of SNAP on retail consumption. Closer to this article,  is \citeauthor{byrne2022welfare} \citeyear{byrne2022welfare} analysis of SNAP approved retailers' stocking decisions, and consumer's purchasing choices, where SNAP-eligible households shift a small share of their consumption towards new SNAP retailers, and new SNAP stores offer a limited fresh inventory. Furthermore, works in public policy have discussed the effectiveness of SNAP, as it does not necessarily direct consumption toward healthy choices. \citeauthor{shenkin2010using} \citeyear{shenkin2010using} discuss that SNAP users disproportionately consume more carbonated drinks and estimated that in 2011 5\% of the SNAP expenditure was spent on carbonated soft drinks. At the household level, the USDA \citeyear{usdareport} showed that sweetened vebrages 
+
+
+This reasoning has triggered an interest to make healthy food more attractive to SNAP users, as allowing for rebates for a narrow group of fruits and vegetables \cite{schanzenbach2017pros}. This article contributes to these works by thinking about the supply side features of this policy. The results in this article also point in that direction: if dollar stores are crowding out retailers that offer fresh produce, and SNAP is an incentive for their entry, then there are concerns about SNAP inadvertently undermining its own success. In this article, however, I do not provide evidence that this is indeed happening, but rather highlight the potential issue for future research to address.
+
+
+
+
+
+%First, to the well established works on the expansion of discount retail in the United States \cite{jia2008happens,holmes2011diffusion}, and more specifically on the growing literature on the expansion of dollar stores \cite{schneier2023buck,caoui2022impact,chenarides2024dynamic} and their effect on the retail landscape. Second, on the literature on nutrition and food access and nutritional inequality \cite{allcott2019food}. Finally, this article ties to the well established literature on the implications and reaches of SNAP, which has for the most part focused on the consumption side \cite{hastings2018snap,beatty2015expenditure}
+
+%Closest to this article, are the articles by \citeauthor{caoui2022impact} \citeyear{caoui2022impact} and \citeauthor{chenarides2024dynamic} \citeyear{chenarides2024dynamic}. 
+
+
+%This article falls in the intersection of three literatures. First, the well-established literature of firm entry games in the US. In this strand, the literature has dealt with two main concerns. First, the strategic interactions of firms entering in the airline markets (berry, bresnahan reiss, ciliberto tamer), the videotape industry (seim), and discount retail (jia, grieco erickson). Second, how firms develop the economies of densities that explain their quick expansion of Walmart in  discount retail (holmes) and Amazon in e-commerce (seim2).
+
+%Motivation: previous papers focus on the demand side. Providing a supply side to understand the providing of food might entice a better story, but I do not htink that my model is effectively doing this. But is a direction that should be encouraged.
+
+
+
+The article will proceed as follows: Section 2 will provide the industry background, Section 2 will present the data, Section 3 contains the model, Section 4 has the results, and Section 5 concludes.
+
+\section{Industry Background}
+
+\textit{Dollar Stores.} Dollar stores provide a large assortment of items.
+
+
+
+\textit{Supplemental Nutritional Assistance Program (SNAP).} The SNAP program, formally known as the Food Stamp Program, has existed in the United States since XX. The policy aims to low income households as the eligibility  has three criteria: (1) being at or below 130\% of the poverty line, or \$28550 a year, (2) net monthly income after deductions must be less than or equal to the poverty line, (3) assets cannot exceed certain limits. These criteria are more lenient for adults over the age of 60, and stronger for able-bodied adults without dependants (ABAWD). ABAWD can only access the program if it is working, otherwise it is limited to access the program for only three months. The program grants an estimated 175\$ per month per person \cite{usda2021snap}.
+
+The program provides eligible households with an Electronic Benefit Transfer (EBT) card, that each month that can be spent for fruits and vegetables; meat, poultry, and fish; dairy products; bread and cereals; snack foods and non-alcoholic beverages; seeds and plants that can produce food. It cannot be used for alcoholic beverages, tobacco products, vitamins, or any nonfood item. Estima
+
+
+
+
+
+
+
+
+
+% Data ---------------------------------------------------------------------------------------------------------------------------------------
+\section{Data}
+
+
+The model requires multiple data sources to adequately model the demand and supply. For the demand, I need the location of the dollar stores, the sales of these stores and the demographic characteristics of the consumers. 
+
+The location of the stores, and the time in which they are open is measured with the SNAP retail panel data. This dataset is a resource for SNAP users to know what retailers accept the EBT payments from the program. The reason I can use this as a proxy for entry is because the 
+
+pertaining the location of the dollar store, the sales of these stores, the demographic characteristics of the consumers, 
+
+
+Firstly, the SNAP Retailer Panel will be utilized to monitor the entry patterns of retailers from 2012 to 2020, a period identified for its smoother entry trends.
+
+
+Efforts are ongoing to locate distribution centers that complement this data. Secondly, demographic and SNAP participation data will be drawn from the American Community Survey, focusing on the Census Tract Level with 5-year binned data. Although yearly data is available for larger geographies, an extrapolation method will be applied to achieve finer granularity where necessary. Lastly, consumer expenditure patterns will be examined using the Kilts-Nielsen Consumer Panel data, providing insights into consumer spending behaviors.
+
+
+% Reduced Form Evidence  ---------------------------------------------------------------------------------------------------------------------------------------
+\section{Reduced Form Evidence}
+
+In this section, I provide evidence on how Dollar Stores in Virginia reacted to the waiving of SNAP's work requirements for able bodied adults without dependents (ABAWD). Starting in July of 2006, the State of Virginia allowed for the waiving of this requirement in different counties. The reasoning behind this is that the Virginia's State Agency requested the waiver, as these areas had higher unemployment. The request was approved by the SNAP program as the counties for which the waiver was requested presented a higher unemployment than the national average. These requests allowed for a rollout where the variation falls in the timing of these waives. After the great recession in 2009, the Recovery and Reinvestment Act (ARRA) exempted all counties from the ABAWD requirements. 
+
+
+The work of \citeauthor{gray2023employed} \citeyear{gray2023employed} uses a regression discontinuity approach that exploits both the roll-out of the policy and the age limit of the requirement (50 years old), to provide a convincing estimate on the effects of the re-instalment of requirements in adoption and remaining in the program. Here, I will be only using their data on the roll-out of the waivers to provide evidence on how limited access to the program affected the entry of dollar stores. Here, I estimate an event study equation for county $i$ at year $t$ from the year 2005 to 2014:
+
+\begin{align}
+    \text{y}_{it} = \sum_{\tau = -5}^{6} \phi_\tau D^\tau_{it} + \zeta_{i} + \eta_j + \nu_{it}
+\end{align}
+
+Where $\text{Stores }_{jit}$ is an approximation of the logarithm\footnote{As the distribution of dollar stores per county is zero-inflated I use the inverse hyperbolic sine transformation to approximate the logarithm.} of stores that firm $j$ has in county $i$ at year $t$, $X_{it}$ are demographic characteristics (population, average income, and proxies for rent and wages), and $D_{it}^\tau$ is a dummy variable that activates if $t$ is $\tau$ years away from the requirement being waived. As a robustness check, I estimate the model using \citeauthor{sun2021estimating} \citeyear{sun2021estimating}. The two-way fixed effect (TFWE) specification shows that the number dollar stores in a county stores go up after the policy is in place. The robustness check with the Sun \& Abraham (2020) specification yields a similar, but noisier pattern. 
+
+
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{Figures/se_all_stores.png}
+    \caption{Event Study - All Dollar Stores}
+    \label{fig:enter-label}
+\end{figure}
+
+
+
+
+
+% Model ---------------------------------------------------------------------------------------------------------------------------------------
+\section{Model}
+
+
+Following the methodologies of \citeauthor{houde2023nexus} (2023) and \citeauthor{holmes2011diffusion} (2011), this study will focus on estimating the demand side and employing instrumental functions to delineate network trade-offs. The analysis will utilize demand estimates to (1) assess revenue impacts and cannibalization, and (2) determine the upper and lower bounds for the supply-side parameters.
+
+
+\textit{Demand Side.} %As in \citeauthor{holmes2011diffusion} and \citeauthor{ellickson2020measuring}, the modeling and estimation of the consumer will rely on an observed expenditure, rather than on the market share. The modeling will stack the decission to buy into
+This demand follows a similar specification to \citeauthor{holmes2011diffusion} (2011) and \citeauthor{ellickson2020measuring} (2020), where consumer decisions abstract away from price elasticities. Instead, a representative consumer is deciding how to spend each unit of budget 
+pre-allocated to dollar-store expenditure. This aggregation allows for the estimation of the consumption primitives relying on sales data. The representative consumer of county $i$, at year $t$, is deciding where to place a unit of expenditure $e$ among different alternatives  $s \in S_{t}\cup \{0\}$, where $S_t$ represents the available dollar stores in the market. The utility draws associated with each selection is characterized by:
+
+\begin{align}
+    u_{eist} =\tau_0 c_{is} + \tau_1 d_{is} z_{it} + \gamma_0 x_s + \gamma_1 x_s  z_{it} + \varepsilon_{eist} \notag\\  \quad \text{and} \quad  u_{ei0t} = \beta_0 w_i + \beta_1 w_i z_i  + \beta_2 M_{it} + \varepsilon_{ei0t} \quad \varepsilon \overset{\text{i.i.d.}}{\sim} \text{T1EV}
+\end{align}
+
+The utility draws reflect that consumers lose utility from commuting, which is measured with $d_{it}$ being the distance of the store $s$ from the centroid of the county $i$. To introduce demographic-specific preferences, I will introduce a vector of demographics $z_{it}$ which will be interacted with the distance. For this analysis, the demographics include the share of SNAP enrollments and its interaction with average household size. It will also include average income, population, and vehicle access. Finally, I will introduce a vector of store characteristics $x_s$ which will capture preferences for the store characteristics, which will interact with the demographics. As it is conventional in this setting, the outside option is a function of the demographics $z_i$ and the population density $w_i$.  
+
+An important weakness of this approach is that the outside option doesn't implicitly model the alternatives, as only one dollar store is present in the sales data. An ideal estimation would use census-like data to model the alternatives properly. I will deal with this in a reduced form way by introducing into the outside option utility $u_{ei0t}$ a vector with the number of the dollar store competitors and state specific dummy variables $M_{it}$. 
+
+%To make up for this, I will provide an additional estimation by using each county's average income and the observed share of income destined for dollar stores.
+
+
+Defining $\delta_{ist}$ as the deterministic part of the utility, we  have that the probability of allocating a unit of consumption on a store $s$ will be:
+
+\begin{align}
+    p_{ist} = \frac{\exp\{\delta_{ist}\}}{\sum_{s' \in S_t \cup \{0\}}\exp\{\delta_{is't}\} }
+\end{align}
+
+So that the expenditure of county $i$ in store $s$ at time $t$ will follow:
+
+\begin{align}
+     R_{ist}^\text{model}= \text{n}_{it} \times  \alpha \times  p_{ist} 
+\end{align}
+
+Where $\text{n}_{it}$ reflects the number of people living in county $i$ at time $t$. As such, $\alpha$ will represent the allocated budget for the dollar store, in thousands. As a store can only be in one county, I will drop the $i$ from revenue going forward. 
+
+
+%The predicted revenues will be $R_s = \sum_{s \in \mathcal{S}_{it}} \alpha \times p_{ist} \times n_{it}$. Where $p_{ist}$ is the model's implied probability of selecting the store, and $\alpha$ is a parameter to estimate that captures the spending per consumer. With this, the parameters can be estimated using Maximum Likelihood by assuming that the difference between the modeled and observed revenue follows a normal or using Non-Linear Least Squares. 
+
+
+
+\textit{Supply Side.} On the supply side I model the decision of \textit{where} to open stores. Importantly, the model abstracts away two important decisions: (1) how many stores to open in a given year, (2) how many distribution centers to build, and where to set them up. That is, the model takes these two decisions as given, and implicitly assumes separability on the payoffs of where to open the stores, and the number of stores and distribution center assortments. 
+
+
+The supplier problem consists in a infinitely living, forward-looking, {Dollar Store} is endowed at $t=0$ with a network $N_0$ (i.e. an assortment of stores), and with an exogenous stock of warehouses, it maximizes its profit by selecting the sequence of store arrangements $\{N_t\}$, subject to the optimal number of store openings at year $t$:
+
+
+\begin{align}
+    \max_{\{N_t\}_{t=0}}\sum_{t=0}^\infty \beta^{t-1} \left(\bar \mu_t\sum_{s}   R_{st}(N_t) - C_t^\text{Dist}(N_t) - C_t^\text{Labor} (N_t) - C_t^\text{Land} (N_t) - F_t (N_t)\right) \text{ subject to }  |N_t^*|-|N_{t-1}^*| 
+\end{align}
+
+ 
+ Going forward, will call the firm's objective function $\Pi(N_t)$. In the objective function, $\bar \mu_t$ adjusts for the sales margins, and the two $C_t$ represent the distance and labor costs.  As it is the convention, the firm faces linear distribution costs:
+
+ \[C_t^{\text{Dist}}(N_t) = \lambda_d \sum_{s \in N_t}  d^\text{DC}_{s}\]
+ 
+ Where $d_{s}^\text{DC}$ captures the distance to the closest distribution center to store $s$. And being forward-looking, it selects the sequence of networks $N\equiv \{N_t\}_{t=0}$ that maximizes over its life's profits. As I do not have information on the exact square footage of each store, I will rely on the average store square footage provided by the 10-K fillings ($F_t$) and the average rent price in each county:
+
+ \[C_t^{\text{Land}}(N_t) =   F_t \sum_{s \in N_t}  r_{st}\]
+
+ Similarly, I will use the average number of both full time and half time employees ($L_t$) provided in the 10-K, and the average wage in each county to characterize the cost function:
+
+\[C_t^{\text{Labor}}(N_t) = L_t \sum_{s \in N_t}  w_{st}\]
+
+
+ A well-known feature of this dynamic entry problem, is that the firm's action space is incredibly large. For this, the solution will rely on revealed preference; the store arrangement in a particular year must yield a higher profit than a deviation.
+ 
+
+ 
+ 
+ %Importantly, I have yet to parameterize $C_t^{\text{Labor}}$.
+ 
+% Conclusion-----------------------------------------------------------------------------------------------------------------------------------
+\section{Estimation}
+
+
+\textit{Demand.} The estimation relies on observing the revenue of each store. One cannot match the sample of sales to the universe of stores. To approach this, I will run a LASSO regression and cross-validate to find the optimal penalization. The LASSO implementation serves to predict sales that are in counties out of sample, but also to predict distinct sales at the store level. I will heavily rely on the age of stores in the sales data, which will be observed imperfectly. The sampling will entail that the age in the sales data is underestimated, which I will assume it is a classical measurement error. Such measurement error entails that the variation within-county will be underestimated. 
+
+With the predicted sales, the demand's parameters will be estimated using a non-linear least squares (NLLS). The routine aims for the demand specification to match the predicted sales:
+
+\[\hat \theta_\text{1} = \arg \min_{\theta_1} \frac{1}{N} \sum_{s} \sum_{t \in T_s} \left( r^\text{model}(\theta_1;X_{sit})  - r^\text{data}_{st}\right)^2 \]
+
+ Where the lowercase $r$ represents the logarithm of the respective sales levels. The objective functions is minimized by using the BFGS algorithm. Finally, for inference, I will use the bootstrap standard errors, as the asymptotic variance of NNLS can be unreliable in small samples \cite{hansen2022econometrics}.
+
+%An important weakness of this approach is that the outside option doesn't implicitly model the alternatives, as only one dollar store is present in the data. An ideal estimation would use census-like data to model the alternatives properly. To make up for this, I will provide an additional estimation by using each county's average income and the observed share of income destined for dollar stores.
+
+
+\textit{Supply.} This setting invites to find the set of parameters of $\lambda_d$ that would minimize the violated moment inequalities, which in this case are the deviations being preferred over the observed outcome. However, due to time constraints, I wont be able to do so. Instead, I will provide \textit{naive} bounds on the distance parameter ($\theta_d$), which rely on finding the upper and lower bounds of a parameter by shutting down the other's cost parameters\footnote{This is the initial exercise executed by \citeauthor{houde2023nexus} \citeyear{houde2023nexus} to bound the distance parameter for Amazon's distribution.}. This exercise has two purposes: it provides a bound for the distance parameter, and provides initial evidence for the trade-off that the dollar store faces between reducing their costs and having access to a greater number of SNAP receivers. 
+
+
+The inequalities that bound the parameters rely on the assumption of the dollar store being forward looking with perfect foresight, as it will entail deterministic inequalities where the observed opening of stores is better than the alternatives.  As in \citeauthor{holmes2011diffusion} (2010), the set of relevant inequalities will be achieved by the \textit{pairwise re-sequenced} inequalities introduced by  \citeauthor{bajari2005measuring} (2005) and \citeauthor{fox2007semiparametric} (2007). Namely, one would consider counterfactual networks composed by swapping the opening of a store $j$ with that of another store $j'$. By defining such a counterfactual sequence as $N^{jj'}$, from the observed one $N^*$, the implied inequality is:
+
+
+
+\begin{align}
+    m_N \equiv \Pi(N^*) - \Pi(N^{jj'}) + \epsilon^{jj'} \geq 0
+\end{align}
+
+
+
+   Where $\epsilon^{jj'}$ is a measurement error. A significant concern is the simultaneity between this error and the demand error, as there are likely unobservable affecting both. To address this concern, one should incorporate an instrumental variable that is not related to the error but is capable of capturing the trade-offs associated with the firm's maximization problem. In this setting, the objective is to use instrumental functions involving swaps that result in an increase in exposure to SNAP beneficiaries and an increase in cost distance to warehouses. The respective instruments are defined as:
+
+   \begin{align}
+       Z^{jj'}_1 = \mathbf{1}\{\Delta SNAP^{jj'} > 0, X_d^{jj'} > 0\} \quad \text{and} \quad  Z^{jj'}_2 = \mathbf{1}\{\Delta SNAP^{jj'} < 0, X_d^{jj'} < 0\}
+   \end{align}
+
+   Where the inputs of the instrument are characterized as:
+
+     \begin{align*}
+      \Delta SNAP^{jj'} & = \sum_{t=t(j)}^{t(j')} \beta^{t-1} \left( \sum_{s \in N_t^*} \frac{SNAP_{i_{(s)}t}}{SNAP_t}\right) -   \sum_{t=t(j)}^{t(j')} \beta^{t-1} \left( \sum_{s \in N_t^{jj'}} \frac{SNAP_{i_{(s)}t}}{SNAP_t}\right) \\
+           X^{jj'}_d & =  \sum_{t=t(j)}^{t(j')} \beta^{t-1} \left( \sum_{s \in N_t^*}  d^\text{DC}_s \right)  -  \sum_{t=t(j)}^{t(j')} \beta^{t-1} \left( \sum_{s \in N_t^{jj'}} d^\text{DC}_s \right) 
+  \end{align*}
+  
+   
+   
+  Where $SNAP_{i_{(s)}t}$ is the number of SNAP households in the county where store $s$ is located, at year $t$, while $SNAP_t$ is the total amount of SNAP households in year $t$. Furthermore, $t(j)$ and $t(j')$ refers to the entry date of store $j$ and $j'$ respectively. Under this structure, it is useful to separate the distance costs from the rest of the profit function. Define $Y^{jj'}$ as the difference in discounted gross profits of wages and rents between the observed outcome and the counterfactual outcome, and $X^{jj'}_d$ as the discounted distribution distances. Respectively:
+
+  \begin{align*}
+      Y^{jj'} & =  \sum_{t=t(j)}^{t(j')}\beta^{t-1} \left(\bar \mu_t\sum_{s}   R_{st}^\text{model}(N_t^*)- C_t^\text{Labor} (N_t^*) - C_t^\text{Land} (N_t^*)\right)  \\
+      & -  \sum_{t=t(j)}^{t(j')} \beta^{t-1} \left(\bar \mu_t\sum_{s}   R_{st}^\text{model}(N_t^{jj'}) - C_t^\text{Labor} (N_t^{jj'}) - C_t^\text{Land} (N_t^{jj'}) \right) 
+  \end{align*}
+  
+  
+  
+  Using the revealed preference principle, one can provide an initial bound the distance primitive ($\lambda_d$) by relying on the instrument:
+  
+
+
+      \begin{align}
+          \mathbb{E}[Y^{jj'}-\lambda_d X_d^{jj'} \mid Z^{1}_{jj'}] \geq 0 \iff \frac{\mathbb{E}[Y^{jj'}\mid Z^{1}_{jj'}]}{\mathbb{E}[X^{jj'}\mid Z^{1}_{jj'}]}\geq \lambda_d  \quad \text{and} \quad  \frac{\mathbb{E}[Y^{jj'}\mid Z^{2}_{jj'}]}{\mathbb{E}[X^{jj'}\mid Z^{2}_{jj'}]}\leq \lambda_d 
+      \end{align}
+
+
+    
+     
+     %If there is a trade-off between distance to warehouses and exposure to SNAP benefits, one would expect a change in expected gross revenues to follow this pattern: 
+     
+     
+     %as the distance increases, expected gross revenues are anticipated to increase ($\mathbb{E}[Y^{jj'} \mid Z^{1}_{jj'}] > 0$), and as the distance decreases, expected gross revenues are anticipated to decrease ($\mathbb{E}[Y^{jj'} \mid Z^{2}_{jj'}] < 0$).
+
+
+\section{Estimation Results}
+\textit{Demand.} The results show that distance to the centroid of the city makes it less likely for a dollar store to be selected. In the vein of the purpose of this article, the higher the share of SNAP is in a county, the more likely it is that the dollar store will be preferred over the outside option\footnote{It would be ideal to have this variable at the zip level, so that there is variation within a market}. Counties with households that are on average larger, are less likely to purchase in the dollar store. Finally, the model estimates that a representative household pre-allocates 730 dollars for dollar store expenditure. To set another point of reference, the budged pre-allocated to Walmart is 2630 dollars \cite{holmes2011diffusion}.
+
+\input{Table/Demand.tex}
+
+
+
+\newpage
+\textit{Supply.} Table 2 provides the estimated upper and lower bound of $\lambda_d$. As highlighted by \citeauthor{houde2023nexus} \citeyear{houde2023nexus}, this estimates not only serves as a initial bound of $\lambda_d$, but also illustrates the trade-off that a dollar store faces when opening a store in terms of being close to the distribution center, but far away from SNAP benefits. The lower bound shows that a deviation that yields a greater exposure to SNAP, and a larger distance would yield a greater gross profit. On the other hand, the being far away from the distribution center, but in a SNAP rich area yields greater sales. However, this must be read carefully as SNAP users and low wages should correlate. 
+\input{Table/Supply.tex}
+
+%\newpage
+
+\section{Preliminary Density Analysis}
+
+In this section, I show preliminary evidence on the (lack of) cannibalization that the dollar stores experiences. The intuition is that an additional dollar store might "steal" the business from an incumbent store. To measure if this is happening, I will use the demand model to estimate for each store-year how much revenue and profit would have been lost if the store did not open. Formally, this is defined as the \textit{incremental sales} ($R^{inc}_{st}$) of store $s$ at year $t$. This analysis mirrors the one done for Walmart by \citeauthor{holmes2011diffusion} \citeyear{holmes2011diffusion}, which I complement by presenting the standard errors. This is also done for the profit, and the distance. Table 3 shows the average of these measures, binning them by the age of the first dollar store in the state. The point estimates highlight a lack of cannibalization, as the incremental sales go up for the most part, and no down as cannibalization would suggest, but slows down as the dollar store is well established in a state. 
+
+
+This is consistent with the fact that dollar stores tend to flood a market, and that their scope is fairly local; in contrast with other retailers as Walmart, where people can do significant commutes to reach one. The incremental distance presents an U shape, with an initial tendency to build closer to distribution centers, which is later 
+
+\input{Table/Density.tex}
+
+
+
+
+
+
+
+% Conclusion-----------------------------------------------------------------------------------------------------------------------------------
+
+\section{Conclusion}
+
+\newpage
+
+\section{Appendix}
+
+\subsection{Objective Function's Analytical Gradient}
+
+The objective's function analytical gradient is required for the minimization routine. The objective function is:
+
+\[f(\theta,X)= \frac{1}{N} \sum_S \sum_{T_s} (r_{sit}-\hat r(\theta,X_{it}))^2\]
+
+There are three sets of parameters: the coefficient ($\alpha$) and the parameters for the inside ($\theta_I$) and outside options ($\theta_0$). The derivatives are:
+
+\begin{align*}
+    \frac{\partial f(\theta,X)}{\partial \alpha} &= -\frac{1}{N}\sum_I \sum_{T_i} 2(r_{sit} - \hat r_{sit}(\theta, X_{it})) \times \frac{1}{\hat R_{sit}(\theta,X_{it})}\times (n_i *  \hat \sigma_{sit}(\theta_I, \theta_0; X_{it}))\\
+    \frac{\partial f(\theta,X)}{\partial \theta_0^k} & = -\frac{1}{N}\sum_I \sum_{T_i} 2(r_{sit} - \hat r_{sit}(\theta, X_{it}))  \times \frac{1}{\hat R_{sit}(\theta,X_{it})}\times  \left(n_i * \alpha *   \frac{\partial \hat\sigma_{sit}(\theta_I, \theta_0; X_{it})}{\partial \theta_0^k}\right) \\
+    \frac{\partial f(\theta,X)}{\partial \theta_I^k} & = -\frac{1}{N}\sum_I \sum_{T_i} 2(r_{sit} - \hat r_{sit}(\theta, X_{it}))  \times \frac{1}{\hat R_{sit}(\theta,X_{it})}\times  \left(n_i * \alpha *   \frac{\partial \hat\sigma_{sit}(\theta_I, \theta_0; X_{it})}{\partial \theta_I^k}\right) 
+\end{align*}
+
+The derivatives of the share are:
+
+
+\begin{align*}
+    \frac{\partial \hat\sigma_{sit}(\theta_I, \theta_0; X_{it})}{\partial \theta_0^k} &  = - x^0_{k,it} \hat \sigma_{sit}(\theta,X_{it}) \hat \sigma_{0it}(\theta,X_{it}) \\
+    \frac{\partial \hat\sigma_{sit}(\theta_I, \theta_0; X_{it})}{\partial \theta_I^k} & = \hat \sigma_{sit}(\theta, X_{it})  \left(x_{k,sit}^I - \sum_{s'} x_{k,s'it}^I \hat \sigma_{s'it}(\theta, X_{it})\right)
+\end{align*}
+
+% In vector form:
+
+% \begin{align*}
+%     \frac{\partial \hat\sigma_{sit}(\theta_I, \theta_0; X_{it})}{\partial \theta_0} &  = - X^0_{it} \odot [\hat \sigma_{sit}(\theta,X_{it}) *  \hat \sigma_{0it} (\theta,X_{it})]\\
+%     \frac{\partial \hat\sigma_{sit}(\theta_I, \theta_0; X_{it})}{\partial \theta_I} &  =  \hat \sigma_{sit}(\theta, X_{it}) \times  \left(X^I_{sit} - (X^I_{it})^\top \cdot \hat \sigma_{it} (\theta, X_{it}) \right)
+% \end{align*}
+% \newpage
+
+% The second derivatives are:
+
+% \begin{align*}
+%      \frac{\partial^2 f(\theta,X)}{\partial \alpha^2} & = 0 \\
+%      \frac{\partial^2 f(\theta,X)}{\partial \alpha \partial \theta_0^k} & =  -\frac{1}{N}\sum_I \sum_{T_i} 2(r_{sit} - \hat r_{sit}(\theta, X_{it}))  \times \frac{1}{\hat R_{sit}(\theta,X_{it})}\times  \left(n_i *   \frac{\partial \hat\sigma_{sit}(\theta_I, \theta_0; X_{it})}{\partial \theta_0^k}\right) \\
+%      \frac{\partial^2 f(\theta,X)}{\partial \alpha \partial \theta_I^k} & =  -\frac{1}{N}\sum_I \sum_{T_i} 2(r_{sit} - \hat r_{sit}(\theta, X_{it}))  \times \frac{1}{\hat R_{sit}(\theta,X_{it})}\times  \left(n_i *   \frac{\partial \hat\sigma_{sit}(\theta_I, \theta_0; X_{it})}{\partial \theta_I^k}\right) \\
+%      \frac{\partial^2 f(\theta,X)}{\partial \theta_0^k \partial \theta_I^{k'}} & =  -\frac{1}{N}\sum_I \sum_{T_i} 2(r_{sit} - \hat r_{sit}(\theta, X_{it}))  \times \frac{1}{\hat R_{sit}(\theta,X_{it})}\times  \left(n_i * \alpha*  \frac{\partial^2 \hat\sigma_{sit}(\theta_I, \theta_0; X_{it})}{\partial \theta_0^k \partial \theta_I^{k'}}\right) \\
+%      \frac{\partial^2 f(\theta,X)}{\partial \theta_0^k \partial  \theta_0^{k'}} & =  -\frac{1}{N}\sum_I \sum_{T_i} 2(r_{sit} - \hat r_{sit}(\theta, X_{it}))  \times \frac{1}{\hat R_{sit}(\theta,X_{it})}\times  \left(n_i * \alpha*  \frac{\partial^2 \hat\sigma_{sit}(\theta_I, \theta_0; X_{it})}{\partial \theta_0^k \partial  \theta_0^{k'}}\right)\\
+%      \frac{\partial^2 f(\theta,X)}{\partial \theta_I^k \partial \theta_I^{k'}} & =  -\frac{1}{N}\sum_I \sum_{T_i} 2(r_{sit} - \hat r_{sit}(\theta, X_{it}))  \times \frac{1}{\hat R_{sit}(\theta,X_{it})}\times  \left(n_i * \alpha*  \frac{\partial^2 \hat\sigma_{sit}(\theta_I, \theta_0; X_{it})}{\partial \theta_I^k \partial  \theta_I^{k'}}\right)
+% \end{align*}
+
+% The second derivative for the share entails:
+
+
+% \begin{align*}
+%    \frac{\partial^2 \hat\sigma_{sit}(\theta_I, \theta_0; X_{it})}{\partial \theta_0^k \partial \theta_I^{k'}} & = - x_{k,it}^0 \left[\frac{\partial \hat \sigma_{sit}}{\partial \theta_I^{k'}} \hat \sigma_{0it} -  \hat \sigma_{sit}  \hat \sigma_{0it} \sum_{s'} x_{s'it}  \hat \sigma_{s'it}  \right] \\
+%   \frac{\partial^2 \hat\sigma_{sit}(\theta_I, \theta_0; X_{it})}{\partial \theta_I^k \partial \theta_I^{k'}} & = \frac{\partial \hat \sigma_{sit}}{\partial \theta_I^{k'}}  \left(x^I_{k,sit} -  \sum_{s'} x_{k,s'it}^I \hat \sigma_{s'it}\right) + \hat \sigma_{sit} \sum_{s'} x_{k,s'it}^I \frac{\partial \hat \sigma_{s'it}}{\partial \theta_{I}^{k'}}\\
+%   \frac{\partial^2 \hat\sigma_{sit}(\theta_I, \theta_0; X_{it})}{\partial \theta_0^k \partial \theta_0^{k'}} & = - x_{k,sit}^0 \left(\frac{\partial \hat \sigma_{sit}}{\partial \theta_0^{k'}} \hat \sigma_{0it}  + x_{k',it}^0 \hat  \sigma_{sit} \hat \sigma_{0it} (1- \hat \sigma_{0it}) \right)
+% \end{align*}
+
+
+
+% \newpage
+% The algebra is:
+% \begin{align*}
+%     \frac{\partial \hat\sigma(\theta_I, \theta_0; X_{it})}{\partial \theta_0^k} & = \frac{-\exp(\theta_{I}X_{it}^I) x^0_{k,it} \exp(\theta_0 X_{it}^0) }{\left(\exp(\theta_0 X_{it}^0) + \sum_j \exp(\theta_I X_{jt}^I)\right)^2} = - x^0_{k,it} \hat \sigma(\theta,X_{it}) \hat \sigma(\theta,X_{0t}) \\
+%     \frac{\partial \hat\sigma(\theta_I, \theta_0; X_{it})}{\partial \theta_I^k} & = \frac{x^I_{k,it} \exp(\theta_I X_{it}^I) \times \left(\exp(\theta_0 X_{it}^0) + \sum_j \exp(\theta_I X_{jt}^I)\right) - \exp(\theta_I X_{it}^I) \sum_{j}( x_{jt}^I \exp(\theta_I X_{jt}^I))}{\left(\exp(\theta_0 X_{it}^0) + \sum_j \exp(\theta_I X_{jt}^I)\right)^2} \\
+%     & = x_{k,it}^I \hat \sigma(\theta, X_{it}) -  \hat \sigma(\theta, X_{it}) \left(\sum_j x_{jt}^I \hat \sigma(\theta, X_{jt})\right)\\
+%     & = \hat \sigma(\theta, X_{it})  \left(x_{k,it}^I - \sum_j x_{jt}^I \hat \sigma(\theta, X_{jt})\right)
+% \end{align*}
+
+
+
+% References
+\newpage
+\bibliography{references}
+\bibliographystyle{apacite}
+
+\end{document}
