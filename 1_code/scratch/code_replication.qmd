@@ -1,0 +1,1465 @@
+---
+title: "Reduced Form Replication, Roth and Chen"
+author: "Inder Majumdar"
+format: html
+---
+
+```{r config, echo= FALSE, warning= FALSE, message= FALSE}
+
+library(dplyr)
+library(purrr)
+library(readr)
+library(readxl)
+library(lubridate)
+library(zoo)
+library(stringr)
+
+
+```
+
+```{r formulae, echo= FALSE}
+
+normalize_fips <- function(x) {
+  digits <- stringr::str_extract(as.character(x), "\\d+")
+  digits <- ifelse(is.na(digits) | digits == "", NA_character_, digits)
+  ifelse(is.na(digits), NA_character_, stringr::str_pad(digits, width = 5, side = "left", pad = "0"))
+}
+
+
+```
+
+
+```{r path_set, echo= FALSE, warning= FALSE, message= FALSE}
+
+waiver_dir <- '/Users/indermajumdar/Library/CloudStorage/Box-Box/SNAP Dollar Entry/data/0_inputs/0_0_waivers/0_0_1_ABAWD_panels'
+
+county_crosswalk_dir <- '/Users/indermajumdar/Library/CloudStorage/Box-Box/SNAP Dollar Entry/data/0_inputs/0_3_county_list/national_county.txt'
+
+snap_path <- '/Users/indermajumdar/Library/CloudStorage/Box-Box/SNAP Dollar Entry/data/0_inputs/0_5_SNAP/0_5_2_Historical SNAP Retailer Locator Data-20231231.csv'
+
+api_key_path <- '/Users/indermajumdar/Research/snap_dollar_entry/0_inputs/census_apikey.md'
+
+wages_path <- '/Users/indermajumdar/Library/CloudStorage/Box-Box/SNAP Dollar Entry/data/0_inputs/0_4_prices/0_4_1_Wages_V2.csv'
+
+```
+
+
+```{r waiver_ingest, echo= FALSE, warning= FALSE, message= FALSE}
+
+## Waivers
+
+waiver_files <- list.files(
+ waiver_dir,
+  pattern = "\\.xlsx$",
+  full.names = TRUE) |>
+  sort()
+
+## Geography crosswalk: State, County to FIPS
+
+## First, ingest the county crosswalk
+geo <- readr::read_csv(county_crosswalk_dir, 
+                       col_names = c("STATE", "STATEFP", "COUNTYFP", "COUNTYNAME", "CLASSFP"), # Columns to keep
+                       show_col_types = FALSE) |>
+              mutate(
+              STATEFP = stringr::str_pad(as.character(STATEFP), width = 2, side = "left", pad = "0"),
+              COUNTYFP = stringr::str_pad(as.character(COUNTYFP), width = 3, side = "left", pad = "0") # Pad strings before merge
+            ) |>
+  transmute(
+    STATE = STATE,
+    COUNTYNAME = COUNTYNAME,
+    FIPS = paste0(STATEFP, COUNTYFP) # Create 5 digit FIPS
+  ) |>
+      mutate(
+      COUNTYNAME = COUNTYNAME |>
+        str_to_lower() |>
+        str_to_title() |>
+        str_replace_all("City County", "City")
+    )
+
+
+
+# --- Create "Wide" File with month-year columns
+
+generated_wide <- waiver_files |>
+  map(readxl::read_excel) |>
+  bind_rows() |> 
+  mutate(
+     DATE_START = as.Date(DATE_START),
+    DATE_END = as.Date(DATE_END)
+  ) 
+
+months_between <-
+  format(
+    seq(from = min(as.yearmon(generated_wide$DATE_START), na.rm = TRUE), to = max(as.yearmon(generated_wide$DATE_END), na.rm = TRUE), by = 1 /12), "%b_%Y"
+  )
+
+for (month_column in months_between) {
+  generated_wide[[month_column]] <- 0L
+ }
+
+# --- Using the newly created month columns, populate with an indicator for each row depending on waiver status
+
+  for (row_index in seq_len(nrow(generated_wide))){
+    active_months <- format(
+      seq(from = as.yearmon(generated_wide$DATE_START[[row_index]]), to = 
+          as.yearmon(generated_wide$DATE_END[[row_index]]), by = 1/12), "%b_%Y"
+    )
+    
+    if (length(active_months) > 0) {
+      generated_wide[row_index, active_months] <- 1L
+    }
+  }
+
+# --- Transform from Wide to Longm with a month_date column that explains 
+
+generated_long <- generated_wide |>
+  select(YEAR, STATE, STATE_ABBREV, ENTIRE_STATE, LOC, LOC_TYPE, DATE_START, DATE_END, SOURCE_DOC) |>
+    mutate(
+    DATE_START = as.Date(DATE_START),
+    DATE_END = as.Date(DATE_END)
+  ) |>
+  rowwise() |> # Create one row per month date combination for each loc
+  reframe(
+    across(everything()),
+    MONTH_DATE = seq.Date(
+      from = DATE_START,
+      to = DATE_END, 
+      by = "month"
+    )
+  ) |>
+  ungroup() |>
+  mutate(
+    YEAR = year(MONTH_DATE)
+  ) |>
+    mutate( #Clean up LOC names
+    LOC = str_replace_all(LOC, "\\bBiaden\\b", "Bladen"),
+    LOC = str_replace_all(LOC, "\\bBighorn\\b", "Big Horn"),
+    LOC = str_replace_all(LOC, "\\bCarterel\\b", "Carteret"),
+    LOC = str_replace_all(LOC, "\\bCentra Costa\\b", "Contra Costa"),
+    LOC = str_replace_all(LOC, "\\bDublin\\b", "Duplin"),
+    LOC = str_replace_all(LOC, "\\bFemont\\b", "Fremont"),
+    LOC = str_replace_all(LOC, "\\bIona\\b", "Ionia"),
+    LOC = str_replace_all(LOC, "\\bLunenberg\\b", "Lunenburg"),
+    LOC = str_replace_all(LOC, "\\bMclean\\b", "McLean"),
+    LOC = str_replace_all(LOC, "\\bRollette\\b", "Rolette"),
+    LOC = str_replace_all(LOC, "\\bTiaga\\b", "Tioga"),
+    LOC = str_replace_all(LOC, "\\bUpsher\\b", "Upshur"),
+    LOC = str_replace_all(LOC, "\\bWyth\\b", "Wythe"),
+    LOC = str_replace_all(LOC, "\\bBaltimore City\\b", "Baltimore")
+    ) |>
+      mutate(
+      LOC = LOC |>
+        str_to_lower() |>
+        str_to_title(),
+      LOC = if_else(LOC_TYPE == "County", paste(LOC, "County"), LOC),
+      LOC = str_replace_all(LOC, "City County", "City"),
+      LOC = case_when(
+        LOC == "Petersburg County" & STATE_ABBREV == "VA" ~ "Petersburg City",
+        LOC == "Williamsburg County" & STATE_ABBREV == "VA" ~ "Williamsburg City",
+        LOC == "Martinsville County" & STATE_ABBREV == "VA" ~ "Martinsville City",
+        TRUE ~ LOC
+      )
+    )
+
+# --- Expand entire-state waivers to county-level rows
+
+## Join generated long with Geo to pull in FIPS to expand state level waivers to county rows
+
+state_rows <- generated_long |>
+  filter(ENTIRE_STATE == 1) |>
+  left_join(geo, by = c("STATE_ABBREV" = "STATE"), relationship = "many-to-many") |>
+  mutate(
+    LOC = COUNTYNAME, 
+    LOC_TYPE = "County",
+    waiver_scope = "statewide"
+  ) |>
+  select(-COUNTYNAME)
+
+
+# sanity check - how many county or county equivalents are in each    
+#state_rows |>
+#  mutate(year = lubridate::year(MONTH_DATE)) |>
+#  distinct(year, FIPS) |>
+#  count(year) -> x
+
+# --- Connect County-level waivers to FIPS codes
+
+county_rows <- generated_long |>
+  filter(LOC_TYPE == "County") |>
+  left_join(geo, by = c("LOC" = "COUNTYNAME", "STATE_ABBREV" = "STATE")) |>
+  mutate(waiver_scope = "substate")
+
+# --- Handle all non-county, non-statewide rows
+
+other_rows <- generated_long |>
+  filter(LOC_TYPE != "County", ENTIRE_STATE != 1) |>
+  mutate(
+    FIPS = NA_character_,
+    waiver_scope = "substate"
+  )
+
+# --- Recombine standardized waiver rows into the final generated long panel
+
+generated_long <- bind_rows(other_rows, county_rows, state_rows) |>
+  mutate(FIPS = normalize_fips(FIPS)) |>
+  arrange(STATE_ABBREV, LOC, MONTH_DATE, SOURCE_DOC)
+
+rm(county_rows, other_rows, state_rows, active_months,crounty_crosswalk_dir, month_column, months_between, row_index, waiver_dir, waiver_files)
+  
+
+```
+
+```{r covariate_SNAP_retailer_prep, echo= FALSE, warning= FALSE, message= FALSE}
+# Prepare the SNAP covariate panel before merging with generated_long
+
+library(data.table)
+library(lubridate)
+library(readr)
+library(stringr)
+
+
+## Ingest SNAP retailer data
+
+snap <- data.table::fread(snap_path, encoding = "UTF-8") |>
+  mutate(`Store Name` = str_to_lower(trimws(`Store Name`)),
+         County = toupper(trimws(County)),
+         State = toupper(trimws(State)),
+         chain = "placeholder")
+
+## Modify geo to match the naming practices used in the SNAP retailer panel 
+
+geo |>
+  mutate(county = COUNTYNAME |> str_trim() |> str_to_upper(),
+         county_fips = FIPS,
+         state_id = STATE) |>
+  select(county, county_fips, state_id) |> 
+  mutate(county = str_remove(county,
+  " (CITY AND BOROUGH|COUNTY|PARISH|BOROUGH|CENSUS AREA|MUNICIPALITY)$")) -> county
+
+rm(geo)
+
+## create store patterns 
+
+store_patterns <- c(
+  "dollar general" = "dollar general",
+  "dollar tree" = "dollar tree",
+  "family dollar" = "family dollar",
+  "7-eleven" = "seven eleven",
+  "circle k" = "circle k",
+  "speedway" = "speedway",
+  "albertsons" = "albertsons",
+  "aldi" = "aldi",
+  "bashas markets" = "bashas markets",
+  "delhaize america" = "delhaize america",
+  "fred meyer" = "fred meyer",
+  "giant eagle" = "giant eagle",
+  "giant food" = "giant food",
+  "great a & p tea co" = "great a & p tea co",
+  "he butt" = "he butt",
+  "hannaford bros" = "hannaford bros",
+  "hy vee food stores" = "hy vee food stores",
+  "ingles markets" = "ingles markets",
+  "kroger" = "kroger",
+  "lone star funds" = "lone star funds",
+  "publix" = "publix",
+  "raley's" = "raley's",
+  "roundy's" = "roundy's",
+  "ruddick corp" = "ruddick corp",
+  "safeway" = "safeway",
+  "save a lot" = "save a lot",
+  "save mart" = "save mart",
+  "smart & final" = "smart & final",
+  "stater bros" = "stater bros",
+  "stop & shop" = "stop & shop",
+  "supervalu" = "supervalu",
+  "trader joe's" = "trader joe's",
+  "weis markets" = "weis markets",
+  "whole foods" = "whole foods",
+  "wild oats" = "wild oats",
+  "winn-dixie" = "winn-dixie",
+  "meijer" = "meijer",
+  "target" = "target",
+  "wal.*mart" = "wal-mart",
+  "bj's" = "bj's",
+  "costco" = "costco",
+  "sam's club" = "sam's club"
+)
+
+# --- Match retailer names to known chain patterns
+
+for (pattern in names(store_patterns)) {
+  snap[grepl(pattern, `Store Name`, ignore.case = TRUE), chain := store_patterns[[pattern]]]
+}
+
+# --- Classify remaining unmatched stores by broad store type
+
+snap[`Store Type` == "Convenience Store" & chain == "placeholder", chain := "convenience_store"]
+snap[`Store Type` == "Supermarket" & chain == "placeholder", chain := "super_market"]
+snap[`Store Type` == "Farmers' Market" & chain == "placeholder", chain := "farmers_market"]
+snap[`Store Type` == "Large Grocery Store" & chain == "placeholder", chain := "large_grocery"]
+snap[`Store Type` == "Medium Grocery Store" & chain == "placeholder", chain := "medium_grocery"]
+snap[`Store Type` == "Small Grocery Store" & chain == "placeholder", chain := "small_grocery"]
+snap[`Store Type` == "Fruits/Veg Specialty" & chain == "placeholder", chain := "produce"]
+
+snap <- snap |>
+  mutate(
+    dollarStore = str_detect(
+      `Store Name`,
+      "dollar tree|dollar general|family dollar"
+    ),
+    chain = paste0("chain_", chain),
+    chain = str_replace_all(chain, "[' ]", "_")
+  ) |>
+  filter(chain != "chain_placeholder")
+
+# --- Merge SNAP retailer panel with list of FIPS codes
+
+snap <- snap |>
+  left_join(
+    county |> 
+      transmute(
+        County = county,
+        State = state_id,
+        county_fips = county_fips
+      ),
+    by = c("County", "State")
+  )
+
+# --- Standardize dates, retailer authorization windows
+
+snap <- snap |>
+  mutate(
+    county_fips = normalize_fips(county_fips),
+    `Authorization Date` = as.Date(
+      `Authorization Date`,
+      format = "%m/%d/%Y"
+    ),
+    `End Date` = as.Date(
+      `End Date`,
+      format = "%m/%d/%Y"
+    ),
+    authorization_year = year(`Authorization Date`),
+    end_year = year(`End Date`),
+    end_year = if_else(
+      is.na(end_year),
+      2024L,
+      end_year
+    ),
+    store_row_id = row_number()
+  )
+
+# --- Expand retailer rows into a county-year store-count panel
+
+store_count <- snap |>
+  filter(!is.na(county_fips) & !is.na(authorization_year) & !is.na(end_year)) |>
+   rowwise() |>
+  reframe(
+    store_row_id,
+    county_fips,
+    chain,
+    year = seq.int(
+      from = authorization_year,
+      to = end_year
+    )
+  ) |>
+  ungroup() |>
+  count(
+    county_fips,
+    chain,
+    year,
+    name = "count"
+  )
+
+```
+
+
+```{r acs_covariates, echo= FALSE, warning= FALSE, message= FALSE}
+## Pull the ACS Covariates by county from Census API
+
+library(dplyr)
+library(purrr)
+library(readr)
+library(stringr)
+library(tibble)
+library(tidyr)
+library(tidycensus)
+
+# -- Define County Scope
+
+excluded_state_fips <- c(
+    "02", # Alaska
+  "15", # Hawaii
+  "60", # American Samoa
+  "66", # Guam
+  "69", # Northern Mariana Islands
+  "72", # Puerto Rico
+  "74", # U.S. Minor Outlying Islands
+  "78"  # U.S. Virgin Islands
+)
+
+county_scope <- county |>
+  mutate(
+    county_fips = normalize_fips(county_fips),
+    state_fips = substr(county_fips, 1, 2), #first 2 digits are state ID 
+    state_abbrev = state_id
+  ) |>
+    distinct(
+    county_fips,
+    state_fips,
+    state_abbrev
+  ) |>
+  filter(
+    !(state_fips %in% excluded_state_fips)
+  ) |>
+  arrange(county_fips)
+
+# -- Read/Register API Key
+
+census_api_key <- readLines(
+  api_key_path,
+  warn = FALSE
+) |>
+  str_trim()
+
+census_api_key <- census_api_key[
+  census_api_key != ""
+][[1]]
+
+Sys.setenv(
+  CENSUS_API_KEY = census_api_key
+)
+
+# -- Define ACS/Analysis Year
+
+acs_year <- 2013L
+
+analysis_years <- 2014:2019
+
+# -- Define the ACS variables used in the current pipeline
+
+acs_variables <- c(
+  "B20002_001", # Median earnings; currently stored as meanInc and income
+  "B11001_001", # Total households
+  "B25064_001", # Median gross rent
+  "B23025_003", # Civilian labor force
+  "B23025_005"  # Unemployed
+)
+
+# -- Pull 2014 ACS 5-year county estimates
+
+acs_2014_raw <- tidycensus::get_acs(
+  geography = "county",
+  variables = acs_variables,
+  year = acs_year,
+  survey = "acs5",
+  geometry = FALSE,
+  output = "wide",
+  cache_table = TRUE
+)
+
+# -- Join the ACS pull to the retained county scope
+
+acs_2014 <- county_scope |>
+  left_join(
+    acs_2014_raw |>
+      mutate(
+        county_fips = normalize_fips(GEOID)
+      ),
+    by = "county_fips"
+  )
+
+# -- Construct the ACS covariates
+
+acs_2014 <- acs_2014 |>
+  transmute(
+    county_fips,
+    state_fips,
+    state_abbrev,
+    acs_source_year = acs_year,
+    totalHH = as.numeric(B11001_001E),
+    medianInc = as.numeric(B20002_001E),
+    num_households = as.numeric(B11001_001E),
+    rent = as.numeric(B25064_001E),
+    civilian_labor_force = as.numeric(B23025_003E),
+    unemployed = as.numeric(B23025_005E),
+    urate = if_else(
+      is.na(civilian_labor_force) | civilian_labor_force == 0,
+      NA_real_, unemployed/civilian_labor_force
+    )
+  )
+
+# -- Keep the 2014 wage observation for each county
+
+wages_2014 <- readr::read_csv(
+  wages_path,
+  show_col_types = FALSE
+) |>
+  mutate(
+    year = as.integer(year),
+    county_fips = normalize_fips(county_fips),
+    wage = as.numeric(wage)
+  ) |> 
+  filter(year == acs_year) |>
+  select(county_fips, wage)
+
+# -- Combine the 2014 ACS and wage covariates
+
+baseline_covariates <- acs_2014 |>
+  left_join(
+    wages_2014, by = "county_fips"
+  ) |>
+  group_by(state_fips) |> #Fill in N/A with state average wage - ask Alejandro why we have ~800 N.A
+  mutate(
+     mean_2014_wage = mean(
+      wage,
+      na.rm = TRUE)
+  ) |>
+  ungroup() |>
+  mutate(
+      wage = if_else(
+      is.na(wage),
+      mean_2014_wage,
+      wage
+    )
+  ) |>
+  select(-mean_2014_wage)
+
+# -- Repeat the fixed 2013 covariates over the 2014–2019 analysis years
+
+county_covariates <- baseline_covariates |>
+  tidyr::crossing(
+    year = analysis_years
+  ) |>
+  mutate(
+    year = as.integer(year)
+  ) |>
+  arrange(
+    county_fips,
+    year
+  )
+
+```
+
+
+
+```{r chain_categorization_panel_build, echo = FALSE, warning = FALSE, message = FALSE}
+
+# ---- Create categories
+
+supermarket_chains <- c(
+  "chain_ingles_markets",
+  "chain_winn-dixie",
+  "chain_stop_&_shop",
+  "chain_albertsons",
+  "chain_fred_meyer",
+  "chain_trader_joes",
+  "chain_trader_joe_s",
+  "chain_whole_foods",
+  "chain_save_a_lot",
+  "chain_aldi",
+  "chain_save_mart",
+  "chain_safeway",
+  "chain_kroger",
+  "chain_giant_food",
+  "chain_weis_markets",
+  "chain_publix",
+  "chain_supervalu",
+  "chain_raleys",
+  "chain_raley_s",
+  "chain_smart_&_final",
+  "chain_wild_oats",
+  "chain_meijer",
+  "chain_giant_eagle",
+  "chain_he_butt",
+  "chain_stater_bros",
+  "chain_roundys",
+  "chain_roundy_s"
+)
+
+club_store_chains <- c("chain_costco", "chain_sams_club", "chain_sam_s_club", "chain_bjs")
+convenience_chains <- c("chain_seven_eleven", "chain_circle_k", "chain_speedway")
+multi_category_chains <- c("chain_wal-mart", "chain_target")
+
+entry_outcome_columns <- c(
+  "chain_dollar_general_entry",
+  "chain_dollar_tree_entry",
+  "chain_family_dollar_entry",
+  "chain_super_market_entry",
+  "chain_convenience_store_entry",
+  "chain_multi_category_entry",
+  "chain_medium_grocery_entry",
+  "chain_small_grocery_entry",
+  "chain_produce_entry",
+  "chain_farmers_market_entry"
+)
+
+stock_outcome_columns <- c(
+  "chain_dollar_general_count",
+  "chain_dollar_tree_count",
+  "chain_family_dollar_count",
+  "chain_nods_count"
+)
+
+# ---- Create the complete county-year panel
+
+county_year_grid <- tidyr::crossing(
+  county_fips = county_scope$county_fips,
+  year = as.integer(analysis_years)
+)
+
+# ---- Collapse detailed chains into broader retailer categories
+
+snap_grouped <- snap |>
+  mutate(
+    county_fips = normalize_fips(county_fips),
+    authorization_year = as.integer(authorization_year),
+    chain = case_when(
+      chain %in% supermarket_chains ~ "chain_super_market",
+      chain %in% club_store_chains ~ "chain_club_store",
+      chain %in% convenience_chains ~ "chain_convenience_store",
+      chain %in% multi_category_chains ~ "chain_multi_category",
+      TRUE ~ chain
+    )
+  )
+
+# ---- Count new retailer authorizations by county, chain, and year
+
+entry_counts <- snap_grouped |>
+  mutate(
+    year = authorization_year,
+    chain = paste0(chain, "_entry")
+  ) |>
+  filter(
+    !is.na(county_fips),
+    !is.na(year),
+    year %in% analysis_years
+  ) |>
+  count(
+    county_fips,
+    year,
+    chain,
+    name = "entry"
+  )
+
+# Add zero-valued observations so that every required outcome
+# is present for every county-year
+
+entry_zero_rows <- county_year_grid |>
+  tidyr::crossing(
+    chain = entry_outcome_columns
+  ) |>
+  mutate(
+    entry = 0L
+  )
+
+# Combine the observed entries and zero-valued observations
+
+entry_panel <- bind_rows(
+  entry_zero_rows,
+  entry_counts
+) |>
+  group_by(
+    county_fips,
+    year,
+    chain
+  ) |>
+  summarise(
+    entry = sum(entry, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  pivot_wider(
+    names_from = chain,
+    values_from = entry,
+    values_fill = 0L) |>
+  mutate(
+      total_ds_entry =
+      chain_dollar_general_entry +
+      chain_dollar_tree_entry +
+      chain_family_dollar_entry,
+    state = as.integer(substr(county_fips, 1, 2))
+  )
+
+# ---- Construct the number of active stores in each county-year
+
+store_stock_counts <- store_count |>
+  mutate(
+    county_fips = normalize_fips(county_fips),
+    year = as.integer(year),
+    chain = paste0(chain, "_count"),
+    count = as.integer(count),
+    chain = case_when(
+      chain == "chain_family_dollar_count" ~ chain,
+      chain == "chain_dollar_general_count" ~ chain,
+      chain == "chain_dollar_tree_count" ~ chain,
+      TRUE ~ "chain_nods_count"
+    )
+  ) |>
+  filter(
+    !is.na(county_fips),
+    year %in% analysis_years
+  ) |>
+  group_by(
+    county_fips,
+    year,
+    chain
+  ) |>
+  summarise(
+    count = sum(count, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+
+# Again add zero-valued observations for every required stock outcome
+
+stock_zero_rows <- county_year_grid |>
+  tidyr::crossing(
+    chain = stock_outcome_columns
+  ) |>
+  mutate(
+    count = 0L
+  )
+
+
+store_stock_panel <- bind_rows(
+  stock_zero_rows,
+  store_stock_counts
+) |>
+  group_by(
+    county_fips,
+    year,
+    chain
+  ) |>
+  summarise(
+    count = sum(count, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  pivot_wider(
+    names_from = chain,
+    values_from = count,
+    values_fill = 0L
+  ) |>
+  mutate(
+    total_count =
+      chain_dollar_general_count +
+      chain_dollar_tree_count +
+      chain_family_dollar_count
+  )
+
+# ---- Collapse monthly waiver observations to county-years
+
+waiver_treatment <- generated_long |>
+  transmute(
+    county_fips = normalize_fips(FIPS),
+    year = as.integer(YEAR),
+    countyname = LOC,
+    type = LOC_TYPE,
+    waiver_scope = waiver_scope,
+    treatment = 1L
+  ) |>
+  filter(
+    !is.na(county_fips),
+    !is.na(year),
+    year %in% analysis_years
+  ) |>
+  distinct() |>
+  group_by(
+    county_fips,
+    year
+  ) |>
+  summarise(
+    countyname = first(countyname),
+    type = first(type),
+    waiver_scope = if_else(
+      any(waiver_scope == "statewide", na.rm = TRUE),
+      "statewide",
+      "substate"
+    ),
+    treatment = 1L,
+    .groups = "drop"
+  )
+
+# ---- Merge treatment and retailer outcomes onto the balanced panel
+
+county_names <- county |>
+  transmute(
+    county_fips = normalize_fips(county_fips),
+    countyname = county
+  ) |>
+  distinct()
+
+analysis_panel <- county_year_grid |>
+  left_join(
+    county_names,
+    by = "county_fips"
+  ) |>
+  left_join(
+    entry_panel,
+    by = c("county_fips", "year")
+  ) |>
+  left_join(
+    store_stock_panel,
+    by = c("county_fips", "year")
+  ) |>
+  left_join(
+    waiver_treatment |>
+      select(-countyname),
+    by = c("county_fips", "year")
+  ) |>
+  mutate(
+    treatment = replace_na(treatment, 0L),
+    waiver_scope = replace_na(waiver_scope, "none"),
+    across(
+      any_of(
+        c(
+          entry_outcome_columns,
+          "total_ds_entry",
+          stock_outcome_columns,
+          "total_count"
+        )
+      ),
+      ~ replace_na(.x, 0L)
+    )
+  )
+
+# ---- Identify the first post-2014 waiver year
+
+event2 <- analysis_panel |>
+  filter(
+    treatment == 1L,
+    year >= 2014L,
+    type == "County"
+  ) |>
+  group_by(county_fips) |>
+  summarise(
+    eventYear2 = min(year),
+    .groups = "drop"
+  )
+
+
+analysis_panel <- analysis_panel |>
+  left_join(
+    event2,
+    by = "county_fips"
+  ) |>
+  mutate(
+    tau2 = year - eventYear2,
+    treated = !is.na(eventYear2)
+  )
+
+rm(event2)
+
+# ---- Add the fixed baseline covariates
+
+analysis_panel <- analysis_panel |>
+  left_join(
+    county_covariates,
+    by = c("county_fips", "year")
+  ) |>
+  arrange(
+    county_fips,
+    year
+  )
+
+analysis_panel |>
+  arrange(county_fips, year) |>
+  group_by(county_fips) |>
+  summarise(
+    eventYear2 = first(eventYear2),
+    treatment_turns_off = if_else(
+      is.na(eventYear2),
+      FALSE,
+      any(year >= eventYear2 & treatment == 0L)
+    ),
+    .groups = "drop"
+  ) |>
+  count(treatment_turns_off)
+
+
+```
+
+# Extensive Margin, Abraham and Sun
+
+```{r DiD_flow, echo= FALSE, warning= FALSE, message= FALSE}
+
+library(fixest)
+
+# ---- Construct the LPM event-study sample
+
+# The existing LPM pipeline retains only counties that eventually receive a
+# waiver and keeps, at most, the three years before first waiver exposure.
+# Never-treated counties are therefore not part of this benchmark sample.
+
+did_sample <- analysis_panel |>
+  mutate(
+    rent = rent / 1000,
+    medianInc = medianInc / 1000,
+    ds_entry_indicator = as.integer(total_ds_entry > 0),
+    chain_super_market_entry_indicator = as.integer(chain_super_market_entry > 0),
+    chain_convenience_store_entry_indicator = as.integer(chain_convenience_store_entry > 0),
+    chain_multi_category_entry_indicator = as.integer(chain_multi_category_entry > 0),
+    chain_medium_grocery_entry_indicator = as.integer(chain_medium_grocery_entry > 0),
+    chain_small_grocery_entry_indicator = as.integer(chain_small_grocery_entry > 0),
+    chain_produce_entry_indicator = as.integer(chain_produce_entry > 0),
+    chain_farmers_market_entry_indicator = as.integer(chain_farmers_market_entry > 0)
+  ) |>
+  filter(
+    year %in% analysis_years,
+    !is.na(eventYear2),
+    tau2 >= -3,
+    !is.na(num_households),
+    !is.na(wage),
+    !is.na(medianInc),
+    !is.na(rent),
+    !is.na(urate)
+  )
+
+did_sample |>
+  summarise(
+    observations = n(),
+    counties = n_distinct(county_fips),
+    first_year = min(year),
+    last_year = max(year)
+  )
+
+
+# The regression formula below matches the existing LPM pipeline. In this QMD,
+# however, the five covariates are fixed at their 2013 values and repeated over
+# time. County fixed effects will therefore absorb them. The regression can be
+# estimated, but its numerical result should not be expected to exactly match
+# the existing pipeline, which uses time-varying covariates.
+
+
+# ---- Dollar-store entry
+
+did_total_ds <- feols(
+  ds_entry_indicator ~
+    sunab(eventYear2, year, ref.p = -1) +
+    num_households + wage + medianInc + rent + urate |
+    county_fips + year,
+  data = did_sample,
+  cluster = ~county_fips
+)
+
+
+# ---- Supermarket entry
+
+did_super_market <- feols(
+  chain_super_market_entry_indicator ~
+    sunab(eventYear2, year, ref.p = -1) +
+    num_households + wage + medianInc + rent + urate |
+    county_fips + year,
+  data = did_sample,
+  cluster = ~county_fips
+)
+
+
+# ---- Convenience-store entry
+
+did_convenience_store <- feols(
+  chain_convenience_store_entry_indicator ~
+    sunab(eventYear2, year, ref.p = -1) +
+    num_households + wage + medianInc + rent + urate |
+    county_fips + year,
+  data = did_sample,
+  cluster = ~county_fips
+)
+
+
+# ---- Multi-category-store entry
+
+did_multi_category <- feols(
+  chain_multi_category_entry_indicator ~
+    sunab(eventYear2, year, ref.p = -1) +
+    num_households + wage + medianInc + rent + urate |
+    county_fips + year,
+  data = did_sample,
+  cluster = ~county_fips
+)
+
+
+# ---- Medium-grocery entry
+
+did_medium_grocery <- feols(
+  chain_medium_grocery_entry_indicator ~
+    sunab(eventYear2, year, ref.p = -1) +
+    num_households + wage + medianInc + rent + urate |
+    county_fips + year,
+  data = did_sample,
+  cluster = ~county_fips
+)
+
+
+# ---- Small-grocery entry
+
+did_small_grocery <- feols(
+  chain_small_grocery_entry_indicator ~
+    sunab(eventYear2, year, ref.p = -1) +
+    num_households + wage + medianInc + rent + urate |
+    county_fips + year,
+  data = did_sample,
+  cluster = ~county_fips
+)
+
+
+# ---- Produce-store entry
+
+did_produce <- feols(
+  chain_produce_entry_indicator ~
+    sunab(eventYear2, year, ref.p = -1) +
+    num_households + wage + medianInc + rent + urate |
+    county_fips + year,
+  data = did_sample,
+  cluster = ~county_fips
+)
+
+
+# ---- Farmers-market entry
+
+did_farmers_market <- feols(
+  chain_farmers_market_entry_indicator ~
+    sunab(eventYear2, year, ref.p = -1) +
+    num_households + wage + medianInc + rent + urate |
+    county_fips + year,
+  data = did_sample,
+  cluster = ~county_fips
+)
+
+
+# ---- Dynamic event-study plots
+
+fixest::iplot(
+  did_total_ds,
+  main = "Dollar-store entry",
+  xlab = "Years relative to first waiver exposure",
+  ylab = "Estimated treatment effect",
+  ref.line = 0
+)
+
+fixest::iplot(
+  did_convenience_store,
+  main = "Convenience-store entry",
+  xlab = "Years relative to first waiver exposure",
+  ylab = "Estimated treatment effect",
+  ref.line = 0
+)
+
+
+# ---- Compare the average post-treatment effects across outcomes
+
+etable(
+  did_total_ds,
+  did_super_market,
+  did_convenience_store,
+  did_multi_category,
+  did_medium_grocery,
+  did_small_grocery,
+  did_produce,
+  did_farmers_market,
+  headers = c(
+    "Dollar Stores",
+    "Supermarkets",
+    "Convenience Stores",
+    "Multi Category",
+    "Medium Grocery",
+    "Small Grocery",
+    "Produce",
+    "Farmers Market"
+  ),
+  agg = "att",
+  keep = "ATT"
+)
+
+```
+
+
+# Extensive Margin, Callaway and Sant'anna
+
+Conditional Parallel Trends: In the absence of first waiver exposure, treated and comparison counties would have followed parallel trends conditional on their 2013 characteristics.
+
+I think a big issue here is the role that unemployment plays as a predictor of treatment - meaning that there is very little propensity score overlap between the treatment and control groups once I include the unemployment rate as a predictor. This means we have treated observations for which we do not have observably comparable counterfactuals.
+
+```{r baseline_cs, echo= FALSE, warning = TRUE, message= FALSE}
+
+library(did)
+library(ggplot2)
+
+# ---- Construct the Callaway-Sant'Anna sample
+
+cs_sample <- analysis_panel |>
+  mutate(
+    county_id = as.integer(county_fips),
+    first_treat_year = if_else(
+      is.na(eventYear2),
+      0L,
+      eventYear2
+    ),
+    ds_entry_indicator = as.integer(total_ds_entry > 0),
+    chain_convenience_store_entry_indicator = as.integer(
+      chain_convenience_store_entry > 0
+    ),
+    medianInc = medianInc / 1000,
+    rent = rent / 1000
+  ) |>
+  filter(
+    year %in% analysis_years,
+    !is.na(num_households),
+    !is.na(wage),
+    !is.na(medianInc),
+    !is.na(rent),
+    !is.na(urate)
+  )
+
+
+# Show the number of counties in each first-treatment cohort before applying
+# the first-period restriction.
+
+cs_sample |>
+  distinct(
+    county_id,
+    first_treat_year
+  ) |>
+  count(
+    first_treat_year,
+    name = "counties"
+  )
+
+
+# Because 2014 is the first observed year, counties first treated in 2014 have
+# no pre-treatment observation. The `did` package drops these already-treated
+# counties. Make that restriction explicit while retaining 2014 as the first
+# observation for never-treated counties and counties treated in 2015 or later.
+
+#cs_sample <- cs_sample |>
+#  filter(
+#    first_treat_year == 0L |
+#      first_treat_year > 2014L
+#  )
+
+
+# Verify that the retained county panel remains balanced.
+
+cs_sample |>
+  count(
+    county_id,
+    name = "years_observed"
+  ) |>
+  count(
+    years_observed,
+    name = "counties"
+  )
+
+
+# ---- Dollar-store entry
+
+cs_dollar_stores <- did::att_gt(
+  yname = "ds_entry_indicator",
+  tname = "year",
+  idname = "county_id",
+  gname = "first_treat_year",
+  xformla = ~ 
+    num_households +
+    wage +
+    medianInc +
+    rent,
+   # urate,
+  data = cs_sample,
+  panel = TRUE,
+  control_group = "notyettreated",
+  est_method = "dr",
+  base_period = "universal",
+  allow_unbalanced_panel = FALSE,
+  bstrap = FALSE,
+  cband = FALSE
+)
+
+cs_dollar_stores_event <- did::aggte(
+  cs_dollar_stores,
+  type = "dynamic",
+  min_e = -3,
+  max_e = 5,
+  na.rm = TRUE,
+  bstrap = FALSE,
+  cband = FALSE
+)
+
+summary(cs_dollar_stores_event)
+
+cs_dollar_stores_plot <- did::ggdid(
+  cs_dollar_stores_event
+) +
+  labs(
+    title = "Dollar-store entry indicator",
+    subtitle = "Callaway-Sant'Anna event study",
+    x = "Years relative to first waiver exposure",
+    y = "Average treatment effect"
+  ) +
+  theme_minimal()
+
+cs_dollar_stores_plot
+
+
+# ---- Convenience-store entry
+
+cs_convenience_stores <- did::att_gt(
+  yname = "chain_convenience_store_entry_indicator",
+  tname = "year",
+  idname = "county_id",
+  gname = "first_treat_year",
+  xformla = ~
+    num_households +
+    wage +
+    medianInc +
+    rent,
+  #  urate,
+  data = cs_sample,
+  panel = TRUE,
+  control_group = "notyettreated",
+  est_method = "dr",
+  base_period = "universal",
+  allow_unbalanced_panel = FALSE,
+  bstrap = FALSE,
+  cband = FALSE
+)
+
+cs_convenience_stores_event <- did::aggte(
+  cs_convenience_stores,
+  type = "dynamic",
+  min_e = -3,
+  max_e = 5,
+  na.rm = TRUE,
+  bstrap = FALSE,
+  cband = FALSE
+)
+
+summary(cs_convenience_stores_event)
+
+cs_convenience_stores_plot <- did::ggdid(
+  cs_convenience_stores_event
+) +
+  labs(
+    title = "Convenience-store entry indicator",
+    subtitle = "Callaway-Sant'Anna event study",
+    x = "Years relative to first waiver exposure",
+    y = "Average treatment effect"
+  ) +
+  theme_minimal()
+
+cs_convenience_stores_plot
+
+
+
+```
+
+## Extensive Margin Poisson DiD
+
+```{r ext_poissonDiD_dollar, echo= FALSE, warning= FALSE, message= FALSE}
+
+library('etwfe')
+
+poisson_sample <- cs_sample |>
+    filter(
+    first_treat_year == 0L |
+      first_treat_year > 2014L
+  )
+
+dollar_poisson_extensive <- etwfe(
+   fml = ds_entry_indicator ~ num_households + wage + medianInc + rent,
+  tvar = year,
+  gvar = first_treat_year,
+  data = poisson_sample,
+  cgroup = "notyet",
+  family = "poisson",
+  vcov = ~county_id
+)
+
+dollar_poisson_att_extensive <- emfx(
+  dollar_poisson_extensive,
+  type = "simple",
+  predict = "response"
+)
+
+dollar_poisson_att_extensive
+
+dollar_poisson_event_extensive <- emfx(
+  dollar_poisson_extensive,
+  type = "event",
+  predict = "response",
+  post_only = TRUE
+)
+
+dollar_poisson_event_extensive
+
+plot(dollar_poisson_event_extensive)
+
+
+
+
+
+```
+
+```{r ext_poissonDiD_dollar, echo= FALSE, warning= FALSE, message= FALSE}
+
+
+
+
+convenience_poisson_extensive <- etwfe(
+  fml = chain_convenience_store_entry_indicator ~ num_households + wage + medianInc + rent,
+  tvar = year,
+  gvar = first_treat_year,
+  data = poisson_sample,
+  cgroup = "notyet",
+  family = "poisson",
+  vcov = ~county_id
+)
+
+convenience_poisson_att_extensive <- emfx(
+  convenience_poisson_extensive,
+  type = "simple",
+  predict = "response"
+)
+
+convenience_poisson_att_extensive
+
+convenience_poisson_event_extensive <- emfx(
+  convenience_poisson_extensive,
+  type = "event",
+  predict = "response",
+  post = FALSE
+)
+
+convenience_poisson_event_extensive 
+
+plot(convenience_poisson_event_extensive )
+
+
+
+
+
+
+```
+
+
+## Following Chen and Roth: Poisson DiD "Intensive Margin" est
+
+```{r int_poissonDiD_dollar, echo= FALSE, warning= FALSE, message= FALSE}
+
+
+
+dollar_poisson_intensive <- etwfe(
+  fml = total_ds_entry ~ num_households + wage + medianInc + rent,
+  tvar = year,
+  gvar = first_treat_year,
+  data = poisson_sample,
+  cgroup = "notyet",
+  family = "poisson",
+  vcov = ~county_id
+)
+
+dollar_poisson_att_intensive <- emfx(
+  dollar_poisson_intensive,
+  type = "simple",
+  predict = "response"
+)
+
+dollar_poisson_att_intensive
+
+dollar_poisson_event_intensive <- emfx(
+  dollar_poisson_intensive,
+  type = "event",
+  predict = "response"
+)
+
+dollar_poisson_event_intensive
+
+plot(dollar_poisson_event_intensive)
+
+```
+
+```{r int_poisson_convenience, echo= FALSE, warning= FALSE, message= FALSE}
+
+convenience_poisson <- etwfe(
+  fml = chain_convenience_store_entry ~ num_households + wage + medianInc + rent,
+  tvar = year,
+  gvar = first_treat_year,
+  data = poisson_sample,
+  cgroup = "notyet",
+  family = "poisson",
+  vcov = ~county_id
+)
+
+convenience_poisson_att <- emfx(
+  convenience_poisson,
+  type = "simple",
+  predict = "response"
+)
+
+convenience_poisson_att
+
+convenience_poisson_event <- emfx(
+  convenience_poisson,
+  type = "event",
+  predict = "response"
+)
+
+convenience_poisson_event
+
+plot(convenience_poisson_event)
+
+```
+
+
+## Intensive Margin: Censored Sample
+
+It's possible that there's an issue with skew in the number of dollar stores entering. For example, in Los Angeles County we had dollar store entry values of 562, 478, 403, 366, 322, and 431.
+
+```{r int_poisson_dollar_censored, echo= FALSE, warning= FALSE, message= FALSE}
+
+
+```
+
+
+```{r int_poisson_convenience_censored, echo= FALSE, warning= FALSE, message= FALSE}
+
+
+```
+
+
+## Outstanding Problem: Repeated Record ID with different authorization years
+
+```{r repeated_record_ID, echo= FALSE, warning= FALSE, message= FALSE}
+repeated_record_dates <- snap |>
+  filter(
+    !is.na(`Record ID`),
+    !is.na(`Authorization Date`)
+  ) |>
+  group_by(`Record ID`) |>
+  filter(
+    n_distinct(`Authorization Date`) > 1
+  ) |>
+  mutate(
+    number_of_authorization_dates = n_distinct(`Authorization Date`)
+  ) |>
+  ungroup() |>
+  arrange(
+    desc(number_of_authorization_dates),
+    `Record ID`,
+    `Authorization Date`
+  ) |>
+  select(
+    `Record ID`,
+    `Store Name`,
+    `Store Type`,
+    County,
+    State,
+    `Authorization Date`,
+    `End Date`,
+    number_of_authorization_dates
+  )
+
+repeated_record_dates
+
+
+
+
+
+```
